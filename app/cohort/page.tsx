@@ -68,7 +68,7 @@ export default function CohortPage() {
   if (!isAuthenticated) {
     return (
       <div className="py-16 text-center max-w-md mx-auto">
-        <h2 className="text-xl font-bold font-display text-white mb-2">
+        <h2 className="text-xl font-bold font-display text-ink mb-2">
           Authentication Required
         </h2>
         <p className="text-sm text-ink-muted mb-6">
@@ -88,7 +88,7 @@ export default function CohortPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold font-display text-white tracking-tight">
+          <h1 className="text-3xl font-extrabold font-display text-ink tracking-tight">
             Cohort Hub
           </h1>
           <p className="text-sm text-ink-muted mt-1.5">
@@ -97,13 +97,13 @@ export default function CohortPage() {
         </div>
 
         {/* Tab Controls */}
-        <div className="flex items-center gap-1 bg-surface p-1 rounded-control border border-hairline">
+        <div className="flex items-center gap-1 bg-white p-1 rounded-control border border-mist">
           <button
             onClick={() => setActiveTab("announcements")}
             className={`px-4 py-1.5 text-xs font-semibold rounded-control transition-all ${
               activeTab === "announcements"
-                ? "bg-mint text-black"
-                : "text-ink-muted hover:text-white"
+                ? "bg-brand text-white"
+                : "text-ink-muted hover:text-ink"
             }`}
           >
             Announcements ({announcements?.length ?? 0})
@@ -112,8 +112,8 @@ export default function CohortPage() {
             onClick={() => setActiveTab("resources")}
             className={`px-4 py-1.5 text-xs font-semibold rounded-control transition-all ${
               activeTab === "resources"
-                ? "bg-mint text-black"
-                : "text-ink-muted hover:text-white"
+                ? "bg-brand text-white"
+                : "text-ink-muted hover:text-ink"
             }`}
           >
             Study Resources ({resources?.length ?? 0})
@@ -136,8 +136,8 @@ export default function CohortPage() {
                   + Post New Announcement
                 </Button>
               ) : (
-                <Card className="bg-surface border-hairline p-6 space-y-4">
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-white">
+                <Card className="bg-white border-mist p-6 space-y-4">
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-ink">
                     Post Cohort Announcement
                   </h3>
                   <form onSubmit={handleCreateAnnouncement} className="space-y-4">
@@ -168,7 +168,7 @@ export default function CohortPage() {
                       <Button
                         type="submit"
                         size="sm"
-                        variant="mint"
+                        variant="primary"
                         isLoading={createAnnMutation.isPending}
                       >
                         Publish Announcement
@@ -195,13 +195,13 @@ export default function CohortPage() {
           ) : (
             <div className="space-y-4">
               {announcements.map((ann) => (
-                <Card key={ann.id} className="bg-surface border-hairline p-6 space-y-3">
+                <Card key={ann.id} className="bg-white border-mist p-6 space-y-3">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <span className="text-[10px] uppercase font-bold tracking-wider text-mint block">
+                      <span className="text-[10px] uppercase font-bold tracking-wider text-moss block">
                         {ann.mentor_name || "Mentor Broadcast"}
                       </span>
-                      <h3 className="font-display font-bold text-lg text-white mt-0.5">
+                      <h3 className="font-display font-bold text-lg text-ink mt-0.5">
                         {ann.title}
                       </h3>
                       <p className="text-xs text-ink-faint">
@@ -221,14 +221,14 @@ export default function CohortPage() {
                         variant="ghost"
                         onClick={() => deleteAnnMutation.mutate(ann.id)}
                         disabled={deleteAnnMutation.isPending}
-                        className="text-neutral-500 hover:text-amber"
+                        className="text-ink-faint hover:text-amber"
                       >
                         Delete
                       </Button>
                     )}
                   </div>
 
-                  <p className="text-sm text-neutral-200 whitespace-pre-line leading-relaxed">
+                  <p className="text-sm text-ink-muted whitespace-pre-line leading-relaxed">
                     {ann.body}
                   </p>
                 </Card>
@@ -253,8 +253,8 @@ export default function CohortPage() {
                   + Add Resource Link
                 </Button>
               ) : (
-                <Card className="bg-surface border-hairline p-6 space-y-4">
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-white">
+                <Card className="bg-white border-mist p-6 space-y-4">
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-ink">
                     Share Study Resource
                   </h3>
                   <form onSubmit={handleCreateResource} className="space-y-4">
@@ -285,7 +285,7 @@ export default function CohortPage() {
                       <Button
                         type="submit"
                         size="sm"
-                        variant="mint"
+                        variant="primary"
                         isLoading={createResMutation.isPending}
                       >
                         Share Resource
@@ -312,12 +312,12 @@ export default function CohortPage() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {resources.map((res) => (
-                <Card key={res.id} className="bg-surface border-hairline p-5 flex flex-col justify-between space-y-4">
+                <Card key={res.id} className="bg-white border-mist p-5 flex flex-col justify-between space-y-4">
                   <div className="space-y-1">
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-mint">
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-moss">
                       {res.mentor_name || "Mentor Resource"}
                     </span>
-                    <h3 className="font-display font-bold text-base text-white line-clamp-2">
+                    <h3 className="font-display font-bold text-base text-ink line-clamp-2">
                       {res.title}
                     </h3>
                     <p className="text-[11px] text-ink-faint break-all line-clamp-1">
@@ -325,12 +325,12 @@ export default function CohortPage() {
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between pt-3 border-t border-hairline">
+                  <div className="flex items-center justify-between pt-3 border-t border-mist">
                     <a
                       href={res.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-mint hover:underline"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-moss hover:underline"
                     >
                       Open Document ↗
                     </a>
@@ -341,7 +341,7 @@ export default function CohortPage() {
                         variant="ghost"
                         onClick={() => deleteResMutation.mutate(res.id)}
                         disabled={deleteResMutation.isPending}
-                        className="text-neutral-500 hover:text-amber text-xs px-2 py-1"
+                        className="text-ink-faint hover:text-amber text-xs px-2 py-1"
                       >
                         Delete
                       </Button>

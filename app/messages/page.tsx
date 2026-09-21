@@ -1,47 +1,67 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import {
   useCohortMessages,
-  useCohortWebSocket,
-  useConversations,
-  useDirectMessages,
-  useDirectWebSocket,
   useSendCohortMessage,
+  useDirectMessages,
   useSendDirectMessage,
+  useConversations,
 } from "@/hooks/useChat";
 import { useSubscriptions } from "@/hooks/useSubscriptions";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
 import { EmptyState } from "@/components/ui/EmptyState";
 
-export default function MessagesPage() {
+function MessagesContent() {
+  const searchParams = useSearchParams();
+  const initialUser = searchParams.get("user");
+
   const { user, isAuthenticated } = useAuthStore();
   const isMentor = user?.role === "MENTOR";
 
-  const [activeTab, setActiveTab] = useState<"cohort" | "dm">("cohort");
+  const [activeTab, setActiveTab] = useState<"cohort" | "dm">(initialUser ? "dm" : "cohort");
+  const [selectedContactId, setSelectedContactId] = useState<string | null>(initialUser);
 
-  // Determine mentorId for Cohort Chat
-  const { data: mySubs } = useSubscriptions(undefined, 10);
-  const activeSubMentorId = mySubs?.items?.[0]?.mentor_id;
-  const cohortMentorId = isMentor ? user?.id : activeSubMentorId;
+  // Subscriptions to get mentor id if user is a student
+  const { data: subsData } = useSubscriptions();
+  const activeSub = subsData?.items?.find((s) => s.status === "ACTIVE");
+  const cohortMentorId = isMentor ? user?.id : activeSub?.mentor_id;
 
-  // Cohort Chat Hooks
+  // Cohort Chat hooks
   const { data: cohortMsgs, isLoading: cohortLoading } = useCohortMessages(cohortMentorId);
   const sendCohortMutation = useSendCohortMessage(cohortMentorId);
-  useCohortWebSocket(cohortMentorId);
-
   const [cohortInput, setCohortInput] = useState("");
   const cohortScrollRef = useRef<HTMLDivElement>(null);
 
+  // Direct Chat hooks
+  const { data: conversations } = useConversations();
+  const { data: directMsgs, isLoading: directLoading } = useDirectMessages(selectedContactId || undefined);
+  const sendDirectMutation = useSendDirectMessage(selectedContactId || "");
+  const [directInput, setDirectInput] = useState("");
+  const directScrollRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    if (cohortScrollRef.current) {
+    if (initialUser) {
+      setActiveTab("dm");
+      setSelectedContactId(initialUser);
+    }
+  }, [initialUser]);
+
+  useEffect(() => {
+    if (activeTab === "cohort" && cohortScrollRef.current) {
       cohortScrollRef.current.scrollTop = cohortScrollRef.current.scrollHeight;
     }
-  }, [cohortMsgs]);
+  }, [cohortMsgs, activeTab]);
+
+  useEffect(() => {
+    if (activeTab === "dm" && directScrollRef.current) {
+      directScrollRef.current.scrollTop = directScrollRef.current.scrollHeight;
+    }
+  }, [directMsgs, activeTab]);
 
   const handleSendCohort = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,32 +70,6 @@ export default function MessagesPage() {
     setCohortInput("");
     await sendCohortMutation.mutateAsync(text);
   };
-
-  // Direct Messages Hooks
-  const { data: conversations, isLoading: convsLoading } = useConversations();
-  const [selectedContactId, setSelectedContactId] = useState<string | null>(null);
-
-  // Set initial selected contact
-  useEffect(() => {
-    if (!selectedContactId && conversations && conversations.length > 0) {
-      setSelectedContactId(conversations[0].user_id);
-    }
-  }, [conversations, selectedContactId]);
-
-  const { data: directMsgs, isLoading: directLoading } = useDirectMessages(
-    selectedContactId || undefined
-  );
-  const sendDirectMutation = useSendDirectMessage(selectedContactId || undefined);
-  useDirectWebSocket(selectedContactId || undefined);
-
-  const [directInput, setDirectInput] = useState("");
-  const directScrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (directScrollRef.current) {
-      directScrollRef.current.scrollTop = directScrollRef.current.scrollHeight;
-    }
-  }, [directMsgs]);
 
   const handleSendDirect = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,7 +82,7 @@ export default function MessagesPage() {
   if (!isAuthenticated) {
     return (
       <div className="py-16 text-center max-w-md mx-auto">
-        <h2 className="text-xl font-bold font-display text-white mb-2">
+        <h2 className="text-xl font-bold font-display text-ink mb-2">
           Authentication Required
         </h2>
         <p className="text-sm text-ink-muted mb-6">
@@ -108,7 +102,7 @@ export default function MessagesPage() {
       {/* Header & Tabs */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold font-display text-white tracking-tight">
+          <h1 className="text-3xl font-extrabold font-display text-ink tracking-tight">
             Messages & Cohort Chat
           </h1>
           <p className="text-sm text-ink-muted mt-1">
@@ -116,13 +110,13 @@ export default function MessagesPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-1 bg-surface p-1 rounded-control border border-hairline">
+        <div className="flex items-center gap-1 bg-white p-1 rounded-control border border-mist">
           <button
             onClick={() => setActiveTab("cohort")}
             className={`px-4 py-1.5 text-xs font-semibold rounded-control transition-all ${
               activeTab === "cohort"
-                ? "bg-mint text-black"
-                : "text-ink-muted hover:text-white"
+                ? "bg-brand text-white"
+                : "text-ink-muted hover:text-ink"
             }`}
           >
             Cohort Channel
@@ -131,8 +125,8 @@ export default function MessagesPage() {
             onClick={() => setActiveTab("dm")}
             className={`px-4 py-1.5 text-xs font-semibold rounded-control transition-all ${
               activeTab === "dm"
-                ? "bg-mint text-black"
-                : "text-ink-muted hover:text-white"
+                ? "bg-brand text-white"
+                : "text-ink-muted hover:text-ink"
             }`}
           >
             Direct Messages ({conversations?.length ?? 0})
@@ -151,12 +145,12 @@ export default function MessagesPage() {
               onAction={() => window.location.assign("/mentors")}
             />
           ) : (
-            <Card className="bg-surface border-hairline p-0 overflow-hidden flex flex-col h-[600px]">
+            <Card className="bg-white border-mist p-0 overflow-hidden flex flex-col h-[600px]">
               {/* Channel Header */}
-              <div className="px-6 py-3.5 border-b border-hairline bg-background/60 flex items-center justify-between">
+              <div className="px-6 py-3.5 border-b border-mist bg-[#FAFAF9] flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-mint animate-pulse" />
-                  <span className="font-display font-bold text-sm text-white">
+                  <span className="w-2.5 h-2.5 rounded-full bg-moss animate-pulse" />
+                  <span className="font-display font-bold text-sm text-ink">
                     # cohort-discussion
                   </span>
                 </div>
@@ -191,14 +185,14 @@ export default function MessagesPage() {
                         }`}
                       >
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-xs font-semibold text-white">
+                          <span className="text-xs font-semibold text-ink">
                             {msg.sender_name || (isSelf ? "You" : "Student")}
                           </span>
                           <span
                             className={`text-[10px] px-1.5 py-0.2 rounded font-bold uppercase tracking-wider ${
                               isSenderMentor
-                                ? "bg-mint/20 text-mint border border-mint/30"
-                                : "bg-neutral-800 text-neutral-400"
+                                ? "bg-moss/10 text-moss border border-moss/20"
+                                : "bg-neutral-100 text-ink-faint border border-mist"
                             }`}
                           >
                             {msg.sender_role}
@@ -213,8 +207,8 @@ export default function MessagesPage() {
                         <div
                           className={`max-w-xl p-3.5 rounded-card text-sm leading-relaxed ${
                             isSelf
-                              ? "bg-mint text-black font-medium"
-                              : "bg-background border border-hairline text-neutral-200"
+                              ? "bg-brand text-white font-medium"
+                              : "bg-[#FAFAF9] border border-mist text-ink"
                           }`}
                         >
                           {msg.content}
@@ -228,14 +222,14 @@ export default function MessagesPage() {
               {/* Input Bar */}
               <form
                 onSubmit={handleSendCohort}
-                className="p-4 border-t border-hairline bg-background/60 flex items-center gap-3"
+                className="p-4 border-t border-mist bg-[#FAFAF9] flex items-center gap-3"
               >
                 <input
                   type="text"
                   value={cohortInput}
                   onChange={(e) => setCohortInput(e.target.value)}
                   placeholder="Share doubt, update, or question with cohort..."
-                  className="flex-1 px-4 py-2 bg-surface text-white text-sm rounded-control border border-hairline placeholder:text-ink-faint focus:outline-none focus:border-mint"
+                  className="flex-1 px-4 py-2 bg-white text-ink text-sm rounded-control border border-mist placeholder:text-ink-faint focus:outline-none focus:border-brand"
                 />
                 <Button
                   type="submit"
@@ -264,15 +258,15 @@ export default function MessagesPage() {
               }
             />
           ) : (
-            <Card className="bg-surface border-hairline p-0 overflow-hidden grid grid-cols-1 md:grid-cols-3 h-[600px]">
+            <Card className="bg-white border-mist p-0 overflow-hidden grid grid-cols-1 md:grid-cols-3 h-[600px]">
               {/* Left Contacts Sidebar */}
-              <div className="border-r border-hairline flex flex-col h-full bg-background/40">
-                <div className="p-4 border-b border-hairline">
+              <div className="border-r border-mist flex flex-col h-full bg-[#FAFAF9]">
+                <div className="p-4 border-b border-mist">
                   <h3 className="text-xs font-semibold uppercase tracking-wider text-ink-faint">
                     Conversations
                   </h3>
                 </div>
-                <div className="flex-1 overflow-y-auto divide-y divide-hairline">
+                <div className="flex-1 overflow-y-auto divide-y divide-mist">
                   {conversations.map((c) => {
                     const isSelected = selectedContactId === c.user_id;
                     return (
@@ -281,15 +275,15 @@ export default function MessagesPage() {
                         onClick={() => setSelectedContactId(c.user_id)}
                         className={`w-full text-left p-4 transition-colors flex flex-col gap-1 ${
                           isSelected
-                            ? "bg-surface-hover border-l-2 border-mint"
-                            : "hover:bg-surface/50"
+                            ? "bg-white border-l-2 border-brand"
+                            : "hover:bg-white/60"
                         }`}
                       >
                         <div className="flex items-center justify-between">
-                          <span className="font-display font-bold text-sm text-white">
+                          <span className="font-display font-bold text-sm text-ink">
                             {c.full_name}
                           </span>
-                          <span className="text-[10px] uppercase font-semibold text-mint px-1.5 py-0.5 rounded bg-mint/10">
+                          <span className="text-[10px] uppercase font-semibold text-moss px-1.5 py-0.5 rounded bg-moss/10">
                             {c.role}
                           </span>
                         </div>
@@ -305,12 +299,12 @@ export default function MessagesPage() {
               </div>
 
               {/* Right Message Chat Area */}
-              <div className="col-span-2 flex flex-col h-full bg-surface">
+              <div className="col-span-2 flex flex-col h-full bg-white">
                 {selectedContactId ? (
                   <>
                     {/* Header */}
-                    <div className="px-6 py-3.5 border-b border-hairline bg-background/60 flex items-center justify-between">
-                      <span className="font-display font-bold text-sm text-white">
+                    <div className="px-6 py-3.5 border-b border-mist bg-[#FAFAF9] flex items-center justify-between">
+                      <span className="font-display font-bold text-sm text-ink">
                         {conversations.find((c) => c.user_id === selectedContactId)?.full_name || "Direct Message"}
                       </span>
                       <span className="text-xs text-ink-faint">
@@ -343,7 +337,7 @@ export default function MessagesPage() {
                               }`}
                             >
                               <div className="flex items-center gap-2 mb-1">
-                                <span className="text-xs font-semibold text-white">
+                                <span className="text-xs font-semibold text-ink">
                                   {isSelf ? "You" : msg.sender_name}
                                 </span>
                                 <span className="text-[10px] text-ink-faint">
@@ -356,8 +350,8 @@ export default function MessagesPage() {
                               <div
                                 className={`max-w-md p-3.5 rounded-card text-sm leading-relaxed ${
                                   isSelf
-                                    ? "bg-white text-black font-medium"
-                                    : "bg-background border border-hairline text-neutral-200"
+                                    ? "bg-brand text-white font-medium"
+                                    : "bg-[#FAFAF9] border border-mist text-ink"
                                 }`}
                               >
                                 {msg.content}
@@ -371,14 +365,14 @@ export default function MessagesPage() {
                     {/* Input Bar */}
                     <form
                       onSubmit={handleSendDirect}
-                      className="p-4 border-t border-hairline bg-background/60 flex items-center gap-3"
+                      className="p-4 border-t border-mist bg-[#FAFAF9] flex items-center gap-3"
                     >
                       <input
                         type="text"
                         value={directInput}
                         onChange={(e) => setDirectInput(e.target.value)}
                         placeholder="Write a private message..."
-                        className="flex-1 px-4 py-2 bg-surface text-white text-sm rounded-control border border-hairline placeholder:text-ink-faint focus:outline-none focus:border-mint"
+                        className="flex-1 px-4 py-2 bg-white text-ink text-sm rounded-control border border-mist placeholder:text-ink-faint focus:outline-none focus:border-brand"
                       />
                       <Button
                         type="submit"
@@ -401,5 +395,19 @@ export default function MessagesPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function MessagesPage() {
+  return (
+    <React.Suspense
+      fallback={
+        <div className="py-16 text-center text-ink-faint text-sm">
+          Loading messages & channels...
+        </div>
+      }
+    >
+      <MessagesContent />
+    </React.Suspense>
   );
 }

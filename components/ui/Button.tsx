@@ -16,7 +16,7 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseClasses =
-    "inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-1 focus:ring-mint disabled:opacity-50 disabled:cursor-not-allowed rounded-control select-none";
+    "inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-1 focus:ring-brand disabled:opacity-50 disabled:cursor-not-allowed rounded-control select-none";
 
   const sizeClasses = {
     sm: "px-3 py-1.5 text-xs font-semibold",
@@ -25,26 +25,26 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   const variantClasses = {
-    // Primary CTA: White background, black text
+    // Primary CTA: Brand Indigo with White Text
     primary:
-      "bg-white text-black hover:bg-neutral-200 active:bg-neutral-300 border border-transparent shadow-none",
-    // Secondary: Dark surface with 1px hairline border
+      "bg-brand text-white hover:bg-brand-hover active:bg-[#1C2644] border border-transparent shadow-none",
+    // Secondary: White surface with 1px hairline border
     secondary:
-      "bg-surface text-white border border-hairline hover:bg-surface-hover active:bg-surface-active shadow-none",
-    // Mint / Moss: Positive/verified mint accent
+      "bg-white text-ink border border-mist hover:bg-[#F4F5F6] active:bg-[#EAEDF1] shadow-none",
+    // Mint / Moss: Positive/verified green accent
     mint:
-      "bg-mint text-black hover:bg-mint-hover active:bg-[#0C8F5A] border border-transparent shadow-none",
+      "bg-moss text-white hover:bg-[#2E8B57] active:bg-[#256F46] border border-transparent shadow-none",
     moss:
-      "bg-mint text-black hover:bg-mint-hover active:bg-[#0C8F5A] border border-transparent shadow-none",
+      "bg-moss text-white hover:bg-[#2E8B57] active:bg-[#256F46] border border-transparent shadow-none",
     // Amber: Urgency / Pending
     amber:
-      "bg-amber text-black hover:bg-amber-hover border border-transparent shadow-none",
-    // Subtle: Neutral dark tone
+      "bg-amber text-white hover:bg-[#D48F2A] border border-transparent shadow-none",
+    // Subtle: Neutral soft tone
     subtle:
-      "bg-[#1A201E] text-ink-muted border border-hairline hover:text-white hover:bg-[#222B28] shadow-none",
+      "bg-[#F4F5F6] text-ink border border-mist hover:bg-[#EAECEF] shadow-none",
     // Ghost: Transparent with hover surface
     ghost:
-      "bg-transparent text-ink-muted hover:text-white hover:bg-white/5 border border-transparent shadow-none",
+      "bg-transparent text-ink-muted hover:text-ink hover:bg-black/5 border border-transparent shadow-none",
   };
 
   return (

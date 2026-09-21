@@ -10,7 +10,7 @@ export default function QuizzesPage() {
   return (
     <div className="max-w-4xl mx-auto py-12 space-y-8">
       <div>
-        <h1 className="text-3xl font-bold font-display text-white tracking-tight">
+        <h1 className="text-3xl font-extrabold font-display text-ink tracking-tight">
           Adaptive Weekly Quizzes
         </h1>
         <p className="text-sm text-ink-muted mt-1">

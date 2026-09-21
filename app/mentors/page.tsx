@@ -32,7 +32,7 @@ export default function MentorsPage() {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold font-display text-white tracking-tight">
+        <h1 className="text-3xl font-extrabold font-display text-ink tracking-tight">
           Explore Mentors
         </h1>
         <p className="text-sm text-ink-muted mt-1.5 max-w-xl">
@@ -52,10 +52,10 @@ export default function MentorsPage() {
                 setSelectedCategory(cat.value);
                 setPage(0);
               }}
-              className={`px-4 py-1.5 text-xs font-medium rounded-control border transition-all ${
+              className={`px-4 py-1.5 text-xs font-semibold rounded-control border transition-all ${
                 isSelected
-                  ? "bg-mint text-black border-mint font-semibold"
-                  : "bg-surface text-ink-muted border-hairline hover:text-white hover:border-neutral-600"
+                  ? "bg-brand text-white border-brand"
+                  : "bg-white text-ink-muted border-mist hover:text-ink hover:border-brand/40"
               }`}
             >
               {cat.label}
@@ -72,7 +72,7 @@ export default function MentorsPage() {
           ))}
         </div>
       ) : isError ? (
-        <div className="py-12 text-center rounded-card border border-hairline bg-surface p-8">
+        <div className="py-12 text-center rounded-card border border-mist bg-white p-8">
           <p className="text-sm text-ink-muted mb-4">
             Unable to load mentors at this time.
           </p>
@@ -97,12 +97,12 @@ export default function MentorsPage() {
             {data.items.map((mentor) => (
               <Card
                 key={mentor.user_id}
-                className="flex flex-col justify-between hover:border-neutral-600 transition-all bg-surface"
+                className="flex flex-col justify-between hover:border-brand/40 transition-all bg-white"
               >
                 <div className="space-y-4">
                   {/* Top Bar: Category & Seat Status */}
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-semibold px-2 py-0.5 rounded bg-[#10C47C]/10 text-mint border border-[#10C47C]/20">
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-moss/10 text-moss border border-moss/20">
                       {CATEGORY_LABELS[mentor.category] || mentor.category}
                     </span>
                     <SeatBadge
@@ -113,7 +113,7 @@ export default function MentorsPage() {
 
                   {/* Mentor Info */}
                   <div>
-                    <h3 className="font-display font-bold text-lg text-white group-hover:text-mint transition-colors">
+                    <h3 className="font-display font-bold text-lg text-ink group-hover:text-brand transition-colors">
                       {mentor.full_name}
                     </h3>
                     <p className="text-xs text-ink-faint mt-0.5">
@@ -128,9 +128,9 @@ export default function MentorsPage() {
                 </div>
 
                 {/* Footer: Pricing & Action */}
-                <div className="pt-6 mt-6 border-t border-hairline flex items-center justify-between">
+                <div className="pt-6 mt-6 border-t border-mist flex items-center justify-between">
                   <div>
-                    <span className="font-display text-xl font-bold text-white">
+                    <span className="font-display text-xl font-bold text-ink">
                       ₹{Number(mentor.price_per_month).toLocaleString("en-IN")}
                     </span>
                     <span className="text-xs text-ink-faint ml-1">/ month</span>
@@ -152,7 +152,7 @@ export default function MentorsPage() {
 
           {/* Pagination Controls */}
           {data.total > limit && (
-            <div className="flex items-center justify-between pt-4 border-t border-hairline text-xs text-ink-muted">
+            <div className="flex items-center justify-between pt-4 border-t border-mist text-xs text-ink-muted">
               <span>
                 Showing {page * limit + 1}–
                 {Math.min((page + 1) * limit, data.total)} of {data.total} mentors

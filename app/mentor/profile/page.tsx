@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { useMentor, useUpdateMentorProfile } from "@/hooks/useMentors";
@@ -17,35 +17,21 @@ const getYouTubeEmbedUrl = (url?: string | null): string | null => {
   return match ? `https://www.youtube-nocookie.com/embed/${match[1]}` : null;
 };
 
-export default function MentorProfileEditPage() {
+export default function MentorProfilePage() {
   const router = useRouter();
-  const { user, isAuthenticated } = useAuthStore();
-  const mentorId = user?.id || "";
-
-  const { data: profile, isLoading } = useMentor(mentorId);
+  const { user, isAuthenticated, isLoading: authLoading } = useAuthStore();
+  const { data: profile, isLoading: profileLoading } = useMentor(user?.id);
   const updateMutation = useUpdateMentorProfile();
 
   const [category, setCategory] = useState<MentorCategory>("JEE_PREP");
   const [bio, setBio] = useState("");
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [seatLimit, setSeatLimit] = useState(10);
-  const [pricePerMonth, setPricePerMonth] = useState(4999);
-  const [isActive, setIsActive] = useState(true);
-
+  const [pricePerMonth, setPricePerMonth] = useState(0);
   const [feedback, setFeedback] = useState<{
     type: "success" | "error";
     message: string;
   } | null>(null);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/login?redirect=/mentor/profile");
-      return;
-    }
-    if (user && user.role !== "MENTOR") {
-      router.push("/dashboard/tasks");
-    }
-  }, [isAuthenticated, user, router]);
 
   useEffect(() => {
     if (profile) {
@@ -53,12 +39,33 @@ export default function MentorProfileEditPage() {
       setBio(profile.bio || "");
       setYoutubeUrl(profile.intro_youtube_url || "");
       setSeatLimit(profile.seat_limit || 10);
-      setPricePerMonth(Number(profile.price_per_month) || 4999);
-      setIsActive(profile.is_active ?? true);
+      setPricePerMonth(Number(profile.price_per_month) || 0);
     }
   }, [profile]);
 
-  const liveEmbedUrl = getYouTubeEmbedUrl(youtubeUrl);
+  if (authLoading || (!user && isAuthenticated)) {
+    return (
+      <div className="max-w-3xl mx-auto py-12 text-center text-ink-muted">
+        Loading...
+      </div>
+    );
+  }
+
+  if (!isAuthenticated || user?.role !== "MENTOR") {
+    return (
+      <div className="max-w-md mx-auto py-16 text-center space-y-4">
+        <h2 className="text-xl font-bold font-display text-ink">
+          Mentor Access Required
+        </h2>
+        <p className="text-sm text-ink-muted">
+          Only mentors can access and configure mentor profile settings.
+        </p>
+        <Button variant="primary" onClick={() => router.push("/login")}>
+          Sign In as Mentor
+        </Button>
+      </div>
+    );
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,24 +75,25 @@ export default function MentorProfileEditPage() {
       await updateMutation.mutateAsync({
         category,
         bio,
-        intro_youtube_url: youtubeUrl.trim() || null,
+        intro_youtube_url: youtubeUrl.trim() || undefined,
         seat_limit: Number(seatLimit),
         price_per_month: Number(pricePerMonth),
-        is_active: isActive,
       });
       setFeedback({
         type: "success",
-        message: "Profile updated successfully! Changes are live on your cohort page.",
+        message: "Profile settings updated successfully!",
       });
     } catch (err: any) {
       setFeedback({
         type: "error",
-        message: err.detail || "Failed to update profile. Please verify your YouTube URL format.",
+        message: err.detail || "Failed to update profile.",
       });
     }
   };
 
-  if (isLoading) {
+  const liveEmbedUrl = getYouTubeEmbedUrl(youtubeUrl);
+
+  if (profileLoading) {
     return (
       <div className="max-w-3xl mx-auto py-12 text-center text-ink-muted">
         Loading mentor profile details...
@@ -96,7 +104,7 @@ export default function MentorProfileEditPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-8">
       <div>
-        <h1 className="text-3xl font-bold font-display text-white tracking-tight">
+        <h1 className="text-3xl font-extrabold font-display text-ink tracking-tight">
           Cohort & Profile Settings
         </h1>
         <p className="text-sm text-ink-muted mt-1">
@@ -108,15 +116,15 @@ export default function MentorProfileEditPage() {
         <div
           className={`p-4 rounded-card text-sm border flex items-center justify-between ${
             feedback.type === "success"
-              ? "bg-[#10C47C]/10 text-mint border-[#10C47C]/30"
-              : "bg-[#E8A23D]/10 text-amber border-[#E8A23D]/30"
+              ? "bg-moss/10 text-moss border-moss/30"
+              : "bg-amber/10 text-amber border-amber/30"
           }`}
         >
           <span>{feedback.message}</span>
         </div>
       )}
 
-      <Card className="bg-surface border-hairline p-6 sm:p-8">
+      <Card className="bg-white border-mist p-6 sm:p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Category Selector */}
           <div className="space-y-2">
@@ -133,8 +141,8 @@ export default function MentorProfileEditPage() {
                     onClick={() => setCategory(cat)}
                     className={`py-2.5 px-3 rounded-control text-xs font-medium border text-center transition-all ${
                       isSelected
-                        ? "bg-mint text-black border-mint font-semibold"
-                        : "bg-background text-ink-muted border-hairline hover:text-white"
+                        ? "bg-brand text-white border-brand font-semibold"
+                        : "bg-white text-ink-muted border-mist hover:text-ink"
                     }`}
                   >
                     {CATEGORY_LABELS[cat]}
@@ -167,13 +175,13 @@ export default function MentorProfileEditPage() {
 
             {/* Live Video Embed Preview */}
             {youtubeUrl.trim() && (
-              <div className="mt-4 pt-4 border-t border-hairline space-y-2">
-                <span className="text-xs font-semibold uppercase tracking-wider text-mint flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-mint animate-pulse" />
+              <div className="mt-4 pt-4 border-t border-mist space-y-2">
+                <span className="text-xs font-semibold uppercase tracking-wider text-moss flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-moss animate-pulse" />
                   Live Video Preview
                 </span>
                 {liveEmbedUrl ? (
-                  <div className="relative w-full aspect-video rounded-card overflow-hidden border border-hairline bg-black">
+                  <div className="relative w-full aspect-video rounded-card overflow-hidden border border-mist bg-black">
                     <iframe
                       src={liveEmbedUrl}
                       title="Live Preview"
@@ -216,7 +224,7 @@ export default function MentorProfileEditPage() {
           </div>
 
           {/* Action Buttons */}
-          <div className="pt-6 border-t border-hairline flex items-center justify-end gap-3">
+          <div className="pt-6 border-t border-mist flex items-center justify-end gap-3">
             <Button
               type="submit"
               variant="primary"

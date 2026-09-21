@@ -9,42 +9,47 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#0B0F0D",
-        paper: "#0B0F0D",
+        background: "#FAFAF9",
+        paper: "#FAFAF9",
         surface: {
-          DEFAULT: "#15191A",
-          hover: "#1A201E",
-          active: "#202724",
+          DEFAULT: "#FFFFFF",
+          hover: "#F7F8F9",
+          active: "#EDEFF2",
         },
-        hairline: "#262B29",
+        hairline: "#E7E9ED",
         mist: {
-          DEFAULT: "#262B29",
-          dark: "#333A37",
-        },
-        mint: {
-          DEFAULT: "#10C47C",
-          hover: "#0EA668",
-          light: "rgba(16, 196, 124, 0.1)",
-        },
-        moss: {
-          DEFAULT: "#10C47C",
-          hover: "#0EA668",
-          light: "rgba(16, 196, 124, 0.1)",
-        },
-        amber: {
-          DEFAULT: "#E8A23D",
-          hover: "#D6922F",
-          light: "rgba(232, 162, 61, 0.1)",
+          DEFAULT: "#E7E9ED",
+          dark: "#D2D6DC",
         },
         brand: {
-          DEFAULT: "#10C47C",
-          hover: "#0EA668",
-          light: "rgba(16, 196, 124, 0.1)",
+          DEFAULT: "#2B3A67",
+          hover: "#212D52",
+          light: "rgba(43, 58, 103, 0.08)",
+        },
+        indigo: {
+          DEFAULT: "#2B3A67",
+          hover: "#212D52",
+          light: "rgba(43, 58, 103, 0.08)",
+        },
+        moss: {
+          DEFAULT: "#3C9D6B",
+          hover: "#2E8B57",
+          light: "rgba(60, 157, 107, 0.1)",
+        },
+        mint: {
+          DEFAULT: "#3C9D6B",
+          hover: "#2E8B57",
+          light: "rgba(60, 157, 107, 0.1)",
+        },
+        amber: {
+          DEFAULT: "#E8A33D",
+          hover: "#D48F2A",
+          light: "rgba(232, 163, 61, 0.1)",
         },
         ink: {
-          DEFAULT: "#FFFFFF",
-          muted: "#9CA3AF",
-          faint: "#6B7280",
+          DEFAULT: "#14181F",
+          muted: "#4A5260",
+          faint: "#8A94A6",
         },
       },
       fontFamily: {

@@ -3,15 +3,15 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
-import { useCreateTask, useMentorAssignedTasks, useMentorRoster } from "@/hooks/useTasks";
+import { useMentorRoster, useMentorAssignedTasks, useCreateTask } from "@/hooks/useTasks";
 import { useStudentEfficiency } from "@/hooks/useEfficiency";
 import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
-import { CardSkeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { CardSkeleton } from "@/components/ui/Skeleton";
 import { Subscription } from "@/lib/types";
 
 interface StudentRowProps {
@@ -23,33 +23,33 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAssigning, setIsAssigning] = useState(false);
 
-  // Efficiency data
+  // Efficiency data for this student
   const { data: effData } = useStudentEfficiency(subscription.student_id);
 
-  // Student task history
+  // Task history for this student
   const { data: taskData, isLoading: tasksLoading, refetch: refetchTasks } = useMentorAssignedTasks(
     mentorId,
-    subscription.student_id,
-    undefined,
-    undefined,
-    20
+    subscription.student_id
   );
 
-  // Task creation mutation
-  const createTaskMutation = useCreateTask();
-
-  // New task form state
-  const today = new Date().toISOString().split("T")[0];
-  const nextWeek = new Date(Date.now() + 6 * 86400000).toISOString().split("T")[0];
+  // Task assignment form state
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [weekStart, setWeekStart] = useState(today);
-  const [weekEnd, setWeekEnd] = useState(nextWeek);
+  const [weekStart, setWeekStart] = useState("");
+  const [weekEnd, setWeekEnd] = useState("");
   const [formFeedback, setFormFeedback] = useState<string | null>(null);
 
-  const handleCreateTask = async (e: React.FormEvent) => {
+  const createTaskMutation = useCreateTask();
+
+  const handleAssignTask = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormFeedback(null);
+
+    if (new Date(weekStart) > new Date(weekEnd)) {
+      setFormFeedback("Week start date cannot be after week end date.");
+      return;
+    }
+
     try {
       await createTaskMutation.mutateAsync({
         student_id: subscription.student_id,
@@ -60,20 +60,22 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
       });
       setTitle("");
       setDescription("");
+      setWeekStart("");
+      setWeekEnd("");
       setIsAssigning(false);
       refetchTasks();
     } catch (err: any) {
-      setFormFeedback(err.detail || "Failed to assign task");
+      setFormFeedback(err.detail || "Failed to assign task.");
     }
   };
 
   return (
-    <Card className="bg-surface border-hairline transition-all">
+    <Card className="bg-white border-mist transition-all">
       {/* Main Student Row */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-3">
-            <h3 className="text-base font-bold font-display text-white">
+            <h3 className="text-base font-bold font-display text-ink">
               {subscription.student_name}
             </h3>
             <Badge variant={subscription.status}>{subscription.status}</Badge>
@@ -85,12 +87,12 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
         </div>
 
         {/* Efficiency & Metrics Stats */}
-        <div className="flex flex-wrap items-center gap-4 sm:gap-6 bg-background/50 px-4 py-2 rounded-control border border-hairline">
+        <div className="flex flex-wrap items-center gap-4 sm:gap-6 bg-[#FAFAF9] px-4 py-2 rounded-control border border-mist">
           <div>
             <span className="text-[10px] uppercase font-bold tracking-wider text-ink-faint block">
               Efficiency
             </span>
-            <span className="font-display font-bold text-sm text-mint">
+            <span className="font-display font-bold text-sm text-moss">
               {effData?.efficiency_score !== null && effData?.efficiency_score !== undefined
                 ? `${effData.efficiency_score}%`
                 : "No data"}
@@ -101,7 +103,7 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
             <span className="text-[10px] uppercase font-bold tracking-wider text-ink-faint block">
               Assigned
             </span>
-            <span className="font-display font-bold text-sm text-white">
+            <span className="font-display font-bold text-sm text-ink">
               {effData?.tasks_assigned ?? 0}
             </span>
           </div>
@@ -110,7 +112,7 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
             <span className="text-[10px] uppercase font-bold tracking-wider text-ink-faint block">
               Approved
             </span>
-            <span className="font-display font-bold text-sm text-mint">
+            <span className="font-display font-bold text-sm text-moss">
               {effData?.tasks_approved ?? 0}
             </span>
           </div>
@@ -149,29 +151,29 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
 
       {/* Expanded Accordion: Inline Task Assignment & History */}
       {isExpanded && (
-        <div className="mt-6 pt-6 border-t border-hairline space-y-6">
+        <div className="mt-6 pt-6 border-t border-mist space-y-6">
           {/* Inline Assignment Form */}
           {isAssigning && (
-            <div className="bg-background/80 rounded-control border border-hairline p-5 space-y-4">
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-white">
+            <div className="bg-[#FAFAF9] rounded-control border border-mist p-5 space-y-4">
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-ink">
                 Assign New Weekly Objective to {subscription.student_name}
               </h4>
               {formFeedback && (
                 <p className="text-xs text-amber font-medium">{formFeedback}</p>
               )}
-              <form onSubmit={handleCreateTask} className="space-y-4">
+              <form onSubmit={handleAssignTask} className="space-y-4">
                 <Input
                   label="Task Title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="e.g. Solve 40 Advanced Mechanics Problems"
+                  placeholder="e.g. Complete 50 Rotational Motion JEE Advanced problems"
                   required
                 />
                 <Textarea
-                  label="Detailed Requirements & Rubric"
+                  label="Task Description & Instructions"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Define the exact chapters, submission link requirements, or notes..."
+                  placeholder="Detailed breakdown of formulas, references, and expected completion criteria..."
                   rows={3}
                   required
                 />
@@ -191,7 +193,7 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
                     required
                   />
                 </div>
-                <div className="flex items-center justify-end gap-2 pt-2">
+                <div className="flex items-center justify-end gap-2">
                   <Button
                     type="button"
                     size="sm"
@@ -203,7 +205,7 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
                   <Button
                     type="submit"
                     size="sm"
-                    variant="mint"
+                    variant="primary"
                     isLoading={createTaskMutation.isPending}
                   >
                     Confirm & Assign
@@ -230,11 +232,11 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
                 {taskData.items.map((task) => (
                   <div
                     key={task.id}
-                    className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-control bg-background/50 border border-hairline gap-2 text-xs"
+                    className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-control bg-[#FAFAF9] border border-mist gap-2 text-xs"
                   >
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-white">{task.title}</span>
+                        <span className="font-bold text-ink">{task.title}</span>
                         <Badge variant={task.status}>{task.status}</Badge>
                         {task.is_late && <Badge variant="LATE">Late</Badge>}
                       </div>
@@ -275,7 +277,7 @@ export default function MentorStudentsPage() {
   if (!isAuthenticated || user?.role !== "MENTOR") {
     return (
       <div className="py-16 text-center max-w-md mx-auto">
-        <h2 className="text-xl font-bold font-display text-white mb-2">
+        <h2 className="text-xl font-bold font-display text-ink mb-2">
           Mentor Access Required
         </h2>
         <p className="text-sm text-ink-muted mb-6">
@@ -295,7 +297,7 @@ export default function MentorStudentsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold font-display text-white tracking-tight">
+          <h1 className="text-3xl font-extrabold font-display text-ink tracking-tight">
             Cohort Student Roster
           </h1>
           <p className="text-sm text-ink-muted mt-1.5">
@@ -318,7 +320,7 @@ export default function MentorStudentsPage() {
           ))}
         </div>
       ) : isError ? (
-        <div className="py-12 text-center rounded-card border border-hairline bg-surface p-8">
+        <div className="py-12 text-center rounded-card border border-mist bg-white p-8">
           <p className="text-sm text-ink-muted mb-4">
             Unable to load student roster.
           </p>

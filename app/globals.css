@@ -5,23 +5,27 @@
 @tailwind utilities;
 
 :root {
-  --background: #0B0F0D;
-  --surface: #15191A;
-  --surface-hover: #1A201E;
-  --hairline: #262B29;
-  --mint: #10C47C;
-  --amber: #E8A23D;
-  --paper: #0B0F0D;
-  --ink: #FFFFFF;
-  --ink-muted: #9CA3AF;
-  --mist: #262B29;
+  --background: #FAFAF9;
+  --surface: #FFFFFF;
+  --surface-hover: #F7F8F9;
+  --hairline: #E7E9ED;
+  --mist: #E7E9ED;
+  --paper: #FAFAF9;
+  --ink: #14181F;
+  --ink-muted: #4A5260;
+  --ink-faint: #8A94A6;
+  --brand: #2B3A67;
+  --indigo: #2B3A67;
+  --moss: #3C9D6B;
+  --mint: #3C9D6B;
+  --amber: #E8A33D;
   --font-display: 'Satoshi', 'General Sans', sans-serif;
   --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 body {
-  background-color: #0B0F0D;
-  color: #FFFFFF;
+  background-color: #FAFAF9;
+  color: #14181F;
   font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -34,7 +38,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 /* Hairline border helper */
 .border-hairline {
-  border: 1px solid #262B29;
+  border: 1px solid #E7E9ED;
 }
 
 /* Flat surfaces - enforce no drop shadows */
@@ -48,12 +52,12 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0B0F0D;
+  background: #FAFAF9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #262B29;
+  background: #E7E9ED;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #333A37;
+  background: #D2D6DC;
 }

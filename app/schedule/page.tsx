@@ -3,12 +3,16 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
-import { useCreateMeeting, useMyMeetings, useUpdateMeeting } from "@/hooks/useMeetings";
+import {
+  useMyMeetings,
+  useCreateMeeting,
+  useUpdateMeeting,
+} from "@/hooks/useMeetings";
 import { useSubscriptions } from "@/hooks/useSubscriptions";
 import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { CardSkeleton } from "@/components/ui/Skeleton";
 import { Meeting } from "@/lib/types";
@@ -21,50 +25,52 @@ export default function SchedulePage() {
   const createMeetingMutation = useCreateMeeting();
   const updateMeetingMutation = useUpdateMeeting();
 
-  // Student request modal/form state
+  // For students to know which mentor they are requesting with
+  const { data: subsData } = useSubscriptions();
+  const activeSub = subsData?.items?.find((s) => s.status === "ACTIVE");
+
+  // Student Request Modal State
   const [showRequestModal, setShowRequestModal] = useState(false);
   const [requestTitle, setRequestTitle] = useState("");
-  const { data: mySubs } = useSubscriptions(undefined, 10);
-  const studentMentorId = mySubs?.items?.[0]?.mentor_id;
-  const [requestError, setRequestError] = useState<string | null>(null);
+  const [requestError, setRequestError] = useState("");
 
-  // Mentor schedule/confirm modal state
+  // Mentor Confirm / Schedule Modal State
   const [selectedMeeting, setSelectedMeeting] = useState<Meeting | null>(null);
   const [scheduleTime, setScheduleTime] = useState("");
   const [meetingLink, setMeetingLink] = useState("");
-  const [confirmError, setConfirmError] = useState<string | null>(null);
+  const [confirmError, setConfirmError] = useState("");
 
   const handleStudentRequest = async (e: React.FormEvent) => {
     e.preventDefault();
-    setRequestError(null);
-    if (!studentMentorId) {
-      setRequestError("You must have an active subscription with a mentor to request a session.");
+    setRequestError("");
+    if (!activeSub) {
+      setRequestError("You must have an active subscription with a mentor to request a meeting.");
       return;
     }
 
     try {
       await createMeetingMutation.mutateAsync({
-        mentor_id: studentMentorId,
+        mentor_id: activeSub.mentor_id,
         title: requestTitle,
       });
-      setRequestTitle("");
       setShowRequestModal(false);
+      setRequestTitle("");
       refetch();
     } catch (err: any) {
-      setRequestError(err.detail || "Failed to request meeting.");
+      setRequestError(err.detail || "Failed to submit meeting request.");
     }
   };
 
   const handleMentorConfirm = async (e: React.FormEvent) => {
     e.preventDefault();
-    setConfirmError(null);
     if (!selectedMeeting) return;
+    setConfirmError("");
 
     try {
       await updateMeetingMutation.mutateAsync({
         meetingId: selectedMeeting.id,
         payload: {
-          scheduled_at: scheduleTime,
+          scheduled_at: new Date(scheduleTime).toISOString(),
           meeting_link: meetingLink,
           status: "SCHEDULED",
         },
@@ -81,7 +87,7 @@ export default function SchedulePage() {
   if (!isAuthenticated) {
     return (
       <div className="py-16 text-center max-w-md mx-auto">
-        <h2 className="text-xl font-bold font-display text-white mb-2">
+        <h2 className="text-xl font-bold font-display text-ink mb-2">
           Authentication Required
         </h2>
         <p className="text-sm text-ink-muted mb-6">
@@ -104,7 +110,7 @@ export default function SchedulePage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold font-display text-white tracking-tight">
+          <h1 className="text-3xl font-extrabold font-display text-ink tracking-tight">
             Live Mentorship Sessions
           </h1>
           <p className="text-sm text-ink-muted mt-1">
@@ -125,14 +131,14 @@ export default function SchedulePage() {
 
       {/* Student Request Modal */}
       {showRequestModal && (
-        <Card className="bg-surface border-hairline p-6 space-y-4">
+        <Card className="bg-white border-mist p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="font-display font-bold text-base text-white">
+            <h3 className="font-display font-bold text-base text-ink">
               Request a 1:1 Mentorship Session
             </h3>
             <button
               onClick={() => setShowRequestModal(false)}
-              className="text-ink-muted hover:text-white text-xs"
+              className="text-ink-muted hover:text-ink text-xs"
             >
               ✕
             </button>
@@ -160,7 +166,7 @@ export default function SchedulePage() {
               <Button
                 type="submit"
                 size="sm"
-                variant="mint"
+                variant="primary"
                 isLoading={createMeetingMutation.isPending}
               >
                 Submit Request
@@ -172,14 +178,14 @@ export default function SchedulePage() {
 
       {/* Mentor Confirm / Schedule Modal */}
       {selectedMeeting && (
-        <Card className="bg-surface border-hairline p-6 space-y-4">
+        <Card className="bg-white border-mist p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="font-display font-bold text-base text-white">
+            <h3 className="font-display font-bold text-base text-ink">
               Confirm & Schedule Session: {selectedMeeting.title}
             </h3>
             <button
               onClick={() => setSelectedMeeting(null)}
-              className="text-ink-muted hover:text-white text-xs"
+              className="text-ink-muted hover:text-ink text-xs"
             >
               ✕
             </button>
@@ -218,7 +224,7 @@ export default function SchedulePage() {
               <Button
                 type="submit"
                 size="sm"
-                variant="mint"
+                variant="primary"
                 isLoading={updateMeetingMutation.isPending}
               >
                 Confirm Session
@@ -250,11 +256,11 @@ export default function SchedulePage() {
                 {requestedMeetings.map((m) => (
                   <Card
                     key={m.id}
-                    className="bg-surface border-hairline p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                    className="bg-white border-mist p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-3">
-                        <span className="font-display font-bold text-base text-white">
+                        <span className="font-display font-bold text-base text-ink">
                           {m.title}
                         </span>
                         <Badge variant="MARKED_COMPLETE">Requested</Badge>
@@ -304,16 +310,16 @@ export default function SchedulePage() {
                 {scheduledMeetings.map((m) => (
                   <Card
                     key={m.id}
-                    className="bg-surface border-hairline p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                    className="bg-white border-mist p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                   >
                     <div className="space-y-1.5">
                       <div className="flex items-center gap-3">
-                        <span className="font-display font-bold text-base text-white">
+                        <span className="font-display font-bold text-base text-ink">
                           {m.title}
                         </span>
                         <Badge variant="APPROVED">Scheduled</Badge>
                       </div>
-                      <p className="text-xs text-mint font-medium">
+                      <p className="text-xs text-moss font-medium">
                         🗓️{" "}
                         {m.scheduled_at
                           ? new Date(m.scheduled_at).toLocaleString("en-IN", {
@@ -340,7 +346,7 @@ export default function SchedulePage() {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <Button size="sm" variant="mint">
+                          <Button size="sm" variant="moss">
                             Join Meeting Link ↗
                           </Button>
                         </a>

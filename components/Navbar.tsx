@@ -20,21 +20,21 @@ export const Navbar: React.FC = () => {
     const isActive = pathname === path || pathname.startsWith(`${path}/`);
     return `text-sm font-medium transition-colors whitespace-nowrap ${
       isActive
-        ? "text-mint border-b-2 border-mint pb-4 -mb-[18px]"
-        : "text-ink-muted hover:text-white pb-4 -mb-[18px]"
+        ? "text-brand border-b-2 border-brand pb-4 -mb-[18px]"
+        : "text-ink-muted hover:text-ink pb-4 -mb-[18px]"
     }`;
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-background/95 backdrop-blur-md border-b border-hairline">
+    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-mist">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
         {/* Logo & Brand */}
         <div className="flex items-center gap-6 lg:gap-8 overflow-x-auto no-scrollbar">
-          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-            <span className="w-6 h-6 rounded-[5px] bg-mint text-black flex items-center justify-center font-display font-bold text-xs">
+          <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
+            <span className="w-7 h-7 rounded-[6px] bg-brand text-white flex items-center justify-center font-display font-bold text-sm shadow-none">
               M
             </span>
-            <span className="font-display font-bold text-lg text-white tracking-tight">
+            <span className="font-display font-bold text-lg text-ink tracking-tight">
               Mentskool
             </span>
           </Link>
@@ -112,10 +112,10 @@ export const Navbar: React.FC = () => {
           {isAuthenticated && user ? (
             <div className="flex items-center gap-4">
               <div className="text-right hidden sm:block">
-                <p className="text-xs font-semibold text-white leading-tight">
+                <p className="text-xs font-semibold text-ink leading-tight">
                   {user.full_name}
                 </p>
-                <span className="text-[10px] uppercase font-bold tracking-wider text-mint">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-moss">
                   {user.role}
                 </span>
               </div>
