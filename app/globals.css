@@ -1,0 +1,55 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,600,500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #FAFAF9;
+  --ink: #14181F;
+  --indigo: #2B3A67;
+  --moss: #3C9D6B;
+  --amber: #E8A33D;
+  --mist: #E7E9ED;
+  --font-display: 'Satoshi', 'General Sans', sans-serif;
+  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* Hairline border helper */
+.border-hairline {
+  border: 1px solid var(--mist);
+}
+
+/* Flat surfaces - enforce no drop shadows */
+* {
+  box-shadow: none !important;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--paper);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--mist);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D4D7DE;
+}
