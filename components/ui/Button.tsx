@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes } from "react";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "moss" | "subtle" | "ghost";
+  variant?: "primary" | "secondary" | "mint" | "moss" | "amber" | "subtle" | "ghost";
   size?: "sm" | "md" | "lg";
   isLoading?: boolean;
 }
@@ -16,30 +16,35 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseClasses =
-    "inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-brand/30 disabled:opacity-50 disabled:cursor-not-allowed rounded-control select-none";
+    "inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-1 focus:ring-mint disabled:opacity-50 disabled:cursor-not-allowed rounded-control select-none";
 
   const sizeClasses = {
-    sm: "px-3 py-1.5 text-xs",
-    md: "px-4 py-2 text-sm",
-    lg: "px-6 py-2.5 text-base",
+    sm: "px-3 py-1.5 text-xs font-semibold",
+    md: "px-4 py-2 text-sm font-semibold",
+    lg: "px-6 py-2.5 text-base font-semibold",
   };
 
   const variantClasses = {
-    // Primary: Indigo
+    // Primary CTA: White background, black text
     primary:
-      "bg-brand text-white hover:bg-brand-hover active:bg-[#1A2340] border border-transparent",
-    // Secondary: Flat paper surface with 1px mist border
+      "bg-white text-black hover:bg-neutral-200 active:bg-neutral-300 border border-transparent shadow-none",
+    // Secondary: Dark surface with 1px hairline border
     secondary:
-      "bg-white text-ink border border-mist hover:bg-[#F5F5F3] active:bg-[#ECECE9]",
-    // Moss: Approved / Success action
+      "bg-surface text-white border border-hairline hover:bg-surface-hover active:bg-surface-active shadow-none",
+    // Mint / Moss: Positive/verified mint accent
+    mint:
+      "bg-mint text-black hover:bg-mint-hover active:bg-[#0C8F5A] border border-transparent shadow-none",
     moss:
-      "bg-moss text-white hover:bg-moss-hover active:bg-[#2A724C] border border-transparent",
-    // Subtle: Neutral / muted reject action (not alarming red)
+      "bg-mint text-black hover:bg-mint-hover active:bg-[#0C8F5A] border border-transparent shadow-none",
+    // Amber: Urgency / Pending
+    amber:
+      "bg-amber text-black hover:bg-amber-hover border border-transparent shadow-none",
+    // Subtle: Neutral dark tone
     subtle:
-      "bg-[#F0F2F5] text-ink-muted border border-mist hover:bg-[#E5E7EB] hover:text-ink active:bg-[#DCDFE5]",
-    // Ghost: transparent
+      "bg-[#1A201E] text-ink-muted border border-hairline hover:text-white hover:bg-[#222B28] shadow-none",
+    // Ghost: Transparent with hover surface
     ghost:
-      "bg-transparent text-ink-muted hover:text-ink hover:bg-mist/40 active:bg-mist/60 border border-transparent",
+      "bg-transparent text-ink-muted hover:text-white hover:bg-white/5 border border-transparent shadow-none",
   };
 
   return (
@@ -70,7 +75,7 @@ export const Button: React.FC<ButtonProps> = ({
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             />
           </svg>
-          <span>{children}</span>
+          Loading...
         </span>
       ) : (
         children

@@ -9,30 +9,42 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: "var(--paper)",
-        ink: {
-          DEFAULT: "var(--ink)",
-          muted: "#4A5260",
-          faint: "#8A94A6",
+        background: "#0B0F0D",
+        paper: "#0B0F0D",
+        surface: {
+          DEFAULT: "#15191A",
+          hover: "#1A201E",
+          active: "#202724",
         },
-        brand: {
-          DEFAULT: "var(--indigo)",
-          hover: "#212D52",
-          light: "#EBEFF9",
+        hairline: "#262B29",
+        mist: {
+          DEFAULT: "#262B29",
+          dark: "#333A37",
+        },
+        mint: {
+          DEFAULT: "#10C47C",
+          hover: "#0EA668",
+          light: "rgba(16, 196, 124, 0.1)",
         },
         moss: {
-          DEFAULT: "var(--moss)",
-          hover: "#328559",
-          light: "#EAF5EF",
+          DEFAULT: "#10C47C",
+          hover: "#0EA668",
+          light: "rgba(16, 196, 124, 0.1)",
         },
         amber: {
-          DEFAULT: "var(--amber)",
+          DEFAULT: "#E8A23D",
           hover: "#D6922F",
-          light: "#FDF5E8",
+          light: "rgba(232, 162, 61, 0.1)",
         },
-        mist: {
-          DEFAULT: "var(--mist)",
-          dark: "#D4D7DE",
+        brand: {
+          DEFAULT: "#10C47C",
+          hover: "#0EA668",
+          light: "rgba(16, 196, 124, 0.1)",
+        },
+        ink: {
+          DEFAULT: "#FFFFFF",
+          muted: "#9CA3AF",
+          faint: "#6B7280",
         },
       },
       fontFamily: {
@@ -40,8 +52,8 @@ const config: Config = {
         display: ["var(--font-display)", "Satoshi", "General Sans", "sans-serif"],
       },
       borderRadius: {
-        control: "7px", // 6-8px for inputs and buttons
-        card: "11px",    // 10-12px for content cards
+        control: "7px",
+        card: "11px",
       },
       boxShadow: {
         none: "none",

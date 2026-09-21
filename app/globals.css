@@ -5,19 +5,23 @@
 @tailwind utilities;
 
 :root {
-  --paper: #FAFAF9;
-  --ink: #14181F;
-  --indigo: #2B3A67;
-  --moss: #3C9D6B;
-  --amber: #E8A33D;
-  --mist: #E7E9ED;
+  --background: #0B0F0D;
+  --surface: #15191A;
+  --surface-hover: #1A201E;
+  --hairline: #262B29;
+  --mint: #10C47C;
+  --amber: #E8A23D;
+  --paper: #0B0F0D;
+  --ink: #FFFFFF;
+  --ink-muted: #9CA3AF;
+  --mist: #262B29;
   --font-display: 'Satoshi', 'General Sans', sans-serif;
   --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 body {
-  background-color: var(--paper);
-  color: var(--ink);
+  background-color: #0B0F0D;
+  color: #FFFFFF;
   font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -30,7 +34,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 /* Hairline border helper */
 .border-hairline {
-  border: 1px solid var(--mist);
+  border: 1px solid #262B29;
 }
 
 /* Flat surfaces - enforce no drop shadows */
@@ -44,12 +48,12 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--paper);
+  background: #0B0F0D;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--mist);
+  background: #262B29;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #D4D7DE;
+  background: #333A37;
 }

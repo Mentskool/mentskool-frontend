@@ -43,3 +43,41 @@ export function useSubscribeMentor() {
     },
   });
 }
+
+export function useCreateMentorProfile() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: {
+      bio: string;
+      category: string;
+      intro_youtube_url?: string | null;
+      seat_limit: number;
+      price_per_month: number;
+    }) => apiClient.post<MentorProfile>("/mentors/profile", payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["mentors"] });
+      queryClient.invalidateQueries({ queryKey: ["mentor"] });
+    },
+  });
+}
+
+export function useUpdateMentorProfile() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: {
+      bio?: string;
+      category?: string;
+      intro_youtube_url?: string | null;
+      seat_limit?: number;
+      price_per_month?: number;
+      is_active?: boolean;
+    }) => apiClient.patch<MentorProfile>("/mentors/profile", payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["mentors"] });
+      queryClient.invalidateQueries({ queryKey: ["mentor"] });
+    },
+  });
+}
+

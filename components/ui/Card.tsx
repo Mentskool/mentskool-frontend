@@ -10,11 +10,11 @@ export const Card: React.FC<CardProps> = ({
   className = "",
   ...props
 }) => {
-  const bgClasses = variant === "default" ? "bg-white" : "bg-paper";
+  const bgClasses = variant === "default" ? "bg-surface" : "bg-background";
 
   return (
     <div
-      className={`${bgClasses} rounded-card border border-mist p-6 text-left transition-colors ${className}`}
+      className={`${bgClasses} rounded-card border border-hairline p-6 text-left transition-colors ${className}`}
       {...props}
     >
       {children}

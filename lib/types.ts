@@ -20,12 +20,21 @@ export interface TokenResponse {
   user: User;
 }
 
+export type MentorCategory = "JEE_PREP" | "NEET_PREP" | "GATE_PSU";
+
+export const CATEGORY_LABELS: Record<MentorCategory, string> = {
+  JEE_PREP: "JEE Prep",
+  NEET_PREP: "NEET Prep",
+  GATE_PSU: "GATE / PSU",
+};
+
 export interface MentorProfile {
   user_id: string;
   full_name: string;
   email: string;
   bio: string;
-  category: string;
+  category: MentorCategory;
+  intro_youtube_url?: string | null;
   seat_limit: number;
   available_seats: number;
   price_per_month: number | string;
@@ -100,6 +109,68 @@ export interface StudentEfficiencyResponse {
   effective_denominator: number;
   efficiency_score: number | null;
   message: string | null;
+}
+
+export interface Announcement {
+  id: string;
+  mentor_id: string;
+  mentor_name?: string | null;
+  title: string;
+  body: string;
+  created_at: string;
+}
+
+export interface Resource {
+  id: string;
+  mentor_id: string;
+  mentor_name?: string | null;
+  title: string;
+  url: string;
+  created_at: string;
+}
+
+export type MeetingStatus = "REQUESTED" | "SCHEDULED";
+
+export interface Meeting {
+  id: string;
+  mentor_id: string;
+  mentor_name?: string | null;
+  student_id?: string | null;
+  student_name?: string | null;
+  title: string;
+  meeting_link?: string | null;
+  scheduled_at?: string | null;
+  status: MeetingStatus;
+  requested_by?: string | null;
+  created_at: string;
+}
+
+export interface GroupMessage {
+  id: string;
+  mentor_id: string;
+  sender_id: string;
+  sender_name?: string | null;
+  sender_role?: string | null;
+  content: string;
+  created_at: string;
+}
+
+export interface DirectMessage {
+  id: string;
+  sender_id: string;
+  sender_name?: string | null;
+  recipient_id: string;
+  recipient_name?: string | null;
+  content: string;
+  created_at: string;
+}
+
+export interface ConversationSummary {
+  user_id: string;
+  full_name: string;
+  role: string;
+  last_message?: string | null;
+  last_message_at?: string | null;
 }
 
 export interface ApiError {

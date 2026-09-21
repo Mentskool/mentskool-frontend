@@ -8,60 +8,60 @@ import { Button } from "@/components/ui/Button";
 import { SeatBadge } from "@/components/SeatBadge";
 import { CardSkeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { CATEGORY_LABELS, MentorCategory } from "@/lib/types";
 
-const CATEGORIES = [
-  "All",
-  "Full Stack",
-  "Backend",
-  "Data Science",
-  "DevOps",
-  "Mobile",
+const CATEGORIES: { label: string; value?: MentorCategory }[] = [
+  { label: "All" },
+  { label: "JEE Prep", value: "JEE_PREP" },
+  { label: "NEET Prep", value: "NEET_PREP" },
+  { label: "GATE / PSU", value: "GATE_PSU" },
 ];
 
 export default function MentorsPage() {
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [selectedCategory, setSelectedCategory] = useState<MentorCategory | undefined>(undefined);
   const [page, setPage] = useState<number>(0);
   const limit = 12;
 
-  const categoryFilter =
-    selectedCategory === "All" ? undefined : selectedCategory;
   const { data, isLoading, isError, refetch } = useMentors(
-    categoryFilter,
+    selectedCategory,
     limit,
     page * limit
   );
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 max-w-7xl mx-auto">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold font-display text-ink tracking-tight">
+        <h1 className="text-3xl font-bold font-display text-white tracking-tight">
           Explore Mentors
         </h1>
         <p className="text-sm text-ink-muted mt-1.5 max-w-xl">
-          Subscribe to experienced industry practitioners for structured weekly
-          accountability and verified efficiency metrics.
+          Subscribe to top rankers and exam specialists for structured weekly
+          accountability, task verification, and efficiency metrics.
         </p>
       </div>
 
-      {/* Category Filter Bar */}
+      {/* Category Filter Pills */}
       <div className="flex flex-wrap items-center gap-2 pb-2">
-        {CATEGORIES.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => {
-              setSelectedCategory(cat);
-              setPage(0);
-            }}
-            className={`px-3.5 py-1.5 text-xs font-medium rounded-control border transition-all ${
-              selectedCategory === cat
-                ? "bg-brand text-white border-brand font-semibold"
-                : "bg-white text-ink-muted border-mist hover:text-ink hover:border-[#D4D7DE]"
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
+        {CATEGORIES.map((cat) => {
+          const isSelected = selectedCategory === cat.value;
+          return (
+            <button
+              key={cat.label}
+              onClick={() => {
+                setSelectedCategory(cat.value);
+                setPage(0);
+              }}
+              className={`px-4 py-1.5 text-xs font-medium rounded-control border transition-all ${
+                isSelected
+                  ? "bg-mint text-black border-mint font-semibold"
+                  : "bg-surface text-ink-muted border-hairline hover:text-white hover:border-neutral-600"
+              }`}
+            >
+              {cat.label}
+            </button>
+          );
+        })}
       </div>
 
       {/* Content Area */}
@@ -72,7 +72,7 @@ export default function MentorsPage() {
           ))}
         </div>
       ) : isError ? (
-        <div className="py-12 text-center rounded-card border border-mist bg-white p-8">
+        <div className="py-12 text-center rounded-card border border-hairline bg-surface p-8">
           <p className="text-sm text-ink-muted mb-4">
             Unable to load mentors at this time.
           </p>
@@ -84,12 +84,12 @@ export default function MentorsPage() {
         <EmptyState
           title="No mentors found"
           description={
-            selectedCategory === "All"
-              ? "No mentors are currently available. Check back soon!"
-              : `No mentors found under category '${selectedCategory}'. Try selecting 'All'.`
+            selectedCategory
+              ? `No active mentors currently available in ${CATEGORY_LABELS[selectedCategory]}. Check back soon!`
+              : "No mentors are currently available. Check back soon!"
           }
-          actionLabel={selectedCategory !== "All" ? "Reset Filter" : undefined}
-          onAction={() => setSelectedCategory("All")}
+          actionLabel={selectedCategory ? "Reset Filter" : undefined}
+          onAction={() => setSelectedCategory(undefined)}
         />
       ) : (
         <>
@@ -97,42 +97,52 @@ export default function MentorsPage() {
             {data.items.map((mentor) => (
               <Card
                 key={mentor.user_id}
-                className="flex flex-col justify-between hover:border-[#D4D7DE] transition-all bg-white"
+                className="flex flex-col justify-between hover:border-neutral-600 transition-all bg-surface"
               >
-                <div className="space-y-3">
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <h3 className="text-base font-bold font-display text-ink leading-snug">
-                        {mentor.full_name}
-                      </h3>
-                      <span className="inline-block mt-0.5 text-xs font-medium text-brand">
-                        {mentor.category}
-                      </span>
-                    </div>
+                <div className="space-y-4">
+                  {/* Top Bar: Category & Seat Status */}
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded bg-[#10C47C]/10 text-mint border border-[#10C47C]/20">
+                      {CATEGORY_LABELS[mentor.category] || mentor.category}
+                    </span>
                     <SeatBadge
                       availableSeats={mentor.available_seats}
                       seatLimit={mentor.seat_limit}
                     />
                   </div>
 
-                  <p className="text-xs text-ink-muted line-clamp-3 leading-relaxed">
+                  {/* Mentor Info */}
+                  <div>
+                    <h3 className="font-display font-bold text-lg text-white group-hover:text-mint transition-colors">
+                      {mentor.full_name}
+                    </h3>
+                    <p className="text-xs text-ink-faint mt-0.5">
+                      {mentor.email}
+                    </p>
+                  </div>
+
+                  {/* Bio Preview */}
+                  <p className="text-sm text-ink-muted line-clamp-3 leading-relaxed">
                     {mentor.bio}
                   </p>
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-mist flex items-center justify-between">
+                {/* Footer: Pricing & Action */}
+                <div className="pt-6 mt-6 border-t border-hairline flex items-center justify-between">
                   <div>
-                    <span className="text-xs text-ink-faint">Monthly Cohort</span>
-                    <p className="text-sm font-bold font-display text-ink">
-                      ${Number(mentor.price_per_month).toFixed(0)}
-                      <span className="text-xs font-normal text-ink-faint">
-                        /mo
-                      </span>
-                    </p>
+                    <span className="font-display text-xl font-bold text-white">
+                      ₹{Number(mentor.price_per_month).toLocaleString("en-IN")}
+                    </span>
+                    <span className="text-xs text-ink-faint ml-1">/ month</span>
                   </div>
+
                   <Link href={`/mentors/${mentor.user_id}`}>
-                    <Button size="sm" variant="secondary">
-                      View Profile
+                    <Button
+                      size="sm"
+                      variant="primary"
+                      disabled={mentor.available_seats <= 0}
+                    >
+                      {mentor.available_seats > 0 ? "View Cohort" : "Waitlist"}
                     </Button>
                   </Link>
                 </div>
@@ -140,11 +150,11 @@ export default function MentorsPage() {
             ))}
           </div>
 
-          {/* Pagination */}
+          {/* Pagination Controls */}
           {data.total > limit && (
-            <div className="flex items-center justify-between pt-6 border-t border-mist">
-              <span className="text-xs text-ink-faint">
-                Showing {page * limit + 1} -{" "}
+            <div className="flex items-center justify-between pt-4 border-t border-hairline text-xs text-ink-muted">
+              <span>
+                Showing {page * limit + 1}–
                 {Math.min((page + 1) * limit, data.total)} of {data.total} mentors
               </span>
               <div className="flex items-center gap-2">

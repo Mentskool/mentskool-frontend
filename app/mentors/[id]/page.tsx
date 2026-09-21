@@ -9,7 +9,14 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { SeatBadge } from "@/components/SeatBadge";
 import { Skeleton } from "@/components/ui/Skeleton";
-import { ApiError } from "@/lib/types";
+import { ApiError, CATEGORY_LABELS } from "@/lib/types";
+
+const getYouTubeEmbedUrl = (url?: string | null): string | null => {
+  if (!url) return null;
+  const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  const match = url.match(regExp);
+  return match ? `https://www.youtube-nocookie.com/embed/${match[1]}` : null;
+};
 
 export default function MentorDetailPage() {
   const params = useParams();
@@ -46,7 +53,7 @@ export default function MentorDetailPage() {
       setFeedback({
         type: "success",
         message:
-          "Successfully subscribed to this cohort! You can now receive weekly accountability assignments.",
+          "Successfully subscribed to this cohort! You can now receive weekly accountability assignments and access cohort materials.",
       });
       refetch();
     } catch (err) {
@@ -76,7 +83,7 @@ export default function MentorDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="max-w-3xl space-y-6">
+      <div className="max-w-4xl mx-auto space-y-6">
         <Skeleton className="h-4 w-28" />
         <Skeleton className="h-10 w-2/3" />
         <Card className="space-y-4">
@@ -90,135 +97,125 @@ export default function MentorDetailPage() {
 
   if (isError || !mentor) {
     return (
-      <div className="py-16 text-center">
-        <h2 className="text-xl font-bold font-display text-ink mb-2">
+      <div className="py-16 text-center max-w-lg mx-auto">
+        <h2 className="text-xl font-bold font-display text-white mb-2">
           Mentor profile not found
         </h2>
         <p className="text-sm text-ink-muted mb-6">
           The mentor you are looking for does not exist or is inactive.
         </p>
         <Link href="/mentors">
-          <Button variant="secondary" size="sm">
-            Back to Directory
-          </Button>
+          <Button variant="secondary">Back to Mentors</Button>
         </Link>
       </div>
     );
   }
 
-  const isCohortFull = mentor.available_seats <= 0;
+  const embedUrl = getYouTubeEmbedUrl(mentor.intro_youtube_url);
 
   return (
-    <div className="max-w-3xl space-y-8">
-      {/* Breadcrumb link */}
+    <div className="max-w-4xl mx-auto space-y-8">
+      {/* Breadcrumb Navigation */}
       <div>
         <Link
           href="/mentors"
-          className="text-xs font-semibold text-brand hover:underline inline-flex items-center gap-1"
+          className="text-xs font-medium text-ink-muted hover:text-white transition-colors"
         >
-          ← Back to Mentors
+          ← All Mentors
         </Link>
       </div>
 
-      {/* Header Info */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-mist">
+      {/* Main Profile Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-hairline">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-extrabold font-display text-ink tracking-tight">
+            <h1 className="text-3xl font-bold font-display text-white tracking-tight">
               {mentor.full_name}
             </h1>
-            <SeatBadge
-              availableSeats={mentor.available_seats}
-              seatLimit={mentor.seat_limit}
-            />
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded bg-[#10C47C]/10 text-mint border border-[#10C47C]/20">
+              {CATEGORY_LABELS[mentor.category] || mentor.category}
+            </span>
           </div>
-          <p className="text-sm font-medium text-brand mt-1">
-            {mentor.category} Domain Specialist
-          </p>
+          <p className="text-sm text-ink-muted mt-1">{mentor.email}</p>
         </div>
 
-        <div className="text-left sm:text-right">
-          <span className="text-xs text-ink-faint">Monthly Mentorship Fee</span>
-          <p className="text-2xl font-bold font-display text-ink">
-            ${Number(mentor.price_per_month).toFixed(0)}
-            <span className="text-xs font-normal text-ink-faint">/mo</span>
-          </p>
-        </div>
+        <SeatBadge
+          availableSeats={mentor.available_seats}
+          seatLimit={mentor.seat_limit}
+          className="self-start sm:self-auto text-sm py-1 px-3"
+        />
       </div>
 
-      {/* Feedback banner */}
+      {/* Feedback Alerts */}
       {feedback && (
         <div
-          className={`p-4 rounded-card border text-xs font-medium leading-relaxed ${
+          className={`p-4 rounded-card text-sm border flex items-center justify-between ${
             feedback.type === "success"
-              ? "bg-moss-light text-moss border-[#A1D6B8]"
-              : "bg-amber-light text-[#9A6210] border-[#EAC286]"
+              ? "bg-[#10C47C]/10 text-mint border-[#10C47C]/30"
+              : "bg-[#E8A23D]/10 text-amber border-[#E8A23D]/30"
           }`}
         >
-          <div className="flex items-center justify-between gap-4">
-            <span>{feedback.message}</span>
-            {feedback.type === "success" && (
-              <Link href="/dashboard/tasks">
-                <Button size="sm" variant="moss">
-                  View Tasks
-                </Button>
-              </Link>
-            )}
-          </div>
+          <span>{feedback.message}</span>
+          {feedback.type === "success" && (
+            <Link href="/dashboard/tasks">
+              <Button size="sm" variant="mint">
+                Go to Tasks
+              </Button>
+            </Link>
+          )}
         </div>
       )}
 
-      {/* Main Profile Card */}
-      <Card className="bg-white space-y-6">
+      {/* Profile Overview Card */}
+      <Card className="space-y-6 bg-surface">
         <div>
-          <h2 className="text-sm font-bold uppercase tracking-wider text-ink-faint mb-2">
-            Mentorship Philosophy & Bio
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-ink-faint mb-2">
+            Cohort Biography & Strategy
           </h2>
-          <p className="text-sm text-ink-muted leading-relaxed whitespace-pre-wrap">
+          <p className="text-base text-neutral-200 whitespace-pre-line leading-relaxed">
             {mentor.bio}
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-6 border-t border-mist">
-          <div>
-            <span className="text-xs text-ink-faint">Cohort Capacity</span>
-            <p className="text-sm font-bold font-display text-ink mt-0.5">
-              {mentor.seat_limit} students
-            </p>
+        {/* Video Introduction Embed (Rendered BEFORE Subscribe) */}
+        {embedUrl && (
+          <div className="space-y-3 pt-4 border-t border-hairline">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-ink-faint">
+              Mentor Introduction Video
+            </h3>
+            <div className="relative w-full aspect-video rounded-card overflow-hidden border border-hairline bg-black">
+              <iframe
+                src={embedUrl}
+                title={`${mentor.full_name} Intro Video`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full border-0"
+              />
+            </div>
           </div>
-          <div>
-            <span className="text-xs text-ink-faint">Open Spots</span>
-            <p className="text-sm font-bold font-display text-ink mt-0.5">
-              {mentor.available_seats} remaining
-            </p>
-          </div>
-          <div>
-            <span className="text-xs text-ink-faint">Status</span>
-            <p className="text-sm font-bold font-display text-moss mt-0.5">
-              Active Cohort
-            </p>
-          </div>
-        </div>
+        )}
 
-        {/* Subscription Action */}
-        <div className="pt-6 border-t border-mist flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* Subscription & Pricing Action */}
+        <div className="pt-6 border-t border-hairline flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <p className="text-xs text-ink-muted">
-              {isCohortFull
-                ? "This cohort has reached maximum capacity."
-                : "Reserve your seat to receive personalized weekly tasks and direct feedback."}
+            <span className="font-display text-3xl font-bold text-white">
+              ₹{Number(mentor.price_per_month).toLocaleString("en-IN")}
+            </span>
+            <span className="text-sm text-ink-faint ml-1">/ month</span>
+            <p className="text-xs text-ink-faint mt-0.5">
+              Includes weekly task assignments, reviews, chat, and scheduled 1:1 sessions.
             </p>
           </div>
 
           <Button
-            variant={isCohortFull ? "secondary" : "primary"}
-            size="md"
-            disabled={isCohortFull || subscribeMutation.isPending}
+            size="lg"
+            variant="primary"
+            disabled={mentor.available_seats <= 0 || subscribeMutation.isPending}
             isLoading={subscribeMutation.isPending}
             onClick={handleSubscribe}
             className="w-full sm:w-auto"
           >
-            {isCohortFull ? "Cohort Full" : "Subscribe to Cohort"}
+            {mentor.available_seats > 0 ? "Subscribe to Cohort" : "Cohort Full"}
           </Button>
         </div>
       </Card>

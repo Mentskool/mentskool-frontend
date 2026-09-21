@@ -7,6 +7,7 @@ export type BadgeVariant =
   | "LATE"
   | "DEFAULT"
   | "MOSS"
+  | "MINT"
   | "AMBER"
   | "INDIGO";
 
@@ -22,18 +23,19 @@ export const Badge: React.FC<BadgeProps> = ({
   className = "",
 }) => {
   const variantStyles: Record<BadgeVariant, string> = {
-    ASSIGNED: "bg-[#F3F4F6] text-ink-muted border border-mist",
-    MARKED_COMPLETE: "bg-amber-light text-[#A86812] border border-[#EAC286]",
-    APPROVED: "bg-moss-light text-moss border border-[#A1D6B8]",
-    REJECTED: "bg-[#F0F1F4] text-[#6B7280] border border-mist",
-    ACTIVE: "bg-moss-light text-moss border border-[#A1D6B8]",
-    EXPIRED: "bg-[#F0F1F4] text-[#6B7280] border border-mist",
-    CANCELLED: "bg-[#FDF2E9] text-[#B95000] border border-[#F4BE95]",
-    LATE: "bg-[#FDF2E9] text-[#B95000] border border-[#F4BE95]",
-    DEFAULT: "bg-[#F3F4F6] text-ink border border-mist",
-    MOSS: "bg-moss-light text-moss border border-[#A1D6B8]",
-    AMBER: "bg-amber-light text-[#A86812] border border-[#EAC286]",
-    INDIGO: "bg-brand-light text-brand border border-[#C5D0EB]",
+    ASSIGNED: "bg-surface-hover text-ink-muted border border-hairline",
+    MARKED_COMPLETE: "bg-[#E8A23D]/10 text-amber border border-[#E8A23D]/30",
+    APPROVED: "bg-[#10C47C]/10 text-mint border border-[#10C47C]/30",
+    REJECTED: "bg-surface text-ink-faint border border-hairline",
+    ACTIVE: "bg-[#10C47C]/10 text-mint border border-[#10C47C]/30",
+    EXPIRED: "bg-surface text-ink-faint border border-hairline",
+    CANCELLED: "bg-[#E8A23D]/10 text-amber border border-[#E8A23D]/30",
+    LATE: "bg-[#E8A23D]/10 text-amber border border-[#E8A23D]/30",
+    DEFAULT: "bg-surface-hover text-white border border-hairline",
+    MOSS: "bg-[#10C47C]/10 text-mint border border-[#10C47C]/30",
+    MINT: "bg-[#10C47C]/10 text-mint border border-[#10C47C]/30",
+    AMBER: "bg-[#E8A23D]/10 text-amber border border-[#E8A23D]/30",
+    INDIGO: "bg-[#10C47C]/10 text-mint border border-[#10C47C]/30",
   };
 
   return (

@@ -132,6 +132,26 @@ export async function apiClient<T>(
   return (await response.json()) as T;
 }
 
+apiClient.get = <T>(endpoint: string, options: RequestInit = {}) =>
+  apiClient<T>(endpoint, { ...options, method: "GET" });
+
+apiClient.post = <T>(endpoint: string, body?: any, options: RequestInit = {}) =>
+  apiClient<T>(endpoint, {
+    ...options,
+    method: "POST",
+    body: body ? JSON.stringify(body) : undefined,
+  });
+
+apiClient.patch = <T>(endpoint: string, body?: any, options: RequestInit = {}) =>
+  apiClient<T>(endpoint, {
+    ...options,
+    method: "PATCH",
+    body: body ? JSON.stringify(body) : undefined,
+  });
+
+apiClient.delete = <T>(endpoint: string, options: RequestInit = {}) =>
+  apiClient<T>(endpoint, { ...options, method: "DELETE" });
+
 async function parseErrorResponse(response: Response): Promise<ApiError> {
   const status = response.status;
   const retryAfterHeader = response.headers.get("Retry-After");
