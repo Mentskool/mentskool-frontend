@@ -75,9 +75,12 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-3">
-            <h3 className="text-base font-bold font-display text-ink">
+            <Link
+              href={`/mentor/students/${subscription.student_id}`}
+              className="text-base font-bold font-display text-ink hover:text-brand hover:underline transition-colors"
+            >
               {subscription.student_name}
-            </h3>
+            </Link>
             <Badge variant={subscription.status}>{subscription.status}</Badge>
           </div>
           <p className="text-xs text-ink-muted">{subscription.student_email}</p>
@@ -128,13 +131,19 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
         </div>
 
         {/* Action Toggle */}
-        <div className="flex items-center gap-2 self-end md:self-center">
+        <div className="flex flex-wrap items-center gap-2 self-end md:self-center">
+          <Link href={`/mentor/students/${subscription.student_id}`}>
+            <Button size="sm" variant="secondary" className="font-semibold text-xs">
+              View Profile & Progress →
+            </Button>
+          </Link>
           <Button
             size="sm"
-            variant="secondary"
+            variant="ghost"
             onClick={() => setIsExpanded(!isExpanded)}
+            className="text-xs text-ink-muted"
           >
-            {isExpanded ? "Hide Details" : "Task History"}
+            {isExpanded ? "Hide" : "Quick History"}
           </Button>
           <Button
             size="sm"
