@@ -20,6 +20,7 @@ import {
   Flame,
   Award,
 } from "lucide-react";
+import { HeroParticles } from "@/components/HeroParticles";
 
 export default function HomePage() {
   const router = useRouter();
@@ -37,29 +38,23 @@ export default function HomePage() {
 
   return (
     <div className="relative overflow-hidden pb-16">
-      {/* Ambient Animated Radiant Glows & Delicate Architectural Grid */}
+      {/* Animated Hero Particles, Sprinkles & Visible Grid Canvas */}
+      <HeroParticles />
+
+      {/* Ambient Animated Radiant Glows & Delicate Architectural Geometry */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10 select-none">
         {/* Soft floating radiant blur orbs with enriched jewel tones */}
-        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[580px] bg-gradient-to-tr from-indigo-500/20 via-purple-500/15 to-transparent rounded-full blur-3xl animate-float-slow" />
-        <div className="absolute top-44 -left-32 w-[650px] h-[650px] bg-gradient-to-br from-emerald-400/25 via-teal-500/10 to-transparent rounded-full blur-3xl animate-float-reverse" />
-        <div className="absolute top-60 -right-32 w-[650px] h-[650px] bg-gradient-to-bl from-amber-400/25 via-pink-500/15 to-transparent rounded-full blur-3xl animate-pulse-subtle" />
-
-        {/* Delicate architectural dot matrix */}
-        <div
-          className="absolute inset-0 opacity-[0.45]"
-          style={{
-            backgroundImage: `radial-gradient(#CBD5E1 1.2px, transparent 1.2px)`,
-            backgroundSize: "28px 28px",
-          }}
-        />
+        <div className="absolute -top-28 left-1/2 -translate-x-1/2 w-[900px] h-[520px] bg-gradient-to-tr from-indigo-500/25 via-purple-500/20 to-transparent rounded-full blur-3xl animate-float-slow" />
+        <div className="absolute top-36 -left-28 w-[600px] h-[600px] bg-gradient-to-br from-emerald-400/30 via-teal-500/15 to-transparent rounded-full blur-3xl animate-float-reverse" />
+        <div className="absolute top-48 -right-28 w-[600px] h-[600px] bg-gradient-to-bl from-amber-400/30 via-pink-500/20 to-transparent rounded-full blur-3xl animate-pulse-subtle" />
 
         {/* Concentric subtle geometric orbital rings */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[920px] h-[920px] border border-indigo-200/40 rounded-full opacity-35 pointer-events-none" />
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1250px] h-[1250px] border border-emerald-200/30 rounded-full opacity-25 pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[920px] h-[920px] border border-indigo-200/40 rounded-full opacity-40 pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1250px] h-[1250px] border border-emerald-200/30 rounded-full opacity-30 pointer-events-none" />
 
-        {/* Elegant Non-Distractive Flowing Ambient Waves in Hero First-Half */}
+        {/* Flowing Ambient Waves in Hero First-Half */}
         <svg
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1400px] h-[580px] opacity-[0.25] pointer-events-none"
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1400px] h-[580px] opacity-[0.35] pointer-events-none"
           viewBox="0 0 1400 580"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -82,35 +77,32 @@ export default function HomePage() {
           />
           <defs>
             <linearGradient id="gradient-wave-1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#4F46E5" stopOpacity="0.2" />
-              <stop offset="50%" stopColor="#7C3AED" stopOpacity="0.6" />
-              <stop offset="100%" stopColor="#059669" stopOpacity="0.3" />
+              <stop offset="0%" stopColor="#4F46E5" stopOpacity="0.3" />
+              <stop offset="50%" stopColor="#7C3AED" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="#059669" stopOpacity="0.4" />
             </linearGradient>
             <linearGradient id="gradient-wave-2" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#059669" stopOpacity="0.2" />
-              <stop offset="50%" stopColor="#4F46E5" stopOpacity="0.7" />
-              <stop offset="100%" stopColor="#F59E0B" stopOpacity="0.2" />
+              <stop offset="0%" stopColor="#059669" stopOpacity="0.3" />
+              <stop offset="50%" stopColor="#4F46E5" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#F59E0B" stopOpacity="0.3" />
             </linearGradient>
           </defs>
         </svg>
 
-        {/* Floating Peripheral Frosted Emblems in Left & Right Margins (Non-distracting) */}
-        <div className="absolute top-24 left-[5%] w-16 h-16 rounded-2xl border border-indigo-200/50 bg-white/40 backdrop-blur-[2px] opacity-40 rotate-12 flex items-center justify-center animate-float-slow pointer-events-none hidden lg:flex shadow-soft">
-          <span className="text-xl opacity-75">⚛️</span>
+        {/* Floating Peripheral Frosted Emblems in Left & Right Margins */}
+        <div className="absolute top-24 left-[5%] w-16 h-16 rounded-2xl border border-indigo-200/70 bg-white/60 backdrop-blur-sm opacity-60 rotate-12 flex items-center justify-center animate-float-slow pointer-events-none hidden lg:flex shadow-soft">
+          <span className="text-xl">⚛️</span>
         </div>
-        <div className="absolute top-64 left-[10%] w-12 h-12 rounded-full border border-emerald-200/60 bg-white/30 backdrop-blur-[2px] opacity-35 -rotate-6 flex items-center justify-center animate-float-reverse pointer-events-none hidden xl:flex shadow-soft">
-          <span className="text-sm opacity-75">🎯</span>
-        </div>
-
-        <div className="absolute top-20 right-[6%] w-16 h-16 rounded-2xl border border-amber-200/50 bg-white/40 backdrop-blur-[2px] opacity-40 -rotate-12 flex items-center justify-center animate-float-reverse pointer-events-none hidden lg:flex shadow-soft">
-          <span className="text-xl opacity-75">🏆</span>
-        </div>
-        <div className="absolute top-60 right-[11%] w-12 h-12 rounded-full border border-purple-200/60 bg-white/30 backdrop-blur-[2px] opacity-35 rotate-6 flex items-center justify-center animate-float-slow pointer-events-none hidden xl:flex shadow-soft">
-          <span className="text-sm opacity-75">⚡</span>
+        <div className="absolute top-64 left-[10%] w-12 h-12 rounded-full border border-emerald-200/80 bg-white/50 backdrop-blur-sm opacity-55 -rotate-6 flex items-center justify-center animate-float-reverse pointer-events-none hidden xl:flex shadow-soft">
+          <span className="text-sm">🎯</span>
         </div>
 
-        {/* Subtle gradient fade to bottom */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-paper" />
+        <div className="absolute top-20 right-[6%] w-16 h-16 rounded-2xl border border-amber-200/70 bg-white/60 backdrop-blur-sm opacity-60 -rotate-12 flex items-center justify-center animate-float-reverse pointer-events-none hidden lg:flex shadow-soft">
+          <span className="text-xl">🏆</span>
+        </div>
+        <div className="absolute top-60 right-[11%] w-12 h-12 rounded-full border border-purple-200/80 bg-white/50 backdrop-blur-sm opacity-55 rotate-6 flex items-center justify-center animate-float-slow pointer-events-none hidden xl:flex shadow-soft">
+          <span className="text-sm">⚡</span>
+        </div>
       </div>
 
       <div className="py-14 md:py-20 flex flex-col items-center justify-center text-center max-w-5xl mx-auto px-4">
