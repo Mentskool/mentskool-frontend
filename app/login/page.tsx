@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -10,6 +11,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Card } from "@/components/ui/Card";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { ApiError } from "@/lib/types";
 
 const loginSchema = z.object({
@@ -19,22 +21,32 @@ const loginSchema = z.object({
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const queryEmail = searchParams.get("email") || "";
+  const queryPassword = searchParams.get("password") || "";
+
   const { login, isLoggingIn } = useAuth();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: queryEmail,
+      password: queryPassword,
     },
   });
+
+  useEffect(() => {
+    if (queryEmail) setValue("email", queryEmail);
+    if (queryPassword) setValue("password", queryPassword);
+  }, [queryEmail, queryPassword, setValue]);
 
   const onSubmit = async (values: LoginFormValues) => {
     setErrorMessage(null);
@@ -122,5 +134,22 @@ export default function LoginPage() {
         </Card>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="py-12 flex justify-center items-center">
+          <div className="w-full max-w-md space-y-4">
+            <Skeleton className="h-10 w-48 mx-auto" />
+            <Skeleton className="h-64 w-full rounded-card" />
+          </div>
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }
