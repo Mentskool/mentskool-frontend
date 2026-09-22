@@ -41,9 +41,9 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   border: 1px solid #E7E9ED;
 }
 
-/* Flat surfaces - enforce no drop shadows */
-* {
-  box-shadow: none !important;
+/* Card and control transitions */
+.transition-smooth {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Custom scrollbars */

@@ -61,7 +61,10 @@ const config: Config = {
         card: "11px",
       },
       boxShadow: {
-        none: "none",
+        soft: "0 2px 8px -2px rgba(20, 24, 31, 0.04), 0 1px 3px -1px rgba(20, 24, 31, 0.02)",
+        card: "0 4px 20px -4px rgba(20, 24, 31, 0.07), 0 2px 6px -2px rgba(20, 24, 31, 0.03)",
+        elevated: "0 14px 40px -10px rgba(20, 24, 31, 0.12), 0 4px 12px -3px rgba(20, 24, 31, 0.04)",
+        glow: "0 0 32px -4px rgba(43, 58, 103, 0.18)",
       },
     },
   },
