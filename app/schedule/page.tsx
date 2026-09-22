@@ -9,6 +9,7 @@ import {
   useUpdateMeeting,
 } from "@/hooks/useMeetings";
 import { useSubscriptions } from "@/hooks/useSubscriptions";
+import { useMentorRoster } from "@/hooks/useTasks";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -29,12 +30,23 @@ export default function SchedulePage() {
   const { data: subsData } = useSubscriptions();
   const activeSub = subsData?.items?.find((s) => s.status === "ACTIVE");
 
+  // For mentors to know their student roster for 1:1 vs Cohort selection
+  const { data: rosterData } = useMentorRoster(isMentor ? user?.id : undefined);
+
   // Student Request Modal State
   const [showRequestModal, setShowRequestModal] = useState(false);
   const [requestTitle, setRequestTitle] = useState("");
   const [requestError, setRequestError] = useState("");
 
-  // Mentor Confirm / Schedule Modal State
+  // Mentor New Session Modal State
+  const [showMentorScheduleModal, setShowMentorScheduleModal] = useState(false);
+  const [mentorScheduleTitle, setMentorScheduleTitle] = useState("");
+  const [mentorScheduleStudentId, setMentorScheduleStudentId] = useState("");
+  const [mentorScheduleTime, setMentorScheduleTime] = useState("");
+  const [mentorScheduleLink, setMentorScheduleLink] = useState("");
+  const [mentorScheduleError, setMentorScheduleError] = useState("");
+
+  // Mentor Confirm / Schedule Modal State (for responding to student requests)
   const [selectedMeeting, setSelectedMeeting] = useState<Meeting | null>(null);
   const [scheduleTime, setScheduleTime] = useState("");
   const [meetingLink, setMeetingLink] = useState("");
@@ -58,6 +70,30 @@ export default function SchedulePage() {
       refetch();
     } catch (err: any) {
       setRequestError(err.detail || "Failed to submit meeting request.");
+    }
+  };
+
+  const handleMentorSchedule = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setMentorScheduleError("");
+    if (!user?.id) return;
+
+    try {
+      await createMeetingMutation.mutateAsync({
+        mentor_id: user.id,
+        student_id: mentorScheduleStudentId.trim() || null,
+        title: mentorScheduleTitle.trim(),
+        scheduled_at: new Date(mentorScheduleTime).toISOString(),
+        meeting_link: mentorScheduleLink.trim(),
+      });
+      setShowMentorScheduleModal(false);
+      setMentorScheduleTitle("");
+      setMentorScheduleStudentId("");
+      setMentorScheduleTime("");
+      setMentorScheduleLink("");
+      refetch();
+    } catch (err: any) {
+      setMentorScheduleError(err.detail || "Failed to schedule session.");
     }
   };
 
@@ -118,7 +154,18 @@ export default function SchedulePage() {
           </p>
         </div>
 
-        {!isMentor && (
+        {isMentor ? (
+          <Button
+            size="sm"
+            variant="primary"
+            onClick={() => {
+              setMentorScheduleError("");
+              setShowMentorScheduleModal(true);
+            }}
+          >
+            + Schedule Session
+          </Button>
+        ) : (
           <Button
             size="sm"
             variant="primary"
@@ -129,10 +176,107 @@ export default function SchedulePage() {
         )}
       </div>
 
+      {/* Mentor Direct Schedule Modal */}
+      {showMentorScheduleModal && (
+        <Card className="bg-white border-2 border-brand/20 p-6 space-y-4">
+          <div className="flex items-center justify-between border-b border-mist pb-3">
+            <div>
+              <h3 className="font-display font-bold text-base text-ink">
+                Schedule a Mentorship Session
+              </h3>
+              <p className="text-xs text-ink-muted mt-0.5">
+                Host a cohort-wide masterclass or a targeted 1:1 doubt clearing session.
+              </p>
+            </div>
+            <button
+              onClick={() => setShowMentorScheduleModal(false)}
+              className="text-ink-muted hover:text-ink text-xs"
+            >
+              ✕ Close
+            </button>
+          </div>
+
+          {mentorScheduleError && (
+            <p className="text-xs text-amber font-medium p-2.5 bg-amber/10 rounded-control border border-amber/30">
+              {mentorScheduleError}
+            </p>
+          )}
+
+          <form onSubmit={handleMentorSchedule} className="space-y-4">
+            <Input
+              label="Session Title / Agenda"
+              value={mentorScheduleTitle}
+              onChange={(e) => setMentorScheduleTitle(e.target.value)}
+              placeholder="e.g. Weekly Doubt Clearing & JEE Physics Mechanics Strategy"
+              required
+            />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-1.5 text-left">
+                <label className="text-xs font-semibold text-ink-muted select-none">
+                  Audience / Attendee
+                </label>
+                <select
+                  value={mentorScheduleStudentId}
+                  onChange={(e) => setMentorScheduleStudentId(e.target.value)}
+                  className="w-full px-3 py-2 bg-white text-ink text-sm rounded-control border border-mist focus:outline-none focus:border-brand"
+                >
+                  <option value="">Cohort-Wide (All Subscribed Students)</option>
+                  {rosterData?.items?.map((s) => (
+                    <option key={s.student_id} value={s.student_id}>
+                      {s.student_name} ({s.student_email})
+                    </option>
+                  ))}
+                </select>
+                <p className="text-[11px] text-ink-faint">
+                  Leave as Cohort-Wide for group webinars, or select a student for 1:1.
+                </p>
+              </div>
+
+              <Input
+                label="Scheduled Date & Time"
+                type="datetime-local"
+                value={mentorScheduleTime}
+                onChange={(e) => setMentorScheduleTime(e.target.value)}
+                required
+              />
+            </div>
+
+            <Input
+              label="Meeting URL (Google Meet or Zoom)"
+              type="url"
+              value={mentorScheduleLink}
+              onChange={(e) => setMentorScheduleLink(e.target.value)}
+              placeholder="https://meet.google.com/abc-defg-hij"
+              required
+            />
+
+            <div className="flex items-center justify-end gap-2 pt-2">
+              <Button
+                type="button"
+                size="sm"
+                variant="ghost"
+                onClick={() => setShowMentorScheduleModal(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                size="sm"
+                variant="primary"
+                isLoading={createMeetingMutation.isPending}
+              >
+                Schedule Session
+              </Button>
+            </div>
+          </form>
+        </Card>
+      )}
+
       {/* Student Request Modal */}
       {showRequestModal && (
         <Card className="bg-white border-mist p-6 space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between border-b border-mist pb-3">
             <h3 className="font-display font-bold text-base text-ink">
               Request a 1:1 Mentorship Session
             </h3>
@@ -301,9 +445,11 @@ export default function SchedulePage() {
                 title="No upcoming sessions"
                 description={
                   isMentor
-                    ? "You have no confirmed sessions on your schedule. Accept pending student requests above."
+                    ? "You have no confirmed sessions on your schedule. Click '+ Schedule Session' above to schedule a live call."
                     : "No sessions scheduled. Click '+ Request 1:1 Meeting' to book time with your mentor."
                 }
+                actionLabel={isMentor ? "+ Schedule Session" : undefined}
+                onAction={isMentor ? () => setShowMentorScheduleModal(true) : undefined}
               />
             ) : (
               <div className="grid grid-cols-1 gap-4">
@@ -334,7 +480,7 @@ export default function SchedulePage() {
                       </p>
                       <p className="text-xs text-ink-faint">
                         {isMentor
-                          ? `Attendee: ${m.student_name || "Cohort Wide"}`
+                          ? `Attendee: ${m.student_name || "Cohort Wide (All Students)"}`
                           : `Host: ${m.mentor_name || "Mentor"}`}
                       </p>
                     </div>
