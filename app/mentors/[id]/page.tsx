@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useMentor, useSubscribeMentor } from "@/hooks/useMentors";
+import { useSubscriptions } from "@/hooks/useSubscriptions";
 import { useAuthStore } from "@/store/authStore";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -26,7 +27,16 @@ export default function MentorDetailPage() {
 
   const { data: mentor, isLoading, isError, refetch } = useMentor(mentorId);
   const { user, isAuthenticated } = useAuthStore();
+  const { data: subsData, refetch: refetchSubs } = useSubscriptions();
   const subscribeMutation = useSubscribeMentor();
+
+  const activeSub = subsData?.items?.find((s) => s.status === "ACTIVE");
+  const isEnrolledHere = Boolean(
+    isAuthenticated && mentor && activeSub && activeSub.mentor_id === mentor.user_id
+  );
+  const isEnrolledElsewhere = Boolean(
+    isAuthenticated && mentor && activeSub && activeSub.mentor_id !== mentor.user_id
+  );
 
   const [activeTab, setActiveTab] = useState<SubTab>("about");
   const [feedback, setFeedback] = useState<{
@@ -58,10 +68,21 @@ export default function MentorDetailPage() {
           "Successfully subscribed to this cohort! You can now receive weekly accountability assignments and access cohort materials.",
       });
       refetch();
+      refetchSubs();
     } catch (err) {
       const apiErr = err as ApiError;
       if (apiErr.status === 409) {
-        if (apiErr.code === "SEAT_FULL" || apiErr.detail.toLowerCase().includes("full")) {
+        if (
+          apiErr.code === "ALREADY_IN_COHORT" ||
+          apiErr.detail?.toLowerCase().includes("multiple cohorts") ||
+          apiErr.detail?.toLowerCase().includes("already enrolled")
+        ) {
+          setFeedback({
+            type: "error",
+            message:
+              "You are already enrolled in an active cohort. Students cannot join multiple cohorts simultaneously.",
+          });
+        } else if (apiErr.code === "SEAT_FULL" || apiErr.detail?.toLowerCase().includes("full")) {
           setFeedback({
             type: "error",
             message:
@@ -458,47 +479,116 @@ export default function MentorDetailPage() {
               </div>
             </div>
 
-            {/* High Momentum Callout Box */}
-            <div className="p-3.5 rounded-control bg-[#FAFAF9] border border-mist flex items-start gap-3">
-              <div className="w-7 h-7 rounded-[5px] bg-amber/15 text-amber flex items-center justify-center font-bold text-sm flex-shrink-0">
-                ↗
+            {/* Enrollment Status Indicator */}
+            {isEnrolledHere ? (
+              <div className="p-3.5 rounded-control bg-moss/10 border border-moss/30 flex items-start gap-3">
+                <div className="w-7 h-7 rounded-[5px] bg-moss/20 text-moss flex items-center justify-center font-bold text-sm flex-shrink-0">
+                  ✓
+                </div>
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-moss block">
+                    You Are Subscribed
+                  </span>
+                  <p className="text-xs text-ink-muted mt-0.5 leading-snug">
+                    You are an active student member in this mentor's cohort.
+                  </p>
+                </div>
               </div>
-              <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-amber block">
-                  High Momentum
-                </span>
-                <p className="text-xs text-ink-muted mt-0.5 leading-snug">
-                  Elevated interest detected in your cohort region.
-                </p>
+            ) : isEnrolledElsewhere ? (
+              <div className="p-3.5 rounded-control bg-amber/10 border border-amber/30 flex items-start gap-3">
+                <div className="w-7 h-7 rounded-[5px] bg-amber/20 text-amber flex items-center justify-center font-bold text-sm flex-shrink-0">
+                  ℹ
+                </div>
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-amber block">
+                    Active in Another Cohort
+                  </span>
+                  <p className="text-xs text-ink-muted mt-0.5 leading-snug">
+                    Students can only be in 1 active cohort at a time.
+                  </p>
+                </div>
               </div>
-            </div>
+            ) : (
+              /* High Momentum Callout Box */
+              <div className="p-3.5 rounded-control bg-[#FAFAF9] border border-mist flex items-start gap-3">
+                <div className="w-7 h-7 rounded-[5px] bg-amber/15 text-amber flex items-center justify-center font-bold text-sm flex-shrink-0">
+                  ↗
+                </div>
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-amber block">
+                    High Momentum
+                  </span>
+                  <p className="text-xs text-ink-muted mt-0.5 leading-snug">
+                    Elevated interest detected in your cohort region.
+                  </p>
+                </div>
+              </div>
+            )}
 
-            {/* Primary Action Button: Subscribe */}
+            {/* Primary Action Button */}
             <div className="space-y-3">
-              <Button
-                size="lg"
-                variant="primary"
-                disabled={mentor.available_seats <= 0 || subscribeMutation.isPending}
-                isLoading={subscribeMutation.isPending}
-                onClick={handleSubscribe}
-                className="w-full text-center py-3.5 text-sm font-bold uppercase tracking-wider"
-              >
-                {mentor.available_seats > 0
-                  ? Number(mentor.price_per_month) > 0
-                    ? `Subscribe - ₹${Number(mentor.price_per_month).toLocaleString("en-IN")}/mo`
-                    : "Subscribe - Free"
-                  : "Cohort Full"}
-              </Button>
+              {user?.id === mentor.user_id ? (
+                <Link href="/mentor/profile" className="block w-full">
+                  <Button
+                    size="lg"
+                    variant="secondary"
+                    className="w-full text-center py-3.5 text-xs font-bold uppercase tracking-wider"
+                  >
+                    Edit Your Profile
+                  </Button>
+                </Link>
+              ) : isEnrolledHere ? (
+                <Link href="/cohort" className="block w-full">
+                  <Button
+                    size="lg"
+                    variant="primary"
+                    className="w-full text-center py-3.5 text-sm font-bold uppercase tracking-wider bg-moss hover:bg-moss/90 text-white shadow-none"
+                  >
+                    ✓ Subscribed — View Cohort
+                  </Button>
+                </Link>
+              ) : isEnrolledElsewhere ? (
+                <div className="space-y-1.5">
+                  <Button
+                    size="lg"
+                    variant="secondary"
+                    disabled
+                    className="w-full text-center py-3.5 text-xs font-bold uppercase tracking-wider opacity-60 cursor-not-allowed"
+                  >
+                    Enrolled in Another Cohort
+                  </Button>
+                  <p className="text-[11px] text-amber text-center font-medium">
+                    You can only be in 1 cohort at a time.
+                  </p>
+                </div>
+              ) : (
+                <Button
+                  size="lg"
+                  variant="primary"
+                  disabled={mentor.available_seats <= 0 || subscribeMutation.isPending}
+                  isLoading={subscribeMutation.isPending}
+                  onClick={handleSubscribe}
+                  className="w-full text-center py-3.5 text-sm font-bold uppercase tracking-wider"
+                >
+                  {mentor.available_seats > 0
+                    ? Number(mentor.price_per_month) > 0
+                      ? `Subscribe - ₹${Number(mentor.price_per_month).toLocaleString("en-IN")}/mo`
+                      : "Subscribe - Free"
+                    : "Cohort Full"}
+                </Button>
+              )}
 
               {/* Secondary Action Button: Message Mentor */}
-              <Button
-                size="lg"
-                variant="secondary"
-                onClick={handleMessageMentor}
-                className="w-full text-center py-3 text-xs font-bold uppercase tracking-wider"
-              >
-                Message Mentor
-              </Button>
+              {user?.id !== mentor.user_id && (
+                <Button
+                  size="lg"
+                  variant="secondary"
+                  onClick={handleMessageMentor}
+                  className="w-full text-center py-3 text-xs font-bold uppercase tracking-wider"
+                >
+                  Message Mentor
+                </Button>
+              )}
             </div>
 
             {/* Value Props Checklist */}

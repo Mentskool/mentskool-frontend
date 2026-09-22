@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
-import { Navbar } from "@/components/Navbar";
+import { AppShell } from "@/components/AppShell";
 
 export const metadata: Metadata = {
   title: "Mentskool — Mentor-Student Accountability Platform",
@@ -28,10 +28,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-paper text-ink font-sans flex flex-col selection:bg-brand/10 selection:text-brand">
         <Providers>
-          <Navbar />
-          <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
-            {children}
-          </main>
+          <AppShell>{children}</AppShell>
         </Providers>
       </body>
     </html>

@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useMentors } from "@/hooks/useMentors";
+import { useSubscriptions } from "@/hooks/useSubscriptions";
+import { useAuthStore } from "@/store/authStore";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { SeatBadge } from "@/components/SeatBadge";
@@ -21,6 +23,10 @@ export default function MentorsPage() {
   const [selectedCategory, setSelectedCategory] = useState<MentorCategory | undefined>(undefined);
   const [page, setPage] = useState<number>(0);
   const limit = 12;
+
+  const { isAuthenticated } = useAuthStore();
+  const { data: subsData } = useSubscriptions();
+  const activeSub = subsData?.items?.find((s) => s.status === "ACTIVE");
 
   const { data, isLoading, isError, refetch } = useMentors(
     selectedCategory,
@@ -94,60 +100,80 @@ export default function MentorsPage() {
       ) : (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {data.items.map((mentor) => (
-              <Card
-                key={mentor.user_id}
-                className="flex flex-col justify-between hover:border-brand/40 transition-all bg-white"
-              >
-                <div className="space-y-4">
-                  {/* Top Bar: Category & Seat Status */}
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-moss/10 text-moss border border-moss/20">
-                      {CATEGORY_LABELS[mentor.category] || mentor.category}
-                    </span>
-                    <SeatBadge
-                      availableSeats={mentor.available_seats}
-                      seatLimit={mentor.seat_limit}
-                    />
-                  </div>
+            {data.items.map((mentor) => {
+              const isSubscribed = Boolean(
+                isAuthenticated && activeSub && activeSub.mentor_id === mentor.user_id
+              );
 
-                  {/* Mentor Info */}
-                  <div>
-                    <h3 className="font-display font-bold text-lg text-ink group-hover:text-brand transition-colors">
-                      {mentor.full_name}
-                    </h3>
-                    <p className="text-xs text-ink-faint mt-0.5">
-                      {mentor.email}
+              return (
+                <Card
+                  key={mentor.user_id}
+                  className={`flex flex-col justify-between hover:border-brand/40 transition-all bg-white ${
+                    isSubscribed ? "border-moss/40 shadow-sm" : ""
+                  }`}
+                >
+                  <div className="space-y-4">
+                    {/* Top Bar: Category & Seat Status */}
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-moss/10 text-moss border border-moss/20">
+                          {CATEGORY_LABELS[mentor.category] || mentor.category}
+                        </span>
+                        {isSubscribed && (
+                          <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-moss text-white">
+                            ✓ Enrolled
+                          </span>
+                        )}
+                      </div>
+                      <SeatBadge
+                        availableSeats={mentor.available_seats}
+                        seatLimit={mentor.seat_limit}
+                      />
+                    </div>
+
+                    {/* Mentor Info */}
+                    <div>
+                      <h3 className="font-display font-bold text-lg text-ink group-hover:text-brand transition-colors">
+                        {mentor.full_name}
+                      </h3>
+                      <p className="text-xs text-ink-faint mt-0.5">
+                        {mentor.email}
+                      </p>
+                    </div>
+
+                    {/* Bio Preview */}
+                    <p className="text-sm text-ink-muted line-clamp-3 leading-relaxed">
+                      {mentor.bio}
                     </p>
                   </div>
 
-                  {/* Bio Preview */}
-                  <p className="text-sm text-ink-muted line-clamp-3 leading-relaxed">
-                    {mentor.bio}
-                  </p>
-                </div>
+                  {/* Footer: Pricing & Action */}
+                  <div className="pt-6 mt-6 border-t border-mist flex items-center justify-between">
+                    <div>
+                      <span className="font-display text-xl font-bold text-ink">
+                        ₹{Number(mentor.price_per_month).toLocaleString("en-IN")}
+                      </span>
+                      <span className="text-xs text-ink-faint ml-1">/ month</span>
+                    </div>
 
-                {/* Footer: Pricing & Action */}
-                <div className="pt-6 mt-6 border-t border-mist flex items-center justify-between">
-                  <div>
-                    <span className="font-display text-xl font-bold text-ink">
-                      ₹{Number(mentor.price_per_month).toLocaleString("en-IN")}
-                    </span>
-                    <span className="text-xs text-ink-faint ml-1">/ month</span>
+                    <Link href={`/mentors/${mentor.user_id}`}>
+                      <Button
+                        size="sm"
+                        variant="primary"
+                        disabled={!isSubscribed && mentor.available_seats <= 0}
+                        className={isSubscribed ? "bg-moss hover:bg-moss/90 text-white" : ""}
+                      >
+                        {isSubscribed
+                          ? "View Cohort"
+                          : mentor.available_seats > 0
+                          ? "View Cohort"
+                          : "Waitlist"}
+                      </Button>
+                    </Link>
                   </div>
-
-                  <Link href={`/mentors/${mentor.user_id}`}>
-                    <Button
-                      size="sm"
-                      variant="primary"
-                      disabled={mentor.available_seats <= 0}
-                    >
-                      {mentor.available_seats > 0 ? "View Cohort" : "Waitlist"}
-                    </Button>
-                  </Link>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              );
+            })}
           </div>
 
           {/* Pagination Controls */}
