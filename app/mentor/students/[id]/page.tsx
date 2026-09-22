@@ -217,7 +217,7 @@ export default function StudentDetailPage() {
                 Message
               </Button>
             </Link>
-            <Link href={`/schedule`}>
+            <Link href={`/schedule?student_id=${studentId}&action=schedule`}>
               <Button size="sm" variant="secondary" className="flex items-center gap-1.5 text-xs font-semibold">
                 <Calendar className="w-3.5 h-3.5 text-moss" />
                 1:1 Session

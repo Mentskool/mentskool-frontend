@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import {
   useMyMeetings,
   useCreateMeeting,
   useUpdateMeeting,
+  useDeleteMeeting,
 } from "@/hooks/useMeetings";
 import { useSubscriptions } from "@/hooks/useSubscriptions";
 import { useMentorRoster } from "@/hooks/useTasks";
@@ -17,14 +19,43 @@ import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { CardSkeleton } from "@/components/ui/Skeleton";
 import { Meeting } from "@/lib/types";
+import {
+  Calendar,
+  Pencil,
+  Trash2,
+  AlertCircle,
+  Video,
+  Clock,
+  User,
+  Users,
+  X,
+} from "lucide-react";
 
-export default function SchedulePage() {
+function toLocalDatetimeInputString(dateStr?: string | null): string {
+  if (!dateStr) return "";
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return "";
+  const pad = (n: number) => n.toString().padStart(2, "0");
+  const year = d.getFullYear();
+  const month = pad(d.getMonth() + 1);
+  const day = pad(d.getDate());
+  const hours = pad(d.getHours());
+  const minutes = pad(d.getMinutes());
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
+function ScheduleContent() {
+  const searchParams = useSearchParams();
+  const paramStudentId = searchParams.get("student_id");
+  const paramAction = searchParams.get("action");
+
   const { user, isAuthenticated } = useAuthStore();
   const isMentor = user?.role === "MENTOR";
 
   const { data: meetings, isLoading, refetch } = useMyMeetings();
   const createMeetingMutation = useCreateMeeting();
   const updateMeetingMutation = useUpdateMeeting();
+  const deleteMeetingMutation = useDeleteMeeting();
 
   // For students to know which mentor they are requesting with
   const { data: subsData } = useSubscriptions();
@@ -51,6 +82,28 @@ export default function SchedulePage() {
   const [scheduleTime, setScheduleTime] = useState("");
   const [meetingLink, setMeetingLink] = useState("");
   const [confirmError, setConfirmError] = useState("");
+
+  // Mentor Edit / Reschedule Modal State
+  const [editingMeeting, setEditingMeeting] = useState<Meeting | null>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editStudentId, setEditStudentId] = useState("");
+  const [editTime, setEditTime] = useState("");
+  const [editLink, setEditLink] = useState("");
+  const [editError, setEditError] = useState("");
+
+  // Delete Confirmation State
+  const [deletingMeeting, setDeletingMeeting] = useState<Meeting | null>(null);
+  const [deleteError, setDeleteError] = useState("");
+
+  // Reactively open scheduling modal if arriving from student profile with ?student_id=...&action=schedule
+  useEffect(() => {
+    if (isMentor && paramStudentId) {
+      setMentorScheduleStudentId(paramStudentId);
+      if (paramAction === "schedule") {
+        setShowMentorScheduleModal(true);
+      }
+    }
+  }, [isMentor, paramStudentId, paramAction]);
 
   const handleStudentRequest = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -120,6 +173,50 @@ export default function SchedulePage() {
     }
   };
 
+  const handleOpenEditModal = (m: Meeting) => {
+    setEditingMeeting(m);
+    setEditTitle(m.title);
+    setEditStudentId(m.student_id || "");
+    setEditTime(toLocalDatetimeInputString(m.scheduled_at));
+    setEditLink(m.meeting_link || "");
+    setEditError("");
+  };
+
+  const handleMentorEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingMeeting) return;
+    setEditError("");
+
+    try {
+      await updateMeetingMutation.mutateAsync({
+        meetingId: editingMeeting.id,
+        payload: {
+          title: editTitle.trim(),
+          scheduled_at: editTime ? new Date(editTime).toISOString() : undefined,
+          meeting_link: editLink.trim() || undefined,
+          student_id: editStudentId ? editStudentId : null,
+        },
+      });
+      setEditingMeeting(null);
+      refetch();
+    } catch (err: any) {
+      setEditError(err.detail || "Failed to update meeting details.");
+    }
+  };
+
+  const handleDeleteMeeting = async () => {
+    if (!deletingMeeting) return;
+    setDeleteError("");
+
+    try {
+      await deleteMeetingMutation.mutateAsync(deletingMeeting.id);
+      setDeletingMeeting(null);
+      refetch();
+    } catch (err: any) {
+      setDeleteError(err.detail || "Failed to delete meeting.");
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="py-16 text-center max-w-md mx-auto">
@@ -162,7 +259,9 @@ export default function SchedulePage() {
               setMentorScheduleError("");
               setShowMentorScheduleModal(true);
             }}
+            className="flex items-center gap-1.5"
           >
+            <Calendar className="w-4 h-4" />
             + Schedule Session
           </Button>
         ) : (
@@ -170,7 +269,9 @@ export default function SchedulePage() {
             size="sm"
             variant="primary"
             onClick={() => setShowRequestModal(true)}
+            className="flex items-center gap-1.5"
           >
+            <Calendar className="w-4 h-4" />
             + Request 1:1 Meeting
           </Button>
         )}
@@ -185,14 +286,14 @@ export default function SchedulePage() {
                 Schedule a Mentorship Session
               </h3>
               <p className="text-xs text-ink-muted mt-0.5">
-                Host a cohort-wide masterclass or a targeted 1:1 doubt clearing session.
+                Host a cohort-wide masterclass or a targeted 1:1 session with a student.
               </p>
             </div>
             <button
               onClick={() => setShowMentorScheduleModal(false)}
-              className="text-ink-muted hover:text-ink text-xs"
+              className="text-ink-muted hover:text-ink text-xs p-1 rounded hover:bg-mist/30"
             >
-              ✕ Close
+              <X className="w-4 h-4" />
             </button>
           </div>
 
@@ -207,21 +308,21 @@ export default function SchedulePage() {
               label="Session Title / Agenda"
               value={mentorScheduleTitle}
               onChange={(e) => setMentorScheduleTitle(e.target.value)}
-              placeholder="e.g. Weekly Doubt Clearing & JEE Physics Mechanics Strategy"
+              placeholder="e.g. 1:1 Weekly Doubt Clearing & JEE Physics Mechanics Review"
               required
             />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5 text-left">
                 <label className="text-xs font-semibold text-ink-muted select-none">
-                  Audience / Attendee
+                  Audience / Student Attendee
                 </label>
                 <select
                   value={mentorScheduleStudentId}
                   onChange={(e) => setMentorScheduleStudentId(e.target.value)}
                   className="w-full px-3 py-2 bg-white text-ink text-sm rounded-control border border-mist focus:outline-none focus:border-brand"
                 >
-                  <option value="">Cohort-Wide (All Subscribed Students)</option>
+                  <option value="">Cohort-Wide (All Enrolled Students)</option>
                   {rosterData?.items?.map((s) => (
                     <option key={s.student_id} value={s.student_id}>
                       {s.student_name} ({s.student_email})
@@ -229,7 +330,7 @@ export default function SchedulePage() {
                   ))}
                 </select>
                 <p className="text-[11px] text-ink-faint">
-                  Leave as Cohort-Wide for group webinars, or select a student for 1:1.
+                  Select an enrolled student for a private 1:1, or leave Cohort-Wide.
                 </p>
               </div>
 
@@ -273,6 +374,152 @@ export default function SchedulePage() {
         </Card>
       )}
 
+      {/* Mentor Edit / Reschedule Modal */}
+      {editingMeeting && (
+        <Card className="bg-white border-2 border-brand/40 p-6 space-y-4 shadow-sm">
+          <div className="flex items-center justify-between border-b border-mist pb-3">
+            <div>
+              <h3 className="font-display font-bold text-base text-ink flex items-center gap-2">
+                <Pencil className="w-4 h-4 text-brand" />
+                Edit & Reschedule Meeting
+              </h3>
+              <p className="text-xs text-ink-muted mt-0.5">
+                Update date/time, agenda, meeting link, or attendee for this session.
+              </p>
+            </div>
+            <button
+              onClick={() => setEditingMeeting(null)}
+              className="text-ink-muted hover:text-ink text-xs p-1 rounded hover:bg-mist/30"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+
+          {editError && (
+            <p className="text-xs text-amber font-medium p-2.5 bg-amber/10 rounded-control border border-amber/30">
+              {editError}
+            </p>
+          )}
+
+          <form onSubmit={handleMentorEdit} className="space-y-4">
+            <Input
+              label="Session Title / Agenda"
+              value={editTitle}
+              onChange={(e) => setEditTitle(e.target.value)}
+              placeholder="e.g. Rescheduled 1:1 Checkpoint"
+              required
+            />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-1.5 text-left">
+                <label className="text-xs font-semibold text-ink-muted select-none">
+                  Audience / Student Attendee
+                </label>
+                <select
+                  value={editStudentId}
+                  onChange={(e) => setEditStudentId(e.target.value)}
+                  className="w-full px-3 py-2 bg-white text-ink text-sm rounded-control border border-mist focus:outline-none focus:border-brand"
+                >
+                  <option value="">Cohort-Wide (All Enrolled Students)</option>
+                  {rosterData?.items?.map((s) => (
+                    <option key={s.student_id} value={s.student_id}>
+                      {s.student_name} ({s.student_email})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <Input
+                label="Scheduled Date & Time"
+                type="datetime-local"
+                value={editTime}
+                onChange={(e) => setEditTime(e.target.value)}
+                required
+              />
+            </div>
+
+            <Input
+              label="Meeting URL (Google Meet or Zoom)"
+              type="url"
+              value={editLink}
+              onChange={(e) => setEditLink(e.target.value)}
+              placeholder="https://meet.google.com/abc-defg-hij"
+              required
+            />
+
+            <div className="flex items-center justify-end gap-2 pt-2">
+              <Button
+                type="button"
+                size="sm"
+                variant="ghost"
+                onClick={() => setEditingMeeting(null)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                size="sm"
+                variant="primary"
+                isLoading={updateMeetingMutation.isPending}
+              >
+                Save Changes & Reschedule
+              </Button>
+            </div>
+          </form>
+        </Card>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deletingMeeting && (
+        <Card className="bg-white border-2 border-red-200 p-6 space-y-4">
+          <div className="flex items-start gap-3">
+            <div className="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 text-red-600">
+              <AlertCircle className="w-5 h-5" />
+            </div>
+            <div className="space-y-1">
+              <h3 className="font-display font-bold text-base text-ink">
+                Delete Mentorship Meeting?
+              </h3>
+              <p className="text-xs text-ink-muted leading-relaxed">
+                Are you sure you want to delete{" "}
+                <span className="font-bold text-ink">&ldquo;{deletingMeeting.title}&rdquo;</span>?
+                {deletingMeeting.student_name && (
+                  <span> Attendee: <strong className="text-ink">{deletingMeeting.student_name}</strong>.</span>
+                )}
+                {" "}This meeting will be permanently cancelled from the schedule.
+              </p>
+            </div>
+          </div>
+
+          {deleteError && (
+            <p className="text-xs text-red-600 font-medium p-2.5 bg-red-50 rounded-control border border-red-200">
+              {deleteError}
+            </p>
+          )}
+
+          <div className="flex items-center justify-end gap-2 pt-2 border-t border-mist">
+            <Button
+              type="button"
+              size="sm"
+              variant="ghost"
+              onClick={() => setDeletingMeeting(null)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant="secondary"
+              isLoading={deleteMeetingMutation.isPending}
+              onClick={handleDeleteMeeting}
+              className="bg-red-600 hover:bg-red-700 text-white font-bold border-transparent"
+            >
+              Confirm Delete
+            </Button>
+          </div>
+        </Card>
+      )}
+
       {/* Student Request Modal */}
       {showRequestModal && (
         <Card className="bg-white border-mist p-6 space-y-4">
@@ -282,9 +529,9 @@ export default function SchedulePage() {
             </h3>
             <button
               onClick={() => setShowRequestModal(false)}
-              className="text-ink-muted hover:text-ink text-xs"
+              className="text-ink-muted hover:text-ink text-xs p-1"
             >
-              ✕
+              <X className="w-4 h-4" />
             </button>
           </div>
           {requestError && (
@@ -320,7 +567,7 @@ export default function SchedulePage() {
         </Card>
       )}
 
-      {/* Mentor Confirm / Schedule Modal */}
+      {/* Mentor Confirm / Schedule Modal (for responding to student requests) */}
       {selectedMeeting && (
         <Card className="bg-white border-mist p-6 space-y-4">
           <div className="flex items-center justify-between">
@@ -329,9 +576,9 @@ export default function SchedulePage() {
             </h3>
             <button
               onClick={() => setSelectedMeeting(null)}
-              className="text-ink-muted hover:text-ink text-xs"
+              className="text-ink-muted hover:text-ink text-xs p-1"
             >
-              ✕
+              <X className="w-4 h-4" />
             </button>
           </div>
           <p className="text-xs text-ink-muted">
@@ -353,7 +600,7 @@ export default function SchedulePage() {
               type="url"
               value={meetingLink}
               onChange={(e) => setMeetingLink(e.target.value)}
-              placeholder="https://meet.google.com/..."
+              placeholder="https://meet.google.com/abc-defg-hij"
               required
             />
             <div className="flex items-center justify-end gap-2">
@@ -419,15 +666,39 @@ export default function SchedulePage() {
                       </p>
                     </div>
 
-                    {isMentor && (
-                      <Button
-                        size="sm"
-                        variant="primary"
-                        onClick={() => setSelectedMeeting(m)}
-                      >
-                        Accept & Set Link
-                      </Button>
-                    )}
+                    <div className="flex items-center gap-2">
+                      {isMentor ? (
+                        <>
+                          <Button
+                            size="sm"
+                            variant="primary"
+                            onClick={() => setSelectedMeeting(m)}
+                            className="text-xs"
+                          >
+                            Accept & Set Link
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="secondary"
+                            onClick={() => setDeletingMeeting(m)}
+                            className="text-xs text-red-600 border-red-200 hover:bg-red-50 flex items-center gap-1"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                            Decline
+                          </Button>
+                        </>
+                      ) : (
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          onClick={() => setDeletingMeeting(m)}
+                          className="text-xs text-red-600 border-red-200 hover:bg-red-50 flex items-center gap-1"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                          Cancel Request
+                        </Button>
+                      )}
+                    </div>
                   </Card>
                 ))}
               </div>
@@ -445,7 +716,7 @@ export default function SchedulePage() {
                 title="No upcoming sessions"
                 description={
                   isMentor
-                    ? "You have no confirmed sessions on your schedule. Click '+ Schedule Session' above to schedule a live call."
+                    ? "You have no confirmed sessions on your schedule. Click '+ Schedule Session' above to schedule a 1:1 or cohort call."
                     : "No sessions scheduled. Click '+ Request 1:1 Meeting' to book time with your mentor."
                 }
                 actionLabel={isMentor ? "+ Schedule Session" : undefined}
@@ -459,14 +730,25 @@ export default function SchedulePage() {
                     className="bg-white border-mist p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                   >
                     <div className="space-y-1.5">
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 flex-wrap">
                         <span className="font-display font-bold text-base text-ink">
                           {m.title}
                         </span>
                         <Badge variant="APPROVED">Scheduled</Badge>
+                        {m.student_id ? (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-brand bg-brand/10 px-2 py-0.5 rounded-full">
+                            <User className="w-3 h-3" />
+                            1:1 Session
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-moss bg-moss/10 px-2 py-0.5 rounded-full">
+                            <Users className="w-3 h-3" />
+                            Cohort-Wide
+                          </span>
+                        )}
                       </div>
-                      <p className="text-xs text-moss font-medium">
-                        🗓️{" "}
+                      <p className="text-xs text-moss font-semibold flex items-center gap-1.5">
+                        <Clock className="w-3.5 h-3.5" />
                         {m.scheduled_at
                           ? new Date(m.scheduled_at).toLocaleString("en-IN", {
                               weekday: "short",
@@ -485,21 +767,45 @@ export default function SchedulePage() {
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-wrap items-center gap-2">
                       {m.meeting_link ? (
                         <a
                           href={m.meeting_link}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <Button size="sm" variant="moss">
-                            Join Meeting Link ↗
+                          <Button size="sm" variant="moss" className="text-xs flex items-center gap-1.5">
+                            <Video className="w-3.5 h-3.5" />
+                            Join Link ↗
                           </Button>
                         </a>
                       ) : (
-                        <span className="text-xs text-ink-faint italic">
+                        <span className="text-xs text-ink-faint italic mr-2">
                           Link pending
                         </span>
+                      )}
+
+                      {isMentor && (
+                        <>
+                          <Button
+                            size="sm"
+                            variant="secondary"
+                            onClick={() => handleOpenEditModal(m)}
+                            className="text-xs flex items-center gap-1.5 font-medium"
+                          >
+                            <Pencil className="w-3.5 h-3.5 text-brand" />
+                            Edit / Reschedule
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="secondary"
+                            onClick={() => setDeletingMeeting(m)}
+                            className="text-xs flex items-center gap-1.5 text-red-600 border-red-200 hover:bg-red-50 hover:border-red-300"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                            Delete
+                          </Button>
+                        </>
                       )}
                     </div>
                   </Card>
@@ -510,5 +816,20 @@ export default function SchedulePage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function SchedulePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="max-w-5xl mx-auto space-y-4">
+          <CardSkeleton />
+          <CardSkeleton />
+        </div>
+      }
+    >
+      <ScheduleContent />
+    </Suspense>
   );
 }

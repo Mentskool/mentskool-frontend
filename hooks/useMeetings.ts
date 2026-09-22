@@ -42,9 +42,22 @@ export const useUpdateMeeting = () => {
         scheduled_at?: string;
         meeting_link?: string;
         status?: MeetingStatus;
+        student_id?: string | null;
       };
     }) => {
       return apiClient.patch<Meeting>(`/meetings/${meetingId}`, payload);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["meetings"] });
+    },
+  });
+};
+
+export const useDeleteMeeting = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (meetingId: string) => {
+      return apiClient.delete(`/meetings/${meetingId}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["meetings"] });
