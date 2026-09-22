@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
-import { useMentor, useUpdateMentorProfile } from "@/hooks/useMentors";
+import { useMentor, useUpdateMentorProfile, useCreateMentorProfile } from "@/hooks/useMentors";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -20,8 +20,9 @@ const getYouTubeEmbedUrl = (url?: string | null): string | null => {
 export default function MentorProfilePage() {
   const router = useRouter();
   const { user, isAuthenticated, isLoading: authLoading } = useAuthStore();
-  const { data: profile, isLoading: profileLoading } = useMentor(user?.id);
+  const { data: profile, isLoading: profileLoading, refetch } = useMentor(user?.id);
   const updateMutation = useUpdateMentorProfile();
+  const createMutation = useCreateMentorProfile();
 
   const [category, setCategory] = useState<MentorCategory>("JEE_PREP");
   const [bio, setBio] = useState("");
@@ -71,19 +72,43 @@ export default function MentorProfilePage() {
     e.preventDefault();
     setFeedback(null);
 
+    const payload = {
+      category,
+      bio: bio.trim(),
+      intro_youtube_url: youtubeUrl.trim() || null,
+      seat_limit: Number(seatLimit),
+      price_per_month: Number(pricePerMonth),
+    };
+
     try {
-      await updateMutation.mutateAsync({
-        category,
-        bio,
-        intro_youtube_url: youtubeUrl.trim() || undefined,
-        seat_limit: Number(seatLimit),
-        price_per_month: Number(pricePerMonth),
-      });
+      if (!profile) {
+        await createMutation.mutateAsync(payload);
+      } else {
+        await updateMutation.mutateAsync(payload);
+      }
       setFeedback({
         type: "success",
-        message: "Profile settings updated successfully!",
+        message: "Profile settings saved successfully!",
       });
+      refetch();
     } catch (err: any) {
+      if (err?.status === 404) {
+        try {
+          await createMutation.mutateAsync(payload);
+          setFeedback({
+            type: "success",
+            message: "Profile settings saved successfully!",
+          });
+          refetch();
+          return;
+        } catch (createErr: any) {
+          setFeedback({
+            type: "error",
+            message: createErr.detail || "Failed to save profile.",
+          });
+          return;
+        }
+      }
       setFeedback({
         type: "error",
         message: err.detail || "Failed to update profile.",
