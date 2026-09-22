@@ -57,6 +57,58 @@ export default function HomePage() {
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[920px] h-[920px] border border-indigo-200/40 rounded-full opacity-35 pointer-events-none" />
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1250px] h-[1250px] border border-emerald-200/30 rounded-full opacity-25 pointer-events-none" />
 
+        {/* Elegant Non-Distractive Flowing Ambient Waves in Hero First-Half */}
+        <svg
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1400px] h-[580px] opacity-[0.25] pointer-events-none"
+          viewBox="0 0 1400 580"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 240C250 320 420 160 700 220C980 280 1150 180 1400 240"
+            stroke="url(#gradient-wave-1)"
+            strokeWidth="1.5"
+            strokeDasharray="4 4"
+          />
+          <path
+            d="M0 290C280 200 450 340 700 270C950 200 1120 310 1400 260"
+            stroke="url(#gradient-wave-2)"
+            strokeWidth="2"
+          />
+          <path
+            d="M0 350C220 390 480 250 700 320C920 390 1180 280 1400 330"
+            stroke="url(#gradient-wave-1)"
+            strokeWidth="1.2"
+          />
+          <defs>
+            <linearGradient id="gradient-wave-1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#4F46E5" stopOpacity="0.2" />
+              <stop offset="50%" stopColor="#7C3AED" stopOpacity="0.6" />
+              <stop offset="100%" stopColor="#059669" stopOpacity="0.3" />
+            </linearGradient>
+            <linearGradient id="gradient-wave-2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#059669" stopOpacity="0.2" />
+              <stop offset="50%" stopColor="#4F46E5" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="#F59E0B" stopOpacity="0.2" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        {/* Floating Peripheral Frosted Emblems in Left & Right Margins (Non-distracting) */}
+        <div className="absolute top-24 left-[5%] w-16 h-16 rounded-2xl border border-indigo-200/50 bg-white/40 backdrop-blur-[2px] opacity-40 rotate-12 flex items-center justify-center animate-float-slow pointer-events-none hidden lg:flex shadow-soft">
+          <span className="text-xl opacity-75">⚛️</span>
+        </div>
+        <div className="absolute top-64 left-[10%] w-12 h-12 rounded-full border border-emerald-200/60 bg-white/30 backdrop-blur-[2px] opacity-35 -rotate-6 flex items-center justify-center animate-float-reverse pointer-events-none hidden xl:flex shadow-soft">
+          <span className="text-sm opacity-75">🎯</span>
+        </div>
+
+        <div className="absolute top-20 right-[6%] w-16 h-16 rounded-2xl border border-amber-200/50 bg-white/40 backdrop-blur-[2px] opacity-40 -rotate-12 flex items-center justify-center animate-float-reverse pointer-events-none hidden lg:flex shadow-soft">
+          <span className="text-xl opacity-75">🏆</span>
+        </div>
+        <div className="absolute top-60 right-[11%] w-12 h-12 rounded-full border border-purple-200/60 bg-white/30 backdrop-blur-[2px] opacity-35 rotate-6 flex items-center justify-center animate-float-slow pointer-events-none hidden xl:flex shadow-soft">
+          <span className="text-sm opacity-75">⚡</span>
+        </div>
+
         {/* Subtle gradient fade to bottom */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-paper" />
       </div>
