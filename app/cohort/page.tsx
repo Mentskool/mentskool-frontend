@@ -11,6 +11,7 @@ import {
   useCreateResource,
   useDeleteResource,
 } from "@/hooks/useCohort";
+import { useSubscriptions, useLeaveActiveCohort } from "@/hooks/useSubscriptions";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -21,6 +22,33 @@ import { CardSkeleton } from "@/components/ui/Skeleton";
 export default function CohortPage() {
   const { user, isAuthenticated } = useAuthStore();
   const isMentor = user?.role === "MENTOR";
+
+  const { data: subsData, refetch: refetchSubs } = useSubscriptions();
+  const leaveCohortMutation = useLeaveActiveCohort();
+  const [showLeaveConfirm, setShowLeaveConfirm] = useState(false);
+  const [leaveFeedback, setLeaveFeedback] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+
+  const activeSub = subsData?.items?.find((s) => s.status === "ACTIVE");
+
+  const handleLeaveCohort = async () => {
+    try {
+      await leaveCohortMutation.mutateAsync();
+      setShowLeaveConfirm(false);
+      setLeaveFeedback({
+        type: "success",
+        message: "You have left this cohort. Your seat has been released and you may now join another cohort.",
+      });
+      refetchSubs();
+    } catch (err: any) {
+      setLeaveFeedback({
+        type: "error",
+        message: err?.detail || "Failed to leave cohort. Please try again.",
+      });
+    }
+  };
 
   const [activeTab, setActiveTab] = useState<"announcements" | "resources">("announcements");
 
@@ -120,6 +148,87 @@ export default function CohortPage() {
           </button>
         </div>
       </div>
+
+      {/* Student Active Cohort Status & Leave Action */}
+      {!isMentor && (
+        <div className="space-y-4">
+          {leaveFeedback && (
+            <div
+              className={`p-3 rounded-control text-xs font-semibold ${
+                leaveFeedback.type === "success"
+                  ? "bg-moss/10 text-moss border border-moss/20"
+                  : "bg-red-50 text-red-700 border border-red-200"
+              }`}
+            >
+              {leaveFeedback.message}
+            </div>
+          )}
+
+          {activeSub ? (
+            <div className="p-4 rounded-card bg-white border border-mist flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-moss/10 text-moss border border-moss/20">
+                    Active Enrollment
+                  </span>
+                  <span className="font-display font-bold text-base text-ink">
+                    Mentor: {activeSub.mentor_name}
+                  </span>
+                </div>
+                <p className="text-xs text-ink-muted mt-1">
+                  You are actively enrolled in this cohort. Leaving releases your seat and allows you to join another mentor.
+                </p>
+              </div>
+
+              {!showLeaveConfirm ? (
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => setShowLeaveConfirm(true)}
+                  className="text-xs text-ink-muted hover:text-red-600 hover:border-red-300 self-start sm:self-center"
+                >
+                  Leave Cohort
+                </Button>
+              ) : (
+                <div className="flex items-center gap-2 bg-red-50 p-2.5 rounded-control border border-red-200">
+                  <span className="text-xs text-red-800 font-medium">Release your seat?</span>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    isLoading={leaveCohortMutation.isPending}
+                    onClick={handleLeaveCohort}
+                    className="text-xs text-red-600 font-bold border-red-300 hover:bg-red-100"
+                  >
+                    Confirm Leave
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    onClick={() => setShowLeaveConfirm(false)}
+                    className="text-xs font-semibold"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="p-6 rounded-card bg-white border border-mist text-center space-y-3">
+              <h3 className="font-display font-bold text-lg text-ink">
+                No Active Cohort
+              </h3>
+              <p className="text-xs text-ink-muted max-w-md mx-auto">
+                You are not currently enrolled in any cohort. Join an active mentor cohort to receive weekly tasks and access cohort discussions.
+              </p>
+              <Link href="/mentors">
+                <Button size="sm" variant="primary">
+                  Find a Mentor
+                </Button>
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Announcements Tab View */}
       {activeTab === "announcements" && (

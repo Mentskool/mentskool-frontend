@@ -65,9 +65,6 @@ export const Navbar: React.FC = () => {
                   <Link href="/mentor/profile" className={navItemClass("/mentor/profile")}>
                     Edit Profile
                   </Link>
-                  <Link href="/mentors" className={navItemClass("/mentors")}>
-                    Browse
-                  </Link>
                 </>
               ) : (
                 <>
@@ -88,9 +85,6 @@ export const Navbar: React.FC = () => {
                   </Link>
                   <Link href="/quizzes" className={navItemClass("/quizzes")}>
                     Quizzes
-                  </Link>
-                  <Link href="/mentors" className={navItemClass("/mentors")}>
-                    Find Mentors
                   </Link>
                 </>
               )

@@ -17,6 +17,17 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({
     setMounted(true);
   }, []);
 
+  const isAuthPage = pathname === "/login" || pathname === "/signup";
+
+  // Dedicated full-screen layout for authentication pages (no sidebar, no navbar)
+  if (isAuthPage) {
+    return (
+      <div className="min-h-screen flex flex-col bg-paper">
+        {children}
+      </div>
+    );
+  }
+
   // During SSR or initial hydration, render default shell to avoid mismatch
   if (!mounted) {
     return (

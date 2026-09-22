@@ -39,6 +39,26 @@ export function useCancelSubscription() {
       apiClient.patch<Subscription>(`/subscriptions/${subscriptionId}/cancel`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["mySubscriptions"] });
+      queryClient.invalidateQueries({ queryKey: ["mentors"] });
+      queryClient.invalidateQueries({ queryKey: ["mentor"] });
+      queryClient.invalidateQueries({ queryKey: ["announcements"] });
+      queryClient.invalidateQueries({ queryKey: ["resources"] });
+    },
+  });
+}
+
+export function useLeaveActiveCohort() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () =>
+      apiClient.post<Subscription>("/subscriptions/leave"),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["mySubscriptions"] });
+      queryClient.invalidateQueries({ queryKey: ["mentors"] });
+      queryClient.invalidateQueries({ queryKey: ["mentor"] });
+      queryClient.invalidateQueries({ queryKey: ["announcements"] });
+      queryClient.invalidateQueries({ queryKey: ["resources"] });
     },
   });
 }

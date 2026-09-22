@@ -33,7 +33,6 @@ const STUDENT_NAV_ITEMS: NavItem[] = [
   { label: "Messages", href: "/messages", icon: MessageSquare },
   { label: "Schedule", href: "/schedule", icon: Calendar },
   { label: "Quizzes", href: "/quizzes", icon: BookOpen },
-  { label: "Find Mentors", href: "/mentors", icon: Search },
 ];
 
 const MENTOR_NAV_ITEMS: NavItem[] = [
@@ -44,7 +43,6 @@ const MENTOR_NAV_ITEMS: NavItem[] = [
   { label: "Schedule", href: "/schedule", icon: Calendar },
   { label: "Quizzes", href: "/quizzes", icon: BookOpen },
   { label: "Edit Profile", href: "/mentor/profile", icon: Settings },
-  { label: "Browse Mentors", href: "/mentors", icon: Compass },
 ];
 
 export const Sidebar: React.FC = () => {

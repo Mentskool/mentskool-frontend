@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useMentor, useSubscribeMentor } from "@/hooks/useMentors";
-import { useSubscriptions } from "@/hooks/useSubscriptions";
+import { useSubscriptions, useLeaveActiveCohort } from "@/hooks/useSubscriptions";
 import { useAuthStore } from "@/store/authStore";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -29,6 +29,7 @@ export default function MentorDetailPage() {
   const { user, isAuthenticated } = useAuthStore();
   const { data: subsData, refetch: refetchSubs } = useSubscriptions();
   const subscribeMutation = useSubscribeMentor();
+  const leaveCohortMutation = useLeaveActiveCohort();
 
   const activeSub = subsData?.items?.find((s) => s.status === "ACTIVE");
   const isEnrolledHere = Boolean(
@@ -39,10 +40,30 @@ export default function MentorDetailPage() {
   );
 
   const [activeTab, setActiveTab] = useState<SubTab>("about");
+  const [showLeaveConfirm, setShowLeaveConfirm] = useState(false);
   const [feedback, setFeedback] = useState<{
     type: "success" | "error";
     message: string;
   } | null>(null);
+
+  const handleLeaveCohort = async () => {
+    try {
+      await leaveCohortMutation.mutateAsync();
+      setShowLeaveConfirm(false);
+      setFeedback({
+        type: "success",
+        message: "You have left this cohort. Your seat has been released and you may now enroll in another cohort.",
+      });
+      refetch();
+      refetchSubs();
+    } catch (err) {
+      const apiErr = err as ApiError;
+      setFeedback({
+        type: "error",
+        message: apiErr.detail || "Unable to leave cohort. Please try again.",
+      });
+    }
+  };
 
   const handleSubscribe = async () => {
     setFeedback(null);
@@ -538,17 +559,55 @@ export default function MentorDetailPage() {
                   </Button>
                 </Link>
               ) : isEnrolledHere ? (
-                <Link href="/cohort" className="block w-full">
-                  <Button
-                    size="lg"
-                    variant="primary"
-                    className="w-full text-center py-3.5 text-sm font-bold uppercase tracking-wider bg-moss hover:bg-moss/90 text-white shadow-none"
-                  >
-                    ✓ Subscribed — View Cohort
-                  </Button>
-                </Link>
+                <div className="space-y-2">
+                  <Link href="/cohort" className="block w-full">
+                    <Button
+                      size="lg"
+                      variant="primary"
+                      className="w-full text-center py-3.5 text-sm font-bold uppercase tracking-wider bg-moss hover:bg-moss/90 text-white shadow-none"
+                    >
+                      ✓ Subscribed — View Cohort
+                    </Button>
+                  </Link>
+
+                  {!showLeaveConfirm ? (
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      onClick={() => setShowLeaveConfirm(true)}
+                      className="w-full text-center py-2 text-xs font-semibold text-ink-muted hover:text-red-600 hover:border-red-300"
+                    >
+                      Leave Cohort
+                    </Button>
+                  ) : (
+                    <div className="p-3 bg-[#FFF5F5] border border-red-200 rounded-control space-y-2 text-left">
+                      <p className="text-xs text-red-800 font-medium leading-snug">
+                        Are you sure you want to leave this cohort? Your seat will be released and you can then join another mentor.
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          isLoading={leaveCohortMutation.isPending}
+                          onClick={handleLeaveCohort}
+                          className="flex-1 text-xs text-red-600 font-bold border-red-300 hover:bg-red-50"
+                        >
+                          Confirm Leave
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          onClick={() => setShowLeaveConfirm(false)}
+                          className="flex-1 text-xs font-semibold"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               ) : isEnrolledElsewhere ? (
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                   <Button
                     size="lg"
                     variant="secondary"
@@ -557,8 +616,12 @@ export default function MentorDetailPage() {
                   >
                     Enrolled in Another Cohort
                   </Button>
-                  <p className="text-[11px] text-amber text-center font-medium">
-                    You can only be in 1 cohort at a time.
+                  <p className="text-[11px] text-amber text-center font-medium leading-snug">
+                    You can only be in 1 cohort at a time.{" "}
+                    <Link href="/cohort" className="underline font-bold text-brand hover:opacity-80">
+                      Go to your cohort
+                    </Link>{" "}
+                    to leave it first.
                   </p>
                 </div>
               ) : (

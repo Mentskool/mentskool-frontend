@@ -75,18 +75,28 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="py-12 flex justify-center items-center">
+    <div className="min-h-screen flex flex-col justify-center items-center px-4 py-12 bg-paper">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold font-display text-ink">
+        {/* Brand Header */}
+        <div className="text-center mb-6">
+          <Link href="/" className="inline-flex items-center gap-2.5 group mb-4">
+            <span className="w-9 h-9 rounded-lg bg-brand text-white flex items-center justify-center font-display font-bold text-base shadow-sm group-hover:bg-brand/90 transition-colors">
+              M
+            </span>
+            <span className="font-display font-bold text-xl text-ink tracking-tight">
+              Mentskool
+            </span>
+          </Link>
+          <h1 className="text-2xl font-bold font-display text-ink tracking-tight">
             Create your account
           </h1>
-          <p className="text-sm text-ink-muted mt-1.5">
+          <p className="text-xs text-ink-muted mt-1">
             Join Mentskool to start tracking verified accountability
           </p>
         </div>
 
-        <Card className="bg-white">
+        {/* Auth Card */}
+        <Card className="bg-white p-7 sm:p-8 border-mist">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {errorMessage && (
               <div className="p-3 bg-[#FDF5E8] border border-amber/40 rounded-control text-xs text-[#9A6210] font-medium leading-relaxed">
@@ -96,7 +106,7 @@ export default function SignupPage() {
 
             {/* Role Toggle */}
             <div className="flex flex-col gap-1.5 text-left">
-              <label className="text-xs font-medium text-ink-muted select-none">
+              <label className="text-xs font-semibold text-ink-muted select-none">
                 I want to join as:
               </label>
               <div className="grid grid-cols-2 gap-2 p-1 bg-[#F3F4F6] rounded-control border border-mist">
@@ -105,7 +115,7 @@ export default function SignupPage() {
                   onClick={() => setValue("role", "STUDENT")}
                   className={`py-1.5 text-xs font-semibold rounded-control transition-all ${
                     selectedRole === "STUDENT"
-                      ? "bg-white text-brand border border-mist/80"
+                      ? "bg-white text-brand border border-mist/80 font-bold"
                       : "text-ink-muted hover:text-ink"
                   }`}
                 >
@@ -116,7 +126,7 @@ export default function SignupPage() {
                   onClick={() => setValue("role", "MENTOR")}
                   className={`py-1.5 text-xs font-semibold rounded-control transition-all ${
                     selectedRole === "MENTOR"
-                      ? "bg-white text-brand border border-mist/80"
+                      ? "bg-white text-brand border border-mist/80 font-bold"
                       : "text-ink-muted hover:text-ink"
                   }`}
                 >
@@ -153,7 +163,7 @@ export default function SignupPage() {
               <Button
                 type="submit"
                 variant="primary"
-                className="w-full"
+                className="w-full py-2.5 text-sm font-bold"
                 isLoading={isSigningUp}
               >
                 Create {selectedRole === "MENTOR" ? "Mentor" : "Student"} Account
@@ -161,16 +171,24 @@ export default function SignupPage() {
             </div>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-mist text-center">
+          <div className="mt-6 pt-6 border-t border-mist text-center space-y-2">
             <p className="text-xs text-ink-muted">
               Already have an account?{" "}
               <Link
                 href="/login"
-                className="font-semibold text-brand hover:underline"
+                className="font-bold text-brand hover:underline"
               >
                 Sign in
               </Link>
             </p>
+            <div>
+              <Link
+                href="/"
+                className="text-[11px] text-ink-faint hover:text-ink transition-colors"
+              >
+                ← Return to Home
+              </Link>
+            </div>
           </div>
         </Card>
       </div>
