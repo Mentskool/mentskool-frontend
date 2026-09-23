@@ -19,6 +19,10 @@ import {
   Calendar,
   Flame,
   Award,
+  Trophy,
+  RefreshCw,
+  ShieldCheck,
+  MessageSquare,
 } from "lucide-react";
 import { HeroParticles } from "@/components/HeroParticles";
 
@@ -37,7 +41,7 @@ export default function HomePage() {
   }, [user, isAuthenticated, isLoading, router]);
 
   return (
-    <div className="relative overflow-hidden pb-16">
+    <div className="relative overflow-hidden pb-16 bg-gradient-to-b from-[#E7EBF0] via-[#ECEEF2] to-[#ECEEF2]">
       {/* Animated Hero Particles, Sprinkles & Visible Grid Canvas */}
       <HeroParticles />
 
@@ -48,61 +52,6 @@ export default function HomePage() {
         <div className="absolute top-36 -left-28 w-[600px] h-[600px] bg-gradient-to-br from-emerald-400/30 via-teal-500/15 to-transparent rounded-full blur-3xl animate-float-reverse" />
         <div className="absolute top-48 -right-28 w-[600px] h-[600px] bg-gradient-to-bl from-amber-400/30 via-pink-500/20 to-transparent rounded-full blur-3xl animate-pulse-subtle" />
 
-        {/* Concentric subtle geometric orbital rings */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[920px] h-[920px] border border-indigo-200/40 rounded-full opacity-40 pointer-events-none" />
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1250px] h-[1250px] border border-emerald-200/30 rounded-full opacity-30 pointer-events-none" />
-
-        {/* Flowing Ambient Waves in Hero First-Half */}
-        <svg
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1400px] h-[580px] opacity-[0.35] pointer-events-none"
-          viewBox="0 0 1400 580"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0 240C250 320 420 160 700 220C980 280 1150 180 1400 240"
-            stroke="url(#gradient-wave-1)"
-            strokeWidth="1.5"
-            strokeDasharray="4 4"
-          />
-          <path
-            d="M0 290C280 200 450 340 700 270C950 200 1120 310 1400 260"
-            stroke="url(#gradient-wave-2)"
-            strokeWidth="2"
-          />
-          <path
-            d="M0 350C220 390 480 250 700 320C920 390 1180 280 1400 330"
-            stroke="url(#gradient-wave-1)"
-            strokeWidth="1.2"
-          />
-          <defs>
-            <linearGradient id="gradient-wave-1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#4F46E5" stopOpacity="0.3" />
-              <stop offset="50%" stopColor="#7C3AED" stopOpacity="0.7" />
-              <stop offset="100%" stopColor="#059669" stopOpacity="0.4" />
-            </linearGradient>
-            <linearGradient id="gradient-wave-2" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#059669" stopOpacity="0.3" />
-              <stop offset="50%" stopColor="#4F46E5" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#F59E0B" stopOpacity="0.3" />
-            </linearGradient>
-          </defs>
-        </svg>
-
-        {/* Floating Peripheral Frosted Emblems in Left & Right Margins */}
-        <div className="absolute top-24 left-[5%] w-16 h-16 rounded-2xl border border-indigo-200/70 bg-white/60 backdrop-blur-sm opacity-60 rotate-12 flex items-center justify-center animate-float-slow pointer-events-none hidden lg:flex shadow-soft">
-          <span className="text-xl">⚛️</span>
-        </div>
-        <div className="absolute top-64 left-[10%] w-12 h-12 rounded-full border border-emerald-200/80 bg-white/50 backdrop-blur-sm opacity-55 -rotate-6 flex items-center justify-center animate-float-reverse pointer-events-none hidden xl:flex shadow-soft">
-          <span className="text-sm">🎯</span>
-        </div>
-
-        <div className="absolute top-20 right-[6%] w-16 h-16 rounded-2xl border border-amber-200/70 bg-white/60 backdrop-blur-sm opacity-60 -rotate-12 flex items-center justify-center animate-float-reverse pointer-events-none hidden lg:flex shadow-soft">
-          <span className="text-xl">🏆</span>
-        </div>
-        <div className="absolute top-60 right-[11%] w-12 h-12 rounded-full border border-purple-200/80 bg-white/50 backdrop-blur-sm opacity-55 rotate-6 flex items-center justify-center animate-float-slow pointer-events-none hidden xl:flex shadow-soft">
-          <span className="text-sm">⚡</span>
-        </div>
       </div>
 
       <div className="py-14 md:py-20 flex flex-col items-center justify-center text-center max-w-5xl mx-auto px-4">
@@ -113,46 +62,45 @@ export default function HomePage() {
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
           </span>
           <span className="font-bold tracking-wider flex items-center gap-1.5">
-            Next-Generation Mentorship
+            1:1 Mentorship for JEE &amp; NEET Aspirants
             <Sparkles className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
           </span>
         </div>
 
-        {/* Main Centered Hero Heading - Rich Multi-Stop Gradient on 'Perfect Mentor' */}
-        <h1 className="text-6xl sm:text-7xl md:text-8xl font-black font-display text-ink tracking-tight leading-[1.03] mb-6">
+        {/* Main Centered Hero Heading - Clean, Bold, High Impact */}
+        <h1 className="text-6xl sm:text-7xl md:text-8xl font-black font-display text-ink tracking-tight leading-[1.03] mb-6 select-none">
           Find Your <br />
-          <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-emerald-600 bg-clip-text text-transparent animate-gradient-flow">
+          <span className="bg-gradient-to-r from-indigo-600 via-blue-600 to-emerald-600 bg-clip-text text-transparent animate-gradient-flow">
             Perfect Mentor
           </span>
         </h1>
 
-        {/* Centered Subtitle */}
+        {/* Centered Subtitle tailored for JEE & NEET Aspirants */}
         <p className="text-lg sm:text-xl text-ink-muted leading-relaxed mb-8 max-w-2xl font-normal">
-          Connect with expert mentors from top organizations. <br className="hidden sm:inline" />
-          Personalized guidance for your career success.
+          Guided by rankers who already cracked <strong className="font-semibold text-ink">JEE &amp; NEET</strong> and study at top <strong className="text-indigo-600 font-semibold">IITs &amp; AIIMS</strong>. Connect with a mentor who aligns with your exact stage — whether you&apos;re a <span className="inline-block font-semibold text-indigo-700 bg-indigo-50/90 px-2 py-0.5 rounded border border-indigo-200/70">Dropper</span>, in <span className="inline-block font-semibold text-emerald-700 bg-emerald-50/90 px-2 py-0.5 rounded border border-emerald-200/70">Class 12th</span>, or starting in <span className="inline-block font-semibold text-purple-700 bg-purple-50/90 px-2 py-0.5 rounded border border-purple-200/70">Class 11th</span>.
         </p>
 
-        {/* Quick Domain Tags with vibrant jewel badges */}
+        {/* Quick Exam & Preparation Stage Filter Badges */}
         <div className="flex flex-wrap items-center justify-center gap-2.5 mb-10">
           <Link href="/mentors" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-50/90 border border-blue-200/80 text-xs font-semibold text-blue-700 shadow-soft hover:bg-blue-100/90 hover:scale-105 transition-all">
             <span>⚛️</span>
-            <span>JEE Prep</span>
+            <span>JEE Advanced &amp; Mains</span>
           </Link>
           <Link href="/mentors" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50/90 border border-emerald-200/80 text-xs font-semibold text-emerald-700 shadow-soft hover:bg-emerald-100/90 hover:scale-105 transition-all">
             <span>🧬</span>
-            <span>NEET Medical</span>
-          </Link>
-          <Link href="/mentors" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-purple-50/90 border border-purple-200/80 text-xs font-semibold text-purple-700 shadow-soft hover:bg-purple-100/90 hover:scale-105 transition-all">
-            <span>💻</span>
-            <span>GATE / PSU</span>
+            <span>NEET-UG (AIIMS &amp; GMCs)</span>
           </Link>
           <Link href="/mentors" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-50/90 border border-amber-200/80 text-xs font-semibold text-amber-800 shadow-soft hover:bg-amber-100/90 hover:scale-105 transition-all">
             <span>🎯</span>
-            <span>1:1 Accountability</span>
+            <span>Dropper / Repeater Strategy</span>
+          </Link>
+          <Link href="/mentors" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-purple-50/90 border border-purple-200/80 text-xs font-semibold text-purple-700 shadow-soft hover:bg-purple-100/90 hover:scale-105 transition-all">
+            <span>📚</span>
+            <span>Class 11 &amp; 12 Foundation</span>
           </Link>
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-rose-50/90 border border-rose-200/80 text-xs font-semibold text-rose-700 shadow-soft">
             <Flame className="w-3.5 h-3.5 text-rose-500 fill-rose-400" />
-            <span>Top 1% Rankers</span>
+            <span>AIR 1–500 Rankers Only</span>
           </span>
         </div>
 
@@ -202,7 +150,7 @@ export default function HomePage() {
             <span>4.9 / 5.0 Rating</span>
           </div>
           <span className="text-ink-faint hidden sm:inline">•</span>
-          <span className="text-ink-muted font-medium">Trusted by 2,400+ Aspirants from Top IITs & AIIMS</span>
+          <span className="text-ink-muted font-medium">Mentors from IIT Bombay, IIT Delhi, AIIMS New Delhi &amp; Top GMCs</span>
         </div>
 
         {/* Interactive UI Mockup Card Showcase */}
@@ -406,11 +354,10 @@ export default function HomePage() {
                 </div>
               </div>
               <h3 className="text-lg font-bold font-display text-ink mb-2">
-                Subscribe to a Cohort
+                Match by Preparation Stage
               </h3>
               <p className="text-xs text-ink-muted leading-relaxed">
-                Browse verified mentors, reserve limited seats with real-time atomic locking,
-                and join dedicated cohorts tailored to your goals.
+                Connect with a mentor who walked your exact shoes — whether you&apos;re a repeater/dropper boosting score, managing Class 12 boards + entrance, or building class 11 fundamentals.
               </p>
             </Card>
 
@@ -425,11 +372,10 @@ export default function HomePage() {
                 </div>
               </div>
               <h3 className="text-lg font-bold font-display text-ink mb-2">
-                Weekly Accountability
+                Weekly Goals &amp; Accountability
               </h3>
               <p className="text-xs text-ink-muted leading-relaxed">
-                Tackle clear weekly objectives. Mark tasks complete with on-time or late
-                tracking against scheduled deadlines and 1:1 checkpoints.
+                Tackle focused weekly problem sheets, revision milestones, and mock tests. Stay on track with on-time delivery tracking and verified mentor review.
               </p>
             </Card>
 
@@ -444,27 +390,288 @@ export default function HomePage() {
                 </div>
               </div>
               <h3 className="text-lg font-bold font-display text-ink mb-2">
-                Dynamic Efficiency Scoring
+                1:1 Strategy &amp; Efficiency Scoring
               </h3>
               <p className="text-xs text-ink-muted leading-relaxed">
-                Mentors review and approve submissions, dynamically generating your
-                accountability efficiency score to measure sustained momentum.
+                Analyze mock test errors, eliminate negative marking habits, and calibrate your daily study efficiency in private 1:1 strategy calls with your mentor.
               </p>
             </Card>
           </div>
         </div>
 
+        {/* Why Serious Aspirants Choose Mentskool - Full Conviction & Marketing Feature Matrix */}
+        <div className="w-full space-y-8 text-left mt-20">
+          <div className="text-center max-w-3xl mx-auto space-y-2.5">
+            <span className="text-xs font-bold text-emerald-700 uppercase tracking-widest bg-emerald-50 border border-emerald-200/60 px-3.5 py-1 rounded-full shadow-soft">
+              Why Serious Aspirants Choose Mentskool
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black font-display text-ink tracking-tight pt-1">
+              Everything You Need to Crack Your Exam — With 100% Freedom
+            </h2>
+            <p className="text-sm sm:text-base text-ink-muted max-w-2xl mx-auto leading-relaxed">
+              Unlike crowded coaching factories where you are just a roll number, Mentskool gives you personal accountability from real rankers with zero lock-in risk.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
+            {/* Feature 1: Quizzes & Tasks */}
+            <Card className="p-6 bg-white border border-mist border-t-4 border-t-blue-500 shadow-card hover:shadow-elevated hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between space-y-4 group">
+              <div className="space-y-3">
+                <div className="w-11 h-11 rounded-control bg-blue-50 text-blue-600 flex items-center justify-center font-bold shadow-soft group-hover:scale-105 transition-transform">
+                  <CheckSquare className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-base font-display text-ink">
+                    Mentor-Assigned Quizzes &amp; Tasks
+                  </h3>
+                  <p className="text-xs text-ink-muted leading-relaxed mt-1">
+                    Your mentor assigns chapter-wise problem sets and weekly diagnostic quizzes tailored to your weak topics. No more guessing what to solve next.
+                  </p>
+                </div>
+              </div>
+
+              {/* Micro-UI Preview Widget */}
+              <div className="bg-[#F8FAFC] border border-mist/80 rounded-control p-3 space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-ink flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                    Rotational Motion Quiz
+                  </span>
+                  <span className="text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-1.5 py-0.5 rounded">
+                    Weekly Due
+                  </span>
+                </div>
+                <div className="text-[11px] text-ink-muted flex items-center justify-between pt-0.5">
+                  <span>25 Questions • 45m</span>
+                  <span className="text-emerald-600 font-semibold flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Reviewed
+                  </span>
+                </div>
+              </div>
+
+              <div className="pt-1">
+                <span className="text-[11px] font-bold text-blue-700 bg-blue-50/90 px-3 py-1 rounded-full border border-blue-200/70 inline-flex items-center gap-1.5 shadow-soft">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Verified feedback on every submission</span>
+                </span>
+              </div>
+            </Card>
+
+            {/* Feature 2: Efficiency & Cohort Ranks */}
+            <Card className="p-6 bg-white border border-mist border-t-4 border-t-emerald-500 shadow-card hover:shadow-elevated hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between space-y-4 group">
+              <div className="space-y-3">
+                <div className="w-11 h-11 rounded-control bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold shadow-soft group-hover:scale-105 transition-transform">
+                  <TrendingUp className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-base font-display text-ink">
+                    Efficiency Score &amp; Cohort Ranks
+                  </h3>
+                  <p className="text-xs text-ink-muted leading-relaxed mt-1">
+                    Stay on track with our dynamic accountability score based on on-time delivery and accuracy. Benchmark your rank among the 10 peers in your dedicated cohort.
+                  </p>
+                </div>
+              </div>
+
+              {/* Micro-UI Preview Widget */}
+              <div className="bg-[#F8FAFC] border border-mist/80 rounded-control p-3 space-y-1.5">
+                <div className="flex items-center justify-between text-[11px] text-ink-muted">
+                  <span className="font-bold text-ink">Cohort Leaderboard</span>
+                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">Live Week 4</span>
+                </div>
+                <div className="space-y-1 text-xs">
+                  <div className="flex items-center justify-between p-1 px-2 rounded bg-white border border-mist text-[11px] font-medium text-ink-muted">
+                    <span>🥇 #1 Aryan K.</span>
+                    <span className="font-bold text-ink">96%</span>
+                  </div>
+                  <div className="flex items-center justify-between p-1 px-2 rounded bg-emerald-50 border border-emerald-200 text-[11px] font-bold text-emerald-900">
+                    <span>🥈 #2 You</span>
+                    <span>94%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-1">
+                <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50/90 px-3 py-1 rounded-full border border-emerald-200/70 inline-flex items-center gap-1.5 shadow-soft">
+                  <Trophy className="w-3.5 h-3.5" />
+                  <span>Healthy peer motivation, zero anonymity</span>
+                </span>
+              </div>
+            </Card>
+
+            {/* Feature 3: 1:1 Strategy & Cohort Discussions */}
+            <Card className="p-6 bg-white border border-mist border-t-4 border-t-purple-500 shadow-card hover:shadow-elevated hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between space-y-4 group">
+              <div className="space-y-3">
+                <div className="w-11 h-11 rounded-control bg-purple-50 text-purple-600 flex items-center justify-center font-bold shadow-soft group-hover:scale-105 transition-transform">
+                  <MessageSquare className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-base font-display text-ink">
+                    1:1 Strategy Calls &amp; Cohort Meets
+                  </h3>
+                  <p className="text-xs text-ink-muted leading-relaxed mt-1">
+                    Schedule private 1:1 calls to analyze mock test mistakes, eliminate negative marking, and discuss tricky questions in your private cohort group.
+                  </p>
+                </div>
+              </div>
+
+              {/* Micro-UI Preview Widget */}
+              <div className="bg-[#F8FAFC] border border-mist/80 rounded-control p-3 space-y-1.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-ink flex items-center gap-1.5">
+                    <Calendar className="w-3.5 h-3.5 text-purple-600" />
+                    Upcoming 1:1 Strategy Call
+                  </span>
+                  <span className="text-[10px] font-bold text-purple-700 bg-purple-50 border border-purple-200 px-1.5 py-0.5 rounded">
+                    Tomorrow 7 PM
+                  </span>
+                </div>
+                <p className="text-[11px] text-ink-muted leading-tight pt-0.5">
+                  Agenda: Fixing Negative Marking in Organic Chemistry Mocks
+                </p>
+              </div>
+
+              <div className="pt-1">
+                <span className="text-[11px] font-bold text-purple-700 bg-purple-50/90 px-3 py-1 rounded-full border border-purple-200/70 inline-flex items-center gap-1.5 shadow-soft">
+                  <Calendar className="w-3.5 h-3.5" />
+                  <span>Personalized roadmap every fortnight</span>
+                </span>
+              </div>
+            </Card>
+
+            {/* Feature 4: Switch Mentors Anytime */}
+            <Card className="p-6 bg-white border border-mist border-t-4 border-t-amber-500 shadow-card hover:shadow-elevated hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between space-y-4 group">
+              <div className="space-y-3">
+                <div className="w-11 h-11 rounded-control bg-amber-50 text-amber-600 flex items-center justify-center font-bold shadow-soft group-hover:scale-105 transition-transform">
+                  <RefreshCw className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-base font-display text-ink">
+                    Switch Mentors Anytime — Zero Risk
+                  </h3>
+                  <p className="text-xs text-ink-muted leading-relaxed mt-1">
+                    If your mentor&apos;s guidance style doesn&apos;t click, switch to any other mentor cohort or leave at the end of the month. You are never locked into long annual contracts.
+                  </p>
+                </div>
+              </div>
+
+              {/* Micro-UI Preview Widget */}
+              <div className="bg-[#F8FAFC] border border-mist/80 rounded-control p-3 space-y-1.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-amber-900 flex items-center gap-1.5">
+                    <ShieldCheck className="w-4 h-4 text-amber-600" />
+                    1-Click Cohort Transfer
+                  </span>
+                  <span className="text-[10px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded">
+                    Active
+                  </span>
+                </div>
+                <p className="text-[11px] text-ink-muted leading-tight pt-0.5">
+                  Change mentor anytime with full credit rollover. Zero cancellation penalty.
+                </p>
+              </div>
+
+              <div className="pt-1">
+                <span className="text-[11px] font-bold text-amber-700 bg-amber-50/90 px-3 py-1 rounded-full border border-amber-200/70 inline-flex items-center gap-1.5 shadow-soft">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>100% student choice guarantee</span>
+                </span>
+              </div>
+            </Card>
+
+            {/* Feature 5: End-of-Month Reviews */}
+            <Card className="p-6 bg-white border border-mist border-t-4 border-t-rose-500 shadow-card hover:shadow-elevated hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between space-y-4 group">
+              <div className="space-y-3">
+                <div className="w-11 h-11 rounded-control bg-rose-50 text-rose-600 flex items-center justify-center font-bold shadow-soft group-hover:scale-105 transition-transform">
+                  <Star className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-base font-display text-ink">
+                    Monthly Reviews &amp; Transparency
+                  </h3>
+                  <p className="text-xs text-ink-muted leading-relaxed mt-1">
+                    Submit honest reviews and ratings for your mentor at the end of every month. This ensures only truly dedicated, high-impact rankers mentor on Mentskool.
+                  </p>
+                </div>
+              </div>
+
+              {/* Micro-UI Preview Widget */}
+              <div className="bg-[#F8FAFC] border border-mist/80 rounded-control p-3 space-y-1.5">
+                <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center text-amber-500 font-bold text-[11px]">
+                    {"★".repeat(5)} <span className="text-ink font-semibold ml-1">5.0 / 5.0</span>
+                  </div>
+                  <span className="text-[10px] font-bold text-rose-700 bg-rose-50 border border-rose-200 px-1.5 py-0.5 rounded">
+                    Month-End Review
+                  </span>
+                </div>
+                <p className="text-[11px] text-ink-muted italic border-l-2 border-rose-400 pl-2 leading-tight pt-0.5">
+                  &ldquo;His mock analysis helped me jump from 120 to 185 in Physics.&rdquo;
+                </p>
+              </div>
+
+              <div className="pt-1">
+                <span className="text-[11px] font-bold text-rose-700 bg-rose-50/90 px-3 py-1 rounded-full border border-rose-200/70 inline-flex items-center gap-1.5 shadow-soft">
+                  <Award className="w-3.5 h-3.5" />
+                  <span>Community-verified mentor track records</span>
+                </span>
+              </div>
+            </Card>
+
+            {/* Feature 6: Best Mentors at Fraction of Cost */}
+            <Card className="p-6 bg-white border border-mist border-t-4 border-t-indigo-500 shadow-card hover:shadow-elevated hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between space-y-4 group">
+              <div className="space-y-3">
+                <div className="w-11 h-11 rounded-control bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold shadow-soft group-hover:scale-105 transition-transform">
+                  <Zap className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-base font-display text-ink">
+                    Top Rankers, Low Cost, Max 10 Seats
+                  </h3>
+                  <p className="text-xs text-ink-muted leading-relaxed mt-1">
+                    Get direct access to AIR 1–500 IIT &amp; AIIMS rankers for ₹2,999 – ₹4,999/mo instead of paying ₹1.5+ Lakhs at coaching factories where you get no personal guidance.
+                  </p>
+                </div>
+              </div>
+
+              {/* Micro-UI Preview Widget */}
+              <div className="bg-[#F8FAFC] border border-mist/80 rounded-control p-3 space-y-1.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-ink flex items-center gap-1">
+                    <Lock className="w-3.5 h-3.5 text-indigo-600" />
+                    Atomic Seat Locking
+                  </span>
+                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded">
+                    Max 10 / Cohort
+                  </span>
+                </div>
+                <div className="flex items-baseline justify-between text-xs pt-0.5">
+                  <span className="font-bold text-brand text-sm">₹3,499 / mo</span>
+                  <span className="text-[10px] text-ink-faint line-through">₹1,50,000 Coaching Fees</span>
+                </div>
+              </div>
+
+              <div className="pt-1">
+                <span className="text-[11px] font-bold text-indigo-700 bg-indigo-50/90 px-3 py-1 rounded-full border border-indigo-200/70 inline-flex items-center gap-1.5 shadow-soft">
+                  <Lock className="w-3.5 h-3.5" />
+                  <span>Strict 10-seat atomic locking</span>
+                </span>
+              </div>
+            </Card>
+          </div>
+        </div>
+
         {/* Bottom Call to Action Card with Rich Gradient Flare */}
-        <div className="w-full mt-16 relative group">
+        <div className="w-full mt-20 relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-emerald-500/20 rounded-card blur-lg opacity-50 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
           <Card className="p-8 sm:p-10 bg-gradient-to-r from-[#1E294B] via-[#2B3A67] to-[#1E1B4B] text-white rounded-card shadow-elevated text-center sm:text-left flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-transparent">
             <div className="space-y-2">
               <h3 className="text-2xl font-black font-display tracking-tight text-white flex items-center gap-2 justify-center sm:justify-start">
-                Ready to find your mentor?
+                Ready to crack JEE or NEET with a proven ranker?
                 <Sparkles className="w-5 h-5 text-amber-400" />
               </h3>
               <p className="text-sm text-white/80 max-w-lg">
-                Join a high-accountability cohort today. Seats are strictly limited per mentor to ensure personalized guidance.
+                Connect with an IITian or AIIMS doctor who walked your exact shoes. Limited to 10 students per cohort for true 1:1 attention.
               </p>
             </div>
             <Link href="/mentors" className="flex-shrink-0">
@@ -472,7 +679,7 @@ export default function HomePage() {
                 size="lg"
                 className="bg-white text-brand hover:bg-white/90 font-bold px-7 py-3.5 rounded-full text-sm shadow-card hover:-translate-y-0.5 transition-all"
               >
-                Browse All Cohorts →
+                Find a Mentor →
               </Button>
             </Link>
           </Card>

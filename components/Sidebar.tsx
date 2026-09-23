@@ -33,6 +33,7 @@ const STUDENT_NAV_ITEMS: NavItem[] = [
   { label: "Messages", href: "/messages", icon: MessageSquare },
   { label: "Schedule", href: "/schedule", icon: Calendar },
   { label: "Quizzes", href: "/quizzes", icon: BookOpen },
+  { label: "My Profile", href: "/dashboard/profile", icon: Settings },
 ];
 
 const MENTOR_NAV_ITEMS: NavItem[] = [
@@ -156,10 +157,22 @@ export const Sidebar: React.FC = () => {
             {/* User section at bottom */}
             {user && (
               <div className="pt-4 border-t border-mist space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#FAFAF9] border border-mist flex items-center justify-center font-display font-bold text-xs text-ink">
-                    {user.full_name?.charAt(0).toUpperCase() || "U"}
-                  </div>
+                <Link
+                  href={user.role === "MENTOR" ? "/mentor/profile" : "/dashboard/profile"}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 p-1.5 -mx-1.5 rounded-control hover:bg-[#FAFAF9] transition-colors"
+                >
+                  {user.avatar_url ? (
+                    <img
+                      src={user.avatar_url}
+                      alt={user.full_name}
+                      className="w-8 h-8 rounded-full object-cover border border-mist flex-shrink-0"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-[#FAFAF9] border border-mist flex items-center justify-center font-display font-bold text-xs text-ink flex-shrink-0">
+                      {user.full_name?.charAt(0).toUpperCase() || "U"}
+                    </div>
+                  )}
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-semibold text-ink truncate">
                       {user.full_name}
@@ -168,7 +181,7 @@ export const Sidebar: React.FC = () => {
                       {user.role}
                     </p>
                   </div>
-                </div>
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="w-full flex items-center justify-center gap-2 text-xs font-semibold py-2 px-3 rounded-control border border-mist hover:bg-[#FAFAF9] text-ink transition-colors"
@@ -214,19 +227,31 @@ export const Sidebar: React.FC = () => {
         {/* User Card & Sign Out at Bottom */}
         {user && (
           <div className="pt-4 border-t border-mist space-y-3">
-            <div className="flex items-center gap-3 px-1">
-              <div className="w-8 h-8 rounded-full bg-[#FAFAF9] border border-mist flex items-center justify-center font-display font-bold text-xs text-ink flex-shrink-0">
-                {user.full_name?.charAt(0).toUpperCase() || "U"}
-              </div>
+            <Link
+              href={user.role === "MENTOR" ? "/mentor/profile" : "/dashboard/profile"}
+              className="flex items-center gap-3 px-2 py-1.5 rounded-control hover:bg-[#FAFAF9] transition-colors group cursor-pointer"
+              title="Edit Profile"
+            >
+              {user.avatar_url ? (
+                <img
+                  src={user.avatar_url}
+                  alt={user.full_name}
+                  className="w-8 h-8 rounded-full object-cover border border-mist flex-shrink-0"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-[#FAFAF9] border border-mist flex items-center justify-center font-display font-bold text-xs text-ink flex-shrink-0">
+                  {user.full_name?.charAt(0).toUpperCase() || "U"}
+                </div>
+              )}
               <div className="min-w-0 flex-1">
-                <p className="text-xs font-semibold text-ink truncate leading-tight">
+                <p className="text-xs font-semibold text-ink group-hover:text-brand transition-colors truncate leading-tight">
                   {user.full_name}
                 </p>
                 <p className="text-[10px] text-ink-faint truncate mt-0.5">
                   {user.email}
                 </p>
               </div>
-            </div>
+            </Link>
 
             <button
               onClick={handleLogout}

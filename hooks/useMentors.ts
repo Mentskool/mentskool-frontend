@@ -51,6 +51,9 @@ export function useCreateMentorProfile() {
     mutationFn: (payload: {
       bio: string;
       category: string;
+      college?: string | null;
+      exam_rank?: string | null;
+      avatar_url?: string | null;
       intro_youtube_url?: string | null;
       seat_limit: number;
       price_per_month: number;
@@ -69,6 +72,9 @@ export function useUpdateMentorProfile() {
     mutationFn: (payload: {
       bio?: string;
       category?: string;
+      college?: string | null;
+      exam_rank?: string | null;
+      avatar_url?: string | null;
       intro_youtube_url?: string | null;
       seat_limit?: number;
       price_per_month?: number;

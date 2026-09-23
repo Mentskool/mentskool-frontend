@@ -90,13 +90,7 @@ export const Navbar: React.FC = () => {
                   </Link>
                 </>
               )
-            ) : (
-              <>
-                <Link href="/mentors" className={navItemClass("/mentors")}>
-                  Explore Mentors
-                </Link>
-              </>
-            )}
+            ) : null}
           </nav>
         </div>
 

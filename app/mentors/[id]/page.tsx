@@ -10,6 +10,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { ApiError, CATEGORY_LABELS } from "@/lib/types";
+import { GraduationCap, Trophy } from "lucide-react";
 
 const getYouTubeEmbedUrl = (url?: string | null): string | null => {
   if (!url) return null;
@@ -178,27 +179,58 @@ export default function MentorDetailPage() {
     <div className="max-w-6xl mx-auto space-y-6">
       {/* Top Breadcrumb & Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-mist">
-        <div>
-          <div className="flex items-center gap-2 text-xs font-semibold text-ink-faint uppercase tracking-wider mb-1">
-            <Link
-              href="/mentors"
-              className="hover:text-ink transition-colors flex items-center gap-1"
-            >
-              <span>Mentors</span>
-              <span>/</span>
-            </Link>
-            <span className="text-moss flex items-center gap-1">
-              <span>▷</span>
-              <span>About This Mentor</span>
-            </span>
-          </div>
-          <div className="flex items-center gap-3">
-            <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-ink tracking-tight">
-              {mentor.full_name}
-            </h1>
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-moss/10 text-moss border border-moss/20">
-              {CATEGORY_LABELS[mentor.category] || mentor.category}
-            </span>
+        <div className="flex items-start gap-4">
+          {mentor.avatar_url ? (
+            <img
+              src={mentor.avatar_url}
+              alt={mentor.full_name}
+              className="w-16 h-16 rounded-full object-cover shadow-sm ring-2 ring-white border border-mist flex-shrink-0 mt-1"
+            />
+          ) : (
+            <div className="w-16 h-16 rounded-full bg-brand text-white font-bold text-xl flex items-center justify-center shadow-sm ring-2 ring-white flex-shrink-0 mt-1">
+              {mentor.full_name
+                .split(" ")
+                .map((n) => n[0])
+                .slice(0, 2)
+                .join("")
+                .toUpperCase()}
+            </div>
+          )}
+
+          <div>
+            <div className="flex items-center gap-2 text-xs font-semibold text-ink-faint uppercase tracking-wider mb-1">
+              <Link
+                href="/mentors"
+                className="hover:text-ink transition-colors flex items-center gap-1"
+              >
+                <span>Mentors</span>
+                <span>/</span>
+              </Link>
+              <span className="text-moss flex items-center gap-1">
+                <span>▷</span>
+                <span>About This Mentor</span>
+              </span>
+            </div>
+            <div className="flex items-center gap-3 flex-wrap">
+              <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-ink tracking-tight">
+                {mentor.full_name}
+              </h1>
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-moss/10 text-moss border border-moss/20">
+                {CATEGORY_LABELS[mentor.category] || mentor.category}
+              </span>
+              {mentor.exam_rank && (
+                <span className="inline-flex items-center gap-1 text-xs font-extrabold text-brand bg-brand/10 px-2.5 py-0.5 rounded-full border border-brand/20">
+                  <Trophy className="w-3 h-3 text-amber" />
+                  {mentor.exam_rank}
+                </span>
+              )}
+            </div>
+            {mentor.college && (
+              <div className="flex items-center gap-1.5 text-xs text-ink-muted mt-1.5 font-medium">
+                <GraduationCap className="w-3.5 h-3.5 text-brand" />
+                <span>{mentor.college}</span>
+              </div>
+            )}
           </div>
         </div>
 

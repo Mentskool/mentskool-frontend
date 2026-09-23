@@ -8,6 +8,7 @@ interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   setAuth: (user: User, accessToken: string, refreshToken: string) => void;
+  setUser: (user: User) => void;
   setAccessToken: (accessToken: string) => void;
   logout: () => void;
   initFromStorage: () => void;
@@ -33,6 +34,13 @@ export const useAuthStore = create<AuthState>((set) => ({
       isAuthenticated: true,
       isLoading: false,
     });
+  },
+
+  setUser: (user) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("mentskool_user", JSON.stringify(user));
+    }
+    set({ user });
   },
 
   setAccessToken: (accessToken) => {

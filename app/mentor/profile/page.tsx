@@ -9,6 +9,12 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { CATEGORY_LABELS, MentorCategory } from "@/lib/types";
+import {
+  Image as ImageIcon,
+  User as UserIcon,
+  GraduationCap,
+  Trophy,
+} from "lucide-react";
 
 const getYouTubeEmbedUrl = (url?: string | null): string | null => {
   if (!url) return null;
@@ -19,12 +25,15 @@ const getYouTubeEmbedUrl = (url?: string | null): string | null => {
 
 export default function MentorProfilePage() {
   const router = useRouter();
-  const { user, isAuthenticated, isLoading: authLoading } = useAuthStore();
+  const { user, setUser, isAuthenticated, isLoading: authLoading } = useAuthStore();
   const { data: profile, isLoading: profileLoading, refetch } = useMentor(user?.id);
   const updateMutation = useUpdateMentorProfile();
   const createMutation = useCreateMentorProfile();
 
   const [category, setCategory] = useState<MentorCategory>("JEE_PREP");
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [college, setCollege] = useState("");
+  const [examRank, setExamRank] = useState("");
   const [bio, setBio] = useState("");
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [seatLimit, setSeatLimit] = useState(10);
@@ -35,14 +44,20 @@ export default function MentorProfilePage() {
   } | null>(null);
 
   useEffect(() => {
+    if (user && user.avatar_url && !avatarUrl) {
+      setAvatarUrl(user.avatar_url);
+    }
     if (profile) {
       setCategory(profile.category || "JEE_PREP");
+      if (profile.avatar_url) setAvatarUrl(profile.avatar_url);
+      setCollege(profile.college || "");
+      setExamRank(profile.exam_rank || "");
       setBio(profile.bio || "");
       setYoutubeUrl(profile.intro_youtube_url || "");
       setSeatLimit(profile.seat_limit || 10);
       setPricePerMonth(Number(profile.price_per_month) || 0);
     }
-  }, [profile]);
+  }, [profile, user]);
 
   if (authLoading || (!user && isAuthenticated)) {
     return (
@@ -74,6 +89,9 @@ export default function MentorProfilePage() {
 
     const payload = {
       category,
+      avatar_url: avatarUrl.trim() || null,
+      college: college.trim() || null,
+      exam_rank: examRank.trim() || null,
       bio: bio.trim(),
       intro_youtube_url: youtubeUrl.trim() || null,
       seat_limit: Number(seatLimit),
@@ -86,6 +104,9 @@ export default function MentorProfilePage() {
       } else {
         await updateMutation.mutateAsync(payload);
       }
+      if (user) {
+        setUser({ ...user, avatar_url: avatarUrl.trim() || null });
+      }
       setFeedback({
         type: "success",
         message: "Profile settings saved successfully!",
@@ -95,6 +116,9 @@ export default function MentorProfilePage() {
       if (err?.status === 404) {
         try {
           await createMutation.mutateAsync(payload);
+          if (user) {
+            setUser({ ...user, avatar_url: avatarUrl.trim() || null });
+          }
           setFeedback({
             type: "success",
             message: "Profile settings saved successfully!",
@@ -151,6 +175,59 @@ export default function MentorProfilePage() {
 
       <Card className="bg-white border-mist p-6 sm:p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Avatar Section */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-4 rounded-card bg-[#FAFAF9] border border-mist">
+            <div className="relative group">
+              {avatarUrl ? (
+                <img
+                  src={avatarUrl}
+                  alt={user?.full_name || "Mentor Avatar"}
+                  className="w-20 h-20 rounded-full object-cover border-2 border-brand shadow-sm bg-white"
+                />
+              ) : (
+                <div className="w-20 h-20 rounded-full bg-brand/10 border-2 border-brand/20 flex items-center justify-center font-display font-bold text-2xl text-brand">
+                  {user?.full_name ? user.full_name.charAt(0).toUpperCase() : <UserIcon className="w-8 h-8" />}
+                </div>
+              )}
+            </div>
+
+            <div className="flex-1 w-full space-y-2">
+              <label className="text-xs font-semibold uppercase tracking-wider text-ink flex items-center gap-1.5">
+                <ImageIcon className="w-3.5 h-3.5 text-brand" />
+                Mentor Profile Photo URL
+              </label>
+              <Input
+                type="url"
+                value={avatarUrl}
+                onChange={(e) => setAvatarUrl(e.target.value)}
+                placeholder="https://images.unsplash.com/... or direct image link"
+                helperText="Students see your photo on mentor exploration cards and cohort dashboards."
+              />
+            </div>
+          </div>
+
+          {/* College Name & Exam Rank */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <Input
+                label="Dream College / University"
+                value={college}
+                onChange={(e) => setCollege(e.target.value)}
+                placeholder="e.g. IIT Bombay, AIIMS New Delhi"
+                helperText="Dropdown selection coming soon. Type your institution."
+              />
+            </div>
+            <div className="space-y-1">
+              <Input
+                label="Exam Rank / Percentile"
+                value={examRank}
+                onChange={(e) => setExamRank(e.target.value)}
+                placeholder="e.g. AIR 42 (JEE Adv), AIR 115 (NEET)"
+                helperText="Shown as a verified credential badge on your card."
+              />
+            </div>
+          </div>
+
           {/* Category Selector */}
           <div className="space-y-2">
             <label className="text-xs font-semibold uppercase tracking-wider text-ink-muted">

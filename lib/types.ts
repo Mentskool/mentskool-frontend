@@ -9,6 +9,11 @@ export interface User {
   email: string;
   full_name: string;
   role: UserRole;
+  avatar_url?: string | null;
+  target_exam?: string | null;
+  target_year?: number | null;
+  prep_stage?: string | null;
+  bio?: string | null;
   created_at: string;
 }
 
@@ -32,6 +37,9 @@ export interface MentorProfile {
   user_id: string;
   full_name: string;
   email: string;
+  avatar_url?: string | null;
+  college?: string | null;
+  exam_rank?: string | null;
   bio: string;
   category: MentorCategory;
   intro_youtube_url?: string | null;

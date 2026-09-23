@@ -20,6 +20,7 @@ import {
   Lock,
   ArrowRight,
   GraduationCap,
+  Trophy,
 } from "lucide-react";
 
 const CATEGORIES: { label: string; value?: MentorCategory }[] = [
@@ -59,6 +60,8 @@ export default function MentorsPage() {
         (m) =>
           m.full_name.toLowerCase().includes(q) ||
           m.bio.toLowerCase().includes(q) ||
+          (m.college && m.college.toLowerCase().includes(q)) ||
+          (m.exam_rank && m.exam_rank.toLowerCase().includes(q)) ||
           CATEGORY_LABELS[m.category]?.toLowerCase().includes(q) ||
           m.email.toLowerCase().includes(q)
       );
@@ -246,21 +249,43 @@ export default function MentorsPage() {
                     {/* Header: Avatar, Name, Rating */}
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-full bg-brand text-white font-bold text-base flex items-center justify-center shadow-soft ring-2 ring-white flex-shrink-0">
-                          {mentor.full_name
-                            .split(" ")
-                            .map((n) => n[0])
-                            .slice(0, 2)
-                            .join("")
-                            .toUpperCase()}
-                        </div>
-                        <div>
-                          <h3 className="font-display font-bold text-base text-ink group-hover:text-brand transition-colors leading-tight">
+                        {mentor.avatar_url ? (
+                          <img
+                            src={mentor.avatar_url}
+                            alt={mentor.full_name}
+                            className="w-12 h-12 rounded-full object-cover shadow-soft ring-2 ring-white border border-mist flex-shrink-0"
+                          />
+                        ) : (
+                          <div className="w-12 h-12 rounded-full bg-brand text-white font-bold text-base flex items-center justify-center shadow-soft ring-2 ring-white flex-shrink-0">
+                            {mentor.full_name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .slice(0, 2)
+                              .join("")
+                              .toUpperCase()}
+                          </div>
+                        )}
+                        <div className="min-w-0">
+                          <h3 className="font-display font-bold text-base text-ink group-hover:text-brand transition-colors leading-tight truncate">
                             {mentor.full_name}
                           </h3>
-                          <span className="text-[11px] font-semibold text-moss">
-                            {CATEGORY_LABELS[mentor.category] || mentor.category}
-                          </span>
+                          <div className="flex items-center gap-1.5 flex-wrap mt-0.5">
+                            <span className="text-[11px] font-semibold text-moss">
+                              {CATEGORY_LABELS[mentor.category] || mentor.category}
+                            </span>
+                            {mentor.exam_rank && (
+                              <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-brand bg-brand/10 px-2 py-0.5 rounded-full border border-brand/20">
+                                <Trophy className="w-2.5 h-2.5 text-amber" />
+                                {mentor.exam_rank}
+                              </span>
+                            )}
+                          </div>
+                          {mentor.college && (
+                            <div className="flex items-center gap-1 text-[11px] text-ink-muted mt-0.5 truncate">
+                              <GraduationCap className="w-3 h-3 text-brand flex-shrink-0" />
+                              <span className="truncate">{mentor.college}</span>
+                            </div>
+                          )}
                         </div>
                       </div>
 

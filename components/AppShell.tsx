@@ -28,12 +28,14 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({
     );
   }
 
+  const isHome = pathname === "/";
+
   // During SSR or initial hydration, render default shell to avoid mismatch
   if (!mounted) {
     return (
-      <div className="min-h-screen flex flex-col bg-paper">
+      <div className={`min-h-screen flex flex-col ${isHome ? "bg-[#ECEEF2]" : "bg-paper"}`}>
         <Navbar />
-        <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
+        <main className={`flex-1 w-full ${isHome ? "" : "max-w-6xl mx-auto px-4 sm:px-6 py-8"}`}>
           {children}
         </main>
       </div>
@@ -52,11 +54,11 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({
     );
   }
 
-  // Public / Guest layout: Clean top navbar + centered content
+  // Public / Guest layout: Clean top navbar + full-width or centered content
   return (
-    <div className="min-h-screen flex flex-col bg-paper">
+    <div className={`min-h-screen flex flex-col ${isHome ? "bg-[#ECEEF2]" : "bg-paper"}`}>
       <Navbar />
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
+      <main className={`flex-1 w-full ${isHome ? "" : "max-w-7xl mx-auto px-4 sm:px-6 py-8"}`}>
         {children}
       </main>
     </div>
