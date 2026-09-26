@@ -1,30 +1,31 @@
 @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,600,500&display=swap');
+@import 'katex/dist/katex.min.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #FAFAF9;
+  --background: #F8FAFC;
   --surface: #FFFFFF;
-  --surface-hover: #F7F8F9;
-  --hairline: #E7E9ED;
-  --mist: #E7E9ED;
-  --paper: #FAFAF9;
+  --surface-hover: #F1F5F9;
+  --hairline: #E2E8F0;
+  --mist: #E2E8F0;
+  --paper: #F8FAFC;
   --ink: #14181F;
   --ink-muted: #4A5260;
   --ink-faint: #8A94A6;
   --brand: #2B3A67;
   --indigo: #2B3A67;
-  --moss: #3C9D6B;
-  --mint: #3C9D6B;
+  --moss: #2563EB;
+  --mint: #0284C7;
   --amber: #E8A33D;
   --font-display: 'Satoshi', 'General Sans', sans-serif;
   --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 body {
-  background-color: #FAFAF9;
+  background-color: #F8FAFC;
   color: #14181F;
   font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
@@ -134,4 +135,38 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   animation: gradient-flow 6s ease infinite;
 }
 
+/* Brand Logo Animations */
+@keyframes logo-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(0.8deg);
+  }
+}
 
+@keyframes logo-glow {
+  0%, 100% {
+    filter: drop-shadow(0 2px 4px rgba(2, 132, 199, 0.08));
+  }
+  50% {
+    filter: drop-shadow(0 3px 8px rgba(14, 165, 233, 0.18));
+  }
+}
+
+@keyframes sheen-sweep {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-20deg);
+  }
+}
+
+.animate-logo-float {
+  animation: logo-float 4.5s ease-in-out infinite, logo-glow 4.5s ease-in-out infinite;
+}
+
+.animate-sheen {
+  animation: sheen-sweep 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}

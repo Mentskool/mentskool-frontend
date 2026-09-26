@@ -7,24 +7,24 @@ import { useSubscriptions } from "@/hooks/useSubscriptions";
 import { useAuthStore } from "@/store/authStore";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { SeatBadge } from "@/components/SeatBadge";
 import { CardSkeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { CATEGORY_LABELS, MentorCategory } from "@/lib/types";
+import { ActivityHeatmap } from "@/components/ActivityHeatmap";
 import {
   Search,
   SlidersHorizontal,
-  Star,
   ArrowLeft,
-  Sparkles,
-  Lock,
-  ArrowRight,
   GraduationCap,
   Trophy,
+  ShieldCheck,
+  Users,
+  ChevronRight,
+  Clock,
 } from "lucide-react";
 
 const CATEGORIES: { label: string; value?: MentorCategory }[] = [
-  { label: "All Mentors" },
+  { label: "All Specializations" },
   { label: "JEE Preparation", value: "JEE_PREP" },
   { label: "NEET Preparation", value: "NEET_PREP" },
   { label: "GATE / PSU", value: "GATE_PSU" },
@@ -47,13 +47,12 @@ export default function MentorsPage() {
     page * limit
   );
 
-  // Client-side search and sort filtering on loaded items
+  // Client-side search and sort filtering
   const filteredAndSortedMentors = useMemo(() => {
     if (!data?.items) return [];
 
     let items = [...data.items];
 
-    // Search query filter
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
       items = items.filter(
@@ -67,7 +66,6 @@ export default function MentorsPage() {
       );
     }
 
-    // Sort
     if (sortBy === "SEATS") {
       items.sort((a, b) => b.available_seats - a.available_seats);
     } else if (sortBy === "PRICE_ASC") {
@@ -80,72 +78,77 @@ export default function MentorsPage() {
   }, [data?.items, searchQuery, sortBy]);
 
   return (
-    <div className="space-y-10 max-w-7xl mx-auto pb-16">
-      {/* Top Breadcrumb / Return to Home */}
+    <div className="space-y-8 max-w-7xl mx-auto pb-20">
+      {/* Top Breadcrumb & Status */}
       <div className="flex items-center justify-between">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-ink-muted hover:text-ink transition-colors group"
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors group"
         >
-          <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1 text-brand" />
-          <span>Back to Home</span>
+          <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5 text-slate-400 group-hover:text-slate-700" />
+          <span>Home</span>
+          <ChevronRight className="w-3 h-3 text-slate-300" />
+          <span className="text-slate-800 font-semibold">Mentors</span>
         </Link>
-        <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-moss bg-moss/10 px-2.5 py-0.5 rounded-full border border-moss/20">
-          <Lock className="w-3 h-3" />
-          Atomic Seat Locking Active
+        <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200/80">
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+          Strict 30-Seat Cap Enforced
         </span>
       </div>
 
-      {/* Hero Header matching user reference image */}
-      <div className="text-center max-w-3xl mx-auto space-y-4 pt-2">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black font-display text-ink tracking-tight leading-[1.1]">
-          Find Your{" "}
-          <span className="bg-gradient-to-r from-brand via-[#3b5998] to-moss bg-clip-text text-transparent">
-            Perfect Mentor
-          </span>
+      {/* Modern Executive Hero */}
+      <div className="rounded-2xl bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white p-8 sm:p-12 text-center max-w-4xl mx-auto space-y-4 shadow-sm">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-slate-200 text-xs font-medium border border-white/10">
+          <span>Curated Mentorship Cohorts</span>
+        </div>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display tracking-tight text-white">
+          Find Your Accountability Mentor
         </h1>
-        <p className="text-base sm:text-lg text-ink-muted leading-relaxed max-w-2xl mx-auto">
-          Connect with elite mentors from top institutions and accelerate your journey to success.
+        <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          Learn with top exam rankers and alumni from premier institutions. Micro-cohorts capped at 30 seats for focused, personalized guidance.
         </p>
       </div>
 
-      {/* Search & Filter Container (Card style matching reference screenshot) */}
-      <Card className="p-4 sm:p-6 bg-white/95 backdrop-blur-sm border border-mist shadow-card rounded-card space-y-4">
-        {/* Search Input Bar */}
-        <div className="flex items-center gap-3">
-          <div className="relative flex-1">
-            <Search className="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-faint pointer-events-none" />
+      {/* Search & Filter Bar */}
+      <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 shadow-sm space-y-4">
+        <div className="flex flex-col sm:flex-row items-center gap-3">
+          <div className="relative flex-1 w-full">
+            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search mentors by name, skills, or expertise..."
-              className="w-full pl-11 pr-4 py-3 bg-[#FAFAF9] text-ink text-sm rounded-control border border-mist focus:outline-none focus:border-brand focus:bg-white transition-all placeholder:text-ink-faint"
+              placeholder="Search by mentor name, college, exam rank, or subject..."
+              className="w-full pl-10 pr-4 py-2.5 bg-slate-50 text-slate-900 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-slate-400 focus:bg-white transition-all placeholder:text-slate-400"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-ink-muted hover:text-ink p-1"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-700 p-1"
               >
                 ✕
               </button>
             )}
           </div>
 
-          <button
-            onClick={() => {
-              setSelectedCategory(undefined);
-              setSearchQuery("");
-            }}
-            className="hidden sm:inline-flex items-center gap-2 px-4 py-3 rounded-control border border-mist bg-white text-xs font-semibold text-ink-muted hover:text-ink hover:border-brand/40 transition-all shadow-soft"
-          >
-            <SlidersHorizontal className="w-4 h-4 text-brand" />
-            <span>Filters</span>
-          </button>
+          {/* Sort Selector */}
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <span className="text-xs text-slate-400 font-medium whitespace-nowrap">Sort:</span>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+              className="w-full sm:w-auto px-3 py-2 text-xs font-semibold text-slate-700 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:border-slate-400"
+            >
+              <option value="POPULAR">Recommended</option>
+              <option value="SEATS">Most Available Seats</option>
+              <option value="PRICE_ASC">Price: Low to High</option>
+              <option value="PRICE_DESC">Price: High to Low</option>
+            </select>
+          </div>
         </div>
 
-        {/* Category Pills below the Search Bar */}
-        <div className="flex flex-wrap items-center gap-2 pt-1">
+        {/* Category Pills */}
+        <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-slate-100">
           {CATEGORIES.map((cat) => {
             const isSelected = selectedCategory === cat.value;
             return (
@@ -155,10 +158,10 @@ export default function MentorsPage() {
                   setSelectedCategory(cat.value);
                   setPage(0);
                 }}
-                className={`px-4 py-1.5 text-xs font-semibold rounded-full border transition-all ${
+                className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                   isSelected
-                    ? "bg-brand text-white border-brand shadow-soft"
-                    : "bg-white text-ink-muted border-mist hover:text-ink hover:border-brand/40"
+                    ? "bg-slate-900 text-white shadow-sm"
+                    : "bg-slate-50 text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200/70"
                 }`}
               >
                 {cat.label}
@@ -166,36 +169,19 @@ export default function MentorsPage() {
             );
           })}
         </div>
-      </Card>
-
-      {/* Available Mentors Section Header with Count & Sort */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
-        <div>
-          <h2 className="text-xl font-bold font-display text-ink tracking-tight">
-            Available Mentors
-          </h2>
-          <p className="text-xs text-ink-muted mt-0.5">
-            Showing {filteredAndSortedMentors.length} of {data?.total || filteredAndSortedMentors.length} verified mentors
-          </p>
-        </div>
-
-        {/* Sort Controls */}
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-ink-muted">Sort by:</span>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as any)}
-            className="px-3 py-1.5 text-xs font-semibold text-ink bg-white rounded-control border border-mist shadow-soft focus:outline-none focus:border-brand"
-          >
-            <option value="POPULAR">Most Popular (Default)</option>
-            <option value="SEATS">Most Available Seats</option>
-            <option value="PRICE_ASC">Price: Low to High</option>
-            <option value="PRICE_DESC">Price: High to Low</option>
-          </select>
-        </div>
       </div>
 
-      {/* Content Area */}
+      {/* Results Header */}
+      <div className="flex items-center justify-between">
+        <h2 className="text-base font-bold font-display text-slate-900">
+          Available Mentors ({filteredAndSortedMentors.length})
+        </h2>
+        <span className="text-xs text-slate-500">
+          Showing verified & active mentors
+        </span>
+      </div>
+
+      {/* Grid of Mentors */}
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
@@ -203,8 +189,8 @@ export default function MentorsPage() {
           ))}
         </div>
       ) : isError ? (
-        <div className="py-12 text-center rounded-card border border-mist bg-white p-8 shadow-soft">
-          <p className="text-sm text-ink-muted mb-4">
+        <div className="py-16 text-center rounded-2xl border border-slate-200 bg-white p-8">
+          <p className="text-sm text-slate-600 mb-4">
             Unable to load mentors at this time.
           </p>
           <Button variant="secondary" size="sm" onClick={() => refetch()}>
@@ -213,13 +199,13 @@ export default function MentorsPage() {
         </div>
       ) : filteredAndSortedMentors.length === 0 ? (
         <EmptyState
-          title="No mentors match your search"
+          title="No mentors found"
           description={
             searchQuery
-              ? `No mentors found matching "${searchQuery}". Try a different search keyword or clear filters.`
+              ? `No mentors matching "${searchQuery}". Try a different keyword or reset filters.`
               : selectedCategory
-              ? `No active mentors currently available in ${CATEGORY_LABELS[selectedCategory]}. Check back soon!`
-              : "No mentors are currently available. Check back soon!"
+              ? `No mentors currently open for enrollment in ${CATEGORY_LABELS[selectedCategory]}.`
+              : "No mentors are currently available. Check back soon."
           }
           actionLabel="Clear Filters"
           onAction={() => {
@@ -228,155 +214,146 @@ export default function MentorsPage() {
           }}
         />
       ) : (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredAndSortedMentors.map((mentor) => {
-              const isSubscribed = Boolean(
-                isAuthenticated && activeSub && activeSub.mentor_id === mentor.user_id
-              );
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredAndSortedMentors.map((mentor) => {
+            const isSubscribed = Boolean(
+              isAuthenticated && activeSub && activeSub.mentor_id === mentor.user_id
+            );
+            const enrolledCount = Math.max(0, mentor.seat_limit - mentor.available_seats);
 
-              return (
-                <Card
-                  key={mentor.user_id}
-                  className={`flex flex-col justify-between hover:border-brand/40 transition-all duration-300 bg-white shadow-card hover:shadow-elevated hover:-translate-y-1 relative overflow-hidden group ${
-                    isSubscribed ? "border-moss/50 shadow-soft ring-1 ring-moss/30" : ""
-                  }`}
-                >
-                  {/* Subtle top banner accent */}
-                  <div className="h-12 bg-gradient-to-r from-brand/10 via-brand/5 to-moss/10 -m-6 mb-0 border-b border-mist/40" />
-
-                  <div className="space-y-4 pt-3">
-                    {/* Header: Avatar, Name, Rating */}
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-3">
-                        {mentor.avatar_url ? (
-                          <img
-                            src={mentor.avatar_url}
-                            alt={mentor.full_name}
-                            className="w-12 h-12 rounded-full object-cover shadow-soft ring-2 ring-white border border-mist flex-shrink-0"
-                          />
-                        ) : (
-                          <div className="w-12 h-12 rounded-full bg-brand text-white font-bold text-base flex items-center justify-center shadow-soft ring-2 ring-white flex-shrink-0">
-                            {mentor.full_name
-                              .split(" ")
-                              .map((n) => n[0])
-                              .slice(0, 2)
-                              .join("")
-                              .toUpperCase()}
-                          </div>
-                        )}
-                        <div className="min-w-0">
-                          <h3 className="font-display font-bold text-base text-ink group-hover:text-brand transition-colors leading-tight truncate">
-                            {mentor.full_name}
-                          </h3>
-                          <div className="flex items-center gap-1.5 flex-wrap mt-0.5">
-                            <span className="text-[11px] font-semibold text-moss">
-                              {CATEGORY_LABELS[mentor.category] || mentor.category}
-                            </span>
-                            {mentor.exam_rank && (
-                              <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-brand bg-brand/10 px-2 py-0.5 rounded-full border border-brand/20">
-                                <Trophy className="w-2.5 h-2.5 text-amber" />
-                                {mentor.exam_rank}
-                              </span>
-                            )}
-                          </div>
-                          {mentor.college && (
-                            <div className="flex items-center gap-1 text-[11px] text-ink-muted mt-0.5 truncate">
-                              <GraduationCap className="w-3 h-3 text-brand flex-shrink-0" />
-                              <span className="truncate">{mentor.college}</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* 5.0 Star Rating */}
-                      <div className="flex items-center gap-1 text-amber text-xs font-bold bg-amber/10 px-2 py-0.5 rounded-full border border-amber/20 flex-shrink-0">
-                        <Star className="w-3.5 h-3.5 fill-amber text-amber" />
-                        <span>4.9</span>
-                      </div>
-                    </div>
-
-                    {/* Bio Description */}
-                    <p className="text-xs text-ink-muted line-clamp-3 leading-relaxed">
-                      {mentor.bio}
-                    </p>
-
-                    {/* Seat Limit Badge */}
-                    <div className="flex items-center justify-between pt-1">
-                      <SeatBadge
-                        availableSeats={mentor.available_seats}
-                        seatLimit={mentor.seat_limit}
+            return (
+              <div
+                key={mentor.user_id}
+                className="flex flex-col justify-between bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-200 group"
+              >
+                <div className="space-y-4">
+                  {/* Top: Avatar, Name, Specialization */}
+                  <div className="flex items-start gap-3.5">
+                    {mentor.avatar_url ? (
+                      <img
+                        src={mentor.avatar_url}
+                        alt={mentor.full_name}
+                        className="w-13 h-13 w-12 h-12 rounded-xl object-cover ring-1 ring-slate-200/80 border border-white flex-shrink-0"
                       />
-                      {isSubscribed && (
-                        <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-moss text-white">
-                          ✓ Enrolled
+                    ) : (
+                      <div className="w-12 h-12 rounded-xl bg-slate-900 text-white font-bold text-sm flex items-center justify-center flex-shrink-0">
+                        {mentor.full_name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .slice(0, 2)
+                          .join("")
+                          .toUpperCase()}
+                      </div>
+                    )}
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <h3 className="font-display font-bold text-base text-slate-900 group-hover:text-indigo-600 transition-colors truncate">
+                          {mentor.full_name}
+                        </h3>
+                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                      </div>
+
+                      <div className="flex items-center gap-1.5 flex-wrap mt-1">
+                        <span className="text-[11px] font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
+                          {CATEGORY_LABELS[mentor.category] || mentor.category}
                         </span>
+                        {mentor.exam_rank && (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200/80">
+                            <Trophy className="w-2.5 h-2.5 text-amber-600" />
+                            {mentor.exam_rank}
+                          </span>
+                        )}
+                      </div>
+
+                      {mentor.college && (
+                        <div className="flex items-center gap-1 text-xs text-slate-500 mt-1 truncate">
+                          <GraduationCap className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
+                          <span className="truncate">{mentor.college}</span>
+                        </div>
                       )}
                     </div>
                   </div>
 
-                  {/* Footer: Price & Action CTA */}
-                  <div className="pt-4 mt-5 border-t border-mist flex items-center justify-between">
-                    <div>
-                      <span className="font-display text-lg font-bold text-ink">
-                        ₹{Number(mentor.price_per_month).toLocaleString("en-IN")}
-                      </span>
-                      <span className="text-[11px] text-ink-faint ml-1">/ mo</span>
-                    </div>
+                  {/* Bio Preview */}
+                  <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                    {mentor.bio || "Accountability mentorship focused on structured weekly goals and revision consistency."}
+                  </p>
 
-                    <Link href={`/mentors/${mentor.user_id}`}>
-                      <Button
-                        size="sm"
-                        variant="primary"
-                        disabled={!isSubscribed && mentor.available_seats <= 0}
-                        className={`text-xs font-bold flex items-center gap-1.5 ${
-                          isSubscribed ? "bg-moss hover:bg-moss/90 text-white" : "bg-brand hover:bg-brand/90"
-                        }`}
-                      >
-                        <span>
-                          {isSubscribed
-                            ? "View Cohort"
-                            : mentor.available_seats > 0
-                            ? "View Profile"
-                            : "Cohort Full"}
-                        </span>
-                        <ArrowRight className="w-3 h-3" />
-                      </Button>
-                    </Link>
+                  {/* 30-Day Activity Heatmap Strip */}
+                  <div className="pt-2 pb-1 border-t border-slate-100">
+                    <ActivityHeatmap
+                      compact
+                      heatmap={mentor.activity_heatmap_30d}
+                      activityStatus={mentor.activity_status}
+                    />
                   </div>
-                </Card>
-              );
-            })}
-          </div>
 
-          {/* Pagination Controls */}
-          {data && data.total > limit && (
-            <div className="flex items-center justify-between pt-6 border-t border-mist text-xs text-ink-muted">
-              <span>
-                Showing {page * limit + 1}–
-                {Math.min((page + 1) * limit, data.total)} of {data.total} mentors
-              </span>
-              <div className="flex items-center gap-2">
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  disabled={page === 0}
-                  onClick={() => setPage((p) => Math.max(0, p - 1))}
-                >
-                  Previous
-                </Button>
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  disabled={(page + 1) * limit >= data.total}
-                  onClick={() => setPage((p) => p + 1)}
-                >
-                  Next
-                </Button>
+                  {/* Seat Meter */}
+                  <div className="pt-1 space-y-1.5">
+                    <div className="flex items-center justify-between text-[11px] font-medium text-slate-500">
+                      <span>Seat Capacity</span>
+                      <span
+                        className={
+                          mentor.available_seats <= 5
+                            ? "text-amber-600 font-bold"
+                            : "text-slate-700 font-semibold"
+                        }
+                      >
+                        {mentor.available_seats > 0
+                          ? `${mentor.available_seats} of ${mentor.seat_limit} open`
+                          : "Cohort Full"}
+                      </span>
+                    </div>
+                    <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all duration-300 ${
+                          mentor.available_seats <= 3 ? "bg-amber-500" : "bg-emerald-500"
+                        }`}
+                        style={{
+                          width: `${Math.min(
+                            100,
+                            Math.round((enrolledCount / Math.max(1, mentor.seat_limit)) * 100)
+                          )}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Footer: Price and CTA */}
+                <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between">
+                  <div>
+                    <span className="text-base font-extrabold font-display text-slate-900">
+                      {Number(mentor.price_per_month) > 0
+                        ? `₹${Number(mentor.price_per_month).toLocaleString("en-IN")}`
+                        : "Free"}
+                    </span>
+                    <span className="text-[11px] text-slate-400 ml-1">/ mo</span>
+                  </div>
+
+                  <Link href={`/mentors/${mentor.user_id}`}>
+                    <Button
+                      size="sm"
+                      variant="primary"
+                      className={`text-xs font-semibold px-3 py-1.5 rounded-lg ${
+                        isSubscribed
+                          ? "bg-emerald-600 hover:bg-emerald-700 text-white"
+                          : "bg-slate-900 hover:bg-slate-800 text-white"
+                      }`}
+                    >
+                      {isSubscribed
+                        ? "Active Cohort"
+                        : mentor.available_seats > 0
+                        ? "View Cohort"
+                        : "View Profile"}
+                    </Button>
+                  </Link>
+                </div>
               </div>
-            </div>
-          )}
-        </>
+            );
+          })}
+        </div>
       )}
     </div>
   );

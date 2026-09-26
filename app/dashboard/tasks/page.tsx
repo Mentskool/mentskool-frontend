@@ -73,10 +73,14 @@ export default function StudentTasksPage() {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Header Banner */}
+      <div className="rounded-2xl bg-gradient-to-r from-sky-50 via-blue-50/40 to-white border border-sky-100/80 p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-soft">
         <div>
-          <h1 className="text-3xl font-bold font-display text-ink tracking-tight">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-sky-100/80 border border-sky-200 text-[11px] font-bold text-sky-900 uppercase tracking-wider mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse"></span>
+            Weekly Accountability
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold font-display text-ink tracking-tight">
             My Accountability Tasks
           </h1>
           <p className="text-sm text-ink-muted mt-1.5">
@@ -85,7 +89,7 @@ export default function StudentTasksPage() {
         </div>
 
         <Link href="/dashboard/efficiency">
-          <Button size="sm" variant="secondary">
+          <Button size="sm" variant="secondary" className="border-sky-200 hover:bg-sky-50 text-blue-800 font-semibold whitespace-nowrap rounded-lg">
             View Efficiency Rating →
           </Button>
         </Link>
@@ -93,11 +97,11 @@ export default function StudentTasksPage() {
 
       {/* Success Toast */}
       {successToast && (
-        <div className="p-3.5 bg-moss-light border border-[#A1D6B8] rounded-card text-xs text-moss font-medium flex items-center justify-between">
+        <div className="p-3.5 bg-blue-50 border border-blue-200 rounded-card text-xs text-blue-900 font-medium flex items-center justify-between">
           <span>{successToast}</span>
           <button
             onClick={() => setSuccessToast(null)}
-            className="text-moss hover:underline"
+            className="text-blue-700 hover:underline font-semibold"
           >
             Dismiss
           </button>
@@ -112,10 +116,10 @@ export default function StudentTasksPage() {
             <button
               key={filter.label}
               onClick={() => setSelectedStatus(filter.value)}
-              className={`px-3.5 py-1.5 text-xs font-medium rounded-control border transition-all ${
+              className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg border transition-all ${
                 isSelected
-                  ? "bg-brand text-white border-brand font-semibold"
-                  : "bg-white text-ink-muted border-mist hover:text-ink hover:border-[#D4D7DE]"
+                  ? "bg-blue-600 text-white border-blue-600 shadow-soft"
+                  : "bg-white text-ink-muted border-mist hover:text-ink hover:border-blue-200 hover:bg-blue-50/40"
               }`}
             >
               {filter.label}

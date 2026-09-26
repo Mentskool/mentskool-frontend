@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { Button } from "./ui/Button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight, LayoutDashboard } from "lucide-react";
+import { BrandLogo } from "./BrandLogo";
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
@@ -19,94 +20,80 @@ export const Navbar: React.FC = () => {
 
   const isExploreMentorsPage = pathname === "/mentors" || pathname.startsWith("/mentors/");
 
-  const navItemClass = (path: string) => {
-    const isActive = pathname === path || (path !== "/" && pathname.startsWith(`${path}/`));
-    return `text-xs font-semibold px-3 py-1.5 rounded-control transition-all whitespace-nowrap ${
-      isActive
-        ? "bg-brand/10 text-brand font-bold"
-        : "text-ink-muted hover:text-ink hover:bg-mist/40"
-    }`;
-  };
+  const dashboardHref =
+    user?.role === "ADMIN"
+      ? "/admin/mentors"
+      : user?.role === "MENTOR"
+      ? "/mentor/students"
+      : "/dashboard/tasks";
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-mist shadow-soft">
+    <header
+      className={`sticky top-0 z-40 w-full transition-colors duration-200 ${
+        pathname === "/"
+          ? "bg-[#EBF3FB]/85 backdrop-blur-md border-b border-blue-900/5 shadow-soft"
+          : "bg-white/95 backdrop-blur-md border-b border-mist shadow-soft"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
         {/* Logo & Brand */}
         <div className="flex items-center gap-6 lg:gap-8">
-          <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group">
-            <span className="w-8 h-8 rounded-control bg-brand text-white flex items-center justify-center font-display font-bold text-sm shadow-soft group-hover:bg-brand/90 transition-colors">
-              M
-            </span>
-            <div className="flex flex-col">
-              <span className="font-display font-bold text-base text-ink tracking-tight leading-tight">
-                Mentskool
-              </span>
-              <span className="text-[10px] text-ink-faint font-medium hidden sm:inline leading-none">
-                Find Your Perfect Mentor
-              </span>
-            </div>
-          </Link>
+          <BrandLogo href="/" size="md" />
 
-          {/* Navigation Links */}
-          <nav className="flex items-center gap-2 overflow-x-auto py-1 no-scrollbar">
-            {isAuthenticated ? (
-              user?.role === "MENTOR" ? (
-                <>
-                  <Link href="/mentor/students" className={navItemClass("/mentor/students")}>
-                    Students
-                  </Link>
-                  <Link href="/mentor/tasks" className={navItemClass("/mentor/tasks")}>
-                    Tasks
-                  </Link>
-                  <Link href="/cohort" className={navItemClass("/cohort")}>
-                    Cohort
-                  </Link>
-                  <Link href="/messages" className={navItemClass("/messages")}>
-                    Messages
-                  </Link>
-                  <Link href="/schedule" className={navItemClass("/schedule")}>
-                    Schedule
-                  </Link>
-                  <Link href="/mentor/profile" className={navItemClass("/mentor/profile")}>
-                    Edit Profile
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link href="/dashboard/tasks" className={navItemClass("/dashboard/tasks")}>
-                    My Tasks
-                  </Link>
-                  <Link href="/dashboard/efficiency" className={navItemClass("/dashboard/efficiency")}>
-                    Efficiency
-                  </Link>
-                  <Link href="/cohort" className={navItemClass("/cohort")}>
-                    Cohort
-                  </Link>
-                  <Link href="/messages" className={navItemClass("/messages")}>
-                    Messages
-                  </Link>
-                  <Link href="/schedule" className={navItemClass("/schedule")}>
-                    Schedule
-                  </Link>
-                </>
-              )
-            ) : null}
+          {/* Navigation Links for Public Pages */}
+          <nav className="hidden sm:flex items-center gap-3">
+            {isExploreMentorsPage ? (
+              <Link
+                href="/"
+                className="text-xs font-semibold text-ink-muted hover:text-ink px-3 py-1.5 rounded-lg hover:bg-mist/40 transition-colors"
+              >
+                Home
+              </Link>
+            ) : (
+              <Link
+                href="/mentors"
+                className="text-xs font-semibold text-ink-muted hover:text-ink px-3 py-1.5 rounded-lg hover:bg-mist/40 transition-colors"
+              >
+                Explore Mentors
+              </Link>
+            )}
           </nav>
         </div>
 
         {/* User Actions */}
-        <div className="flex items-center gap-2.5 flex-shrink-0">
+        <div className="flex items-center gap-3 flex-shrink-0">
           {isAuthenticated && user ? (
             <div className="flex items-center gap-3">
+              {/* Primary Dashboard Button */}
+              <Link href={dashboardHref}>
+                <Button
+                  size="sm"
+                  variant="primary"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2 shadow-soft rounded-xl flex items-center gap-1.5"
+                >
+                  <LayoutDashboard className="w-3.5 h-3.5" />
+                  <span>Dashboard</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Button>
+              </Link>
+
+              {/* User Identity info */}
               <div className="text-right hidden sm:block">
                 <p className="text-xs font-semibold text-ink leading-tight">
                   {user.full_name}
                 </p>
-                <span className="text-[10px] uppercase font-bold tracking-wider text-moss">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">
                   {user.role}
                 </span>
               </div>
-              <Button size="sm" variant="secondary" onClick={handleLogout} className="text-xs font-medium">
+
+              {/* Sign Out Button */}
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={handleLogout}
+                className="text-xs font-medium text-ink-muted hover:text-ink border-mist"
+              >
                 Sign Out
               </Button>
             </div>
@@ -116,8 +103,8 @@ export const Navbar: React.FC = () => {
                 <Link href="/">
                   <Button
                     size="sm"
-                    variant="primary"
-                    className="bg-brand hover:bg-brand/90 text-white font-bold text-xs flex items-center gap-1.5 px-3.5 shadow-soft"
+                    variant="secondary"
+                    className="text-ink font-semibold text-xs flex items-center gap-1.5 px-3.5 border-mist"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back to Home</span>
@@ -125,21 +112,29 @@ export const Navbar: React.FC = () => {
                 </Link>
               ) : (
                 <Link href="/mentors">
-                  <Button size="sm" variant="secondary" className="hidden sm:inline-flex text-xs font-semibold text-ink">
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    className="hidden sm:inline-flex text-xs font-semibold text-ink border-mist"
+                  >
                     Explore Mentors
                   </Button>
                 </Link>
               )}
               <Link href="/login">
-                <Button size="sm" variant="ghost" className="text-xs font-semibold text-ink-muted hover:text-ink">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="text-xs font-semibold text-ink-muted hover:text-ink"
+                >
                   Sign In
                 </Button>
               </Link>
               <Link href="/signup?role=MENTOR">
                 <Button
                   size="sm"
-                  variant={isExploreMentorsPage ? "secondary" : "primary"}
-                  className="text-xs font-bold"
+                  variant="primary"
+                  className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-soft"
                 >
                   Become a Mentor
                 </Button>

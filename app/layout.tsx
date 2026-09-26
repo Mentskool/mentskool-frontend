@@ -7,6 +7,14 @@ export const metadata: Metadata = {
   title: "Mentskool — Mentor-Student Accountability Platform",
   description:
     "A structured platform where mentors assign weekly accountability tasks and compute verified student efficiency scores.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico?v=3", sizes: "any" },
+      { url: "/icon.png?v=3", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png?v=3",
+    shortcut: "/favicon.ico?v=3",
+  },
 };
 
 export default function RootLayout({
@@ -17,6 +25,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/favicon.ico?v=3" sizes="any" />
+        <link rel="icon" href="/icon.png?v=3" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
         <link
           rel="stylesheet"
           href="https://api.fontshare.com/v2/css?f[]=satoshi@700,600,500&display=swap"

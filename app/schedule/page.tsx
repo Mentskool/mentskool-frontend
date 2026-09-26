@@ -240,10 +240,14 @@ function ScheduleContent() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Header Banner */}
+      <div className="rounded-2xl bg-gradient-to-r from-sky-50 via-blue-50/40 to-white border border-sky-100/80 p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-soft">
         <div>
-          <h1 className="text-3xl font-extrabold font-display text-ink tracking-tight">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-sky-100/80 border border-sky-200 text-[11px] font-bold text-sky-900 uppercase tracking-wider mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+            Session Management
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-ink tracking-tight">
             Live Mentorship Sessions
           </h1>
           <p className="text-sm text-ink-muted mt-1">
@@ -259,7 +263,7 @@ function ScheduleContent() {
               setMentorScheduleError("");
               setShowMentorScheduleModal(true);
             }}
-            className="flex items-center gap-1.5"
+            className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-soft rounded-lg"
           >
             <Calendar className="w-4 h-4" />
             + Schedule Session
@@ -269,7 +273,7 @@ function ScheduleContent() {
             size="sm"
             variant="primary"
             onClick={() => setShowRequestModal(true)}
-            className="flex items-center gap-1.5"
+            className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-soft rounded-lg"
           >
             <Calendar className="w-4 h-4" />
             + Request 1:1 Meeting

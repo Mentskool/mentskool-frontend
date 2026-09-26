@@ -152,10 +152,14 @@ function MentorTasksContent() {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Header Banner */}
+      <div className="rounded-2xl bg-gradient-to-r from-sky-50 via-blue-50/40 to-white border border-sky-100/80 p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-soft">
         <div>
-          <h1 className="text-3xl font-bold font-display text-ink tracking-tight">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-sky-100/80 border border-sky-200 text-[11px] font-bold text-sky-900 uppercase tracking-wider mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+            Task Administration
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold font-display text-ink tracking-tight">
             Manage Assigned Tasks
           </h1>
           <p className="text-sm text-ink-muted mt-1.5">
@@ -170,6 +174,7 @@ function MentorTasksContent() {
             setErrorMessage(null);
             setShowAssignModal(true);
           }}
+          className="bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-soft whitespace-nowrap rounded-lg"
         >
           + Assign New Task
         </Button>
@@ -285,10 +290,10 @@ function MentorTasksContent() {
               <button
                 key={filter.label}
                 onClick={() => setSelectedStatus(filter.value)}
-                className={`px-3 py-1 text-xs font-medium rounded-control border transition-all ${
+                className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all ${
                   isSelected
-                    ? "bg-brand text-white border-brand font-semibold"
-                    : "bg-white text-ink-muted border-mist hover:text-ink"
+                    ? "bg-blue-600 text-white border-blue-600 shadow-soft"
+                    : "bg-white text-ink-muted border-mist hover:text-ink hover:border-blue-200"
                 }`}
               >
                 {filter.label}

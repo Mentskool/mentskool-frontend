@@ -33,6 +33,14 @@ export const CATEGORY_LABELS: Record<MentorCategory, string> = {
   GATE_PSU: "GATE / PSU",
 };
 
+export type MentorVerificationStatus = "PENDING" | "APPROVED" | "REJECTED";
+
+export interface DayActivityItem {
+  date: string;
+  count: number;
+  level: number;
+}
+
 export interface MentorProfile {
   user_id: string;
   full_name: string;
@@ -40,6 +48,7 @@ export interface MentorProfile {
   avatar_url?: string | null;
   college?: string | null;
   exam_rank?: string | null;
+  phone_number?: string | null;
   bio: string;
   category: MentorCategory;
   intro_youtube_url?: string | null;
@@ -47,8 +56,71 @@ export interface MentorProfile {
   available_seats: number;
   price_per_month: number | string;
   is_active: boolean;
+  is_available?: boolean;
+  verification_status: MentorVerificationStatus;
+  last_active_at?: string | null;
+  activity_status?: string;
+  activity_heatmap_30d?: DayActivityItem[];
+  college_id_proof_url?: string | null;
+  scorecard_proof_url?: string | null;
+  college_email?: string | null;
+  payout_upi_id?: string | null;
+  payout_account_number?: string | null;
+  payout_ifsc?: string | null;
+  payout_account_name?: string | null;
+  rejection_reason?: string | null;
+  auto_paused_at?: string | null;
   created_at: string;
 }
+
+export interface RecentActivityItem {
+  id: string;
+  activity_type: string;
+  description?: string | null;
+  created_at: string;
+}
+
+export interface MentorStatsResponse {
+  user_id: string;
+  full_name: string;
+  email: string;
+  college?: string | null;
+  exam_rank?: string | null;
+  category: MentorCategory;
+  is_active: boolean;
+  is_available: boolean;
+  verification_status: MentorVerificationStatus;
+  last_active_at: string;
+  activity_status: string;
+  active_students_count: number;
+  total_seat_limit: number;
+  tasks_assigned_month: number;
+  tasks_reviewed_month: number;
+  quizzes_created: number;
+  announcements_created: number;
+  meetings_scheduled: number;
+  heatmap_30d: DayActivityItem[];
+  recent_activities: RecentActivityItem[];
+}
+
+export interface AdminMentorItem extends MentorProfile {
+  active_students_count: number;
+  total_monthly_revenue: number;
+  platform_commission_pct: number;
+  payout_due: number;
+}
+
+export interface AdminMentorListResponse {
+  items: AdminMentorItem[];
+  total: number;
+  pending_count: number;
+  approved_count: number;
+  rejected_count: number;
+  total_active_students: number;
+  total_monthly_revenue: number;
+  total_payout_due: number;
+}
+
 
 export interface MentorListResponse {
   items: MentorProfile[];
@@ -187,3 +259,157 @@ export interface ApiError {
   status?: number;
   retryAfter?: number;
 }
+
+// --- Quiz System Types ---
+export type QuestionType = "MCQ_SINGLE" | "MCQ_MULTIPLE" | "NAT";
+export type QuizStatus = "DRAFT" | "SCHEDULED" | "PUBLISHED" | "ARCHIVED";
+export type AttemptStatus = "IN_PROGRESS" | "SUBMITTED";
+
+export interface QuizOption {
+  id: string;
+  question_id: string;
+  option_text: string;
+  option_image_url?: string | null;
+  is_correct?: boolean | null;
+  order_index: number;
+}
+
+export interface QuizQuestion {
+  id: string;
+  quiz_id: string;
+  order_index: number;
+  question_type: QuestionType;
+  question_text: string;
+  question_image_url?: string | null;
+  source_image_url?: string | null;
+  positive_marks: number | string;
+  negative_marks: number | string;
+  nat_answer?: number | string | null;
+  nat_tolerance?: number | string | null;
+  options: QuizOption[];
+  created_at: string;
+}
+
+export interface Quiz {
+  id: string;
+  mentor_id: string;
+  title: string;
+  description: string;
+  has_deadline: boolean;
+  deadline_at?: string | null;
+  live_at?: string | null;
+  status: QuizStatus;
+  default_positive_marks: number | string;
+  default_negative_marks: number | string;
+  question_count: number;
+  total_marks: number | string;
+  attempt_count: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface QuizDetail extends Quiz {
+  questions: QuizQuestion[];
+  has_attempted: boolean;
+  attempt_id?: string | null;
+  attempt_status?: AttemptStatus | null;
+}
+
+export interface StudentQuizItem {
+  id: string;
+  mentor_id: string;
+  mentor_name: string;
+  title: string;
+  description: string;
+  has_deadline: boolean;
+  deadline_at?: string | null;
+  live_at?: string | null;
+  status: QuizStatus;
+  default_positive_marks: number | string;
+  default_negative_marks: number | string;
+  question_count: number;
+  total_marks: number | string;
+  has_attempted: boolean;
+  attempt_id?: string | null;
+  attempt_status?: AttemptStatus | null;
+  score?: number | string | null;
+  is_deadline_passed: boolean;
+  is_attemptable: boolean;
+}
+
+export interface AnswerBreakdownItem {
+  question_id: string;
+  question_type: QuestionType;
+  question_text: string;
+  question_image_url?: string | null;
+  positive_marks: number | string;
+  negative_marks: number | string;
+  nat_answer?: number | string | null;
+  nat_tolerance?: number | string | null;
+  options: QuizOption[];
+  selected_option_ids?: string[] | null;
+  nat_answer_given?: number | null;
+  is_correct: boolean;
+  marks_awarded: number | string;
+}
+
+export interface QuizSubmitResponse {
+  attempt_id: string;
+  quiz_id: string;
+  total_score: number | string;
+  max_score: number | string;
+  percentage: number | string;
+  submitted_at: string;
+  breakdown: AnswerBreakdownItem[];
+}
+
+export interface LeaderboardEntry {
+  rank: number;
+  student_id: string;
+  student_name: string;
+  avatar_url?: string | null;
+  total_score: number | string;
+  submitted_at: string;
+}
+
+export interface StudentQuizRanking {
+  student_id: string;
+  student_name: string;
+  quizzes_attempted: number;
+  average_percentage?: number | string | null;
+  rank?: number | null;
+  cohort_size?: number | null;
+  message?: string | null;
+}
+
+export interface StudentQuizAttemptItem {
+  attempt_id: string;
+  quiz_id: string;
+  quiz_title: string;
+  total_score?: number | string | null;
+  max_score: number | string;
+  percentage?: number | string | null;
+  status: AttemptStatus;
+  started_at: string;
+  submitted_at?: string | null;
+}
+
+export interface StudentCohortRankItem {
+  student_id: string;
+  student_name: string;
+  avatar_url?: string | null;
+  quizzes_attempted: number;
+  average_percentage?: number | string | null;
+  rank?: number | null;
+}
+
+export interface CohortQuizSummaryResponse {
+  mentor_id: string;
+  total_quizzes: number;
+  total_published: number;
+  total_cohort_students: number;
+  total_attempts: number;
+  cohort_average_percentage?: number | string | null;
+  rankings: StudentCohortRankItem[];
+}
+

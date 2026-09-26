@@ -113,10 +113,14 @@ export default function CohortPage() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Header Banner */}
+      <div className="rounded-2xl bg-gradient-to-r from-sky-50 via-blue-50/40 to-white border border-sky-100/80 p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-soft">
         <div>
-          <h1 className="text-3xl font-extrabold font-display text-ink tracking-tight">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-sky-100/80 border border-sky-200 text-[11px] font-bold text-sky-900 uppercase tracking-wider mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+            Collaborative Learning
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-ink tracking-tight">
             Cohort Hub
           </h1>
           <p className="text-sm text-ink-muted mt-1.5">
@@ -125,13 +129,13 @@ export default function CohortPage() {
         </div>
 
         {/* Tab Controls */}
-        <div className="flex items-center gap-1 bg-white p-1 rounded-control border border-mist">
+        <div className="flex items-center gap-1 bg-white p-1 rounded-control border border-sky-200/80 shadow-soft">
           <button
             onClick={() => setActiveTab("announcements")}
             className={`px-4 py-1.5 text-xs font-semibold rounded-control transition-all ${
               activeTab === "announcements"
-                ? "bg-brand text-white"
-                : "text-ink-muted hover:text-ink"
+                ? "bg-blue-600 text-white shadow-soft"
+                : "text-ink-muted hover:text-ink hover:bg-sky-50/50"
             }`}
           >
             Announcements ({announcements?.length ?? 0})
@@ -140,8 +144,8 @@ export default function CohortPage() {
             onClick={() => setActiveTab("resources")}
             className={`px-4 py-1.5 text-xs font-semibold rounded-control transition-all ${
               activeTab === "resources"
-                ? "bg-brand text-white"
-                : "text-ink-muted hover:text-ink"
+                ? "bg-blue-600 text-white shadow-soft"
+                : "text-ink-muted hover:text-ink hover:bg-sky-50/50"
             }`}
           >
             Study Resources ({resources?.length ?? 0})
@@ -156,7 +160,7 @@ export default function CohortPage() {
             <div
               className={`p-3 rounded-control text-xs font-semibold ${
                 leaveFeedback.type === "success"
-                  ? "bg-moss/10 text-moss border border-moss/20"
+                  ? "bg-blue-50 text-blue-700 border border-blue-200/80"
                   : "bg-red-50 text-red-700 border border-red-200"
               }`}
             >
@@ -168,7 +172,7 @@ export default function CohortPage() {
             <div className="p-4 rounded-card bg-white border border-mist flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-moss/10 text-moss border border-moss/20">
+                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200/80">
                     Active Enrollment
                   </span>
                   <span className="font-display font-bold text-base text-ink">
@@ -423,7 +427,7 @@ export default function CohortPage() {
               {resources.map((res) => (
                 <Card key={res.id} className="bg-white border-mist p-5 flex flex-col justify-between space-y-4">
                   <div className="space-y-1">
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-moss">
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-blue-600">
                       {res.mentor_name || "Mentor Resource"}
                     </span>
                     <h3 className="font-display font-bold text-base text-ink line-clamp-2">
@@ -439,7 +443,7 @@ export default function CohortPage() {
                       href={res.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-moss hover:underline"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:underline"
                     >
                       Open Document ↗
                     </a>

@@ -44,6 +44,28 @@ export function useSubscribeMentor() {
   });
 }
 
+export function useMyMentorProfile() {
+  return useQuery({
+    queryKey: ["myMentorProfile"],
+    queryFn: () => apiClient<MentorProfile>("/mentors/me"),
+  });
+}
+
+export function useUploadMentorProof() {
+  return useMutation({
+    mutationFn: async ({ file, proofType }: { file: File; proofType: string }) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("proof_type", proofType);
+
+      return apiClient<{ url: string; proof_type: string }>("/mentors/upload-proof", {
+        method: "POST",
+        body: formData,
+      });
+    },
+  });
+}
+
 export function useCreateMentorProfile() {
   const queryClient = useQueryClient();
 
@@ -53,6 +75,14 @@ export function useCreateMentorProfile() {
       category: string;
       college?: string | null;
       exam_rank?: string | null;
+      phone_number?: string | null;
+      college_id_proof_url?: string | null;
+      scorecard_proof_url?: string | null;
+      college_email?: string | null;
+      payout_upi_id?: string | null;
+      payout_account_number?: string | null;
+      payout_ifsc?: string | null;
+      payout_account_name?: string | null;
       avatar_url?: string | null;
       intro_youtube_url?: string | null;
       seat_limit: number;
@@ -61,6 +91,7 @@ export function useCreateMentorProfile() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["mentors"] });
       queryClient.invalidateQueries({ queryKey: ["mentor"] });
+      queryClient.invalidateQueries({ queryKey: ["myMentorProfile"] });
     },
   });
 }
@@ -74,6 +105,14 @@ export function useUpdateMentorProfile() {
       category?: string;
       college?: string | null;
       exam_rank?: string | null;
+      phone_number?: string | null;
+      college_id_proof_url?: string | null;
+      scorecard_proof_url?: string | null;
+      college_email?: string | null;
+      payout_upi_id?: string | null;
+      payout_account_number?: string | null;
+      payout_ifsc?: string | null;
+      payout_account_name?: string | null;
       avatar_url?: string | null;
       intro_youtube_url?: string | null;
       seat_limit?: number;
@@ -83,7 +122,9 @@ export function useUpdateMentorProfile() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["mentors"] });
       queryClient.invalidateQueries({ queryKey: ["mentor"] });
+      queryClient.invalidateQueries({ queryKey: ["myMentorProfile"] });
     },
   });
 }
+
 

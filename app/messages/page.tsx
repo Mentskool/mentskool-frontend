@@ -99,10 +99,14 @@ function MessagesContent() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
-      {/* Header & Tabs */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Header Banner & Tabs */}
+      <div className="rounded-2xl bg-gradient-to-r from-sky-50 via-blue-50/40 to-white border border-sky-100/80 p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-soft">
         <div>
-          <h1 className="text-3xl font-extrabold font-display text-ink tracking-tight">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-sky-100/80 border border-sky-200 text-[11px] font-bold text-sky-900 uppercase tracking-wider mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse"></span>
+            Real-Time Communications
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-ink tracking-tight">
             Messages & Cohort Chat
           </h1>
           <p className="text-sm text-ink-muted mt-1">
@@ -110,13 +114,13 @@ function MessagesContent() {
           </p>
         </div>
 
-        <div className="flex items-center gap-1 bg-white p-1 rounded-control border border-mist">
+        <div className="flex items-center gap-1 bg-white p-1 rounded-control border border-sky-200/80 shadow-soft">
           <button
             onClick={() => setActiveTab("cohort")}
             className={`px-4 py-1.5 text-xs font-semibold rounded-control transition-all ${
               activeTab === "cohort"
-                ? "bg-brand text-white"
-                : "text-ink-muted hover:text-ink"
+                ? "bg-blue-600 text-white shadow-soft"
+                : "text-ink-muted hover:text-ink hover:bg-sky-50/50"
             }`}
           >
             Cohort Channel
@@ -125,8 +129,8 @@ function MessagesContent() {
             onClick={() => setActiveTab("dm")}
             className={`px-4 py-1.5 text-xs font-semibold rounded-control transition-all ${
               activeTab === "dm"
-                ? "bg-brand text-white"
-                : "text-ink-muted hover:text-ink"
+                ? "bg-blue-600 text-white shadow-soft"
+                : "text-ink-muted hover:text-ink hover:bg-sky-50/50"
             }`}
           >
             Direct Messages ({conversations?.length ?? 0})
@@ -207,7 +211,7 @@ function MessagesContent() {
                         <div
                           className={`max-w-xl p-3.5 rounded-card text-sm leading-relaxed ${
                             isSelf
-                              ? "bg-brand text-white font-medium"
+                              ? "bg-blue-600 text-white font-medium shadow-soft"
                               : "bg-[#FAFAF9] border border-mist text-ink"
                           }`}
                         >
@@ -229,12 +233,13 @@ function MessagesContent() {
                   value={cohortInput}
                   onChange={(e) => setCohortInput(e.target.value)}
                   placeholder="Share doubt, update, or question with cohort..."
-                  className="flex-1 px-4 py-2 bg-white text-ink text-sm rounded-control border border-mist placeholder:text-ink-faint focus:outline-none focus:border-brand"
+                  className="flex-1 px-4 py-2 bg-white text-ink text-sm rounded-control border border-mist placeholder:text-ink-faint focus:outline-none focus:border-blue-500"
                 />
                 <Button
                   type="submit"
                   size="md"
                   variant="primary"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg"
                   disabled={!cohortInput.trim() || sendCohortMutation.isPending}
                 >
                   Send
@@ -275,7 +280,7 @@ function MessagesContent() {
                         onClick={() => setSelectedContactId(c.user_id)}
                         className={`w-full text-left p-4 transition-colors flex flex-col gap-1 ${
                           isSelected
-                            ? "bg-white border-l-2 border-brand"
+                            ? "bg-white border-l-2 border-blue-600"
                             : "hover:bg-white/60"
                         }`}
                       >

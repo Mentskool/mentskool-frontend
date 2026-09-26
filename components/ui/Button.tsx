@@ -31,11 +31,11 @@ export const Button: React.FC<ButtonProps> = ({
     // Secondary: White surface with 1px hairline border
     secondary:
       "bg-white text-ink border border-mist hover:bg-[#F4F5F6] active:bg-[#EAEDF1] shadow-none",
-    // Mint / Moss: Positive/verified green accent
+    // Mint / Moss: Positive/verified accent (now blue/sky)
     mint:
-      "bg-moss text-white hover:bg-[#2E8B57] active:bg-[#256F46] border border-transparent shadow-none",
+      "bg-sky-600 text-white hover:bg-sky-700 active:bg-sky-800 border border-transparent shadow-none",
     moss:
-      "bg-moss text-white hover:bg-[#2E8B57] active:bg-[#256F46] border border-transparent shadow-none",
+      "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 border border-transparent shadow-none",
     // Amber: Urgency / Pending
     amber:
       "bg-amber text-white hover:bg-[#D48F2A] border border-transparent shadow-none",

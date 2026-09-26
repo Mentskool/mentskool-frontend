@@ -9,17 +9,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#FAFAF9",
-        paper: "#FAFAF9",
+        background: "#F8FAFC",
+        paper: "#F8FAFC",
         surface: {
           DEFAULT: "#FFFFFF",
-          hover: "#F7F8F9",
-          active: "#EDEFF2",
+          hover: "#F1F5F9",
+          active: "#E2E8F0",
         },
-        hairline: "#E7E9ED",
+        hairline: "#E2E8F0",
         mist: {
-          DEFAULT: "#E7E9ED",
-          dark: "#D2D6DC",
+          DEFAULT: "#E2E8F0",
+          dark: "#CBD5E1",
         },
         brand: {
           DEFAULT: "#2B3A67",
@@ -32,14 +32,14 @@ const config: Config = {
           light: "rgba(43, 58, 103, 0.08)",
         },
         moss: {
-          DEFAULT: "#3C9D6B",
-          hover: "#2E8B57",
-          light: "rgba(60, 157, 107, 0.1)",
+          DEFAULT: "#2563EB",
+          hover: "#1D4ED8",
+          light: "rgba(37, 99, 235, 0.08)",
         },
         mint: {
-          DEFAULT: "#3C9D6B",
-          hover: "#2E8B57",
-          light: "rgba(60, 157, 107, 0.1)",
+          DEFAULT: "#0284C7",
+          hover: "#0369A1",
+          light: "rgba(2, 132, 199, 0.08)",
         },
         amber: {
           DEFAULT: "#E8A33D",

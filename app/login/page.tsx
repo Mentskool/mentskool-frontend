@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Card } from "@/components/ui/Card";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { GoogleSignInButton } from "@/components/ui/GoogleSignInButton";
+import { BrandLogo } from "@/components/BrandLogo";
 import { ApiError } from "@/lib/types";
 
 const loginSchema = z.object({
@@ -27,7 +29,7 @@ function LoginForm() {
   const queryEmail = searchParams.get("email") || "";
   const queryPassword = searchParams.get("password") || "";
 
-  const { login, isLoggingIn } = useAuth();
+  const { login, isLoggingIn, googleAuth, isGoogleAuthPending } = useAuth();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const {
@@ -52,12 +54,15 @@ function LoginForm() {
     setErrorMessage(null);
     try {
       const response = await login(values);
-      if (response.user.role === "MENTOR") {
+      if (response.user.role === "ADMIN") {
+        router.push("/admin/mentors");
+      } else if (response.user.role === "MENTOR") {
         router.push("/mentor/students");
       } else {
         router.push("/dashboard/tasks");
       }
     } catch (err) {
+
       const apiErr = err as ApiError;
       if (apiErr.status === 429) {
         setErrorMessage(
@@ -72,19 +77,35 @@ function LoginForm() {
     }
   };
 
+  const handleGoogleCode = useCallback(
+    async (code: string) => {
+      setErrorMessage(null);
+      try {
+        const response = await googleAuth({ code });
+        if (response.user.role === "ADMIN") {
+          router.push("/admin/mentors");
+        } else if (response.user.role === "MENTOR") {
+          router.push("/mentor/students");
+        } else {
+          router.push("/dashboard/tasks");
+        }
+      } catch (err) {
+
+        const apiErr = err as ApiError;
+        setErrorMessage(
+          apiErr.detail || "Google sign-in failed. Please try again."
+        );
+      }
+    },
+    [googleAuth, router]
+  );
+
   return (
     <div className="min-h-screen flex flex-col justify-center items-center px-4 py-12 bg-paper">
       <div className="w-full max-w-md">
         {/* Brand Header */}
         <div className="text-center mb-6">
-          <Link href="/" className="inline-flex items-center gap-2.5 group mb-4">
-            <span className="w-9 h-9 rounded-lg bg-brand text-white flex items-center justify-center font-display font-bold text-base shadow-sm group-hover:bg-brand/90 transition-colors">
-              M
-            </span>
-            <span className="font-display font-bold text-xl text-ink tracking-tight">
-              Mentskool
-            </span>
-          </Link>
+          <BrandLogo href="/" size="lg" showText={true} showTagline={false} className="mb-4" />
           <h1 className="text-2xl font-bold font-display text-ink tracking-tight">
             Sign in to your account
           </h1>
@@ -95,12 +116,32 @@ function LoginForm() {
 
         {/* Auth Card */}
         <Card className="bg-white p-7 sm:p-8 border-mist">
+          {errorMessage && (
+            <div className="p-3 mb-4 bg-[#FDF5E8] border border-amber/40 rounded-control text-xs text-[#9A6210] font-medium leading-relaxed">
+              {errorMessage}
+            </div>
+          )}
+
+          {/* Google OAuth */}
+          <GoogleSignInButton
+            onCode={handleGoogleCode}
+            disabled={isLoggingIn || isGoogleAuthPending}
+            label="Sign in with Google"
+          />
+
+          {/* Divider */}
+          <div className="relative my-5">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-mist" />
+            </div>
+            <div className="relative flex justify-center text-xs">
+              <span className="bg-white px-3 text-ink-faint font-medium">
+                or sign in with email
+              </span>
+            </div>
+          </div>
+
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {errorMessage && (
-              <div className="p-3 bg-[#FDF5E8] border border-amber/40 rounded-control text-xs text-[#9A6210] font-medium leading-relaxed">
-                {errorMessage}
-              </div>
-            )}
 
             <Input
               label="Email address"

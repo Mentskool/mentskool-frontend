@@ -21,7 +21,7 @@ const COLORS = [
   "rgba(99, 102, 241, ", // Soft Indigo
   "rgba(14, 165, 233, ", // Soft Sky Blue
   "rgba(168, 85, 247, ", // Soft Violet
-  "rgba(16, 185, 129, ", // Soft Emerald
+  "rgba(2, 132, 199, ", // Soft Deep Sky
   "rgba(245, 158, 11, ", // Soft Amber
 ];
 
@@ -174,15 +174,15 @@ export const HeroParticles: React.FC = () => {
         "rgba(168, 85, 247, 0.08)"
       );
 
-      // Soft Emerald/Mint accent wave
+      // Soft Sky/Blue accent wave
       drawRibbon(
         height * 0.32,
         22,
         0.0034,
         0.68,
         14,
-        "rgba(16, 185, 129, 0.08)",
-        "rgba(20, 184, 166, 0.06)"
+        "rgba(37, 99, 235, 0.08)",
+        "rgba(2, 132, 199, 0.06)"
       );
 
       // 3. Ambient Micro-particles (slow, calm floating embers & sparkles)

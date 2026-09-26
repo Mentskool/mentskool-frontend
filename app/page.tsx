@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
 import { Button } from "@/components/ui/Button";
@@ -17,151 +15,155 @@ import {
   Lock,
   CheckCircle2,
   Calendar,
-  Flame,
   Award,
   Trophy,
   RefreshCw,
   ShieldCheck,
   MessageSquare,
 } from "lucide-react";
-import { HeroParticles } from "@/components/HeroParticles";
+import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { HeroPlatformEngine } from "@/components/HeroPlatformEngine";
 
 export default function HomePage() {
-  const router = useRouter();
-  const { user, isAuthenticated, isLoading } = useAuthStore();
-
-  useEffect(() => {
-    if (!isLoading && isAuthenticated && user) {
-      if (user.role === "MENTOR") {
-        router.replace("/mentor/students");
-      } else {
-        router.replace("/dashboard/tasks");
-      }
-    }
-  }, [user, isAuthenticated, isLoading, router]);
+  const { user, isAuthenticated } = useAuthStore();
 
   return (
-    <div className="relative overflow-hidden pb-16 bg-gradient-to-b from-[#E7EBF0] via-[#ECEEF2] to-[#ECEEF2]">
-      {/* Animated Hero Particles, Sprinkles & Visible Grid Canvas */}
-      <HeroParticles />
+    <div className="relative overflow-hidden bg-[#EBF3FB]">
+      {/* 1. Luminous Soft Sky-Blue Gradient with Architectural Square Grid Pattern */}
+      <HeroGridBackground />
 
-      {/* Ambient Animated Radiant Glows & Delicate Architectural Geometry */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10 select-none">
-        {/* Soft floating radiant blur orbs with enriched jewel tones */}
-        <div className="absolute -top-28 left-1/2 -translate-x-1/2 w-[900px] h-[520px] bg-gradient-to-tr from-indigo-500/25 via-purple-500/20 to-transparent rounded-full blur-3xl animate-float-slow" />
-        <div className="absolute top-36 -left-28 w-[600px] h-[600px] bg-gradient-to-br from-emerald-400/30 via-teal-500/15 to-transparent rounded-full blur-3xl animate-float-reverse" />
-        <div className="absolute top-48 -right-28 w-[600px] h-[600px] bg-gradient-to-bl from-amber-400/30 via-pink-500/20 to-transparent rounded-full blur-3xl animate-pulse-subtle" />
+      {/* 2. Top Hero Section - 2-Column Desktop Layout */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-16 pb-14 sm:pb-20 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          {/* Left Column: Heading, Subtitle, Badges, CTAs */}
+          <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+            {/* Top Status Pill */}
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg border border-sky-300/80 bg-white/90 backdrop-blur-md text-xs font-semibold uppercase tracking-wider text-sky-950 mb-6 shadow-soft transition-all hover:shadow-card hover:border-sky-400">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-500 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500"></span>
+              </span>
+              <span className="font-bold tracking-wider flex items-center gap-1.5">
+                1:1 Mentorship for JEE &amp; NEET Aspirants
+                <Sparkles className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
+              </span>
+            </div>
 
+            {/* Main Hero Headline */}
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black font-display text-ink tracking-tight leading-[1.05] mb-6 select-none">
+              Find Your <br />
+              <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-500 bg-clip-text text-transparent">
+                Perfect Mentor
+              </span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-base sm:text-lg text-ink-muted leading-relaxed mb-6 max-w-xl font-normal">
+              Guided by rankers from top <strong className="text-blue-700 font-semibold">IITs &amp; AIIMS</strong> who mastered your exact exam. Tailored weekly roadmaps for <span className="font-semibold text-ink">Droppers</span>, <span className="font-semibold text-ink">Class 12th Board + Entrance</span>, and <span className="font-semibold text-ink">Class 11th</span>.
+            </p>
+
+            {/* Stage Badges */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 mb-8">
+              <Link
+                href="/mentors"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white/95 backdrop-blur-sm border border-blue-200/80 text-xs font-semibold text-blue-900 shadow-soft hover:bg-blue-50 hover:border-blue-300 hover:shadow-card hover:-translate-y-0.5 transition-all"
+              >
+                <span>⚛️</span>
+                <span>JEE Advanced &amp; Mains</span>
+              </Link>
+              <Link
+                href="/mentors"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white/95 backdrop-blur-sm border border-cyan-200/80 text-xs font-semibold text-cyan-900 shadow-soft hover:bg-cyan-50 hover:border-cyan-300 hover:shadow-card hover:-translate-y-0.5 transition-all"
+              >
+                <span>🧬</span>
+                <span>NEET-UG (AIIMS &amp; GMCs)</span>
+              </Link>
+              <Link
+                href="/mentors"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white/95 backdrop-blur-sm border border-amber-200/80 text-xs font-semibold text-amber-800 shadow-soft hover:bg-amber-50 hover:border-amber-300 hover:shadow-card hover:-translate-y-0.5 transition-all"
+              >
+                <span>🎯</span>
+                <span>Dropper Strategy</span>
+              </Link>
+              <Link
+                href="/mentors"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white/95 backdrop-blur-sm border border-indigo-200/80 text-xs font-semibold text-indigo-800 shadow-soft hover:bg-indigo-50 hover:border-indigo-300 hover:shadow-card hover:-translate-y-0.5 transition-all"
+              >
+                <span>📚</span>
+                <span>Class 11 &amp; 12 Foundation</span>
+              </Link>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 mb-8">
+              <Link href={isAuthenticated ? (user?.role === "MENTOR" ? "/mentor/students" : "/dashboard/tasks") : "/mentors"}>
+                <Button
+                  size="lg"
+                  variant="primary"
+                  className="px-7 py-3 rounded-xl text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white shadow-elevated hover:shadow-card hover:-translate-y-0.5 transition-all group"
+                >
+                  <span>{isAuthenticated ? "Go to Dashboard" : "Find Your Mentor"}</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
+              <Link href={isAuthenticated ? "/mentors" : "/signup?role=MENTOR"}>
+                <Button
+                  size="lg"
+                  variant="secondary"
+                  className="px-6 py-3 rounded-xl text-base font-semibold bg-white/90 hover:bg-white border-blue-200/80 text-ink shadow-soft hover:shadow-card hover:-translate-y-0.5 transition-all"
+                >
+                  {isAuthenticated ? "Explore Mentors" : "Become a Mentor"}
+                </Button>
+              </Link>
+            </div>
+
+            {/* Social Proof Rating */}
+            <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2.5 px-4 py-2 rounded-xl bg-white/85 backdrop-blur-sm border border-blue-100 shadow-soft text-xs text-ink-muted">
+              <div className="flex items-center -space-x-2">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-bold text-[9px] flex items-center justify-center ring-2 ring-white shadow-soft">AK</div>
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 text-white font-bold text-[9px] flex items-center justify-center ring-2 ring-white shadow-soft">PR</div>
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 text-white font-bold text-[9px] flex items-center justify-center ring-2 ring-white shadow-soft">SM</div>
+              </div>
+              <div className="flex items-center gap-1 font-semibold text-ink">
+                <div className="flex text-amber-500 text-[11px]">{"★".repeat(5)}</div>
+                <span>4.9 / 5.0 Rating</span>
+              </div>
+              <span className="text-ink-faint hidden sm:inline">•</span>
+              <span className="text-ink-muted font-medium text-[11px]">Mentors from IIT Bombay &amp; AIIMS New Delhi</span>
+            </div>
+          </div>
+
+          {/* Right Column: 3D Isometric Mentorship Platform Engine */}
+          <div className="lg:col-span-5 flex justify-center items-center">
+            <HeroPlatformEngine />
+          </div>
+        </div>
       </div>
 
-      <div className="py-14 md:py-20 flex flex-col items-center justify-center text-center max-w-5xl mx-auto px-4">
-        {/* Top Tag Pill with glowing jewel border & live ping beacon */}
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-indigo-200/80 bg-gradient-to-r from-indigo-50/90 via-white to-emerald-50/90 backdrop-blur-md text-xs font-semibold uppercase tracking-wider text-indigo-900 mb-8 shadow-soft transition-all hover:shadow-card hover:border-indigo-300">
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-          </span>
-          <span className="font-bold tracking-wider flex items-center gap-1.5">
-            1:1 Mentorship for JEE &amp; NEET Aspirants
-            <Sparkles className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
-          </span>
-        </div>
-
-        {/* Main Centered Hero Heading - Clean, Bold, High Impact */}
-        <h1 className="text-6xl sm:text-7xl md:text-8xl font-black font-display text-ink tracking-tight leading-[1.03] mb-6 select-none">
-          Find Your <br />
-          <span className="bg-gradient-to-r from-indigo-600 via-blue-600 to-emerald-600 bg-clip-text text-transparent animate-gradient-flow">
-            Perfect Mentor
-          </span>
-        </h1>
-
-        {/* Centered Subtitle tailored for JEE & NEET Aspirants */}
-        <p className="text-lg sm:text-xl text-ink-muted leading-relaxed mb-8 max-w-2xl font-normal">
-          Guided by rankers who already cracked <strong className="font-semibold text-ink">JEE &amp; NEET</strong> and study at top <strong className="text-indigo-600 font-semibold">IITs &amp; AIIMS</strong>. Connect with a mentor who aligns with your exact stage — whether you&apos;re a <span className="inline-block font-semibold text-indigo-700 bg-indigo-50/90 px-2 py-0.5 rounded border border-indigo-200/70">Dropper</span>, in <span className="inline-block font-semibold text-emerald-700 bg-emerald-50/90 px-2 py-0.5 rounded border border-emerald-200/70">Class 12th</span>, or starting in <span className="inline-block font-semibold text-purple-700 bg-purple-50/90 px-2 py-0.5 rounded border border-purple-200/70">Class 11th</span>.
-        </p>
-
-        {/* Quick Exam & Preparation Stage Filter Badges */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-10">
-          <Link href="/mentors" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-50/90 border border-blue-200/80 text-xs font-semibold text-blue-700 shadow-soft hover:bg-blue-100/90 hover:scale-105 transition-all">
-            <span>⚛️</span>
-            <span>JEE Advanced &amp; Mains</span>
-          </Link>
-          <Link href="/mentors" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50/90 border border-emerald-200/80 text-xs font-semibold text-emerald-700 shadow-soft hover:bg-emerald-100/90 hover:scale-105 transition-all">
-            <span>🧬</span>
-            <span>NEET-UG (AIIMS &amp; GMCs)</span>
-          </Link>
-          <Link href="/mentors" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-50/90 border border-amber-200/80 text-xs font-semibold text-amber-800 shadow-soft hover:bg-amber-100/90 hover:scale-105 transition-all">
-            <span>🎯</span>
-            <span>Dropper / Repeater Strategy</span>
-          </Link>
-          <Link href="/mentors" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-purple-50/90 border border-purple-200/80 text-xs font-semibold text-purple-700 shadow-soft hover:bg-purple-100/90 hover:scale-105 transition-all">
-            <span>📚</span>
-            <span>Class 11 &amp; 12 Foundation</span>
-          </Link>
-          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-rose-50/90 border border-rose-200/80 text-xs font-semibold text-rose-700 shadow-soft">
-            <Flame className="w-3.5 h-3.5 text-rose-500 fill-rose-400" />
-            <span>AIR 1–500 Rankers Only</span>
-          </span>
-        </div>
-
-        {/* Hero Action Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
-          <Link href="/mentors">
-            <Button
-              size="lg"
-              variant="primary"
-              className="px-8 py-3.5 rounded-full text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-brand via-[#3b5998] to-[#1e294b] hover:from-[#212d52] hover:to-[#161f38] text-white shadow-elevated hover:-translate-y-0.5 transition-all group"
-            >
-              <span>Find a Mentor</span>
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Button>
-          </Link>
-          <Link href="/signup?role=MENTOR">
-            <Button
-              size="lg"
-              variant="secondary"
-              className="px-8 py-3.5 rounded-full text-base font-semibold bg-white hover:bg-[#F7F8F9] border-mist text-ink shadow-soft hover:shadow-card hover:-translate-y-0.5 transition-all"
-            >
-              Become a Mentor
-            </Button>
-          </Link>
-        </div>
-
-        {/* Social Proof Avatar Cluster with Star Rating */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-16 text-xs text-ink-muted">
-          <div className="flex items-center -space-x-2">
-            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-bold text-[10px] flex items-center justify-center ring-2 ring-white shadow-soft">
-              AK
-            </div>
-            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 text-white font-bold text-[10px] flex items-center justify-center ring-2 ring-white shadow-soft">
-              PR
-            </div>
-            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 text-white font-bold text-[10px] flex items-center justify-center ring-2 ring-white shadow-soft">
-              SM
-            </div>
-            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 text-white font-bold text-[10px] flex items-center justify-center ring-2 ring-white shadow-soft">
-              NV
-            </div>
+      {/* 3. Curved White Base Container */}
+      <div className="w-full bg-white rounded-t-[40px] sm:rounded-t-[54px] border-t border-blue-900/5 shadow-[0_-16px_40px_rgba(0,0,0,0.03)] pt-14 pb-20 px-4 sm:px-6 lg:px-8 -mt-4 relative z-10">
+        <div className="max-w-5xl mx-auto flex flex-col items-center text-center">
+          <div className="mb-10 text-center">
+            <span className="text-xs font-bold text-blue-800 uppercase tracking-widest bg-blue-50 border border-blue-200/80 px-4 py-1.5 rounded-lg shadow-soft inline-block">
+              — LIVE PLATFORM WORKSPACE PREVIEW —
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-ink tracking-tight mt-3">
+              Personalized Cohort &amp; Real-Time Accountability
+            </h2>
+            <p className="text-sm text-ink-muted mt-1">
+              Experience 1:1 mentorship backed by verified milestone reviews and dynamic efficiency scoring.
+            </p>
           </div>
-          <div className="flex items-center gap-1.5 font-semibold text-ink">
-            <div className="flex text-amber-500">
-              {"★".repeat(5)}
-            </div>
-            <span>4.9 / 5.0 Rating</span>
-          </div>
-          <span className="text-ink-faint hidden sm:inline">•</span>
-          <span className="text-ink-muted font-medium">Mentors from IIT Bombay, IIT Delhi, AIIMS New Delhi &amp; Top GMCs</span>
-        </div>
 
-        {/* Interactive UI Mockup Card Showcase */}
+          {/* Interactive UI Mockup Card Showcase */}
         <div className="w-full max-w-4xl relative mb-20 group">
-          {/* Multi-color ambient gradient aura */}
-          <div className="absolute -inset-1.5 bg-gradient-to-r from-indigo-500/25 via-purple-500/20 via-pink-500/20 to-emerald-500/25 rounded-card blur-2xl opacity-70 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+          {/* Subtle luminous blue ambient gradient aura */}
+          <div className="absolute -inset-1.5 bg-gradient-to-r from-blue-500/20 via-sky-500/20 to-indigo-500/20 rounded-card blur-2xl opacity-70 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
 
           {/* Main Floating Mockup Container */}
           <Card className="bg-white/95 backdrop-blur-md border border-mist shadow-elevated rounded-card text-left overflow-hidden">
             {/* Top Multi-Color Ribbon */}
-            <div className="h-1.5 w-full bg-gradient-to-r from-blue-500 via-indigo-500 via-purple-500 via-pink-500 to-emerald-500" />
+            <div className="h-1.5 w-full bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600" />
 
             <div className="p-4 sm:p-7 space-y-6">
               {/* Window header with simulated controls */}
@@ -169,14 +171,14 @@ export default function HomePage() {
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-red-400 inline-block shadow-soft" />
                   <span className="w-3 h-3 rounded-full bg-amber-400 inline-block shadow-soft" />
-                  <span className="w-3 h-3 rounded-full bg-emerald-400 inline-block shadow-soft" />
+                  <span className="w-3 h-3 rounded-full bg-blue-500 inline-block shadow-soft" />
                   <span className="ml-3 text-xs font-mono text-ink-faint">
                     mentskool.com/cohort/jee-prep
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                    <Lock className="w-3 h-3 text-emerald-600" />
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-200">
+                    <Lock className="w-3 h-3 text-blue-600" />
                     Atomic Redis Locking Active
                   </span>
                 </div>
@@ -185,10 +187,10 @@ export default function HomePage() {
               {/* Split Showcase Inside the Mockup */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
                 {/* Left: Mentor Cohort Preview */}
-                <div className="p-5 rounded-control bg-gradient-to-br from-white to-[#FAFAF9] border border-mist shadow-soft space-y-3.5 relative overflow-hidden">
+                <div className="p-5 rounded-xl bg-gradient-to-br from-white to-[#FAFAF9] border border-mist shadow-soft space-y-3.5 relative overflow-hidden">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 text-white font-bold text-base flex items-center justify-center shadow-card ring-2 ring-white">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-bold text-base flex items-center justify-center shadow-card ring-2 ring-white">
                         RS
                       </div>
                       <div>
@@ -201,7 +203,7 @@ export default function HomePage() {
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1 text-amber-600 text-xs font-bold bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                    <div className="flex items-center gap-1 text-amber-600 text-xs font-bold bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
                       <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
                       <span>5.0</span>
                     </div>
@@ -211,12 +213,12 @@ export default function HomePage() {
                   <div className="space-y-1.5 pt-1">
                     <div className="flex items-center justify-between text-xs">
                       <span className="font-bold text-ink">8 / 10 Seats Filled</span>
-                      <span className="text-emerald-700 font-bold text-[11px] bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                      <span className="text-blue-700 font-bold text-[11px] bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-md">
                         2 Seats Left
                       </span>
                     </div>
                     <div className="w-full h-2.5 bg-mist rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 rounded-full w-[80%]" />
+                      <div className="h-full bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 rounded-full w-[80%]" />
                     </div>
                   </div>
 
@@ -229,22 +231,22 @@ export default function HomePage() {
                 </div>
 
                 {/* Right: Real-Time Student Accountability & Score */}
-                <div className="p-5 rounded-control bg-gradient-to-br from-white to-[#FAFAF9] border border-mist shadow-soft space-y-3.5">
+                <div className="p-5 rounded-xl bg-gradient-to-br from-white to-[#FAFAF9] border border-mist shadow-soft space-y-3.5">
                   <div className="flex items-center justify-between">
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-wider text-ink-faint">
                         Real-Time Accountability Score
                       </span>
                       <div className="flex items-baseline gap-2 mt-0.5">
-                        <span className="text-3xl font-black font-display bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                        <span className="text-3xl font-black font-display bg-gradient-to-r from-blue-600 to-sky-600 bg-clip-text text-transparent">
                           94%
                         </span>
-                        <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                        <span className="text-xs font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-200">
                           Exceptional Tier
                         </span>
                       </div>
                     </div>
-                    <div className="w-11 h-11 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center shadow-card">
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-600 to-sky-600 text-white flex items-center justify-center shadow-card">
                       <TrendingUp className="w-5 h-5" />
                     </div>
                   </div>
@@ -255,8 +257,8 @@ export default function HomePage() {
                       <span className="text-xs font-bold text-ink">
                         Mechanics Mock Test Analysis
                       </span>
-                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-0.5">
-                        <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                      <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200 flex items-center gap-0.5">
+                        <CheckCircle2 className="w-3 h-3 text-blue-600" />
                         Verified
                       </span>
                     </div>
@@ -282,9 +284,9 @@ export default function HomePage() {
               value: "98%",
               label: "Weekly On-Time Rate",
               desc: "Driven by verified checkpoints",
-              color: "text-emerald-600",
-              border: "border-emerald-200/80",
-              bg: "bg-emerald-50/50",
+              color: "text-blue-600",
+              border: "border-blue-200/80",
+              bg: "bg-blue-50/50",
             },
             {
               value: "10 Max",
@@ -362,12 +364,12 @@ export default function HomePage() {
             </Card>
 
             {/* Step 2 */}
-            <Card className="p-7 bg-white/95 backdrop-blur-sm border border-mist border-t-4 border-t-emerald-500 shadow-card hover:shadow-elevated hover:-translate-y-1.5 transition-all duration-300 group">
+            <Card className="p-7 bg-white/95 backdrop-blur-sm border border-mist border-t-4 border-t-sky-500 shadow-card hover:shadow-elevated hover:-translate-y-1.5 transition-all duration-300 group">
               <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-bold text-emerald-700 uppercase tracking-widest bg-emerald-50 border border-emerald-200/60 px-3 py-1 rounded-full">
+                <span className="text-xs font-bold text-sky-800 uppercase tracking-widest bg-sky-50 border border-sky-200/60 px-3 py-1 rounded-lg">
                   Step 2
                 </span>
-                <div className="w-10 h-10 rounded-control bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center shadow-soft group-hover:scale-110 transition-transform">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-sky-500 to-blue-600 text-white flex items-center justify-center shadow-soft group-hover:scale-110 transition-transform">
                   <CheckSquare className="w-5 h-5" />
                 </div>
               </div>
@@ -382,10 +384,10 @@ export default function HomePage() {
             {/* Step 3 */}
             <Card className="p-7 bg-white/95 backdrop-blur-sm border border-mist border-t-4 border-t-purple-500 shadow-card hover:shadow-elevated hover:-translate-y-1.5 transition-all duration-300 group">
               <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-bold text-purple-700 uppercase tracking-widest bg-purple-50 border border-purple-200/60 px-3 py-1 rounded-full">
+                <span className="text-xs font-bold text-purple-700 uppercase tracking-widest bg-purple-50 border border-purple-200/60 px-3 py-1 rounded-lg">
                   Step 3
                 </span>
-                <div className="w-10 h-10 rounded-control bg-gradient-to-br from-purple-500 to-pink-500 text-white flex items-center justify-center shadow-soft group-hover:scale-110 transition-transform">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 text-white flex items-center justify-center shadow-soft group-hover:scale-110 transition-transform">
                   <TrendingUp className="w-5 h-5" />
                 </div>
               </div>
@@ -402,7 +404,7 @@ export default function HomePage() {
         {/* Why Serious Aspirants Choose Mentskool - Full Conviction & Marketing Feature Matrix */}
         <div className="w-full space-y-8 text-left mt-20">
           <div className="text-center max-w-3xl mx-auto space-y-2.5">
-            <span className="text-xs font-bold text-emerald-700 uppercase tracking-widest bg-emerald-50 border border-emerald-200/60 px-3.5 py-1 rounded-full shadow-soft">
+            <span className="text-xs font-bold text-blue-800 uppercase tracking-widest bg-blue-50 border border-blue-200/60 px-3.5 py-1 rounded-lg shadow-soft">
               Why Serious Aspirants Choose Mentskool
             </span>
             <h2 className="text-3xl sm:text-4xl font-black font-display text-ink tracking-tight pt-1">
@@ -443,14 +445,14 @@ export default function HomePage() {
                 </div>
                 <div className="text-[11px] text-ink-muted flex items-center justify-between pt-0.5">
                   <span>25 Questions • 45m</span>
-                  <span className="text-emerald-600 font-semibold flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Reviewed
+                  <span className="text-blue-600 font-semibold flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3 text-blue-600" /> Reviewed
                   </span>
                 </div>
               </div>
 
               <div className="pt-1">
-                <span className="text-[11px] font-bold text-blue-700 bg-blue-50/90 px-3 py-1 rounded-full border border-blue-200/70 inline-flex items-center gap-1.5 shadow-soft">
+                <span className="text-[11px] font-bold text-blue-700 bg-blue-50/90 px-3 py-1 rounded-lg border border-blue-200/70 inline-flex items-center gap-1.5 shadow-soft">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   <span>Verified feedback on every submission</span>
                 </span>
@@ -458,9 +460,9 @@ export default function HomePage() {
             </Card>
 
             {/* Feature 2: Efficiency & Cohort Ranks */}
-            <Card className="p-6 bg-white border border-mist border-t-4 border-t-emerald-500 shadow-card hover:shadow-elevated hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between space-y-4 group">
+            <Card className="p-6 bg-white border border-mist border-t-4 border-t-blue-500 shadow-card hover:shadow-elevated hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between space-y-4 group">
               <div className="space-y-3">
-                <div className="w-11 h-11 rounded-control bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold shadow-soft group-hover:scale-105 transition-transform">
+                <div className="w-11 h-11 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold shadow-soft group-hover:scale-105 transition-transform">
                   <TrendingUp className="w-5 h-5" />
                 </div>
                 <div>
@@ -474,17 +476,17 @@ export default function HomePage() {
               </div>
 
               {/* Micro-UI Preview Widget */}
-              <div className="bg-[#F8FAFC] border border-mist/80 rounded-control p-3 space-y-1.5">
+              <div className="bg-[#F8FAFC] border border-mist/80 rounded-lg p-3 space-y-1.5">
                 <div className="flex items-center justify-between text-[11px] text-ink-muted">
                   <span className="font-bold text-ink">Cohort Leaderboard</span>
-                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">Live Week 4</span>
+                  <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">Live Week 4</span>
                 </div>
                 <div className="space-y-1 text-xs">
                   <div className="flex items-center justify-between p-1 px-2 rounded bg-white border border-mist text-[11px] font-medium text-ink-muted">
                     <span>🥇 #1 Aryan K.</span>
                     <span className="font-bold text-ink">96%</span>
                   </div>
-                  <div className="flex items-center justify-between p-1 px-2 rounded bg-emerald-50 border border-emerald-200 text-[11px] font-bold text-emerald-900">
+                  <div className="flex items-center justify-between p-1 px-2 rounded bg-blue-50 border border-blue-200 text-[11px] font-bold text-blue-900">
                     <span>🥈 #2 You</span>
                     <span>94%</span>
                   </div>
@@ -492,7 +494,7 @@ export default function HomePage() {
               </div>
 
               <div className="pt-1">
-                <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50/90 px-3 py-1 rounded-full border border-emerald-200/70 inline-flex items-center gap-1.5 shadow-soft">
+                <span className="text-[11px] font-bold text-blue-700 bg-blue-50/90 px-3 py-1 rounded-lg border border-blue-200/70 inline-flex items-center gap-1.5 shadow-soft">
                   <Trophy className="w-3.5 h-3.5" />
                   <span>Healthy peer motivation, zero anonymity</span>
                 </span>
@@ -641,7 +643,7 @@ export default function HomePage() {
                     <Lock className="w-3.5 h-3.5 text-indigo-600" />
                     Atomic Seat Locking
                   </span>
-                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded">
+                  <span className="text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-1.5 py-0.5 rounded">
                     Max 10 / Cohort
                   </span>
                 </div>
@@ -663,7 +665,7 @@ export default function HomePage() {
 
         {/* Bottom Call to Action Card with Rich Gradient Flare */}
         <div className="w-full mt-20 relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-emerald-500/20 rounded-card blur-lg opacity-50 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+          <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-sky-500/20 rounded-card blur-lg opacity-50 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
           <Card className="p-8 sm:p-10 bg-gradient-to-r from-[#1E294B] via-[#2B3A67] to-[#1E1B4B] text-white rounded-card shadow-elevated text-center sm:text-left flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-transparent">
             <div className="space-y-2">
               <h3 className="text-2xl font-black font-display tracking-tight text-white flex items-center gap-2 justify-center sm:justify-start">
@@ -677,7 +679,7 @@ export default function HomePage() {
             <Link href="/mentors" className="flex-shrink-0">
               <Button
                 size="lg"
-                className="bg-white text-brand hover:bg-white/90 font-bold px-7 py-3.5 rounded-full text-sm shadow-card hover:-translate-y-0.5 transition-all"
+                className="bg-white text-brand hover:bg-white/90 font-bold px-7 py-3 rounded-xl text-sm shadow-card hover:-translate-y-0.5 transition-all"
               >
                 Find a Mentor →
               </Button>
@@ -686,5 +688,6 @@ export default function HomePage() {
         </div>
       </div>
     </div>
+  </div>
   );
 }

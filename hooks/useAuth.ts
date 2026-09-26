@@ -15,6 +15,11 @@ export interface SignupPayload {
   role: "STUDENT" | "MENTOR";
 }
 
+export interface GoogleAuthPayload {
+  code: string;
+  role?: "STUDENT" | "MENTOR";
+}
+
 export function useAuth() {
   const queryClient = useQueryClient();
   const { setAuth, logout, user, isAuthenticated, isLoading } = useAuthStore();
@@ -43,6 +48,18 @@ export function useAuth() {
     },
   });
 
+  const googleAuthMutation = useMutation({
+    mutationFn: (payload: GoogleAuthPayload) =>
+      apiClient<TokenResponse>("/auth/google", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      }),
+    onSuccess: (data) => {
+      setAuth(data.user, data.access_token, data.refresh_token);
+      queryClient.setQueryData(["currentUser"], data.user);
+    },
+  });
+
   const currentUserQuery = useQuery({
     queryKey: ["currentUser"],
     queryFn: () => apiClient<User>("/auth/me"),
@@ -60,6 +77,9 @@ export function useAuth() {
     signup: signupMutation.mutateAsync,
     isSigningUp: signupMutation.isPending,
     signupError: signupMutation.error,
+    googleAuth: googleAuthMutation.mutateAsync,
+    isGoogleAuthPending: googleAuthMutation.isPending,
+    googleAuthError: googleAuthMutation.error,
     currentUser: currentUserQuery.data,
     logout,
   };

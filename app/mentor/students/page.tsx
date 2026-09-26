@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
 import { useMentorRoster, useMentorAssignedTasks, useCreateTask } from "@/hooks/useTasks";
 import { useStudentEfficiency } from "@/hooks/useEfficiency";
+import { useCohortQuizSummary, useStudentQuizRanking } from "@/hooks/useQuizzes";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -13,6 +14,7 @@ import { Textarea } from "@/components/ui/Textarea";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { CardSkeleton } from "@/components/ui/Skeleton";
 import { Subscription } from "@/lib/types";
+import { Users, Trophy, FileText, CheckCircle2, Award } from "lucide-react";
 
 interface StudentRowProps {
   subscription: Subscription;
@@ -25,6 +27,9 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
 
   // Efficiency data for this student
   const { data: effData } = useStudentEfficiency(subscription.student_id);
+
+  // Quiz rank & test performance for this student
+  const { data: quizRank } = useStudentQuizRanking(subscription.student_id);
 
   // Task history for this student
   const { data: taskData, isLoading: tasksLoading, refetch: refetchTasks } = useMentorAssignedTasks(
@@ -89,8 +94,38 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
           </p>
         </div>
 
-        {/* Efficiency & Metrics Stats */}
-        <div className="flex flex-wrap items-center gap-4 sm:gap-6 bg-[#FAFAF9] px-4 py-2 rounded-control border border-mist">
+        {/* Efficiency & Quiz Exam Stats */}
+        <div className="flex flex-wrap items-center gap-3 sm:gap-5 bg-[#FAFAF9] px-3.5 py-2 rounded-control border border-mist">
+          <div>
+            <span className="text-[10px] uppercase font-bold tracking-wider text-ink-faint block">
+              Quiz Rank
+            </span>
+            <span className="font-display font-bold text-sm text-amber flex items-center gap-1">
+              <Award className="w-3.5 h-3.5 text-amber" />
+              {quizRank?.rank ? `#${quizRank.rank}` : "—"}
+            </span>
+          </div>
+
+          <div>
+            <span className="text-[10px] uppercase font-bold tracking-wider text-ink-faint block">
+              Avg Score
+            </span>
+            <span className="font-display font-bold text-sm text-moss">
+              {quizRank?.average_percentage !== null && quizRank?.average_percentage !== undefined
+                ? `${quizRank.average_percentage}%`
+                : "—"}
+            </span>
+          </div>
+
+          <div>
+            <span className="text-[10px] uppercase font-bold tracking-wider text-ink-faint block">
+              Tests
+            </span>
+            <span className="font-display font-bold text-sm text-ink">
+              {quizRank?.quizzes_attempted ?? 0}
+            </span>
+          </div>
+
           <div>
             <span className="text-[10px] uppercase font-bold tracking-wider text-ink-faint block">
               Efficiency
@@ -98,34 +133,16 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
             <span className="font-display font-bold text-sm text-moss">
               {effData?.efficiency_score !== null && effData?.efficiency_score !== undefined
                 ? `${effData.efficiency_score}%`
-                : "No data"}
+                : "—"}
             </span>
           </div>
 
           <div>
             <span className="text-[10px] uppercase font-bold tracking-wider text-ink-faint block">
-              Assigned
+              Tasks
             </span>
             <span className="font-display font-bold text-sm text-ink">
-              {effData?.tasks_assigned ?? 0}
-            </span>
-          </div>
-
-          <div>
-            <span className="text-[10px] uppercase font-bold tracking-wider text-ink-faint block">
-              Approved
-            </span>
-            <span className="font-display font-bold text-sm text-moss">
-              {effData?.tasks_approved ?? 0}
-            </span>
-          </div>
-
-          <div>
-            <span className="text-[10px] uppercase font-bold tracking-wider text-ink-faint block">
-              Pending
-            </span>
-            <span className="font-display font-bold text-sm text-amber">
-              {effData?.tasks_pending ?? 0}
+              {effData?.tasks_approved ?? 0} / {effData?.tasks_assigned ?? 0}
             </span>
           </div>
         </div>
@@ -274,6 +291,7 @@ export default function MentorStudentsPage() {
     isError,
     refetch,
   } = useMentorRoster(user?.id);
+  const { data: cohortSummary, isLoading: cohortSummaryLoading } = useCohortQuizSummary(user?.id);
 
   if (authLoading) {
     return (
@@ -303,22 +321,110 @@ export default function MentorStudentsPage() {
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Header Banner */}
+      <div className="rounded-2xl bg-gradient-to-r from-sky-50 via-blue-50/40 to-white border border-sky-100/80 p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-soft">
         <div>
-          <h1 className="text-3xl font-extrabold font-display text-ink tracking-tight">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-sky-100/80 border border-sky-200 text-[11px] font-bold text-sky-900 uppercase tracking-wider mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+            Cohort Management
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-ink tracking-tight">
             Cohort Student Roster
           </h1>
           <p className="text-sm text-ink-muted mt-1.5">
-            Monitor student efficiency scores, review completed submissions, and assign weekly accountability targets.
+            Monitor student efficiency scores, track exam series rankings, and review completed submissions.
           </p>
         </div>
 
-        <Link href="/mentor/tasks">
-          <Button size="sm" variant="secondary">
-            Task Review Dashboard
-          </Button>
-        </Link>
+        <div className="flex flex-wrap items-center gap-2">
+          <Link href="/quizzes">
+            <Button size="sm" variant="secondary" className="border-sky-200 hover:bg-sky-50 text-blue-800 font-semibold whitespace-nowrap rounded-lg">
+              Manage Quizzes →
+            </Button>
+          </Link>
+          <Link href="/mentor/tasks">
+            <Button size="sm" variant="primary" className="whitespace-nowrap rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold">
+              Task Review Dashboard →
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      {/* Cohort Capacity & General Performance Overview */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {/* Total Active Cohort Students */}
+        <Card className="bg-white border-mist p-5 flex flex-col justify-between shadow-soft">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-ink-faint">
+              Cohort Students
+            </span>
+            <Users className="w-4 h-4 text-brand" />
+          </div>
+          <div className="my-2">
+            <span className="text-3xl font-extrabold font-display text-ink">
+              {rosterData?.items?.length ?? 0}
+            </span>
+          </div>
+          <p className="text-[10px] text-ink-faint">
+            Students currently in cohort
+          </p>
+        </Card>
+
+        {/* Cohort Tests Published */}
+        <Card className="bg-white border-mist p-5 flex flex-col justify-between shadow-soft">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-ink-faint">
+              Tests Published
+            </span>
+            <FileText className="w-4 h-4 text-sky-600" />
+          </div>
+          <div className="my-2">
+            <span className="text-3xl font-extrabold font-display text-sky-600">
+              {cohortSummary?.total_published ?? 0}
+            </span>
+          </div>
+          <p className="text-[10px] text-ink-faint">
+            {cohortSummary?.total_quizzes ? `Out of ${cohortSummary.total_quizzes} total tests` : "Live exam series drills"}
+          </p>
+        </Card>
+
+        {/* Total Test Submissions */}
+        <Card className="bg-white border-mist p-5 flex flex-col justify-between shadow-soft">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-ink-faint">
+              Total Submissions
+            </span>
+            <CheckCircle2 className="w-4 h-4 text-moss" />
+          </div>
+          <div className="my-2">
+            <span className="text-3xl font-extrabold font-display text-moss">
+              {cohortSummary?.total_attempts ?? 0}
+            </span>
+          </div>
+          <p className="text-[10px] text-ink-faint">
+            Evaluated quiz attempts
+          </p>
+        </Card>
+
+        {/* Cohort Average Exam Score */}
+        <Card className="bg-white border-mist p-5 flex flex-col justify-between shadow-soft">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-ink-faint">
+              Cohort Avg Score
+            </span>
+            <Trophy className="w-4 h-4 text-amber" />
+          </div>
+          <div className="my-2">
+            <span className="text-3xl font-extrabold font-display text-amber">
+              {cohortSummary?.cohort_average_percentage !== null && cohortSummary?.cohort_average_percentage !== undefined
+                ? `${cohortSummary.cohort_average_percentage}%`
+                : "—"}
+            </span>
+          </div>
+          <p className="text-[10px] text-ink-faint">
+            Overall cohort test accuracy
+          </p>
+        </Card>
       </div>
 
       {/* Roster View */}

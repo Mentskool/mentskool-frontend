@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { useMentorRoster, useMentorAssignedTasks, useCreateTask, useReviewTask } from "@/hooks/useTasks";
 import { useStudentEfficiency } from "@/hooks/useEfficiency";
+import { useStudentQuizRanking, useStudentQuizAttempts } from "@/hooks/useQuizzes";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -26,6 +27,12 @@ import {
   TrendingUp,
   Award,
   BookOpen,
+  Trophy,
+  Users,
+  FileText,
+  ExternalLink,
+  ChevronRight,
+  GraduationCap,
 } from "lucide-react";
 
 export default function StudentDetailPage() {
@@ -42,6 +49,10 @@ export default function StudentDetailPage() {
 
   // 2. Efficiency data
   const { data: effData, isLoading: effLoading, refetch: refetchEff } = useStudentEfficiency(studentId);
+
+  // 2b. Quiz & Exam Performance data
+  const { data: quizRank, isLoading: quizRankLoading } = useStudentQuizRanking(studentId);
+  const { data: quizAttempts, isLoading: quizAttemptsLoading } = useStudentQuizAttempts(studentId);
 
   // 3. Task history
   const [taskFilter, setTaskFilter] = useState<string>("ALL");
@@ -178,10 +189,10 @@ export default function StudentDetailPage() {
       </div>
 
       {/* Student Profile Overview Card */}
-      <Card className="bg-white border-mist p-6 sm:p-7">
+      <Card className="bg-gradient-to-r from-sky-50/80 via-blue-50/40 to-white border border-blue-100 p-6 sm:p-7 shadow-soft">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-start gap-4">
-            <div className="w-14 h-14 rounded-full bg-brand/10 text-brand border border-brand/20 flex items-center justify-center font-display font-extrabold text-xl flex-shrink-0">
+            <div className="w-14 h-14 rounded-full bg-blue-100 text-blue-800 border border-blue-200 flex items-center justify-center font-display font-extrabold text-xl flex-shrink-0 shadow-soft">
               {studentName.charAt(0).toUpperCase()}
             </div>
             <div className="space-y-1">
@@ -212,14 +223,14 @@ export default function StudentDetailPage() {
           {/* Quick Action Toolbar */}
           <div className="flex flex-wrap items-center gap-2.5">
             <Link href={`/messages?user=${studentId}`}>
-              <Button size="sm" variant="secondary" className="flex items-center gap-1.5 text-xs font-semibold">
-                <MessageSquare className="w-3.5 h-3.5 text-brand" />
+              <Button size="sm" variant="secondary" className="flex items-center gap-1.5 text-xs font-semibold border-blue-200 hover:bg-blue-50 rounded-lg">
+                <MessageSquare className="w-3.5 h-3.5 text-blue-600" />
                 Message
               </Button>
             </Link>
             <Link href={`/schedule?student_id=${studentId}&action=schedule`}>
-              <Button size="sm" variant="secondary" className="flex items-center gap-1.5 text-xs font-semibold">
-                <Calendar className="w-3.5 h-3.5 text-moss" />
+              <Button size="sm" variant="secondary" className="flex items-center gap-1.5 text-xs font-semibold border-blue-200 hover:bg-blue-50 rounded-lg">
+                <Calendar className="w-3.5 h-3.5 text-blue-600" />
                 1:1 Session
               </Button>
             </Link>
@@ -227,7 +238,7 @@ export default function StudentDetailPage() {
               size="sm"
               variant="primary"
               onClick={() => setShowAssignModal(true)}
-              className="flex items-center gap-1.5 text-xs font-bold"
+              className="flex items-center gap-1.5 text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-soft rounded-lg"
             >
               <Plus className="w-3.5 h-3.5" />
               Assign Task
@@ -319,6 +330,190 @@ export default function StudentDetailPage() {
         </div>
       </div>
 
+      {/* Exam & Quiz Performance */}
+      <div className="space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2">
+              <Trophy className="w-4 h-4 text-amber" />
+              <h2 className="text-lg font-bold font-display text-ink tracking-tight">
+                Exam & Quiz Performance
+              </h2>
+            </div>
+            <p className="text-xs text-ink-muted">
+              Exam-pattern test series scores, average accuracy, and cohort rank for {studentName}.
+            </p>
+          </div>
+
+          {quizRank?.rank ? (
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber/10 border border-amber/30 text-amber font-display font-extrabold text-xs">
+              <Award className="w-3.5 h-3.5 text-amber" />
+              <span>Rank #{quizRank.rank} of {quizRank.cohort_size || "—"} in Cohort</span>
+            </div>
+          ) : (
+            <span className="text-[11px] font-semibold text-ink-faint px-2.5 py-0.5 rounded-full bg-ink-faint/10">
+              Rank Pending Attempts
+            </span>
+          )}
+        </div>
+
+        {/* Quiz Metrics Row */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <Card className="bg-white border-mist p-5 flex flex-col justify-between">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-ink-faint">
+              Cohort Rank
+            </span>
+            <div className="my-2">
+              <span className="text-3xl font-extrabold font-display text-amber">
+                {quizRank?.rank ? `#${quizRank.rank}` : "—"}
+              </span>
+            </div>
+            <p className="text-[10px] text-ink-faint">
+              {quizRank?.cohort_size ? `Out of ${quizRank.cohort_size} cohort students` : "No rank calculated"}
+            </p>
+          </Card>
+
+          <Card className="bg-white border-mist p-5 flex flex-col justify-between">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-ink-faint">
+              Average Quiz Score
+            </span>
+            <div className="my-2">
+              <span className="text-3xl font-extrabold font-display text-moss">
+                {quizRank?.average_percentage !== null && quizRank?.average_percentage !== undefined
+                  ? `${quizRank.average_percentage}%`
+                  : "—"}
+              </span>
+            </div>
+            <p className="text-[10px] text-ink-faint">
+              Across all graded attempts
+            </p>
+          </Card>
+
+          <Card className="bg-white border-mist p-5 flex flex-col justify-between">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-ink-faint">
+              Quizzes Attempted
+            </span>
+            <div className="my-2">
+              <span className="text-3xl font-extrabold font-display text-ink">
+                {quizRank?.quizzes_attempted ?? (quizAttempts?.length ?? 0)}
+              </span>
+            </div>
+            <p className="text-[10px] text-ink-faint">
+              Total tests engaged
+            </p>
+          </Card>
+
+          <Card className="bg-white border-mist p-5 flex flex-col justify-between">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-ink-faint">
+              Submitted Tests
+            </span>
+            <div className="my-2">
+              <span className="text-3xl font-extrabold font-display text-brand">
+                {quizAttempts?.filter((a) => a.status === "SUBMITTED").length ?? 0}
+              </span>
+            </div>
+            <p className="text-[10px] text-ink-faint">
+              Fully submitted & evaluated
+            </p>
+          </Card>
+        </div>
+
+        {/* Quiz Attempts Breakdown List */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-ink-faint">
+              Test Series Drill History ({quizAttempts?.length ?? 0})
+            </h3>
+            <Link
+              href="/quizzes"
+              className="text-xs font-semibold text-brand hover:underline inline-flex items-center gap-1"
+            >
+              Manage Quizzes <ExternalLink className="w-3 h-3" />
+            </Link>
+          </div>
+
+          {quizAttemptsLoading ? (
+            <div className="space-y-2">
+              <Skeleton className="h-16 rounded-card" />
+              <Skeleton className="h-16 rounded-card" />
+            </div>
+          ) : !quizAttempts || quizAttempts.length === 0 ? (
+            <div className="p-6 rounded-card bg-white border border-mist text-center space-y-2">
+              <FileText className="w-8 h-8 text-ink-faint mx-auto opacity-50" />
+              <p className="text-xs font-bold text-ink">No Quiz Attempts Recorded</p>
+              <p className="text-xs text-ink-muted max-w-sm mx-auto">
+                {studentName} has not attempted any published cohort quizzes yet. Once they submit tests, their scores and breakdown will appear here.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {quizAttempts.map((att) => {
+                const isSubmitted = att.status === "SUBMITTED";
+                return (
+                  <Card
+                    key={att.attempt_id}
+                    className="bg-white border-mist p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-brand/40 transition-colors"
+                  >
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="font-bold text-sm text-ink font-display">
+                          {att.quiz_title}
+                        </span>
+                        <Badge variant={isSubmitted ? "SUBMITTED" : "IN_PROGRESS"}>
+                          {isSubmitted ? "SUBMITTED" : "IN PROGRESS"}
+                        </Badge>
+                        {att.percentage !== null && att.percentage !== undefined && (
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+                            Number(att.percentage) >= 75
+                              ? "bg-moss/10 text-moss border-moss/30"
+                              : Number(att.percentage) >= 50
+                              ? "bg-brand/10 text-brand border-brand/30"
+                              : "bg-amber/10 text-amber border-amber/30"
+                          }`}>
+                            {att.percentage}% Accuracy
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-3 text-xs text-ink-faint">
+                        <span>
+                          Score:{" "}
+                          <strong className="text-ink">
+                            {att.total_score !== null && att.total_score !== undefined
+                              ? att.total_score
+                              : "—"}
+                          </strong>{" "}
+                          / {att.max_score} marks
+                        </span>
+                        <span>•</span>
+                        <span>
+                          {att.submitted_at
+                            ? `Submitted on ${new Date(att.submitted_at).toLocaleDateString()}`
+                            : `Started on ${new Date(att.started_at).toLocaleDateString()}`}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 self-end sm:self-center">
+                      <Link href={`/quizzes/${att.quiz_id}/leaderboard`}>
+                        <Button size="sm" variant="secondary" className="text-xs font-semibold flex items-center gap-1.5">
+                          <Trophy className="w-3.5 h-3.5 text-amber" />
+                          Leaderboard
+                        </Button>
+                      </Link>
+                      <Link href={`/quizzes/${att.quiz_id}`}>
+                        <Button size="sm" variant="ghost" className="text-xs text-ink-muted">
+                          View Test →
+                        </Button>
+                      </Link>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Task Roadmap & Progress Section */}
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -332,7 +527,7 @@ export default function StudentDetailPage() {
           </div>
 
           {/* Filter Tabs */}
-          <div className="flex items-center gap-1 bg-white p-1 rounded-control border border-mist self-start sm:self-auto overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-1 bg-white p-1 rounded-lg border border-blue-100 shadow-soft self-start sm:self-auto overflow-x-auto no-scrollbar">
             {[
               { id: "ALL", label: "All" },
               { id: "PENDING_REVIEW", label: "Needs Review" },
@@ -343,10 +538,10 @@ export default function StudentDetailPage() {
               <button
                 key={tab.id}
                 onClick={() => setTaskFilter(tab.id)}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-control transition-all whitespace-nowrap ${
+                className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all whitespace-nowrap ${
                   taskFilter === tab.id
-                    ? "bg-brand text-white"
-                    : "text-ink-muted hover:text-ink"
+                    ? "bg-blue-600 text-white shadow-soft"
+                    : "text-ink-muted hover:text-ink hover:bg-blue-50/50"
                 }`}
               >
                 {tab.label}
@@ -497,6 +692,90 @@ export default function StudentDetailPage() {
             })}
           </div>
         )}
+      </div>
+
+      {/* Students in this Cohort (Peer Group) */}
+      <div className="space-y-4 pt-4 border-t border-mist">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <div className="flex items-center gap-2">
+              <Users className="w-4 h-4 text-brand" />
+              <h2 className="text-lg font-bold font-display text-ink tracking-tight">
+                Students in this Cohort ({rosterData?.items?.length || 0})
+              </h2>
+            </div>
+            <p className="text-xs text-ink-muted">
+              All students enrolled in your cohort. Click any student to view their metrics and progress.
+            </p>
+          </div>
+
+          <Link href="/mentor/students">
+            <Button size="sm" variant="secondary" className="text-xs font-semibold">
+              View All Students →
+            </Button>
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {rosterData?.items?.map((peer) => {
+            const isCurrent = peer.student_id === studentId;
+            return (
+              <div
+                key={peer.id}
+                className={`p-4 rounded-xl border transition-all ${
+                  isCurrent
+                    ? "bg-blue-50/70 border-blue-200 shadow-soft ring-1 ring-blue-300"
+                    : "bg-white border-mist hover:border-blue-200 hover:bg-slate-50/50"
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div
+                      className={`w-10 h-10 rounded-full flex items-center justify-center font-display font-extrabold text-sm flex-shrink-0 ${
+                        isCurrent
+                          ? "bg-blue-600 text-white"
+                          : "bg-blue-100 text-blue-800 border border-blue-200"
+                      }`}
+                    >
+                      {peer.student_name.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="font-bold text-sm text-ink truncate font-display">
+                          {peer.student_name}
+                        </span>
+                        {isCurrent && (
+                          <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-blue-600 text-white">
+                            Current
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-ink-muted truncate">
+                        {peer.student_email}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-3 pt-2.5 border-t border-mist/60 flex items-center justify-between text-xs">
+                  <Badge variant={peer.status}>{peer.status}</Badge>
+                  {isCurrent ? (
+                    <span className="text-[11px] font-semibold text-blue-700">
+                      Viewing Profile
+                    </span>
+                  ) : (
+                    <Link
+                      href={`/mentor/students/${peer.student_id}`}
+                      className="text-[11px] font-bold text-brand hover:underline inline-flex items-center gap-0.5"
+                    >
+                      Inspect <ChevronRight className="w-3 h-3" />
+                    </Link>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/* Task Assignment Modal */}
