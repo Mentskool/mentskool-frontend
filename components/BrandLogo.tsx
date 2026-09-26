@@ -36,7 +36,7 @@ export function BrandLogo({
   }[size];
 
   const content = (
-    <div className={`group relative inline-flex items-center gap-2.5 select-none ${className}`}>
+    <div className={`group relative inline-flex items-center gap-2.5 select-none flex-shrink-0 ${className}`}>
       {/* M Symbol Icon with Subtle Clean Shadow & Animation */}
       <div className="relative flex-shrink-0 flex items-center justify-center">
         {/* Floating Animated Logo Container */}
@@ -65,7 +65,7 @@ export function BrandLogo({
 
       {/* Brand Text */}
       {showText && (
-        <div className="flex flex-col">
+        <div className="flex flex-col flex-shrink-0">
           <span
             className={`font-display font-bold text-ink tracking-tight leading-none group-hover:text-brand transition-colors ${titleSize}`}
           >
@@ -83,7 +83,7 @@ export function BrandLogo({
 
   if (href) {
     return (
-      <Link href={href} className="inline-flex focus:outline-none">
+      <Link href={href} className="inline-flex items-center flex-shrink-0 focus:outline-none">
         {content}
       </Link>
     );

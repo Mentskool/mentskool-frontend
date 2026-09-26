@@ -37,7 +37,7 @@ export const Navbar: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
         {/* Logo & Brand */}
-        <div className="flex items-center gap-6 lg:gap-8">
+        <div className="flex items-center gap-4 lg:gap-8 flex-shrink-0">
           <BrandLogo href="/" size="md" />
 
           {/* Navigation Links for Public Pages */}
@@ -61,18 +61,18 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* User Actions */}
-        <div className="flex items-center gap-3 flex-shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
           {isAuthenticated && user ? (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               {/* Primary Dashboard Button */}
               <Link href={dashboardHref}>
                 <Button
                   size="sm"
                   variant="primary"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2 shadow-soft rounded-xl flex items-center gap-1.5"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-3 sm:px-4 py-2 shadow-soft rounded-xl flex items-center gap-1.5"
                 >
                   <LayoutDashboard className="w-3.5 h-3.5" />
-                  <span>Dashboard</span>
+                  <span className="hidden xs:inline sm:inline">Dashboard</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Button>
               </Link>
@@ -92,30 +92,30 @@ export const Navbar: React.FC = () => {
                 size="sm"
                 variant="secondary"
                 onClick={handleLogout}
-                className="text-xs font-medium text-ink-muted hover:text-ink border-mist"
+                className="text-xs font-medium text-ink-muted hover:text-ink border-mist px-2.5 sm:px-3"
               >
                 Sign Out
               </Button>
             </div>
           ) : (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               {isExploreMentorsPage ? (
-                <Link href="/">
+                <Link href="/" className="hidden sm:inline-flex">
                   <Button
                     size="sm"
                     variant="secondary"
-                    className="text-ink font-semibold text-xs flex items-center gap-1.5 px-3.5 border-mist"
+                    className="text-ink font-semibold text-xs flex items-center gap-1.5 px-3 border-mist"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Back to Home</span>
                   </Button>
                 </Link>
               ) : (
-                <Link href="/mentors">
+                <Link href="/mentors" className="hidden sm:inline-flex">
                   <Button
                     size="sm"
                     variant="secondary"
-                    className="hidden sm:inline-flex text-xs font-semibold text-ink border-mist"
+                    className="text-xs font-semibold text-ink border-mist px-3"
                   >
                     Explore Mentors
                   </Button>
@@ -125,7 +125,7 @@ export const Navbar: React.FC = () => {
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="text-xs font-semibold text-ink-muted hover:text-ink"
+                  className="text-xs font-semibold text-ink-muted hover:text-ink px-2.5 py-1.5"
                 >
                   Sign In
                 </Button>
@@ -134,9 +134,10 @@ export const Navbar: React.FC = () => {
                 <Button
                   size="sm"
                   variant="primary"
-                  className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-soft"
+                  className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-soft px-3 py-1.5 whitespace-nowrap"
                 >
-                  Become a Mentor
+                  <span className="hidden sm:inline">Become a Mentor</span>
+                  <span className="sm:hidden">Join Mentor</span>
                 </Button>
               </Link>
             </div>

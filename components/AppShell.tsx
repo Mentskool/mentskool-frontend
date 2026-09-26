@@ -67,12 +67,20 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({
   }
 
 
+  const isMessagesPage = pathname === "/messages";
+
   // Authenticated workspace: Left vertical sidebar + main content area
   if (isAuthenticated && isWorkspaceRoute) {
     return (
       <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-[#EBF3FB]/70 via-[#F1F6FB] to-[#F8FAFC]">
         <Sidebar />
-        <main className="flex-1 min-w-0 px-4 sm:px-6 lg:px-8 py-8 w-full max-w-7xl mx-auto">
+        <main
+          className={`flex-1 min-w-0 w-full max-w-7xl mx-auto ${
+            isMessagesPage
+              ? "p-2 sm:p-4 md:p-6 flex flex-col h-[calc(100dvh-58px)] md:h-screen"
+              : "px-4 sm:px-6 lg:px-8 py-8"
+          }`}
+        >
           {children}
         </main>
       </div>
