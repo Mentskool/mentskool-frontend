@@ -6,9 +6,7 @@ import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
 import {
   useAddQuestion,
-  useBulkImportQuestions,
   useDeleteQuestion,
-  useOcrCaptureQuestion,
   usePublishQuiz,
   useQuiz,
   useUpdateQuiz,
@@ -27,15 +25,11 @@ import {
   Calendar,
   CheckCircle2,
   Clock,
-  Download,
-  FileSpreadsheet,
   FileText,
-  Image as ImageIcon,
   Lock,
   Plus,
   Send,
   Trash2,
-  Upload,
   Trophy,
 } from "lucide-react";
 
@@ -50,11 +44,6 @@ export default function MentorQuizBuilderPage() {
   const updateQuizMutation = useUpdateQuiz();
   const addQuestionMutation = useAddQuestion();
   const deleteQuestionMutation = useDeleteQuestion();
-  const ocrMutation = useOcrCaptureQuestion();
-  const bulkImportMutation = useBulkImportQuestions();
-
-  // Active input tab: 'manual' | 'ocr' | 'bulk'
-  const [activeTab, setActiveTab] = useState<"manual" | "ocr" | "bulk">("manual");
 
   // Question builder form state
   const [qType, setQType] = useState<QuestionType>("MCQ_SINGLE");
@@ -71,21 +60,6 @@ export default function MentorQuizBuilderPage() {
   ]);
   const [builderError, setBuilderError] = useState("");
   const [builderSuccess, setBuilderSuccess] = useState("");
-
-  // OCR state
-  const [ocrFile, setOcrFile] = useState<File | null>(null);
-  const [ocrType, setOcrType] = useState<QuestionType>("MCQ_SINGLE");
-  const [ocrOverrideText, setOcrOverrideText] = useState("");
-  const [ocrFeedback, setOcrFeedback] = useState("");
-
-  // Bulk Import state
-  const [csvFile, setCsvFile] = useState<File | null>(null);
-  const [csvText, setCsvText] = useState("");
-  const [bulkFeedback, setBulkFeedback] = useState<{
-    imported: number;
-    skipped: number;
-    errors: Array<{ row: number; reason: string }>;
-  } | null>(null);
 
   // Metadata edit modal / section toggle
   const [isEditingMeta, setIsEditingMeta] = useState(false);
@@ -231,52 +205,6 @@ export default function MentorQuizBuilderPage() {
     }
   };
 
-  const handleOcrSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!ocrFile) return;
-    setOcrFeedback("");
-
-    try {
-      const res = await ocrMutation.mutateAsync({
-        quizId: quiz.id,
-        file: ocrFile,
-        questionType: ocrType,
-        overrideText: ocrOverrideText.trim() || undefined,
-      });
-      setOcrFeedback(res.message || "Question captured via OCR successfully!");
-      setOcrFile(null);
-      setOcrOverrideText("");
-    } catch (err: any) {
-      setOcrFeedback(err.detail || "Failed to extract question from photo");
-    }
-  };
-
-  const handleBulkSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setBulkFeedback(null);
-
-    try {
-      const res = await bulkImportMutation.mutateAsync({
-        quizId: quiz.id,
-        file: csvFile || undefined,
-        csvText: csvText.trim() || undefined,
-      });
-      setBulkFeedback({
-        imported: res.imported_count,
-        skipped: res.skipped_count,
-        errors: res.errors || [],
-      });
-      setCsvFile(null);
-      setCsvText("");
-    } catch (err: any) {
-      setBulkFeedback({
-        imported: 0,
-        skipped: 0,
-        errors: [{ row: 0, reason: err.detail || "Bulk import failed" }],
-      });
-    }
-  };
-
   const handlePublish = async () => {
     if (quiz.questions.length === 0) {
       alert("Please add at least one question before publishing.");
@@ -402,49 +330,15 @@ export default function MentorQuizBuilderPage() {
         </div>
       </Card>
 
-      {/* Question Input Section — 3 Tabs */}
+      {/* Question Input Section — Unified LaTeX Builder */}
       {!isLocked && (
         <div className="space-y-4">
           <div className="flex items-center justify-between border-b border-mist pb-2">
             <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setActiveTab("manual")}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                  activeTab === "manual"
-                    ? "bg-sky-600 text-white shadow-soft"
-                    : "text-ink-muted hover:text-ink hover:bg-slate-100"
-                }`}
-              >
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-sky-600 text-white shadow-soft">
                 <FileText className="w-4 h-4" />
-                Unified LaTeX Builder
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setActiveTab("ocr")}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                  activeTab === "ocr"
-                    ? "bg-sky-600 text-white shadow-soft"
-                    : "text-ink-muted hover:text-ink hover:bg-slate-100"
-                }`}
-              >
-                <ImageIcon className="w-4 h-4" />
-                Photo / OCR Extraction
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setActiveTab("bulk")}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                  activeTab === "bulk"
-                    ? "bg-sky-600 text-white shadow-soft"
-                    : "text-ink-muted hover:text-ink hover:bg-slate-100"
-                }`}
-              >
-                <FileSpreadsheet className="w-4 h-4" />
-                Bulk CSV Import
-              </button>
+                Add Question (LaTeX & Math Formula Builder)
+              </div>
             </div>
 
             <span className="text-[11px] font-medium text-ink-faint hidden sm:inline">
@@ -452,403 +346,223 @@ export default function MentorQuizBuilderPage() {
             </span>
           </div>
 
-          {/* TAB 1: MANUAL BUILDER (Always default, unified input) */}
-          {activeTab === "manual" && (
-            <Card variant="default" className="p-6 bg-white border-mist shadow-lift space-y-6">
-              {builderError && (
-                <div className="p-3 text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200 rounded-xl">
-                  {builderError}
-                </div>
-              )}
-              {builderSuccess && (
-                <div className="p-3 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-xl">
-                  {builderSuccess}
-                </div>
-              )}
+          <Card variant="default" className="p-6 bg-white border-mist shadow-lift space-y-6">
+            {builderError && (
+              <div className="p-3 text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200 rounded-xl">
+                {builderError}
+              </div>
+            )}
+            {builderSuccess && (
+              <div className="p-3 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-xl">
+                {builderSuccess}
+              </div>
+            )}
 
-              <form onSubmit={handleSaveQuestion} className="space-y-6">
-                {/* Question Type Selector */}
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-ink uppercase tracking-wider">
-                    Question Type
-                  </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setQType("MCQ_SINGLE")}
-                      className={`p-3 text-left rounded-xl border transition-all ${
-                        qType === "MCQ_SINGLE"
-                          ? "border-sky-500 bg-sky-50/50 ring-2 ring-sky-500/20"
-                          : "border-mist hover:border-slate-300 bg-white"
-                      }`}
-                    >
-                      <div className="text-xs font-bold text-ink">MCQ Single Choice</div>
-                      <div className="text-[11px] text-ink-muted mt-0.5">
-                        1 correct option (+full marks, -penalty)
-                      </div>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setQType("MCQ_MULTIPLE")}
-                      className={`p-3 text-left rounded-xl border transition-all ${
-                        qType === "MCQ_MULTIPLE"
-                          ? "border-sky-500 bg-sky-50/50 ring-2 ring-sky-500/20"
-                          : "border-mist hover:border-slate-300 bg-white"
-                      }`}
-                    >
-                      <div className="text-xs font-bold text-ink">MCQ Multiple Choice</div>
-                      <div className="text-[11px] text-ink-muted mt-0.5">
-                        One or more correct options (JEE Advanced)
-                      </div>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setQType("NAT")}
-                      className={`p-3 text-left rounded-xl border transition-all ${
-                        qType === "NAT"
-                          ? "border-sky-500 bg-sky-50/50 ring-2 ring-sky-500/20"
-                          : "border-mist hover:border-slate-300 bg-white"
-                      }`}
-                    >
-                      <div className="text-xs font-bold text-ink">Numerical Answer (NAT)</div>
-                      <div className="text-[11px] text-ink-muted mt-0.5">
-                        Exact numeric entry with tolerance (GATE / JEE)
-                      </div>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Unified Question Text with KaTeX Preview */}
-                <UnifiedLatexInput
-                  label="Question Statement"
-                  required
-                  value={qText}
-                  onChange={setQText}
-                  placeholder="Type question statement. E.g. Find the acceleration $a = \frac{F}{m}$ given force $F = 20\text{ N}$ and mass $m = 4\text{ kg}$."
-                  rows={4}
-                />
-
-                {/* Marks Override */}
-                <div className="grid grid-cols-2 gap-3 p-3 bg-slate-50/60 rounded-xl border border-mist">
-                  <Input
-                    label="Positive Marks (+)"
-                    type="number"
-                    step="0.5"
-                    placeholder={`Default: ${quiz.default_positive_marks}`}
-                    value={posMarks}
-                    onChange={(e) => setPosMarks(e.target.value)}
-                  />
-                  <Input
-                    label="Negative Deduction (-)"
-                    type="number"
-                    step="0.5"
-                    placeholder={`Default: ${quiz.default_negative_marks}`}
-                    value={negMarks}
-                    onChange={(e) => setNegMarks(e.target.value)}
-                  />
-                </div>
-
-                {/* Options Section for MCQ */}
-                {qType !== "NAT" ? (
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <label className="text-xs font-bold text-ink uppercase tracking-wider">
-                        Answer Options & Correct Key
-                      </label>
-                      <span className="text-[11px] text-ink-faint">
-                        {qType === "MCQ_SINGLE" ? "Select 1 correct option" : "Select all correct options"}
-                      </span>
+            <form onSubmit={handleSaveQuestion} className="space-y-6">
+              {/* Question Type Selector */}
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-ink uppercase tracking-wider">
+                  Question Type
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setQType("MCQ_SINGLE")}
+                    className={`p-3 text-left rounded-xl border transition-all ${
+                      qType === "MCQ_SINGLE"
+                        ? "border-sky-500 bg-sky-50/50 ring-2 ring-sky-500/20"
+                        : "border-mist hover:border-slate-300 bg-white"
+                    }`}
+                  >
+                    <div className="text-xs font-bold text-ink">MCQ Single Choice</div>
+                    <div className="text-[11px] text-ink-muted mt-0.5">
+                      1 correct option (+full marks, -penalty)
                     </div>
+                  </button>
 
-                    <div className="space-y-3">
-                      {options.map((opt, idx) => (
-                        <div
-                          key={idx}
-                          className={`p-3 rounded-xl border transition-all ${
-                            opt.isCorrect
-                              ? "bg-blue-50/40 border-blue-200"
-                              : "bg-white border-mist"
-                          }`}
-                        >
-                          <div className="flex items-center justify-between gap-3 mb-2">
-                            <div className="flex items-center gap-2">
-                              <input
-                                type={qType === "MCQ_SINGLE" ? "radio" : "checkbox"}
-                                name="correct_option"
-                                checked={opt.isCorrect}
-                                onChange={() => handleOptionCorrectChange(idx)}
-                                className="w-4 h-4 text-blue-600 focus:ring-blue-500 rounded cursor-pointer"
-                              />
-                              <span className="text-xs font-bold text-ink">
-                                Option {String.fromCharCode(65 + idx)} {opt.isCorrect && "• Correct"}
-                              </span>
-                            </div>
+                  <button
+                    type="button"
+                    onClick={() => setQType("MCQ_MULTIPLE")}
+                    className={`p-3 text-left rounded-xl border transition-all ${
+                      qType === "MCQ_MULTIPLE"
+                        ? "border-sky-500 bg-sky-50/50 ring-2 ring-sky-500/20"
+                        : "border-mist hover:border-slate-300 bg-white"
+                    }`}
+                  >
+                    <div className="text-xs font-bold text-ink">MCQ Multiple Choice</div>
+                    <div className="text-[11px] text-ink-muted mt-0.5">
+                      One or more correct options (JEE Advanced)
+                    </div>
+                  </button>
 
-                            {options.length > 2 && (
-                              <button
-                                type="button"
-                                onClick={() => handleRemoveOption(idx)}
-                                className="text-xs text-rose-500 hover:text-rose-700"
-                              >
-                                Remove
-                              </button>
+                  <button
+                    type="button"
+                    onClick={() => setQType("NAT")}
+                    className={`p-3 text-left rounded-xl border transition-all ${
+                      qType === "NAT"
+                        ? "border-sky-500 bg-sky-50/50 ring-2 ring-sky-500/20"
+                        : "border-mist hover:border-slate-300 bg-white"
+                    }`}
+                  >
+                    <div className="text-xs font-bold text-ink">Numerical Answer (NAT)</div>
+                    <div className="text-[11px] text-ink-muted mt-0.5">
+                      Exact numeric entry with tolerance (GATE / JEE)
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              {/* Unified Question Text with KaTeX Preview */}
+              <UnifiedLatexInput
+                label="Question Statement"
+                required
+                value={qText}
+                onChange={setQText}
+                placeholder="Type question statement. E.g. Find the acceleration $a = \frac{F}{m}$ given force $F = 20\text{ N}$ and mass $m = 4\text{ kg}$."
+                rows={4}
+              />
+
+              {/* Marks Override */}
+              <div className="grid grid-cols-2 gap-3 p-3 bg-slate-50/60 rounded-xl border border-mist">
+                <Input
+                  label="Positive Marks (+)"
+                  type="number"
+                  step="0.5"
+                  placeholder={`Default: ${quiz.default_positive_marks}`}
+                  value={posMarks}
+                  onChange={(e) => setPosMarks(e.target.value)}
+                />
+                <Input
+                  label="Negative Deduction (-)"
+                  type="number"
+                  step="0.5"
+                  placeholder={`Default: ${quiz.default_negative_marks}`}
+                  value={negMarks}
+                  onChange={(e) => setNegMarks(e.target.value)}
+                />
+              </div>
+
+              {/* Options Section for MCQ */}
+              {qType !== "NAT" ? (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-bold text-ink uppercase tracking-wider">
+                      Answer Options & Correct Key
+                    </label>
+                    <span className="text-[11px] text-ink-faint">
+                      {qType === "MCQ_SINGLE" ? "Select 1 correct option" : "Select all correct options"}
+                    </span>
+                  </div>
+
+                  <div className="space-y-3">
+                    {options.map((opt, idx) => (
+                      <div
+                        key={idx}
+                        className={`p-3 rounded-xl border transition-all ${
+                          opt.isCorrect
+                            ? "bg-blue-50/40 border-blue-200"
+                            : "bg-white border-mist"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between gap-3 mb-2">
+                          <div className="flex items-center gap-2">
+                            <input
+                              type={qType === "MCQ_SINGLE" ? "radio" : "checkbox"}
+                              name="correct_option"
+                              checked={opt.isCorrect}
+                              onChange={() => handleOptionCorrectChange(idx)}
+                              className="w-4 h-4 text-blue-600 focus:ring-blue-500 rounded cursor-pointer"
+                            />
+                            <span className="text-xs font-bold text-ink">
+                              Option {String.fromCharCode(65 + idx)} {opt.isCorrect && "• Correct"}
+                            </span>
+                          </div>
+
+                          {options.length > 2 && (
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveOption(idx)}
+                              className="text-xs text-rose-500 hover:text-rose-700"
+                            >
+                              Remove
+                            </button>
+                          )}
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          <input
+                            type="text"
+                            value={opt.text}
+                            onChange={(e) => handleOptionChange(idx, e.target.value)}
+                            placeholder={`Option ${String.fromCharCode(65 + idx)} text (wrap math in $...$)`}
+                            className="w-full p-2 text-xs text-ink bg-white border border-mist rounded-lg focus:outline-none focus:border-sky-500"
+                          />
+                          <div className="p-2 text-xs text-ink bg-slate-50/60 border border-slate-200/80 rounded-lg min-h-[34px] flex items-center">
+                            {opt.text ? (
+                              <MathText text={opt.text} />
+                            ) : (
+                              <span className="text-ink-faint italic text-[11px]">Preview</span>
                             )}
                           </div>
-
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            <input
-                              type="text"
-                              value={opt.text}
-                              onChange={(e) => handleOptionChange(idx, e.target.value)}
-                              placeholder={`Option ${String.fromCharCode(65 + idx)} text (wrap math in $...$)`}
-                              className="w-full p-2 text-xs text-ink bg-white border border-mist rounded-lg focus:outline-none focus:border-sky-500"
-                            />
-                            <div className="p-2 text-xs text-ink bg-slate-50/60 border border-slate-200/80 rounded-lg min-h-[34px] flex items-center">
-                              {opt.text ? (
-                                <MathText text={opt.text} />
-                              ) : (
-                                <span className="text-ink-faint italic text-[11px]">Preview</span>
-                              )}
-                            </div>
-                          </div>
                         </div>
-                      ))}
-                    </div>
-
-                    <Button
-                      type="button"
-                      variant="secondary"
-                      size="sm"
-                      onClick={handleAddOption}
-                      className="rounded-xl"
-                    >
-                      <Plus className="w-4 h-4 mr-1.5" />
-                      Add Option
-                    </Button>
+                      </div>
+                    ))}
                   </div>
-                ) : (
-                  /* NAT Section */
-                  <div className="p-4 bg-sky-50/30 border border-sky-100 rounded-xl space-y-4">
-                    <div className="text-xs font-bold text-sky-900 uppercase tracking-wider">
-                      Numerical Answer Specifications (JEE / GATE)
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <Input
-                        label="Exact Correct Answer"
-                        type="number"
-                        step="any"
-                        required
-                        value={natAnswer}
-                        onChange={(e) => setNatAnswer(e.target.value)}
-                        placeholder="e.g. 24.50"
-                      />
-                      <Input
-                        label="Acceptable Tolerance (±)"
-                        type="number"
-                        step="any"
-                        value={natTolerance}
-                        onChange={(e) => setNatTolerance(e.target.value)}
-                        placeholder="e.g. 0.05"
-                        helperText="Accepts student entries within [answer - tol, answer + tol]"
-                      />
-                    </div>
-                  </div>
-                )}
 
-                <div className="flex justify-end pt-2">
                   <Button
-                    type="submit"
-                    variant="primary"
-                    size="md"
-                    isLoading={addQuestionMutation.isPending}
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    onClick={handleAddOption}
                     className="rounded-xl"
                   >
                     <Plus className="w-4 h-4 mr-1.5" />
-                    Save & Add Question
+                    Add Option
                   </Button>
                 </div>
-              </form>
-            </Card>
-          )}
-
-          {/* TAB 2: PHOTO / OCR EXTRACTION */}
-          {activeTab === "ocr" && (
-            <Card variant="default" className="p-6 bg-white border-mist shadow-lift space-y-6">
-              <div>
-                <h3 className="text-sm font-bold font-display text-ink">
-                  Capture Question via Photo / OCR
-                </h3>
-                <p className="text-xs text-ink-muted mt-1 leading-relaxed">
-                  Upload a photo of a textbook problem, handwritten problem, or diagram. The system
-                  extracts the problem statement with formulas while preserving the original source image
-                  for review.
-                </p>
-              </div>
-
-              {ocrFeedback && (
-                <div className="p-3 text-xs font-semibold text-sky-800 bg-sky-50 border border-sky-200 rounded-xl">
-                  {ocrFeedback}
+              ) : (
+                /* NAT Section */
+                <div className="p-4 bg-sky-50/30 border border-sky-100 rounded-xl space-y-4">
+                  <div className="text-xs font-bold text-sky-900 uppercase tracking-wider">
+                    Numerical Answer Specifications (JEE / GATE)
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <Input
+                      label="Exact Correct Answer"
+                      type="number"
+                      step="any"
+                      required
+                      value={natAnswer}
+                      onChange={(e) => setNatAnswer(e.target.value)}
+                      placeholder="e.g. 24.50"
+                    />
+                    <Input
+                      label="Acceptable Tolerance (±)"
+                      type="number"
+                      step="any"
+                      value={natTolerance}
+                      onChange={(e) => setNatTolerance(e.target.value)}
+                      placeholder="e.g. 0.05"
+                      helperText="Accepts student entries within [answer - tol, answer + tol]"
+                    />
+                  </div>
                 </div>
               )}
 
-              <form onSubmit={handleOcrSubmit} className="space-y-4">
-                <div className="p-6 border-2 border-dashed border-sky-200 rounded-2xl bg-sky-50/20 text-center space-y-3">
-                  <Upload className="w-8 h-8 text-sky-500 mx-auto" />
-                  <div>
-                    <label className="cursor-pointer text-xs font-bold text-sky-600 hover:text-sky-800">
-                      <span>Choose image file</span>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        className="sr-only"
-                        onChange={(e) => setOcrFile(e.target.files?.[0] || null)}
-                      />
-                    </label>
-                    <p className="text-[11px] text-ink-faint mt-1">PNG, JPG, or WEBP up to 10MB</p>
-                  </div>
-                  {ocrFile && (
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-sky-200 rounded-full text-xs text-sky-800 font-medium">
-                      <ImageIcon className="w-3.5 h-3.5" />
-                      {ocrFile.name} ({(ocrFile.size / 1024).toFixed(0)} KB)
-                    </div>
-                  )}
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="text-xs font-bold text-ink uppercase tracking-wider block mb-1">
-                      Expected Question Type
-                    </label>
-                    <select
-                      value={ocrType}
-                      onChange={(e) => setOcrType(e.target.value as QuestionType)}
-                      className="w-full p-2.5 text-xs text-ink bg-white border border-mist rounded-xl focus:outline-none focus:border-sky-500"
-                    >
-                      <option value="MCQ_SINGLE">MCQ Single Choice</option>
-                      <option value="MCQ_MULTIPLE">MCQ Multiple Choice</option>
-                      <option value="NAT">Numerical Answer (NAT)</option>
-                    </select>
-                  </div>
-
-                  <Input
-                    label="Optional Text Override / Hint"
-                    placeholder="Leave empty to use automatic OCR extraction"
-                    value={ocrOverrideText}
-                    onChange={(e) => setOcrOverrideText(e.target.value)}
-                  />
-                </div>
-
-                <div className="flex justify-end pt-2">
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    size="md"
-                    disabled={!ocrFile}
-                    isLoading={ocrMutation.isPending}
-                    className="rounded-xl"
-                  >
-                    <Upload className="w-4 h-4 mr-1.5" />
-                    Extract & Add to Quiz
-                  </Button>
-                </div>
-              </form>
-            </Card>
-          )}
-
-          {/* TAB 3: BULK CSV IMPORT */}
-          {activeTab === "bulk" && (
-            <Card variant="default" className="p-6 bg-white border-mist shadow-lift space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div>
-                  <h3 className="text-sm font-bold font-display text-ink">
-                    Bulk Import Questions from CSV
-                  </h3>
-                  <p className="text-xs text-ink-muted mt-0.5">
-                    Import multiple questions mixing MCQ_SINGLE, MCQ_MULTIPLE, and NAT in a single batch.
-                  </p>
-                </div>
-
-                <a
-                  href={`/quizzes/${quiz.id}/questions/template`}
-                  download="quiz_questions_template.csv"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-sky-200 bg-sky-50 hover:bg-sky-100 text-sky-800 text-xs font-bold transition-colors"
+              <div className="flex justify-end pt-2">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size="md"
+                  isLoading={addQuestionMutation.isPending}
+                  className="rounded-xl"
                 >
-                  <Download className="w-3.5 h-3.5" />
-                  Download CSV Template
-                </a>
+                  <Plus className="w-4 h-4 mr-1.5" />
+                  Save & Add Question
+                </Button>
               </div>
-
-              {bulkFeedback && (
-                <div
-                  className={`p-4 rounded-xl border text-xs space-y-2 ${
-                    bulkFeedback.imported > 0
-                      ? "bg-blue-50/80 border-blue-200 text-blue-900"
-                      : "bg-rose-50 border-rose-200 text-rose-900"
-                  }`}
-                >
-                  <div className="font-bold flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4" />
-                    Import summary: {bulkFeedback.imported} imported, {bulkFeedback.skipped} skipped
-                  </div>
-                  {bulkFeedback.errors.length > 0 && (
-                    <div className="space-y-1 pt-1 border-t border-rose-200">
-                      <div className="font-semibold text-rose-800">Errors encountered:</div>
-                      <ul className="list-disc list-inside text-rose-700 space-y-0.5 max-h-48 overflow-y-auto">
-                        {bulkFeedback.errors.map((err, i) => (
-                          <li key={i}>
-                            Row {err.row}: {err.reason}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              <form onSubmit={handleBulkSubmit} className="space-y-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-ink uppercase tracking-wider">
-                    Upload CSV File
-                  </label>
-                  <input
-                    type="file"
-                    accept=".csv,text/csv"
-                    onChange={(e) => setCsvFile(e.target.files?.[0] || null)}
-                    className="block w-full text-xs text-ink-muted file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-sky-50 file:text-sky-700 hover:file:bg-sky-100 cursor-pointer"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-ink uppercase tracking-wider">
-                    Or Paste CSV Data Directly
-                  </label>
-                  <textarea
-                    rows={6}
-                    value={csvText}
-                    onChange={(e) => setCsvText(e.target.value)}
-                    placeholder="question_type,question_text,positive_marks,negative_marks,nat_answer,nat_tolerance,option_1,option_2,option_3,option_4,correct_options&#10;MCQ_SINGLE,Derivative of $\sin(x)$?,4.0,1.0,,,$\cos(x)$,$-\cos(x)$,$\tan(x)$,$1$,1"
-                    className="w-full p-3 font-mono text-xs text-ink bg-white border border-mist rounded-xl focus:outline-none focus:border-sky-500"
-                  />
-                </div>
-
-                <div className="flex justify-end pt-2">
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    size="md"
-                    disabled={!csvFile && !csvText.trim()}
-                    isLoading={bulkImportMutation.isPending}
-                    className="rounded-xl"
-                  >
-                    <Upload className="w-4 h-4 mr-1.5" />
-                    Process & Import Questions
-                  </Button>
-                </div>
-              </form>
-            </Card>
-          )}
+            </form>
+          </Card>
         </div>
       )}
 
@@ -867,7 +581,7 @@ export default function MentorQuizBuilderPage() {
           <div className="p-12 text-center border-2 border-dashed border-mist rounded-2xl bg-white space-y-2">
             <p className="text-sm font-semibold text-ink">No questions added yet</p>
             <p className="text-xs text-ink-muted">
-              Use the unified LaTeX builder above or upload textbook photos via OCR to build your quiz.
+              Use the unified LaTeX builder above to add questions to your quiz.
             </p>
           </div>
         ) : (
