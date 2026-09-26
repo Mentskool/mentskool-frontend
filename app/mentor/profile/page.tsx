@@ -354,22 +354,26 @@ export default function MentorProfilePage() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           {/* Avatar & Info */}
           <div className="flex items-center gap-5 min-w-0">
-            {avatarUrl || user?.avatar_url ? (
-              <img
-                src={avatarUrl || user?.avatar_url || ""}
-                alt={user?.full_name || profile.full_name}
-                className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover shadow-sm ring-1 ring-slate-200 border-2 border-white flex-shrink-0"
-              />
-            ) : (
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-bold text-xl sm:text-2xl flex items-center justify-center shadow-sm flex-shrink-0">
+            <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-bold text-xl sm:text-2xl flex items-center justify-center shadow-sm flex-shrink-0 overflow-hidden ring-1 ring-slate-200 border-2 border-white">
+              <span>
                 {(user?.full_name || profile.full_name || "M")
                   .split(" ")
                   .map((n) => n[0])
                   .slice(0, 2)
                   .join("")
                   .toUpperCase()}
-              </div>
-            )}
+              </span>
+              {(avatarUrl || user?.avatar_url) && (
+                <img
+                  src={avatarUrl || user?.avatar_url || ""}
+                  alt={user?.full_name || profile.full_name}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+              )}
+            </div>
 
             <div className="space-y-1.5 min-w-0">
               <div className="flex items-center gap-2.5 flex-wrap">

@@ -227,22 +227,26 @@ export default function MentorDetailPage() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           {/* Avatar and Primary Details */}
           <div className="flex items-start sm:items-center gap-5">
-            {mentor.avatar_url ? (
-              <img
-                src={mentor.avatar_url}
-                alt={mentor.full_name}
-                className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover shadow-sm ring-1 ring-slate-200/70 border-2 border-white flex-shrink-0"
-              />
-            ) : (
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 text-white font-bold text-2xl flex items-center justify-center shadow-sm ring-1 ring-slate-200/70 border-2 border-white flex-shrink-0">
+            <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 text-white font-bold text-2xl flex items-center justify-center shadow-sm ring-1 ring-slate-200/70 border-2 border-white flex-shrink-0 overflow-hidden">
+              <span>
                 {mentor.full_name
                   .split(" ")
                   .map((n) => n[0])
                   .slice(0, 2)
                   .join("")
                   .toUpperCase()}
-              </div>
-            )}
+              </span>
+              {mentor.avatar_url && (
+                <img
+                  src={mentor.avatar_url}
+                  alt={mentor.full_name}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+              )}
+            </div>
 
             <div className="space-y-2">
               <div className="flex items-center gap-2.5 flex-wrap">

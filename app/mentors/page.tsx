@@ -61,8 +61,8 @@ export default function MentorsPage() {
           m.bio.toLowerCase().includes(q) ||
           (m.college && m.college.toLowerCase().includes(q)) ||
           (m.exam_rank && m.exam_rank.toLowerCase().includes(q)) ||
-          CATEGORY_LABELS[m.category]?.toLowerCase().includes(q) ||
-          m.email.toLowerCase().includes(q)
+          (CATEGORY_LABELS[m.category] && CATEGORY_LABELS[m.category].toLowerCase().includes(q)) ||
+          Boolean(m.email && m.email.toLowerCase().includes(q))
       );
     }
 
@@ -229,22 +229,26 @@ export default function MentorsPage() {
                 <div className="space-y-4">
                   {/* Top: Avatar, Name, Specialization */}
                   <div className="flex items-start gap-3.5">
-                    {mentor.avatar_url ? (
-                      <img
-                        src={mentor.avatar_url}
-                        alt={mentor.full_name}
-                        className="w-13 h-13 w-12 h-12 rounded-xl object-cover ring-1 ring-slate-200/80 border border-white flex-shrink-0"
-                      />
-                    ) : (
-                      <div className="w-12 h-12 rounded-xl bg-slate-900 text-white font-bold text-sm flex items-center justify-center flex-shrink-0">
+                    <div className="relative w-12 h-12 rounded-xl bg-slate-900 text-white font-bold text-sm flex items-center justify-center flex-shrink-0 overflow-hidden ring-1 ring-slate-200/80">
+                      <span>
                         {mentor.full_name
                           .split(" ")
                           .map((n) => n[0])
                           .slice(0, 2)
                           .join("")
                           .toUpperCase()}
-                      </div>
-                    )}
+                      </span>
+                      {mentor.avatar_url && (
+                        <img
+                          src={mentor.avatar_url}
+                          alt={mentor.full_name}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          onError={(e) => {
+                            e.currentTarget.style.display = "none";
+                          }}
+                        />
+                      )}
+                    </div>
 
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-1.5 flex-wrap">
