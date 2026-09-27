@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import {
   useMentor,
   useSubscribeMentor,
@@ -73,7 +73,13 @@ export default function MentorDetailClient({
     isAuthenticated && mentor && activeSub && activeSub.mentor_id !== mentor.user_id
   );
 
-  const [activeTab, setActiveTab] = useState<SubTab>("overview");
+  const searchParams = useSearchParams();
+  const queryTab = searchParams?.get("tab") as SubTab | null;
+  const [activeTab, setActiveTab] = useState<SubTab>(
+    queryTab === "reviews" || queryTab === "curriculum" || queryTab === "schedule"
+      ? queryTab
+      : "overview"
+  );
   const [showLeaveConfirm, setShowLeaveConfirm] = useState(false);
   const [feedback, setFeedback] = useState<{
     type: "success" | "error";
@@ -476,8 +482,13 @@ export default function MentorDetailClient({
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
               }`}
             >
-              <Award className="w-3.5 h-3.5" />
-              <span>Track Record</span>
+              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
+              <span>Reviews & Ratings</span>
+              {Boolean(mentor.review_count) && (
+                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-100 text-amber-900 font-bold">
+                  {mentor.review_count}
+                </span>
+              )}
             </button>
           </div>
 
