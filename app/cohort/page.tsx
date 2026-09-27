@@ -150,6 +150,15 @@ export default function CohortPage() {
           >
             Study Resources ({resources?.length ?? 0})
           </button>
+          {!isMentor && activeSub && (
+            <Link
+              href={`/mentors/${activeSub.mentor_id}?tab=reviews`}
+              className="px-4 py-1.5 text-xs font-semibold rounded-control transition-all text-amber-700 hover:text-amber-800 hover:bg-amber-50/60 flex items-center gap-1"
+            >
+              <span>⭐</span>
+              <span>Reviews & Ratings</span>
+            </Link>
+          )}
         </div>
       </div>
 
@@ -184,16 +193,28 @@ export default function CohortPage() {
                 </p>
               </div>
 
-              {!showLeaveConfirm ? (
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  onClick={() => setShowLeaveConfirm(true)}
-                  className="text-xs text-ink-muted hover:text-red-600 hover:border-red-300 self-start sm:self-center"
-                >
-                  Leave Cohort
-                </Button>
-              ) : (
+              <div className="flex items-center gap-2 self-start sm:self-center flex-wrap">
+                <Link href={`/mentors/${activeSub.mentor_id}?tab=reviews`}>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    className="text-xs font-semibold text-amber-800 bg-amber-50 hover:bg-amber-100 border-amber-200/80 shadow-xs flex items-center gap-1.5"
+                  >
+                    <span>⭐</span>
+                    <span>Rate & Review Mentor</span>
+                  </Button>
+                </Link>
+
+                {!showLeaveConfirm ? (
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    onClick={() => setShowLeaveConfirm(true)}
+                    className="text-xs text-ink-muted hover:text-red-600 hover:border-red-300"
+                  >
+                    Leave Cohort
+                  </Button>
+                ) : (
                 <div className="flex items-center gap-2 bg-red-50 p-2.5 rounded-control border border-red-200">
                   <span className="text-xs text-red-800 font-medium">Release your seat?</span>
                   <Button
@@ -215,6 +236,7 @@ export default function CohortPage() {
                   </Button>
                 </div>
               )}
+              </div>
             </div>
           ) : (
             <div className="p-6 rounded-card bg-white border border-mist text-center space-y-3">
