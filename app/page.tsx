@@ -331,7 +331,7 @@ export default function HomePage() {
         </div>
 
         {/* 3-Step Process Section with Color Themed Headers */}
-        <div className="w-full space-y-6 text-left">
+        <div id="how-it-works" className="w-full space-y-6 text-left scroll-mt-24">
           <div>
             <span className="text-xs font-bold text-indigo-700 uppercase tracking-widest bg-indigo-50 border border-indigo-200/60 px-3 py-1 rounded-full">
               Platform Journey
