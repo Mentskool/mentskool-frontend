@@ -84,15 +84,15 @@ export const Sidebar: React.FC = () => {
             key={item.href}
             href={item.href}
             onClick={onItemClick}
-            className={`flex items-center gap-3 text-xs font-semibold py-2.5 transition-all ${
+            className={`flex items-center gap-3 text-xs font-semibold px-3.5 py-2.5 rounded-xl transition-all ${
               isActive
-                ? "text-blue-700 bg-blue-50/80 border-l-[3px] border-blue-600 pl-3 pr-3.5 rounded-r-control font-bold"
-                : "text-ink-muted hover:text-ink hover:bg-blue-50/50 px-3.5 rounded-control"
+                ? "text-blue-600 bg-blue-50/90 border border-blue-200/70 font-bold shadow-xs"
+                : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
             }`}
           >
             <Icon
               className={`w-4 h-4 flex-shrink-0 ${
-                isActive ? "text-blue-600" : "text-ink-muted group-hover:text-ink"
+                isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-700"
               }`}
             />
             <span>{item.label}</span>
@@ -190,13 +190,13 @@ export const Sidebar: React.FC = () => {
       )}
 
       {/* DESKTOP VERTICAL SIDEBAR (Fixed / Sticky on the left for md: screens and above) */}
-      <aside className="hidden md:flex w-60 lg:w-64 h-screen sticky top-0 bg-gradient-to-b from-[#EBF3FB] via-[#F3F8FD] to-white border-r border-blue-100/70 flex-col justify-between p-5 flex-shrink-0 z-30">
+      <aside className="hidden md:flex w-60 lg:w-64 h-screen sticky top-0 bg-white border-r border-slate-200/80 flex-col justify-between p-5 flex-shrink-0 z-30">
         <div className="space-y-6">
-          {/* Logo & Platform Name */}
-          <div className="flex items-center justify-between pb-4 border-b border-blue-100/70">
+          {/* Logo & Platform Role Tag */}
+          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <BrandLogo href="/" size="sm" showTagline={false} />
             {user && (
-              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200">
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-blue-50 text-blue-600 border border-blue-200/60">
                 {user.role}
               </span>
             )}
@@ -204,7 +204,7 @@ export const Sidebar: React.FC = () => {
 
           {/* Navigation Section */}
           <div className="space-y-1">
-            <div className="text-[10px] font-bold uppercase tracking-widest text-blue-600/70 px-3 mb-2 flex items-center gap-1.5">
+            <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 mb-2.5 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
               Workspace
             </div>
@@ -214,28 +214,28 @@ export const Sidebar: React.FC = () => {
 
         {/* User Card & Sign Out at Bottom */}
         {user && (
-          <div className="pt-4 border-t border-blue-100/80 space-y-3">
+          <div className="pt-4 border-t border-slate-100 space-y-3">
             <Link
               href={user.role === "MENTOR" ? "/mentor/profile" : "/dashboard/profile"}
-              className="flex items-center gap-3 px-2 py-1.5 rounded-control hover:bg-blue-50/70 transition-colors group cursor-pointer"
-              title="Edit Profile"
+              className="flex items-center gap-3 px-2 py-1.5 rounded-xl hover:bg-slate-50 transition-colors group cursor-pointer"
+              title="View / Edit Profile"
             >
               {user.avatar_url ? (
                 <img
                   src={user.avatar_url}
                   alt={user.full_name}
-                  className="w-8 h-8 rounded-full object-cover border border-blue-200 flex-shrink-0"
+                  className="w-9 h-9 rounded-full object-cover border border-slate-200 flex-shrink-0"
                 />
               ) : (
-                <div className="w-8 h-8 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center font-display font-bold text-xs text-blue-700 flex-shrink-0">
+                <div className="w-9 h-9 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center font-display font-bold text-xs text-blue-600 flex-shrink-0">
                   {user.full_name?.charAt(0).toUpperCase() || "U"}
                 </div>
               )}
               <div className="min-w-0 flex-1">
-                <p className="text-xs font-semibold text-ink group-hover:text-blue-700 transition-colors truncate leading-tight">
+                <p className="text-xs font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate leading-tight">
                   {user.full_name}
                 </p>
-                <p className="text-[10px] text-ink-faint truncate mt-0.5">
+                <p className="text-[10px] text-slate-400 truncate mt-0.5">
                   {user.email}
                 </p>
               </div>
@@ -243,9 +243,9 @@ export const Sidebar: React.FC = () => {
 
             <button
               onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 text-xs font-semibold py-2 px-3 rounded-control border border-blue-200 hover:bg-blue-50 text-ink transition-colors"
+              className="w-full flex items-center justify-center gap-2 text-xs font-semibold py-2 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 transition-all shadow-xs"
             >
-              <LogOut className="w-3.5 h-3.5 text-ink-muted" />
+              <LogOut className="w-3.5 h-3.5 text-slate-400" />
               Sign Out
             </button>
           </div>
