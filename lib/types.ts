@@ -43,6 +43,7 @@ export interface DayActivityItem {
 
 export interface MentorProfile {
   user_id: string;
+  slug?: string | null;
   full_name: string;
   email: string;
   avatar_url?: string | null;

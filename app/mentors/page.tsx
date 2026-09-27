@@ -252,9 +252,11 @@ export default function MentorsPage() {
 
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        <h3 className="font-display font-bold text-base text-slate-900 group-hover:text-indigo-600 transition-colors truncate">
-                          {mentor.full_name}
-                        </h3>
+                        <Link href={`/mentors/${mentor.slug || mentor.user_id}`}>
+                          <h3 className="font-display font-bold text-base text-slate-900 group-hover:text-indigo-600 transition-colors truncate hover:underline">
+                            {mentor.full_name}
+                          </h3>
+                        </Link>
                         <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
                       </div>
 
@@ -336,7 +338,7 @@ export default function MentorsPage() {
                     <span className="text-[11px] text-slate-400 ml-1">/ mo</span>
                   </div>
 
-                  <Link href={`/mentors/${mentor.user_id}`}>
+                  <Link href={`/mentors/${mentor.slug || mentor.user_id}`}>
                     <Button
                       size="sm"
                       variant="primary"

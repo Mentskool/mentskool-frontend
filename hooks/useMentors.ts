@@ -20,11 +20,12 @@ export function useMentors(category?: string, limit = 20, offset = 0) {
   });
 }
 
-export function useMentor(id?: string) {
+export function useMentor(id?: string, initialData?: MentorProfile) {
   return useQuery({
     queryKey: ["mentor", id],
     queryFn: () => apiClient<MentorProfile>(`/mentors/${id}`),
     enabled: Boolean(id),
+    initialData,
   });
 }
 
