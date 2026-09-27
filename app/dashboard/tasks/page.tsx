@@ -64,18 +64,31 @@ export default function StudentTasksPage() {
     };
   }, [allTasksData]);
 
-  // Compute date range from active tasks or current month
+  // Compute date range from active tasks or current month in human-friendly format (e.g. Sep 26 – Oct 30, 2026)
   const cycleDateRange = useMemo(() => {
     const items = allTasksData?.items || [];
+    const formatShort = (dateStr: string) => {
+      const parts = dateStr.split("-");
+      if (parts.length === 3) {
+        const year = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1;
+        const day = parseInt(parts[2], 10);
+        const d = new Date(year, month, day);
+        return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      }
+      return dateStr;
+    };
+
     if (items.length > 0 && items[0].week_start && items[0].week_end) {
-      return `${items[0].week_start} – ${items[0].week_end}`;
+      const endYear = items[0].week_end.split("-")[0] || "";
+      return `${formatShort(items[0].week_start)} – ${formatShort(items[0].week_end)}${endYear ? `, ${endYear}` : ""}`;
     }
     const now = new Date();
     const start = new Date(now.getFullYear(), now.getMonth(), 1);
     const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-    const format = (d: Date) =>
-      d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-    return `${format(start)} – ${format(end)}`;
+    const formatFull = (d: Date) =>
+      d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    return `${formatFull(start)} – ${formatFull(end)}, ${now.getFullYear()}`;
   }, [allTasksData]);
 
   // Filter tasks locally based on selected tab
