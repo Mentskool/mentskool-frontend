@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/authStore";
 import { apiClient } from "@/lib/api-client";
 import { User } from "@/lib/types";
@@ -19,6 +20,7 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
   userName,
   onAvatarUpdated,
 }) => {
+  const queryClient = useQueryClient();
   const { user, setUser } = useAuthStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -31,7 +33,11 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
     message: string;
   } | null>(null);
 
-  const displayAvatar = currentAvatarUrl || user?.avatar_url;
+  // If currentAvatarUrl is explicitly provided (even as null or empty string), respect it.
+  const displayAvatar =
+    currentAvatarUrl !== undefined
+      ? currentAvatarUrl || null
+      : user?.avatar_url || null;
   const displayName = userName || user?.full_name || "User";
 
   const handleFileSelected = (file: File) => {
@@ -83,6 +89,10 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
         onAvatarUpdated(updatedUser.avatar_url ?? null);
       }
 
+      queryClient.invalidateQueries({ queryKey: ["myMentorProfile"] });
+      queryClient.invalidateQueries({ queryKey: ["mentor"] });
+      queryClient.invalidateQueries({ queryKey: ["mentors"] });
+
       setFeedback({
         type: "success",
         message: "Photo cropped and updated successfully!",
@@ -123,6 +133,10 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
       if (onAvatarUpdated) {
         onAvatarUpdated(null);
       }
+
+      queryClient.invalidateQueries({ queryKey: ["myMentorProfile"] });
+      queryClient.invalidateQueries({ queryKey: ["mentor"] });
+      queryClient.invalidateQueries({ queryKey: ["mentors"] });
 
       setFeedback({
         type: "success",

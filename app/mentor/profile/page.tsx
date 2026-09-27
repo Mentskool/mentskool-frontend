@@ -21,6 +21,7 @@ import {
   ShieldCheck,
   Clock,
   AlertTriangle,
+  AlertCircle,
   Upload,
   FileText,
   CheckCircle2,
@@ -79,6 +80,7 @@ export default function MentorProfilePage() {
   const [isUploadingScorecard, setIsUploadingScorecard] = useState(false);
   const [showDocUploadModal, setShowDocUploadModal] = useState(false);
 
+  const [saveSuccess, setSaveSuccess] = useState(false);
   const [feedback, setFeedback] = useState<{
     type: "success" | "error";
     message: string;
@@ -88,11 +90,8 @@ export default function MentorProfilePage() {
   const [isReactivating, setIsReactivating] = useState(false);
 
   useEffect(() => {
-    if (user?.avatar_url && !avatarUrl) {
-      setAvatarUrl(user.avatar_url);
-    }
     if (profile) {
-      if (profile.avatar_url) setAvatarUrl(profile.avatar_url);
+      setAvatarUrl(profile.avatar_url || "");
       setPhoneNumber(profile.phone_number || "");
       setBio(profile.bio || "");
       setYoutubeUrl(profile.intro_youtube_url || "");
@@ -109,8 +108,10 @@ export default function MentorProfilePage() {
       if (profile.payout_account_number) {
         setPayoutMethod("BANK");
       }
+    } else if (user?.avatar_url && !avatarUrl) {
+      setAvatarUrl(user.avatar_url);
     }
-  }, [profile, user]);
+  }, [profile]);
 
   if (authLoading || profileLoading) {
     return (
@@ -205,6 +206,14 @@ export default function MentorProfilePage() {
     e.preventDefault();
     setFeedback(null);
 
+    if (bio.trim().length < 10) {
+      setFeedback({
+        type: "error",
+        message: "Your mentor bio must be at least 10 characters long.",
+      });
+      return;
+    }
+
     const validatedSeats = Math.min(Math.max(1, Number(seatLimit)), 30);
     const validatedPrice = Math.min(Math.max(0, Number(pricePerMonth)), 2000);
 
@@ -232,6 +241,8 @@ export default function MentorProfilePage() {
         type: "success",
         message: "Profile updates saved successfully!",
       });
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3500);
       refetch();
     } catch (err: any) {
       setFeedback({
@@ -864,21 +875,86 @@ export default function MentorProfilePage() {
           />
         </Card>
 
-        {/* Save Bar */}
-        <div className="pt-2 flex items-center justify-between">
-          <span className="text-xs text-ink-muted">
-            Remember to save changes after editing your bio or payout details.
-          </span>
-          <Button
-            type="submit"
-            variant="primary"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2.5 rounded-xl shadow-soft flex items-center gap-1.5"
-            isLoading={updateMutation.isPending}
-          >
-            <Save className="w-4 h-4" />
-            <span>Save Profile Changes</span>
-          </Button>
+        {/* Save Bar with Immediate Inline Feedback */}
+        <div className="pt-4 border-t border-mist space-y-3">
+          {feedback && (
+            <div
+              className={`p-3.5 rounded-xl text-xs font-semibold border flex items-center justify-between animate-fade-in ${
+                feedback.type === "success"
+                  ? "bg-emerald-50 text-emerald-800 border-emerald-300 shadow-xs"
+                  : "bg-rose-50 text-rose-800 border-rose-300 shadow-xs"
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                {feedback.type === "success" ? (
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                ) : (
+                  <AlertCircle className="w-4 h-4 text-rose-600 flex-shrink-0" />
+                )}
+                <span>{feedback.message}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setFeedback(null)}
+                className="text-xs opacity-60 hover:opacity-100 px-1"
+              >
+                ✕
+              </button>
+            </div>
+          )}
+
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <span className="text-xs text-ink-muted">
+              Remember to save changes after editing your bio or payout details.
+            </span>
+            <Button
+              type="submit"
+              variant="primary"
+              className={`px-6 py-2.5 rounded-xl shadow-soft flex items-center gap-1.5 font-bold transition-all duration-200 ${
+                saveSuccess
+                  ? "bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-500/20"
+                  : "bg-blue-600 hover:bg-blue-700 text-white"
+              }`}
+              isLoading={updateMutation.isPending}
+            >
+              {saveSuccess ? (
+                <>
+                  <Check className="w-4 h-4 text-white" />
+                  <span>Saved Successfully!</span>
+                </>
+              ) : (
+                <>
+                  <Save className="w-4 h-4" />
+                  <span>Save Profile Changes</span>
+                </>
+              )}
+            </Button>
+          </div>
         </div>
+
+        {/* Global Floating Toast for Instant Visibility from any scroll position */}
+        {feedback && (
+          <div className="fixed bottom-6 right-6 z-50 max-w-sm p-4 rounded-2xl shadow-elevated border flex items-start gap-3 bg-white/95 backdrop-blur-md border-slate-200 animate-slide-up">
+            {feedback.type === "success" ? (
+              <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+            ) : (
+              <AlertCircle className="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5" />
+            )}
+            <div className="flex-1 text-xs space-y-0.5">
+              <p className="font-bold text-slate-900">
+                {feedback.type === "success" ? "Profile Updated" : "Notice"}
+              </p>
+              <p className="text-slate-600">{feedback.message}</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setFeedback(null)}
+              className="text-xs text-slate-400 hover:text-slate-700"
+            >
+              ✕
+            </button>
+          </div>
+        )}
       </form>
     </div>
   );
