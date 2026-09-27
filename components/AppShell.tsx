@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { Navbar } from "./Navbar";
 import { Sidebar } from "./Sidebar";
+import { Footer } from "./Footer";
 
 export const AppShell: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -54,14 +55,22 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({
     );
   }
 
+  const isFullWidthPublic =
+    isHome ||
+    pathname === "/terms" ||
+    pathname === "/privacy" ||
+    pathname === "/refund-policy" ||
+    pathname === "/contact";
+
   // During SSR or initial hydration, render default shell to avoid mismatch
   if (!mounted) {
     return (
       <div className={`min-h-screen flex flex-col ${isHome ? "bg-[#EBF3FB]" : "bg-[#F8FAFC]"}`}>
         <Navbar />
-        <main className={`flex-1 w-full ${isHome ? "" : "max-w-6xl mx-auto px-4 sm:px-6 py-8"}`}>
+        <main className={`flex-1 w-full ${isFullWidthPublic ? "" : "max-w-6xl mx-auto px-4 sm:px-6 py-8"}`}>
           {children}
         </main>
+        <Footer />
       </div>
     );
   }
@@ -91,9 +100,10 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({
   return (
     <div className={`min-h-screen flex flex-col ${isHome ? "bg-[#EBF3FB]" : "bg-[#F8FAFC]"}`}>
       <Navbar />
-      <main className={`flex-1 w-full ${isHome ? "" : "max-w-7xl mx-auto px-4 sm:px-6 py-8"}`}>
+      <main className={`flex-1 w-full ${isFullWidthPublic ? "" : "max-w-7xl mx-auto px-4 sm:px-6 py-8"}`}>
         {children}
       </main>
+      <Footer />
     </div>
   );
 };
