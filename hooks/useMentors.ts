@@ -3,6 +3,9 @@ import { apiClient } from "@/lib/api-client";
 import {
   MentorListResponse,
   MentorProfile,
+  MentorReview,
+  MentorReviewsListResponse,
+  ReviewEligibilityResponse,
   Subscription,
 } from "@/lib/types";
 
@@ -124,6 +127,38 @@ export function useUpdateMentorProfile() {
       queryClient.invalidateQueries({ queryKey: ["mentors"] });
       queryClient.invalidateQueries({ queryKey: ["mentor"] });
       queryClient.invalidateQueries({ queryKey: ["myMentorProfile"] });
+    },
+  });
+}
+
+export function useMentorReviews(identifier?: string) {
+  return useQuery({
+    queryKey: ["mentorReviews", identifier],
+    queryFn: () => apiClient<MentorReviewsListResponse>(`/mentors/${identifier}/reviews`),
+    enabled: Boolean(identifier),
+  });
+}
+
+export function useMentorReviewEligibility(identifier?: string, enabled = true) {
+  return useQuery({
+    queryKey: ["mentorReviewEligibility", identifier],
+    queryFn: () => apiClient<ReviewEligibilityResponse>(`/mentors/${identifier}/reviews/eligibility`),
+    enabled: Boolean(identifier) && enabled,
+    retry: false,
+  });
+}
+
+export function useSubmitMentorReview(identifier?: string) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: { rating: number; comment: string }) =>
+      apiClient.post<MentorReview>(`/mentors/${identifier}/reviews`, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["mentorReviews", identifier] });
+      queryClient.invalidateQueries({ queryKey: ["mentorReviewEligibility", identifier] });
+      queryClient.invalidateQueries({ queryKey: ["mentor", identifier] });
+      queryClient.invalidateQueries({ queryKey: ["mentors"] });
     },
   });
 }

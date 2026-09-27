@@ -119,6 +119,16 @@ export default async function MentorPage({ params }: PageProps) {
           "Competitive Exam Preparation",
         ].filter(Boolean),
         url: `${SITE_URL}/mentors/${mentor.slug || mentor.user_id}`,
+        aggregateRating:
+          mentor.rating_avg && mentor.review_count && mentor.review_count > 0
+            ? {
+                "@type": "AggregateRating",
+                ratingValue: Number(mentor.rating_avg).toFixed(1),
+                reviewCount: mentor.review_count,
+                bestRating: "5",
+                worstRating: "1",
+              }
+            : undefined,
         offers: {
           "@type": "Offer",
           price: Number(mentor.price_per_month) || 0,
