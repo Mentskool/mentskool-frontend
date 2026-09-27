@@ -49,6 +49,7 @@ export default function StudentProfilePage() {
   const [prepStage, setPrepStage] = useState("Dropper / Repeater");
   const [bio, setBio] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
   const [feedback, setFeedback] = useState<{
     type: "success" | "error";
     message: string;
@@ -110,6 +111,8 @@ export default function StudentProfilePage() {
         type: "success",
         message: "Profile updated successfully! Your cohort mentor can now see your updated goals.",
       });
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3500);
     } catch (err: any) {
       setFeedback({
         type: "error",
@@ -271,19 +274,82 @@ export default function StudentProfilePage() {
             helperText="Your cohort mentor reads this to customize problem sets and 1:1 strategy calls."
           />
 
-          {/* Submit Button */}
-          <div className="pt-6 border-t border-mist flex items-center justify-end gap-3">
-            <Button
-              type="submit"
-              variant="primary"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-soft rounded-lg"
-              isLoading={isSaving}
-            >
-              Save Profile Changes
-            </Button>
+          {/* Submit Button & Inline Feedback */}
+          <div className="pt-6 border-t border-mist space-y-4">
+            {feedback && (
+              <div
+                className={`p-3.5 rounded-xl text-xs font-semibold border flex items-center justify-between animate-fade-in ${
+                  feedback.type === "success"
+                    ? "bg-emerald-50 text-emerald-800 border-emerald-300 shadow-xs"
+                    : "bg-rose-50 text-rose-800 border-rose-300 shadow-xs"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  {feedback.type === "success" ? (
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  ) : (
+                    <AlertCircle className="w-4 h-4 text-rose-600 flex-shrink-0" />
+                  )}
+                  <span>{feedback.message}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setFeedback(null)}
+                  className="text-xs opacity-60 hover:opacity-100 px-1"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
+
+            <div className="flex items-center justify-end gap-3">
+              <Button
+                type="submit"
+                variant="primary"
+                className={`font-bold shadow-soft rounded-lg px-6 py-2.5 transition-all duration-200 ${
+                  saveSuccess
+                    ? "bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-500/20"
+                    : "bg-blue-600 hover:bg-blue-700 text-white"
+                }`}
+                isLoading={isSaving}
+              >
+                {saveSuccess ? (
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-white" />
+                    Saved Successfully!
+                  </span>
+                ) : (
+                  "Save Profile Changes"
+                )}
+              </Button>
+            </div>
           </div>
         </form>
       </Card>
+
+      {/* Global Floating Toast for Instant Visibility from any scroll position */}
+      {feedback && (
+        <div className="fixed bottom-6 right-6 z-50 max-w-sm p-4 rounded-2xl shadow-elevated border flex items-start gap-3 bg-white/95 backdrop-blur-md border-slate-200 animate-slide-up">
+          {feedback.type === "success" ? (
+            <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+          ) : (
+            <AlertCircle className="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5" />
+          )}
+          <div className="flex-1 text-xs space-y-0.5">
+            <p className="font-bold text-slate-900">
+              {feedback.type === "success" ? "Profile Updated" : "Notice"}
+            </p>
+            <p className="text-slate-600">{feedback.message}</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setFeedback(null)}
+            className="text-xs text-slate-400 hover:text-slate-700"
+          >
+            ✕
+          </button>
+        </div>
+      )}
     </div>
   );
 }
