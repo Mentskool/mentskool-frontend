@@ -59,6 +59,8 @@ export interface MentorProfile {
   is_active: boolean;
   is_available?: boolean;
   verification_status: MentorVerificationStatus;
+  rating_avg?: number | null;
+  review_count?: number;
   last_active_at?: string | null;
   activity_status?: string;
   activity_heatmap_30d?: DayActivityItem[];
@@ -102,6 +104,33 @@ export interface MentorStatsResponse {
   meetings_scheduled: number;
   heatmap_30d: DayActivityItem[];
   recent_activities: RecentActivityItem[];
+}
+
+export interface MentorReview {
+  id: string;
+  mentor_id: string;
+  student_id: string;
+  student_name: string;
+  student_avatar_url?: string | null;
+  rating: number;
+  comment: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface MentorReviewsListResponse {
+  items: MentorReview[];
+  total: number;
+  average_rating: number;
+  review_count: number;
+}
+
+export interface ReviewEligibilityResponse {
+  can_review: boolean;
+  is_enrolled: boolean;
+  days_enrolled: number;
+  days_remaining: number;
+  my_review?: MentorReview | null;
 }
 
 export interface AdminMentorItem extends MentorProfile {
