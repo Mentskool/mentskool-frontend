@@ -43,6 +43,7 @@ export function useSubscribeMentor() {
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["mentors"] });
+      queryClient.invalidateQueries({ queryKey: ["mentor"] });
       queryClient.invalidateQueries({ queryKey: ["mySubscriptions"] });
     },
   });
