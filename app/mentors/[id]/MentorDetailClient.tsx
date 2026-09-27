@@ -86,12 +86,13 @@ export default function MentorDetailClient({
     message: string;
   } | null>(null);
 
-  const { data: reviewsData, refetch: refetchReviews } = useMentorReviews(mentorId);
+  const targetMentorId = mentor?.user_id || mentorId;
+  const { data: reviewsData, refetch: refetchReviews } = useMentorReviews(targetMentorId);
   const { data: eligibility, refetch: refetchEligibility } = useMentorReviewEligibility(
-    mentorId,
+    targetMentorId,
     Boolean(isAuthenticated)
   );
-  const submitReviewMutation = useSubmitMentorReview(mentorId);
+  const submitReviewMutation = useSubmitMentorReview(targetMentorId);
 
   const [reviewRating, setReviewRating] = useState<number>(5);
   const [reviewComment, setReviewComment] = useState<string>("");
@@ -163,7 +164,7 @@ export default function MentorDetailClient({
     }
 
     try {
-      await subscribeMutation.mutateAsync(mentorId);
+      await subscribeMutation.mutateAsync(targetMentorId);
       setFeedback({
         type: "success",
         message: "Successfully subscribed to this cohort! You now have full access to assignments, chat, and meetings.",
@@ -193,10 +194,20 @@ export default function MentorDetailClient({
             message: "You already hold an active subscription with this mentor.",
           });
         }
+      } else if (apiErr.status === 404) {
+        setFeedback({
+          type: "error",
+          message: "Mentor profile could not be found. Please refresh and try again.",
+        });
+      } else if (apiErr.status === 400 && apiErr.detail?.toLowerCase().includes("not accepting")) {
+        setFeedback({
+          type: "error",
+          message: "This mentor is currently not accepting new students.",
+        });
       } else {
         setFeedback({
           type: "error",
-          message: apiErr.detail || "Unable to complete subscription.",
+          message: apiErr.detail || "Unable to complete subscription. Please try again.",
         });
       }
     }
