@@ -204,6 +204,11 @@ export default function MentorDetailClient({
           type: "error",
           message: "This mentor is currently not accepting new students.",
         });
+      } else if (apiErr.code === "EMAIL_NOT_VERIFIED" || apiErr.detail === "EMAIL_NOT_VERIFIED") {
+        setFeedback({
+          type: "error",
+          message: "Please verify your email address before enrolling in a cohort. Check your inbox for the verification link or click Resend in the banner.",
+        });
       } else {
         setFeedback({
           type: "error",

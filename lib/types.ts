@@ -6,7 +6,9 @@ export type UserRole = "STUDENT" | "MENTOR" | "ADMIN";
 
 export interface User {
   id: string;
+  firebase_uid?: string;
   email: string;
+  email_verified?: boolean;
   full_name: string;
   role: UserRole;
   avatar_url?: string | null;

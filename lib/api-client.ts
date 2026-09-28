@@ -1,25 +1,10 @@
+import { auth } from "./firebase";
+import { signOut } from "firebase/auth";
 import { useAuthStore } from "@/store/authStore";
 import { ApiError } from "./types";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
-
-let isRefreshing = false;
-let failedQueue: Array<{
-  resolve: (token: string) => void;
-  reject: (error: unknown) => void;
-}> = [];
-
-const processQueue = (error: unknown, token: string | null = null) => {
-  failedQueue.forEach((promise) => {
-    if (token) {
-      promise.resolve(token);
-    } else {
-      promise.reject(error);
-    }
-  });
-  failedQueue = [];
-};
 
 export async function apiClient<T>(
   endpoint: string,
@@ -27,16 +12,24 @@ export async function apiClient<T>(
 ): Promise<T> {
   const url = `${API_BASE_URL}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
 
-  const { accessToken, refreshToken, setAccessToken, logout } =
-    useAuthStore.getState();
-
   const headers = new Headers(options.headers || {});
   if (!headers.has("Content-Type") && !(options.body instanceof FormData)) {
     headers.set("Content-Type", "application/json");
   }
 
-  if (accessToken && !headers.has("Authorization")) {
-    headers.set("Authorization", `Bearer ${accessToken}`);
+  // Attach fresh Firebase ID token if user is signed in
+  if (!headers.has("Authorization")) {
+    try {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        const idToken = await currentUser.getIdToken();
+        if (idToken) {
+          headers.set("Authorization", `Bearer ${idToken}`);
+        }
+      }
+    } catch (tokenErr) {
+      console.warn("Could not retrieve Firebase ID token:", tokenErr);
+    }
   }
 
   let response: Response;
@@ -45,78 +38,41 @@ export async function apiClient<T>(
       ...options,
       headers,
     });
-  } catch (netErr) {
+  } catch {
     const error: ApiError = {
-      detail: "Unable to connect to Mentskool backend service. Ensure Docker is running.",
+      detail: "Unable to connect to Mentskool backend service. Ensure server is running.",
       status: 0,
     };
     throw error;
   }
 
-  // Handle 401 Unauthorized with automatic refresh token rotation
-  if (
-    response.status === 401 &&
-    !endpoint.includes("/auth/login") &&
-    !endpoint.includes("/auth/signup") &&
-    !endpoint.includes("/auth/refresh") &&
-    refreshToken
-  ) {
-    if (isRefreshing) {
-      // Queue requests until refresh resolves
-      try {
-        const newToken = await new Promise<string>((resolve, reject) => {
-          failedQueue.push({ resolve, reject });
-        });
-        headers.set("Authorization", `Bearer ${newToken}`);
-        const retryRes = await fetch(url, { ...options, headers });
-        if (!retryRes.ok) {
-          throw await parseErrorResponse(retryRes);
-        }
-        return (await retryRes.json()) as T;
-      } catch (err) {
-        throw err;
-      }
-    }
-
-    isRefreshing = true;
-
+  // Handle 401: Refresh ID token once and retry
+  if (response.status === 401 && auth.currentUser) {
     try {
-      const refreshRes = await fetch(`${API_BASE_URL}/auth/refresh`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ refresh_token: refreshToken }),
-      });
+      // Force refresh the token
+      const freshToken = await auth.currentUser.getIdToken(true);
+      headers.set("Authorization", `Bearer ${freshToken}`);
+      const retryRes = await fetch(url, { ...options, headers });
 
-      if (!refreshRes.ok) {
-        logout();
-        processQueue(new Error("Refresh session expired"), null);
-        throw await parseErrorResponse(refreshRes);
+      if (retryRes.ok) {
+        if (retryRes.status === 204) return {} as T;
+        return (await retryRes.json()) as T;
       }
 
-      const refreshData = await refreshRes.json();
-      const newAccessToken = refreshData.access_token;
-      const newRefreshToken = refreshData.refresh_token;
-
-      // Update Zustand and LocalStorage
-      useAuthStore.getState().setAuth(
-        refreshData.user,
-        newAccessToken,
-        newRefreshToken
-      );
-      processQueue(null, newAccessToken);
-
-      // Retry the initial request with new access token
-      headers.set("Authorization", `Bearer ${newAccessToken}`);
-      const retryRes = await fetch(url, { ...options, headers });
-      if (!retryRes.ok) {
+      if (retryRes.status === 401) {
+        // Still unauthorized after force refresh: sign out cleanly
+        await signOut(auth);
+        useAuthStore.getState().logout();
         throw await parseErrorResponse(retryRes);
       }
-      return (await retryRes.json()) as T;
-    } catch (err) {
-      logout();
-      throw err;
-    } finally {
-      isRefreshing = false;
+      throw await parseErrorResponse(retryRes);
+    } catch (refreshErr) {
+      if ((refreshErr as ApiError)?.status !== undefined) {
+        throw refreshErr;
+      }
+      await signOut(auth);
+      useAuthStore.getState().logout();
+      throw await parseErrorResponse(response);
     }
   }
 
@@ -139,14 +95,14 @@ apiClient.post = <T>(endpoint: string, body?: any, options: RequestInit = {}) =>
   apiClient<T>(endpoint, {
     ...options,
     method: "POST",
-    body: body ? JSON.stringify(body) : undefined,
+    body: body instanceof FormData ? body : body !== undefined ? JSON.stringify(body) : undefined,
   });
 
 apiClient.patch = <T>(endpoint: string, body?: any, options: RequestInit = {}) =>
   apiClient<T>(endpoint, {
     ...options,
     method: "PATCH",
-    body: body ? JSON.stringify(body) : undefined,
+    body: body instanceof FormData ? body : body !== undefined ? JSON.stringify(body) : undefined,
   });
 
 apiClient.delete = <T>(endpoint: string, options: RequestInit = {}) =>
@@ -156,15 +112,22 @@ async function parseErrorResponse(response: Response): Promise<ApiError> {
   const status = response.status;
   const retryAfterHeader = response.headers.get("Retry-After");
   const retryAfter = retryAfterHeader ? parseInt(retryAfterHeader, 10) : undefined;
+  const headerCode = response.headers.get("X-Error-Code") || response.headers.get("x-error-code");
 
   try {
     const errorData = await response.json();
     let detail = "An unexpected error occurred.";
+    let code = headerCode || errorData.code || undefined;
 
     if (typeof errorData.detail === "string") {
       detail = errorData.detail;
+      if (detail === "PROFILE_NOT_CREATED" || detail === "EMAIL_NOT_VERIFIED") {
+        code = detail;
+      }
+    } else if (errorData.detail && typeof errorData.detail === "object") {
+      if (errorData.detail.code) code = errorData.detail.code;
+      detail = errorData.detail.message || errorData.detail.detail || JSON.stringify(errorData.detail);
     } else if (Array.isArray(errorData.detail)) {
-      // Pydantic validation errors array
       detail = errorData.detail.map((d: any) => d.msg || JSON.stringify(d)).join(", ");
     } else if (status === 429) {
       detail = `Rate limit exceeded. Please wait ${retryAfter || 60} seconds before retrying.`;
@@ -174,13 +137,17 @@ async function parseErrorResponse(response: Response): Promise<ApiError> {
       detail,
       status,
       retryAfter,
-      code: errorData.code || response.headers.get("X-Error-Code") || undefined,
+      code,
     };
   } catch {
     return {
-      detail: status === 429 ? "Rate limit reached. Please try again in 1 minute." : `Request failed with HTTP ${status}`,
+      detail:
+        status === 429
+          ? "Rate limit reached. Please try again in 1 minute."
+          : `Request failed with HTTP ${status}`,
       status,
       retryAfter,
+      code: headerCode || undefined,
     };
   }
 }

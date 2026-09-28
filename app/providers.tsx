@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useAuthStore } from "@/store/authStore";
+import { AuthListener } from "@/components/AuthListener";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -18,14 +18,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
       })
   );
 
-  const initFromStorage = useAuthStore((s) => s.initFromStorage);
-
-  useEffect(() => {
-    initFromStorage();
-  }, [initFromStorage]);
-
   return (
     <QueryClientProvider client={queryClient}>
+      <AuthListener />
       {children}
     </QueryClientProvider>
   );

@@ -7,13 +7,14 @@ import { Navbar } from "./Navbar";
 import { Sidebar } from "./Sidebar";
 import { WorkspaceHeader } from "./WorkspaceHeader";
 import { Footer } from "./Footer";
+import { EmailVerificationBanner } from "./EmailVerificationBanner";
 
 export const AppShell: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const pathname = usePathname();
   const router = useRouter();
-  const { user, isAuthenticated } = useAuthStore();
+  const { user, isAuthenticated, isLoading } = useAuthStore();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -23,12 +24,15 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({
   const isAuthPage =
     pathname === "/login" ||
     pathname === "/signup" ||
+    pathname === "/forgot-password" ||
+    pathname === "/verify-email" ||
     pathname === "/mentor/onboarding";
 
   const isHome = pathname === "/";
 
   // Workspace routes that should display the dashboard sidebar when logged in
-  const isMentorsExplore = pathname === "/mentors" || pathname.startsWith("/mentors/");
+  const isMentorsExplore =
+    pathname === "/mentors" || pathname.startsWith("/mentors/");
   const isWorkspaceRoute =
     !isMentorsExplore &&
     !pathname.startsWith("/admin") &&
@@ -39,6 +43,15 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({
       pathname === "/messages" ||
       pathname === "/schedule" ||
       pathname.startsWith("/quizzes"));
+
+  // Route protection: client-side guards for /dashboard and /mentor routes
+  useEffect(() => {
+    if (mounted && !isLoading) {
+      if (!isAuthenticated && (pathname.startsWith("/dashboard") || (pathname.startsWith("/mentor") && pathname !== "/mentor/onboarding"))) {
+        router.replace("/login");
+      }
+    }
+  }, [mounted, isLoading, isAuthenticated, pathname, router]);
 
   // Admins do not participate in student/mentor workspaces: redirect to Admin Console
   useEffect(() => {
@@ -76,25 +89,27 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({
     );
   }
 
-
   const isMessagesPage = pathname === "/messages";
 
-  // Authenticated workspace: Left vertical sidebar + top WorkspaceHeader + main content area
+  // Authenticated workspace: EmailVerificationBanner + Left vertical sidebar + top WorkspaceHeader + main content area
   if (isAuthenticated && isWorkspaceRoute) {
     return (
-      <div className="min-h-screen flex flex-col md:flex-row bg-[#F8FAFC]">
-        <Sidebar />
-        <div className="flex-1 min-w-0 flex flex-col">
-          <WorkspaceHeader />
-          <main
-            className={`flex-1 min-w-0 w-full max-w-7xl mx-auto ${
-              isMessagesPage
-                ? "p-2 sm:p-4 md:p-6 flex flex-col h-[calc(100dvh-112px)] md:h-[calc(100vh-53px)]"
-                : "px-4 sm:px-6 lg:px-8 py-6 sm:py-8"
-            }`}
-          >
-            {children}
-          </main>
+      <div className="min-h-screen flex flex-col bg-[#F8FAFC]">
+        <EmailVerificationBanner />
+        <div className="flex-1 min-w-0 flex flex-col md:flex-row">
+          <Sidebar />
+          <div className="flex-1 min-w-0 flex flex-col">
+            <WorkspaceHeader />
+            <main
+              className={`flex-1 min-w-0 w-full max-w-7xl mx-auto ${
+                isMessagesPage
+                  ? "p-2 sm:p-4 md:p-6 flex flex-col h-[calc(100dvh-112px)] md:h-[calc(100vh-53px)]"
+                  : "px-4 sm:px-6 lg:px-8 py-6 sm:py-8"
+              }`}
+            >
+              {children}
+            </main>
+          </div>
         </div>
       </div>
     );
@@ -103,6 +118,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({
   // Marketing & Public layout (Home, Mentors explore, etc.): Clean top navbar + full-width content
   return (
     <div className={`min-h-screen flex flex-col ${isHome ? "bg-[#EBF3FB]" : "bg-[#F8FAFC]"}`}>
+      <EmailVerificationBanner />
       <Navbar />
       <main className={`flex-1 w-full ${isFullWidthPublic ? "" : "max-w-7xl mx-auto px-4 sm:px-6 py-8"}`}>
         {children}
