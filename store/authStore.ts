@@ -3,51 +3,50 @@ import { User } from "@/lib/types";
 
 interface AuthState {
   user: User | null;
-  accessToken: string | null;
-  refreshToken: string | null;
+  firebaseUid: string | null;
+  emailVerified: boolean;
   isAuthenticated: boolean;
   isLoading: boolean;
-  setAuth: (user: User, accessToken: string, refreshToken: string) => void;
-  setUser: (user: User) => void;
-  setAccessToken: (accessToken: string) => void;
+  profileNeedsCreation: boolean;
+  setUser: (user: User | null) => void;
+  setFirebaseState: (params: { firebaseUid: string | null; emailVerified: boolean }) => void;
+  setProfileNeedsCreation: (needsCreation: boolean) => void;
+  setLoading: (isLoading: boolean) => void;
   logout: () => void;
-  initFromStorage: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  accessToken: null,
-  refreshToken: null,
+  firebaseUid: null,
+  emailVerified: false,
   isAuthenticated: false,
   isLoading: true,
+  profileNeedsCreation: false,
 
-  setAuth: (user, accessToken, refreshToken) => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("mentskool_access_token", accessToken);
-      localStorage.setItem("mentskool_refresh_token", refreshToken);
-      localStorage.setItem("mentskool_user", JSON.stringify(user));
-    }
+  setUser: (user) => {
     set({
       user,
-      accessToken,
-      refreshToken,
-      isAuthenticated: true,
+      isAuthenticated: !!user,
+      emailVerified: user?.email_verified ?? false,
+      profileNeedsCreation: false,
       isLoading: false,
     });
   },
 
-  setUser: (user) => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("mentskool_user", JSON.stringify(user));
-    }
-    set({ user });
+  setFirebaseState: ({ firebaseUid, emailVerified }) => {
+    set((state) => ({
+      firebaseUid,
+      emailVerified,
+      user: state.user ? { ...state.user, email_verified: emailVerified } : state.user,
+    }));
   },
 
-  setAccessToken: (accessToken) => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("mentskool_access_token", accessToken);
-    }
-    set({ accessToken });
+  setProfileNeedsCreation: (needsCreation) => {
+    set({ profileNeedsCreation: needsCreation, isLoading: false });
+  },
+
+  setLoading: (isLoading) => {
+    set({ isLoading });
   },
 
   logout: () => {
@@ -58,38 +57,11 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
     set({
       user: null,
-      accessToken: null,
-      refreshToken: null,
+      firebaseUid: null,
+      emailVerified: false,
       isAuthenticated: false,
       isLoading: false,
+      profileNeedsCreation: false,
     });
-  },
-
-  initFromStorage: () => {
-    if (typeof window === "undefined") {
-      set({ isLoading: false });
-      return;
-    }
-
-    try {
-      const accessToken = localStorage.getItem("mentskool_access_token");
-      const refreshToken = localStorage.getItem("mentskool_refresh_token");
-      const userStr = localStorage.getItem("mentskool_user");
-
-      if (accessToken && refreshToken && userStr) {
-        const user = JSON.parse(userStr) as User;
-        set({
-          user,
-          accessToken,
-          refreshToken,
-          isAuthenticated: true,
-          isLoading: false,
-        });
-      } else {
-        set({ isLoading: false });
-      }
-    } catch {
-      set({ isLoading: false });
-    }
   },
 }));

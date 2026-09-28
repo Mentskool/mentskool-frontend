@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { Mail, ArrowRight, RefreshCw, CheckCircle2, ShieldAlert } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Card } from "@/components/ui/Card";
-import { GoogleSignInButton } from "@/components/ui/GoogleSignInButton";
 import { BrandLogo } from "@/components/BrandLogo";
 import { ApiError } from "@/lib/types";
 
@@ -31,8 +31,22 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 
 export default function SignupPage() {
   const router = useRouter();
-  const { signup, isSigningUp, googleAuth, isGoogleAuthPending } = useAuth();
+  const {
+    signup,
+    isSigningUp,
+    googleAuth,
+    isGoogleAuthPending,
+    resendVerificationEmail,
+    isResendingEmail,
+    reloadVerificationStatus,
+    isCheckingVerification,
+    user,
+  } = useAuth();
+
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successRegisteredEmail, setSuccessRegisteredEmail] = useState<string | null>(null);
+  const [resendStatus, setResendStatus] = useState<string | null>(null);
+  const [cooldownSeconds, setCooldownSeconds] = useState(0);
 
   const {
     register,
@@ -52,181 +66,334 @@ export default function SignupPage() {
 
   const selectedRole = watch("role");
 
+  useEffect(() => {
+    if (cooldownSeconds <= 0) return;
+    const timer = setInterval(() => {
+      setCooldownSeconds((prev) => Math.max(0, prev - 1));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [cooldownSeconds]);
+
   const onSubmit = async (values: SignupFormValues) => {
     setErrorMessage(null);
     try {
-      const response = await signup(values);
-      if (response.user.role === "MENTOR") {
-        router.push("/mentor/onboarding");
-      } else {
-        router.push("/dashboard/tasks");
-      }
-    } catch (err) {
-      const apiErr = err as ApiError;
-      if (apiErr.status === 429) {
-        setErrorMessage(
-          apiErr.detail ||
-            "Rate limit exceeded: Please wait 60 seconds before submitting again."
-        );
-      } else if (apiErr.status === 409) {
+      await signup(values);
+      setSuccessRegisteredEmail(values.email);
+    } catch (err: any) {
+      console.error("Signup error:", err);
+      const code = err.code || "";
+      if (code === "auth/email-already-in-use") {
         setErrorMessage("This email is already registered. Please sign in instead.");
+      } else if (code === "auth/weak-password") {
+        setErrorMessage("Password is too weak. Please choose at least 8 characters.");
+      } else if (code === "auth/too-many-requests") {
+        setErrorMessage("Too many attempts. Please wait a moment before trying again.");
       } else {
-        setErrorMessage(apiErr.detail || "Unable to create account. Please try again.");
+        const apiErr = err as ApiError;
+        setErrorMessage(
+          apiErr.detail || err.message || "Unable to create account. Please try again."
+        );
       }
     }
   };
 
-  const handleGoogleCode = useCallback(
-    async (code: string) => {
-      setErrorMessage(null);
-      try {
-        const response = await googleAuth({ code, role: selectedRole });
-        if (response.user.role === "MENTOR") {
+  const handleGoogleSignIn = async () => {
+    setErrorMessage(null);
+    try {
+      const res = await googleAuth(selectedRole);
+      if (!res.needsRole) {
+        if (selectedRole === "MENTOR") {
           router.push("/mentor/onboarding");
         } else {
           router.push("/dashboard/tasks");
         }
-      } catch (err) {
-        const apiErr = err as ApiError;
-        setErrorMessage(
-          apiErr.detail || "Google sign-up failed. Please try again."
-        );
       }
-    },
-    [googleAuth, router, selectedRole]
-  );
+    } catch (err: any) {
+      console.error("Google sign-up error:", err);
+      const code = err.code || "";
+      if (code === "auth/popup-closed-by-user") {
+        return;
+      }
+      setErrorMessage("Google sign-in was interrupted. Please try again.");
+    }
+  };
 
-  return (
-    <div className="min-h-screen flex flex-col justify-center items-center px-4 py-12 bg-paper">
-      <div className="w-full max-w-md">
-        {/* Brand Header */}
-        <div className="text-center mb-6">
-          <BrandLogo href="/" size="lg" showText={true} showTagline={false} className="mb-4" />
-          <h1 className="text-2xl font-bold font-display text-ink tracking-tight">
-            Create your account
-          </h1>
-          <p className="text-xs text-ink-muted mt-1">
-            Join Mentskool to start tracking verified accountability
-          </p>
+  const handleResend = async () => {
+    if (cooldownSeconds > 0) return;
+    setResendStatus(null);
+    setErrorMessage(null);
+    try {
+      await resendVerificationEmail();
+      setResendStatus("Verification email sent! Check your inbox.");
+      setCooldownSeconds(60);
+    } catch (err: any) {
+      if (err.code === "auth/too-many-requests") {
+        setErrorMessage("Too many requests. Please wait a minute before requesting another email.");
+        setCooldownSeconds(60);
+      } else {
+        setErrorMessage("Could not resend email. Please try again later.");
+      }
+    }
+  };
+
+  const handleCheckVerified = async () => {
+    setErrorMessage(null);
+    try {
+      const verified = await reloadVerificationStatus();
+      if (verified) {
+        if (selectedRole === "MENTOR") {
+          router.push("/mentor/onboarding");
+        } else {
+          router.push("/dashboard/tasks");
+        }
+      } else {
+        setErrorMessage("Email is not verified yet. Please click the link in your inbox first.");
+      }
+    } catch {
+      setErrorMessage("Could not check verification status. Please try again.");
+    }
+  };
+
+  // --- "Check your email" Confirmation Screen ---
+  if (successRegisteredEmail) {
+    return (
+      <div className="min-h-screen flex flex-col justify-center items-center px-4 py-12 bg-[#F8FAFC]">
+        <div className="mb-8">
+          <BrandLogo size="lg" />
         </div>
 
-        {/* Auth Card */}
-        <Card className="bg-white p-7 sm:p-8 border-mist">
+        <Card className="w-full max-w-md p-8 border border-slate-200/80 shadow-sm text-center">
+          <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Mail className="w-8 h-8" />
+          </div>
+
+          <h2 className="text-2xl font-bold font-serif text-ink tracking-tight">
+            Check your email
+          </h2>
+          <p className="text-sm text-muted mt-2">
+            We sent a verification link to{" "}
+            <span className="font-semibold text-ink">{successRegisteredEmail}</span>.
+            Please verify your email to access all features.
+          </p>
+
           {errorMessage && (
-            <div className="p-3 mb-4 bg-[#FDF5E8] border border-amber/40 rounded-control text-xs text-[#9A6210] font-medium leading-relaxed">
-              {errorMessage}
+            <div className="mt-4 p-3 rounded-lg bg-red-50 border border-red-200 text-xs text-red-700 flex items-center gap-2 text-left">
+              <ShieldAlert className="w-4 h-4 flex-shrink-0 text-red-500" />
+              <span>{errorMessage}</span>
             </div>
           )}
 
-          {/* Role Toggle */}
-          <div className="flex flex-col gap-1.5 text-left mb-4">
-            <label className="text-xs font-semibold text-ink-muted select-none">
-              I want to join as:
-            </label>
-            <div className="grid grid-cols-2 gap-2 p-1 bg-[#F3F4F6] rounded-control border border-mist">
-              <button
-                type="button"
-                onClick={() => setValue("role", "STUDENT")}
-                className={`py-1.5 text-xs font-semibold rounded-control transition-all ${
-                  selectedRole === "STUDENT"
-                    ? "bg-white text-brand border border-mist/80 font-bold"
-                    : "text-ink-muted hover:text-ink"
-                }`}
-              >
-                Student
-              </button>
-              <button
-                type="button"
-                onClick={() => setValue("role", "MENTOR")}
-                className={`py-1.5 text-xs font-semibold rounded-control transition-all ${
-                  selectedRole === "MENTOR"
-                    ? "bg-white text-brand border border-mist/80 font-bold"
-                    : "text-ink-muted hover:text-ink"
-                }`}
-              >
-                Mentor
-              </button>
+          {resendStatus && (
+            <div className="mt-4 p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2 text-left">
+              <CheckCircle2 className="w-4 h-4 flex-shrink-0 text-emerald-600" />
+              <span>{resendStatus}</span>
             </div>
-          </div>
+          )}
 
-          {/* Google OAuth */}
-          <GoogleSignInButton
-            onCode={handleGoogleCode}
-            disabled={isSigningUp || isGoogleAuthPending}
-            label="Sign up with Google"
-          />
+          <div className="mt-8 space-y-3">
+            <Button
+              type="button"
+              className="w-full justify-center"
+              onClick={handleCheckVerified}
+              isLoading={isCheckingVerification}
+            >
+              <CheckCircle2 className="w-4 h-4 mr-2" />
+              I&apos;ve verified my email
+            </Button>
 
-          {/* Divider */}
-          <div className="relative my-5">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-mist" />
-            </div>
-            <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-3 text-ink-faint font-medium">
-                or sign up with email
-              </span>
-            </div>
-          </div>
+            <Button
+              type="button"
+              variant="secondary"
+              className="w-full justify-center text-xs"
+              onClick={handleResend}
+              isLoading={isResendingEmail}
+              disabled={cooldownSeconds > 0}
+            >
+              <RefreshCw className="w-3.5 h-3.5 mr-2" />
+              {cooldownSeconds > 0
+                ? `Resend in ${cooldownSeconds}s`
+                : "Resend verification email"}
+            </Button>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-
-            <Input
-              label="Full name"
-              type="text"
-              placeholder="e.g. Alex Morgan"
-              error={errors.full_name?.message}
-              {...register("full_name")}
-            />
-
-            <Input
-              label="Email address"
-              type="email"
-              placeholder="alex@example.com"
-              error={errors.email?.message}
-              {...register("email")}
-            />
-
-            <Input
-              label="Password (min 8 characters)"
-              type="password"
-              placeholder="••••••••"
-              error={errors.password?.message}
-              {...register("password")}
-            />
-
-            <div className="pt-2">
-              <Button
-                type="submit"
-                variant="primary"
-                className="w-full py-2.5 text-sm font-bold"
-                isLoading={isSigningUp}
-              >
-                Create {selectedRole === "MENTOR" ? "Mentor" : "Student"} Account
-              </Button>
-            </div>
-          </form>
-
-          <div className="mt-6 pt-6 border-t border-mist text-center space-y-2">
-            <p className="text-xs text-ink-muted">
-              Already have an account?{" "}
-              <Link
-                href="/login"
-                className="font-bold text-brand hover:underline"
-              >
-                Sign in
-              </Link>
-            </p>
-            <div>
-              <Link
-                href="/"
-                className="text-[11px] text-ink-faint hover:text-ink transition-colors"
-              >
-                ← Return to Home
-              </Link>
-            </div>
+            <Button
+              type="button"
+              variant="ghost"
+              className="w-full justify-center text-xs text-muted hover:text-ink"
+              onClick={() => {
+                if (user?.role === "MENTOR") {
+                  router.push("/mentor/onboarding");
+                } else {
+                  router.push("/dashboard/tasks");
+                }
+              }}
+            >
+              Continue to dashboard for now
+              <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+            </Button>
           </div>
         </Card>
       </div>
+    );
+  }
+
+  // --- Registration Form ---
+  return (
+    <div className="min-h-screen flex flex-col justify-center items-center px-4 py-12 bg-paper">
+      <div className="mb-8">
+        <BrandLogo size="lg" />
+      </div>
+
+      <Card className="w-full max-w-md p-8 border border-slate-200/80 shadow-xs">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold font-serif text-ink tracking-tight">
+            Create your account
+          </h2>
+          <p className="text-sm text-muted mt-1">
+            Join Mentskool to build discipline, track accountability, and achieve exam mastery.
+          </p>
+        </div>
+
+        {errorMessage && (
+          <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-sm text-red-700 flex items-center gap-2">
+            <ShieldAlert className="w-4 h-4 flex-shrink-0 text-red-500" />
+            <span>{errorMessage}</span>
+          </div>
+        )}
+
+        {/* Google Sign-Up Button */}
+        <div className="mb-5">
+          <Button
+            type="button"
+            variant="secondary"
+            className="w-full flex items-center justify-center gap-3 py-2.5 font-medium border-slate-300 hover:bg-slate-50 transition"
+            onClick={handleGoogleSignIn}
+            isLoading={isGoogleAuthPending}
+          >
+            <svg className="w-4 h-4" viewBox="0 0 24 24">
+              <path
+                fill="#4285F4"
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+              />
+              <path
+                fill="#34A853"
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+              />
+              <path
+                fill="#FBBC05"
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+              />
+              <path
+                fill="#EA4335"
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+              />
+            </svg>
+            Continue with Google
+          </Button>
+        </div>
+
+        <div className="relative mb-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-slate-200"></div>
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-white px-3 text-slate-400 font-medium">Or continue with email</span>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+              I want to join as
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setValue("role", "STUDENT")}
+                className={`flex flex-col items-center justify-center p-3 rounded-xl border text-sm font-medium transition ${
+                  selectedRole === "STUDENT"
+                    ? "border-brand bg-brand/5 text-brand font-semibold shadow-xs"
+                    : "border-slate-200 bg-white text-muted hover:border-slate-300"
+                }`}
+              >
+                <span>Student</span>
+                <span className="text-[11px] text-muted font-normal mt-0.5">
+                  Prepare & Track
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setValue("role", "MENTOR")}
+                className={`flex flex-col items-center justify-center p-3 rounded-xl border text-sm font-medium transition ${
+                  selectedRole === "MENTOR"
+                    ? "border-brand bg-brand/5 text-brand font-semibold shadow-xs"
+                    : "border-slate-200 bg-white text-muted hover:border-slate-300"
+                }`}
+              >
+                <span>Mentor</span>
+                <span className="text-[11px] text-muted font-normal mt-0.5">
+                  Guide & Review
+                </span>
+              </button>
+            </div>
+            <input type="hidden" {...register("role")} />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+              Full Name
+            </label>
+            <Input
+              type="text"
+              placeholder="e.g. Aarav Patel"
+              {...register("full_name")}
+              error={errors.full_name?.message}
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+              Email Address
+            </label>
+            <Input
+              type="email"
+              placeholder="you@example.com"
+              {...register("email")}
+              error={errors.email?.message}
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+              Password
+            </label>
+            <Input
+              type="password"
+              placeholder="Min. 8 characters"
+              {...register("password")}
+              error={errors.password?.message}
+            />
+          </div>
+
+          <Button
+            type="submit"
+            className="w-full justify-center mt-2"
+            isLoading={isSigningUp}
+          >
+            Create Account
+          </Button>
+        </form>
+
+        <p className="text-center text-xs text-muted mt-6">
+          Already have an account?{" "}
+          <Link
+            href="/login"
+            className="text-brand font-semibold hover:underline"
+          >
+            Sign in
+          </Link>
+        </p>
+      </Card>
     </div>
   );
 }
