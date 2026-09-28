@@ -134,10 +134,10 @@ function LoginForm() {
   // --- Step: Choose role for new Google account ---
   if (profileNeedsCreation) {
     return (
-      <Card className="w-full max-w-md p-8 border border-slate-200/80 shadow-xs">
-        <div className="text-center mb-6">
-          <div className="w-12 h-12 bg-brand/10 text-brand rounded-full flex items-center justify-center mx-auto mb-3">
-            <UserCheck className="w-6 h-6" />
+      <Card className="w-full p-6 sm:p-7 border border-slate-200/90 shadow-sm bg-white/95 backdrop-blur-sm rounded-2xl">
+        <div className="text-center mb-5">
+          <div className="w-10 h-10 bg-brand/10 text-brand rounded-full flex items-center justify-center mx-auto mb-2.5">
+            <UserCheck className="w-5 h-5" />
           </div>
           <h2 className="text-xl font-bold font-serif text-ink tracking-tight">
             Complete your profile
@@ -220,25 +220,25 @@ function LoginForm() {
 
   // --- Normal Login Form ---
   return (
-    <Card className="w-full max-w-md p-8 border border-slate-200/80 shadow-xs">
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold font-serif text-ink tracking-tight">
+    <Card className="w-full p-6 sm:p-7 border border-slate-200/90 shadow-sm bg-white/95 backdrop-blur-sm rounded-2xl">
+      <div className="text-center mb-4 sm:mb-5">
+        <h2 className="text-xl sm:text-2xl font-bold font-serif text-ink tracking-tight">
           Welcome back
         </h2>
-        <p className="text-sm text-muted mt-1">
+        <p className="text-xs text-muted mt-1">
           Enter your credentials to access your accountability workspace.
         </p>
       </div>
 
       {errorMessage && (
-        <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-sm text-red-700 flex items-center gap-2">
+        <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-xs text-red-700 flex items-center gap-2">
           <ShieldAlert className="w-4 h-4 flex-shrink-0 text-red-500" />
           <span>{errorMessage}</span>
         </div>
       )}
 
       {/* Google Sign-In Button */}
-      <div className="mb-5">
+      <div className="mb-4">
         <Button
           type="button"
           variant="secondary"
@@ -268,7 +268,7 @@ function LoginForm() {
         </Button>
       </div>
 
-      <div className="relative mb-6">
+      <div className="relative mb-4">
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-slate-200"></div>
         </div>
@@ -277,9 +277,9 @@ function LoginForm() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">
             Email Address
           </label>
           <Input
@@ -291,7 +291,7 @@ function LoginForm() {
         </div>
 
         <div>
-          <div className="flex justify-between items-center mb-1.5">
+          <div className="flex justify-between items-center mb-1">
             <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600">
               Password
             </label>
@@ -312,14 +312,14 @@ function LoginForm() {
 
         <Button
           type="submit"
-          className="w-full justify-center mt-2"
+          className="w-full justify-center mt-1"
           isLoading={isLoggingIn}
         >
           Sign In
         </Button>
       </form>
 
-      <p className="text-center text-xs text-muted mt-6">
+      <p className="text-center text-xs text-muted mt-4 sm:mt-5">
         Don&apos;t have an account yet?{" "}
         <Link
           href="/signup"
@@ -334,13 +334,27 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center px-4 py-12 bg-paper">
-      <div className="mb-8">
-        <BrandLogo size="lg" />
+    <div className="relative min-h-screen flex flex-col justify-center items-center px-4 py-4 sm:py-6 bg-slate-50 overflow-hidden">
+      {/* Subtle faded grid background */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] bg-[size:28px_28px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-35"
+        aria-hidden="true"
+      />
+
+      {/* Ambient background glow */}
+      <div
+        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[460px] h-[460px] bg-gradient-to-tr from-blue-100/50 via-indigo-100/30 to-transparent rounded-full blur-3xl -z-10"
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 w-full max-w-[420px] flex flex-col items-center">
+        <div className="mb-3 sm:mb-4">
+          <BrandLogo size="md" href="/" />
+        </div>
+        <Suspense fallback={<div className="text-sm text-muted">Loading login...</div>}>
+          <LoginForm />
+        </Suspense>
       </div>
-      <Suspense fallback={<div className="text-sm text-muted">Loading login...</div>}>
-        <LoginForm />
-      </Suspense>
     </div>
   );
 }
