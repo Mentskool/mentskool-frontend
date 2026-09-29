@@ -97,16 +97,22 @@ export default function MentorsPage() {
       </div>
 
       {/* Modern Executive Hero */}
-      <div className="rounded-2xl bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white p-8 sm:p-12 text-center max-w-4xl mx-auto space-y-4 shadow-sm">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-slate-200 text-xs font-medium border border-white/10">
-          <span>Curated Mentorship Cohorts</span>
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white p-8 sm:p-12 text-center max-w-4xl mx-auto space-y-4 shadow-sm">
+        <div
+          className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_50%,#000_70%,transparent_100%)] opacity-[0.06]"
+          aria-hidden="true"
+        />
+        <div className="relative z-10 space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-slate-200 text-xs font-medium border border-white/10">
+            <span>Curated Mentorship Cohorts</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display tracking-tight text-white">
+            Find Your Accountability Mentor
+          </h1>
+          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            Learn with top exam rankers and alumni from premier institutions. Micro-cohorts capped at 30 seats for focused, personalized guidance.
+          </p>
         </div>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display tracking-tight text-white">
-          Find Your Accountability Mentor
-        </h1>
-        <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
-          Learn with top exam rankers and alumni from premier institutions. Micro-cohorts capped at 30 seats for focused, personalized guidance.
-        </p>
       </div>
 
       {/* Search & Filter Bar */}

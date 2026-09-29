@@ -145,7 +145,7 @@ export default function PrivacyPolicyPage() {
             </p>
             <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm">
               <li>
-                <strong>Mentorship Delivery:</strong> Managing cohort seat allocation (capped at 10 students), enabling 1:1 video meetings, and synchronizing mentor feedback on homework tasks.
+                <strong>Mentorship Delivery:</strong> Managing cohort seat allocation (capped at 30 students), enabling 1:1 video meetings, and synchronizing mentor feedback on homework tasks.
               </li>
               <li>
                 <strong>Authenticity Audits:</strong> Reviewing uploaded college credentials and scorecards to verify that every active mentor is a genuine ranker.

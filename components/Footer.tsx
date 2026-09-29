@@ -44,7 +44,7 @@ export function Footer() {
             <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-slate-300">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/90 border border-slate-800 text-sky-400">
                 <Lock className="w-3 h-3 text-sky-400" />
-                <span>Max 10 Seats / Cohort</span>
+                <span>Max 30 Seats / Cohort</span>
               </span>
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/90 border border-slate-800 text-emerald-400">
                 <ShieldCheck className="w-3 h-3 text-emerald-400" />

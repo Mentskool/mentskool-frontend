@@ -41,7 +41,7 @@ export default function RefundPolicyPage() {
             <span>•</span>
             <span>Version: 1.0 (Operational Draft)</span>
             <span>•</span>
-            <span className="text-sky-400">10-Seat Atomic Allocation Architecture</span>
+            <span className="text-sky-400">30-Seat Atomic Allocation Architecture</span>
           </div>
 
           {/* Preliminary Legal Draft Notice */}
@@ -91,14 +91,14 @@ export default function RefundPolicyPage() {
           </h2>
           <div className="text-sm text-slate-300 leading-relaxed space-y-3">
             <p>
-              Unlike mass online coaching platforms with thousands of anonymous students watching pre-recorded videos, Mentskool is built on <strong>strictly capped cohorts of at most 10 students per mentor</strong>:
+              Unlike mass online coaching platforms with thousands of anonymous students watching pre-recorded videos, Mentskool is built on <strong>strictly capped cohorts of at most 30 students per mentor</strong>:
             </p>
             <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3 text-xs sm:text-sm">
               <div className="flex items-start gap-3">
                 <Lock className="w-4 h-4 text-sky-400 mt-1 flex-shrink-0" />
                 <div>
                   <strong className="text-white block">Atomic Seat Reservation:</strong>
-                  The moment you complete enrollment, our system executes an atomic Redis lock that physically reserves 1 of the 10 available seats exclusively in your name.
+                  The moment you complete enrollment, our system executes an atomic Redis lock that physically reserves 1 of the 30 available seats exclusively in your name.
                 </div>
               </div>
               <div className="flex items-start gap-3">

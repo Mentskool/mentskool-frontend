@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import { User } from "@/lib/types";
+import { auth } from "@/lib/firebase";
+import { signOut } from "firebase/auth";
 
 interface AuthState {
   user: User | null;
@@ -50,6 +52,13 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   logout: () => {
+    try {
+      signOut(auth).catch((err) => {
+        console.warn("Firebase signout error:", err);
+      });
+    } catch (e) {
+      console.warn("Firebase signout failed:", e);
+    }
     if (typeof window !== "undefined") {
       localStorage.removeItem("mentskool_access_token");
       localStorage.removeItem("mentskool_refresh_token");

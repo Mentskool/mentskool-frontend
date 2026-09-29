@@ -28,18 +28,10 @@ export const HeroGridBackground: React.FC = () => {
         }}
       />
 
-      {/* 3. Crisp Architectural Square Grid Pattern in Clean Ice Blue */}
+      {/* 3. Crisp Faded Light Grid Pattern */}
       <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, rgba(14, 165, 233, 0.08) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(14, 165, 233, 0.08) 1px, transparent 1px)
-          `,
-          backgroundSize: "56px 56px",
-          maskImage: "radial-gradient(ellipse 90% 75% at 50% 35%, black 40%, transparent 95%)",
-          WebkitMaskImage: "radial-gradient(ellipse 90% 75% at 50% 35%, black 40%, transparent 95%)",
-        }}
+        className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_80%_65%_at_50%_30%,#000_60%,transparent_100%)] opacity-35"
+        aria-hidden="true"
       />
 
       {/* 4. Subtle Ambient Diagonal Horizon Vignette */}
