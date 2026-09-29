@@ -1,8 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api";
 import { Subscription, SubscriptionListResponse, SubscriptionStatus } from "@/lib/types";
+import { useAuthStore } from "@/store/authStore";
 
 export function useSubscriptions(status?: SubscriptionStatus, limit = 20, offset = 0) {
+  const { isAuthenticated } = useAuthStore();
   const queryParams = new URLSearchParams();
   if (status) queryParams.set("status", status);
   queryParams.set("limit", limit.toString());
@@ -11,6 +13,7 @@ export function useSubscriptions(status?: SubscriptionStatus, limit = 20, offset
   return useQuery({
     queryKey: ["mySubscriptions", { status, limit, offset }],
     queryFn: () => apiClient.get<SubscriptionListResponse>(`/subscriptions/me?${queryParams.toString()}`),
+    enabled: Boolean(isAuthenticated),
   });
 }
 
