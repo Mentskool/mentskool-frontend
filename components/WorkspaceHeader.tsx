@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
+import { useAuth } from "@/hooks/useAuth";
 import { useStudentTasks, useMentorAssignedTasks } from "@/hooks/useTasks";
 import { useMyMeetings } from "@/hooks/useMeetings";
 import { useAnnouncements } from "@/hooks/useCohort";
@@ -36,7 +37,8 @@ interface NotificationItem {
 export const WorkspaceHeader: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const { user, logout } = useAuthStore();
+  const { user } = useAuthStore();
+  const { logout } = useAuth();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [lastReadTimestamp, setLastReadTimestamp] = useState<number>(0);
@@ -221,8 +223,8 @@ export const WorkspaceHeader: React.FC = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     router.push("/login");
   };
 

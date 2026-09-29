@@ -212,9 +212,9 @@ export default function HomePage() {
                   {/* Live Seat Progress Bar */}
                   <div className="space-y-1.5 pt-1">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="font-bold text-ink">8 / 10 Seats Filled</span>
+                      <span className="font-bold text-ink">24 / 30 Seats Filled</span>
                       <span className="text-blue-700 font-bold text-[11px] bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-md">
-                        2 Seats Left
+                        6 Seats Left
                       </span>
                     </div>
                     <div className="w-full h-2.5 bg-mist rounded-full overflow-hidden">
@@ -226,7 +226,7 @@ export default function HomePage() {
                     <span className="flex items-center gap-1 font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200/60">
                       <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-400" /> High Momentum
                     </span>
-                    <span className="font-bold text-brand text-sm">₹4,999 / month</span>
+                    <span className="font-bold text-brand text-sm">₹1,000 / month</span>
                   </div>
                 </div>
 
@@ -289,7 +289,7 @@ export default function HomePage() {
               bg: "bg-blue-50/50",
             },
             {
-              value: "10 Max",
+              value: "30 Max",
               label: "Students Per Cohort",
               desc: "Personalized 1:1 attention",
               color: "text-indigo-600",
@@ -628,10 +628,10 @@ export default function HomePage() {
                 </div>
                 <div>
                   <h3 className="font-bold text-base font-display text-ink">
-                    Top Rankers, Low Cost, Max 10 Seats
+                    Top Rankers, Low Cost, Max 30 Seats
                   </h3>
                   <p className="text-xs text-ink-muted leading-relaxed mt-1">
-                    Get direct access to AIR 1–500 IIT &amp; AIIMS rankers for ₹2,999 – ₹4,999/mo instead of paying ₹1.5+ Lakhs at coaching factories where you get no personal guidance.
+                    Get direct access to AIR 1–500 IIT &amp; AIIMS rankers starting from ₹1,000/mo instead of paying ₹1.5+ Lakhs at coaching factories where you get no personal guidance.
                   </p>
                 </div>
               </div>
@@ -644,11 +644,11 @@ export default function HomePage() {
                     Atomic Seat Locking
                   </span>
                   <span className="text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-1.5 py-0.5 rounded">
-                    Max 10 / Cohort
+                    Max 30 / Cohort
                   </span>
                 </div>
                 <div className="flex items-baseline justify-between text-xs pt-0.5">
-                  <span className="font-bold text-brand text-sm">₹3,499 / mo</span>
+                  <span className="font-bold text-brand text-sm">₹1,000 / mo</span>
                   <span className="text-[10px] text-ink-faint line-through">₹1,50,000 Coaching Fees</span>
                 </div>
               </div>
@@ -656,7 +656,7 @@ export default function HomePage() {
               <div className="pt-1">
                 <span className="text-[11px] font-bold text-indigo-700 bg-indigo-50/90 px-3 py-1 rounded-full border border-indigo-200/70 inline-flex items-center gap-1.5 shadow-soft">
                   <Lock className="w-3.5 h-3.5" />
-                  <span>Strict 10-seat atomic locking</span>
+                  <span>Strict 30-seat atomic locking</span>
                 </span>
               </div>
             </Card>
@@ -673,7 +673,7 @@ export default function HomePage() {
                 <Sparkles className="w-5 h-5 text-amber-400" />
               </h3>
               <p className="text-sm text-white/80 max-w-lg">
-                Connect with an IITian or AIIMS doctor who walked your exact shoes. Limited to 10 students per cohort for true 1:1 attention.
+                Connect with an IITian or AIIMS doctor who walked your exact shoes. Limited to 30 students per cohort for true 1:1 attention.
               </p>
             </div>
             <Link href="/mentors" className="flex-shrink-0">

@@ -65,7 +65,7 @@ export default function TermsOfServicePage() {
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-300 leading-normal">
             <li className="flex items-start gap-2">
               <span className="text-sky-400 font-bold">•</span>
-              <span><strong>10-Seat Limit:</strong> Every mentor cohort is strictly capped at 10 students with atomic seat reservations.</span>
+              <span><strong>30-Seat Limit:</strong> Every mentor cohort is strictly capped at 30 students with atomic seat reservations.</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-sky-400 font-bold">•</span>
@@ -132,7 +132,7 @@ export default function TermsOfServicePage() {
                 <strong>Document Verification:</strong> Mentors must upload a valid college student ID card and official entrance exam scorecard during onboarding. Submitting fabricated, altered, or fraudulent credentials results in immediate permanent ban, revocation of all platform fees, and potential civil reporting.
               </li>
               <li>
-                <strong>Capacity Constraints:</strong> Mentors agree to maintain cohorts with a strict ceiling of no more than 10 active students simultaneously to ensure meaningful personal attention.
+                <strong>Capacity Constraints:</strong> Mentors agree to maintain cohorts with a strict ceiling of no more than 30 active students simultaneously to ensure meaningful personal attention.
               </li>
               <li>
                 <strong>Turnaround Commitment:</strong> Mentors commit to reviewing assigned tasks, providing actionable feedback within 24–48 hours, and scheduling agreed 1:1 strategy meetings.
@@ -181,7 +181,7 @@ export default function TermsOfServicePage() {
                   <Lock className="w-3.5 h-3.5" /> Atomic Reservation
                 </span>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  When you enroll, an atomic Redis lock reserves your seat. Because capacity is strictly capped at 10, that seat cannot be offered to other aspirants for your paid month.
+                  When you enroll, an atomic Redis lock reserves your seat. Because capacity is strictly capped at 30, that seat cannot be offered to other aspirants for your paid month.
                 </p>
               </div>
 

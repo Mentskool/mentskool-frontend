@@ -107,7 +107,7 @@ export const HeroPlatformEngineClassic: React.FC = () => {
               </div>
               <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#F4F9FE] border border-sky-200/60 text-[11px] font-semibold text-sky-950">
                 <Users className="w-3.5 h-3.5 text-indigo-600" />
-                <span>Max 10 Students</span>
+                <span>Max 30 Students</span>
               </div>
               <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#F4F9FE] border border-sky-200/60 text-[11px] font-semibold text-sky-950">
                 <Award className="w-3.5 h-3.5 text-purple-600" />
