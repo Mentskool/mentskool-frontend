@@ -44,14 +44,21 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({
       pathname === "/schedule" ||
       pathname.startsWith("/quizzes"));
 
-  // Route protection: client-side guards for /dashboard and /mentor routes
+  // Route protection: client-side guards for private workspaces
   useEffect(() => {
     if (mounted && !isLoading) {
-      if (!isAuthenticated && (pathname.startsWith("/dashboard") || (pathname.startsWith("/mentor") && pathname !== "/mentor/onboarding"))) {
+      const isPrivateMentorRoute =
+        (pathname === "/mentor" || pathname.startsWith("/mentor/")) &&
+        pathname !== "/mentor/onboarding";
+      if (
+        !isAuthenticated &&
+        !isMentorsExplore &&
+        (pathname.startsWith("/dashboard") || isPrivateMentorRoute)
+      ) {
         router.replace("/login");
       }
     }
-  }, [mounted, isLoading, isAuthenticated, pathname, router]);
+  }, [mounted, isLoading, isAuthenticated, isMentorsExplore, pathname, router]);
 
   // Admins do not participate in student/mentor workspaces: redirect to Admin Console
   useEffect(() => {
