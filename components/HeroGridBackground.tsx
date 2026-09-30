@@ -28,17 +28,17 @@ export const HeroGridBackground: React.FC = () => {
         }}
       />
 
-      {/* 3. Subtle, Professional Faded Graded Grid Lines */}
+      {/* 3. Clearly Visible yet Elegant Faded Graded Grid Lines */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(30, 58, 138, 0.05) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(30, 58, 138, 0.05) 1px, transparent 1px)
+            linear-gradient(to right, rgba(71, 85, 105, 0.16) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(71, 85, 105, 0.16) 1px, transparent 1px)
           `,
-          backgroundSize: "64px 64px",
-          maskImage: "radial-gradient(ellipse 80% 550px at 50% 80px, black 15%, transparent 75%)",
-          WebkitMaskImage: "radial-gradient(ellipse 80% 550px at 50% 80px, black 15%, transparent 75%)",
+          backgroundSize: "48px 48px",
+          maskImage: "radial-gradient(ellipse 90% 700px at 50% 60px, black 45%, transparent 95%)",
+          WebkitMaskImage: "radial-gradient(ellipse 90% 700px at 50% 60px, black 45%, transparent 95%)",
         }}
       />
     </div>
