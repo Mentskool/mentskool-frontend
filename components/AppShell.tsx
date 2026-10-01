@@ -101,17 +101,29 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({
   // Authenticated workspace: EmailVerificationBanner + Left vertical sidebar + top WorkspaceHeader + main content area
   if (isAuthenticated && isWorkspaceRoute) {
     return (
-      <div className="min-h-screen flex flex-col bg-[#F8FAFC]">
+      <div
+        className={`bg-[#F8FAFC] flex flex-col ${
+          isMessagesPage ? "h-[100dvh] max-h-[100dvh] overflow-hidden" : "min-h-screen"
+        }`}
+      >
         <EmailVerificationBanner />
-        <div className="flex-1 min-w-0 flex flex-col md:flex-row">
+        <div
+          className={`flex-1 min-w-0 flex flex-col md:flex-row ${
+            isMessagesPage ? "min-h-0 overflow-hidden" : ""
+          }`}
+        >
           <Sidebar />
-          <div className="flex-1 min-w-0 flex flex-col">
+          <div
+            className={`flex-1 min-w-0 flex flex-col ${
+              isMessagesPage ? "h-full min-h-0 overflow-hidden" : ""
+            }`}
+          >
             <WorkspaceHeader />
             <main
-              className={`flex-1 min-w-0 w-full max-w-7xl mx-auto ${
+              className={`flex-1 min-w-0 w-full ${
                 isMessagesPage
-                  ? "p-2 sm:p-4 md:p-6 flex flex-col h-[calc(100dvh-112px)] md:h-[calc(100vh-53px)]"
-                  : "px-4 sm:px-6 lg:px-8 py-6 sm:py-8"
+                  ? "p-2 sm:p-3 md:p-4 flex flex-col min-h-0 overflow-hidden max-w-7xl mx-auto"
+                  : "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8"
               }`}
             >
               {children}

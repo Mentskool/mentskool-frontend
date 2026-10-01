@@ -167,9 +167,14 @@ export interface Subscription {
   id: string;
   student_id: string;
   student_name: string;
-  student_email: string;
+  student_email?: string | null;
+  student_avatar_url?: string | null;
+  student_target_exam?: string | null;
+  student_target_year?: number | null;
+  student_prep_stage?: string | null;
   mentor_id: string;
   mentor_name: string;
+  mentor_avatar_url?: string | null;
   status: SubscriptionStatus;
   started_at: string;
   expires_at: string;
@@ -263,6 +268,7 @@ export interface GroupMessage {
   sender_id: string;
   sender_name?: string | null;
   sender_role?: string | null;
+  sender_avatar_url?: string | null;
   content: string;
   created_at: string;
 }
@@ -271,8 +277,10 @@ export interface DirectMessage {
   id: string;
   sender_id: string;
   sender_name?: string | null;
+  sender_avatar_url?: string | null;
   recipient_id: string;
   recipient_name?: string | null;
+  recipient_avatar_url?: string | null;
   content: string;
   created_at: string;
 }
@@ -281,6 +289,7 @@ export interface ConversationSummary {
   user_id: string;
   full_name: string;
   role: string;
+  avatar_url?: string | null;
   last_message?: string | null;
   last_message_at?: string | null;
 }

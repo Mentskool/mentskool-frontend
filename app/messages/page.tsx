@@ -30,8 +30,8 @@ import {
 } from "lucide-react";
 
 type ActiveChat =
-  | { type: "cohort"; mentorId: string; title: string }
-  | { type: "dm"; contactId: string; contactName: string; role: string };
+  | { type: "cohort"; mentorId: string; title: string; avatarUrl?: string | null }
+  | { type: "dm"; contactId: string; contactName: string; role: string; avatarUrl?: string | null };
 
 function formatMessageTime(dateStr: string) {
   try {
@@ -119,6 +119,7 @@ function MessagesContent() {
           contactId: contact.user_id,
           contactName: contact.full_name,
           role: contact.role,
+          avatarUrl: contact.avatar_url,
         });
         setMobileView("chat");
         return;
@@ -132,6 +133,7 @@ function MessagesContent() {
           contactId: initialUser,
           contactName: "Direct Message",
           role: isMentor ? "STUDENT" : "MENTOR",
+          avatarUrl: null,
         });
         setMobileView("chat");
       } else if (cohortMentorId) {
@@ -140,6 +142,7 @@ function MessagesContent() {
           type: "cohort",
           mentorId: cohortMentorId,
           title: isMentor ? "Cohort Discussion Channel" : `${cohortMentorName || "Mentor"}'s Cohort Channel`,
+          avatarUrl: null,
         });
       } else if (conversations && conversations.length > 0) {
         const first = conversations[0];
@@ -148,6 +151,7 @@ function MessagesContent() {
           contactId: first.user_id,
           contactName: first.full_name,
           role: first.role,
+          avatarUrl: first.avatar_url,
         });
       }
     }
@@ -453,6 +457,7 @@ function MessagesContent() {
                             contactId: c.user_id,
                             contactName: c.full_name,
                             role: c.role,
+                            avatarUrl: c.avatar_url,
                           });
                           setMobileView("chat");
                         }}
@@ -464,20 +469,28 @@ function MessagesContent() {
                       >
                         {/* Avatar */}
                         <div className="relative flex-shrink-0">
-                          <div
-                            className={`w-11 h-11 rounded-2xl flex items-center justify-center font-display font-bold text-sm shadow-xs ${
-                              isContactMentor
-                                ? "bg-emerald-700 text-white"
-                                : "bg-slate-800 text-white"
-                            }`}
-                          >
-                            {c.full_name
-                              .split(" ")
-                              .map((n) => n[0])
-                              .slice(0, 2)
-                              .join("")
-                              .toUpperCase()}
-                          </div>
+                          {c.avatar_url ? (
+                            <img
+                              src={c.avatar_url}
+                              alt={c.full_name}
+                              className="w-11 h-11 rounded-2xl object-cover border border-slate-200/80 shadow-xs"
+                            />
+                          ) : (
+                            <div
+                              className={`w-11 h-11 rounded-2xl flex items-center justify-center font-display font-bold text-sm shadow-xs ${
+                                isContactMentor
+                                  ? "bg-emerald-700 text-white"
+                                  : "bg-slate-800 text-white"
+                              }`}
+                            >
+                              {c.full_name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .slice(0, 2)
+                                .join("")
+                                .toUpperCase()}
+                            </div>
+                          )}
                           {isContactMentor && (
                             <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white ring-1 ring-emerald-400" />
                           )}
@@ -550,6 +563,12 @@ function MessagesContent() {
                       <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-xs">
                         <Users className="w-5 h-5 text-white" />
                       </div>
+                    ) : activeChat.avatarUrl ? (
+                      <img
+                        src={activeChat.avatarUrl}
+                        alt={activeChat.contactName}
+                        className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl object-cover border border-slate-200 shadow-xs"
+                      />
                     ) : (
                       <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-slate-800 text-white flex items-center justify-center font-bold text-xs sm:text-sm shadow-xs">
                         {activeChat.contactName
@@ -635,6 +654,17 @@ function MessagesContent() {
                           >
                             {!isSelf && (
                               <div className="flex items-center gap-1.5 mb-1 pl-1">
+                                {msg.sender_avatar_url ? (
+                                  <img
+                                    src={msg.sender_avatar_url}
+                                    alt={msg.sender_name || "Member"}
+                                    className="w-4 h-4 rounded-full object-cover border border-slate-200 flex-shrink-0"
+                                  />
+                                ) : (
+                                  <div className="w-4 h-4 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-[9px] font-bold flex-shrink-0">
+                                    {(msg.sender_name || "M").charAt(0).toUpperCase()}
+                                  </div>
+                                )}
                                 <span className="text-xs font-semibold text-slate-800">
                                   {msg.sender_name || "Member"}
                                 </span>
@@ -705,6 +735,25 @@ function MessagesContent() {
                             key={msg.id}
                             className={`flex flex-col ${isSelf ? "items-end ml-auto" : "items-start mr-auto"} max-w-[85%] sm:max-w-md`}
                           >
+                            {!isSelf && (
+                              <div className="flex items-center gap-1.5 mb-1 pl-1">
+                                {activeChat.avatarUrl ? (
+                                  <img
+                                    src={activeChat.avatarUrl}
+                                    alt={activeChat.contactName}
+                                    className="w-4 h-4 rounded-full object-cover border border-slate-200 flex-shrink-0"
+                                  />
+                                ) : (
+                                  <div className="w-4 h-4 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-[9px] font-bold flex-shrink-0">
+                                    {activeChat.contactName.charAt(0).toUpperCase()}
+                                  </div>
+                                )}
+                                <span className="text-xs font-semibold text-slate-800">
+                                  {activeChat.contactName}
+                                </span>
+                              </div>
+                            )}
+
                             {/* Chat Bubble */}
                             <div
                               className={`p-3 rounded-2xl text-xs sm:text-sm leading-relaxed whitespace-pre-wrap break-words shadow-xs ${

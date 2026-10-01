@@ -377,7 +377,8 @@ function ScheduleContent() {
                   <option value="">Cohort-Wide (All Enrolled Students)</option>
                   {rosterData?.items?.map((s) => (
                     <option key={s.student_id} value={s.student_id}>
-                      {s.student_name} ({s.student_email})
+                      {s.student_name}
+                      {s.student_target_exam ? ` (${s.student_target_exam})` : ""}
                     </option>
                   ))}
                 </select>
@@ -475,7 +476,8 @@ function ScheduleContent() {
                   <option value="">Cohort-Wide (All Enrolled Students)</option>
                   {rosterData?.items?.map((s) => (
                     <option key={s.student_id} value={s.student_id}>
-                      {s.student_name} ({s.student_email})
+                      {s.student_name}
+                      {s.student_target_exam ? ` (${s.student_target_exam})` : ""}
                     </option>
                   ))}
                 </select>

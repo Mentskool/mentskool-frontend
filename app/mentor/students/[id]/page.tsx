@@ -33,6 +33,7 @@ import {
   ExternalLink,
   ChevronRight,
   GraduationCap,
+  Target,
 } from "lucide-react";
 
 export default function StudentDetailPage() {
@@ -163,7 +164,6 @@ export default function StudentDetailPage() {
   });
 
   const studentName = studentSub?.student_name || effData?.student_name || "Student";
-  const studentEmail = studentSub?.student_email || "Active Cohort Student";
 
   // Score tier
   const score = effData?.efficiency_score;
@@ -192,10 +192,18 @@ export default function StudentDetailPage() {
       <Card className="bg-gradient-to-r from-sky-50/80 via-blue-50/40 to-white border border-blue-100 p-6 sm:p-7 shadow-soft">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-start gap-4">
-            <div className="w-14 h-14 rounded-full bg-blue-100 text-blue-800 border border-blue-200 flex items-center justify-center font-display font-extrabold text-xl flex-shrink-0 shadow-soft">
-              {studentName.charAt(0).toUpperCase()}
-            </div>
-            <div className="space-y-1">
+            {studentSub?.student_avatar_url ? (
+              <img
+                src={studentSub.student_avatar_url}
+                alt={studentName}
+                className="w-16 h-16 rounded-2xl object-cover border border-blue-200 flex-shrink-0 shadow-soft"
+              />
+            ) : (
+              <div className="w-16 h-16 rounded-2xl bg-blue-100 text-blue-800 border border-blue-200 flex items-center justify-center font-display font-extrabold text-2xl flex-shrink-0 shadow-soft">
+                {studentName.charAt(0).toUpperCase()}
+              </div>
+            )}
+            <div className="space-y-1.5">
               <div className="flex items-center gap-3 flex-wrap">
                 <h1 className="text-2xl font-bold font-display text-ink tracking-tight">
                   {studentName}
@@ -204,7 +212,28 @@ export default function StudentDetailPage() {
                   {studentSub?.status || "ACTIVE"}
                 </Badge>
               </div>
-              <p className="text-xs text-ink-muted">{studentEmail}</p>
+
+              {/* Target Exam & Stage Badges */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/80">
+                  <Target className="w-3.5 h-3.5 text-indigo-600" />
+                  <span>
+                    {studentSub?.student_target_exam
+                      ? `Target: ${studentSub.student_target_exam}${
+                          studentSub.student_target_year
+                            ? ` (${studentSub.student_target_year})`
+                            : ""
+                        }`
+                      : "Target Exam: JEE / NEET Prep"}
+                  </span>
+                </span>
+                {studentSub?.student_prep_stage && (
+                  <span className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-white text-slate-700 border border-slate-200 shadow-2xs">
+                    Stage: {studentSub.student_prep_stage}
+                  </span>
+                )}
+              </div>
+
               {studentSub?.started_at && (
                 <p className="text-[11px] text-ink-faint">
                   Enrolled in your cohort since:{" "}
@@ -730,15 +759,23 @@ export default function StudentDetailPage() {
               >
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center font-display font-extrabold text-sm flex-shrink-0 ${
-                        isCurrent
-                          ? "bg-blue-600 text-white"
-                          : "bg-blue-100 text-blue-800 border border-blue-200"
-                      }`}
-                    >
-                      {peer.student_name.charAt(0).toUpperCase()}
-                    </div>
+                    {peer.student_avatar_url ? (
+                      <img
+                        src={peer.student_avatar_url}
+                        alt={peer.student_name}
+                        className="w-10 h-10 rounded-full object-cover border border-slate-200 flex-shrink-0"
+                      />
+                    ) : (
+                      <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center font-display font-extrabold text-sm flex-shrink-0 ${
+                          isCurrent
+                            ? "bg-blue-600 text-white"
+                            : "bg-blue-100 text-blue-800 border border-blue-200"
+                        }`}
+                      >
+                        {peer.student_name.charAt(0).toUpperCase()}
+                      </div>
+                    )}
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5 flex-wrap">
                         <span className="font-bold text-sm text-ink truncate font-display">
@@ -750,8 +787,8 @@ export default function StudentDetailPage() {
                           </span>
                         )}
                       </div>
-                      <p className="text-[11px] text-ink-muted truncate">
-                        {peer.student_email}
+                      <p className="text-[11px] text-indigo-700 font-semibold truncate">
+                        {peer.student_target_exam || "JEE / NEET Aspirant"}
                       </p>
                     </div>
                   </div>

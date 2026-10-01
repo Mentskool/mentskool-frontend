@@ -305,8 +305,8 @@ export default function StudentTasksPage() {
           )}
         </div>
 
-        {/* Right Column: Widgets (4 cols) */}
-        <div className="lg:col-span-4 space-y-5">
+        {/* Right Column: Sticky Widgets (4 cols) */}
+        <div className="lg:col-span-4 space-y-5 lg:sticky lg:top-6">
           {/* Motivational Quote Banner */}
           <FocusBanner />
 
