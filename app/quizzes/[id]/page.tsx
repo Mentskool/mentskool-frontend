@@ -40,6 +40,7 @@ export default function QuizDetailPage() {
   >({});
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [startError, setStartError] = useState("");
   const [submittedResult, setSubmittedResult] = useState<any>(null);
 
   // Timer states
@@ -104,11 +105,12 @@ export default function QuizDetailPage() {
   // Start attempt
   const handleStartAttempt = async () => {
     if (!quiz) return;
+    setStartError("");
     try {
       await startAttemptMutation.mutateAsync(quiz.id);
       await refetch();
     } catch (err: any) {
-      alert(err.detail || "Unable to start quiz attempt");
+      setStartError(err.detail || "Unable to start quiz attempt. Please ensure you are enrolled or try again.");
     }
   };
 
@@ -668,6 +670,13 @@ export default function QuizDetailPage() {
                 </li>
               </ul>
             </div>
+
+            {startError && (
+              <div className="p-3.5 text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200 rounded-xl flex items-center justify-center gap-2 max-w-lg mx-auto animate-fade-in">
+                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                <span>{startError}</span>
+              </div>
+            )}
 
             <div>
               <Button
