@@ -1,8 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api-client";
 import { AdminMentorItem, AdminMentorListResponse } from "@/lib/types";
+import { useAuthStore } from "@/store/authStore";
 
 export function useAdminMentors(status?: string, search?: string) {
+  const { user, isAuthenticated, isLoading } = useAuthStore();
   const queryParams = new URLSearchParams();
   if (status && status !== "ALL") queryParams.set("status", status);
   if (search && search.trim()) queryParams.set("search", search.trim());
@@ -11,6 +13,7 @@ export function useAdminMentors(status?: string, search?: string) {
     queryKey: ["adminMentors", { status, search }],
     queryFn: () =>
       apiClient<AdminMentorListResponse>(`/admin/mentors?${queryParams.toString()}`),
+    enabled: !isLoading && isAuthenticated && user?.role === "ADMIN",
   });
 }
 

@@ -1,14 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api";
 import { Announcement, Resource } from "@/lib/types";
+import { useAuthStore } from "@/store/authStore";
 
 export const useAnnouncements = (mentorId?: string) => {
+  const { isAuthenticated, isLoading } = useAuthStore();
   return useQuery<Announcement[]>({
     queryKey: ["cohort", "announcements", mentorId],
     queryFn: async () => {
       const url = mentorId ? `/cohort/announcements?mentor_id=${mentorId}` : "/cohort/announcements";
       return apiClient.get<Announcement[]>(url);
     },
+    enabled: !isLoading && isAuthenticated,
   });
 };
 
@@ -37,12 +40,14 @@ export const useDeleteAnnouncement = () => {
 };
 
 export const useResources = (mentorId?: string) => {
+  const { isAuthenticated, isLoading } = useAuthStore();
   return useQuery<Resource[]>({
     queryKey: ["cohort", "resources", mentorId],
     queryFn: async () => {
       const url = mentorId ? `/cohort/resources?mentor_id=${mentorId}` : "/cohort/resources";
       return apiClient.get<Resource[]>(url);
     },
+    enabled: !isLoading && isAuthenticated,
   });
 };
 

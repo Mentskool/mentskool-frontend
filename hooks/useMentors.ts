@@ -8,6 +8,7 @@ import {
   ReviewEligibilityResponse,
   Subscription,
 } from "@/lib/types";
+import { useAuthStore } from "@/store/authStore";
 
 export function useMentors(category?: string, limit = 20, offset = 0) {
   const queryParams = new URLSearchParams();
@@ -50,9 +51,11 @@ export function useSubscribeMentor() {
 }
 
 export function useMyMentorProfile() {
+  const { isAuthenticated, isLoading } = useAuthStore();
   return useQuery({
     queryKey: ["myMentorProfile"],
     queryFn: () => apiClient<MentorProfile>("/mentors/me"),
+    enabled: !isLoading && isAuthenticated,
   });
 }
 
