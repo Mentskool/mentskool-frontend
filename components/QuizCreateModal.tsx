@@ -26,6 +26,9 @@ export const QuizCreateModal: React.FC<QuizCreateModalProps> = ({
   const [liveAt, setLiveAt] = useState("");
   const [positiveMarks, setPositiveMarks] = useState("4.00");
   const [negativeMarks, setNegativeMarks] = useState("1.00");
+  const [durationMode, setDurationMode] = useState<"preset" | "custom" | "untimed">("preset");
+  const [selectedDuration, setSelectedDuration] = useState<number>(45);
+  const [customDuration, setCustomDuration] = useState<string>("45");
   const [errorMsg, setErrorMsg] = useState("");
 
   const createMutation = useCreateQuiz();
@@ -41,6 +44,20 @@ export const QuizCreateModal: React.FC<QuizCreateModalProps> = ({
       return;
     }
 
+    let finalDuration: number | null = null;
+    if (durationMode === "preset") {
+      finalDuration = selectedDuration;
+    } else if (durationMode === "custom") {
+      const parsed = parseInt(customDuration, 10);
+      if (isNaN(parsed) || parsed <= 0) {
+        setErrorMsg("Please enter a valid positive duration in minutes");
+        return;
+      }
+      finalDuration = parsed;
+    } else {
+      finalDuration = null; // untimed
+    }
+
     try {
       const created = await createMutation.mutateAsync({
         title: title.trim(),
@@ -50,6 +67,7 @@ export const QuizCreateModal: React.FC<QuizCreateModalProps> = ({
         live_at: scheduleLive && liveAt ? new Date(liveAt).toISOString() : null,
         default_positive_marks: parseFloat(positiveMarks) || 4.0,
         default_negative_marks: parseFloat(negativeMarks) || 1.0,
+        duration_minutes: finalDuration,
       });
 
       onCreated(created.id);
@@ -129,6 +147,104 @@ export const QuizCreateModal: React.FC<QuizCreateModalProps> = ({
             <p className="text-[11px] text-ink-faint">
               Negative deduction is applied on incorrect responses. Defaults can be overridden per question.
             </p>
+          </div>
+
+          {/* Exam Duration / Time Limit */}
+          <div className="p-3.5 bg-slate-50/70 border border-mist rounded-xl space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-xs font-bold text-ink">
+                <Clock className="w-4 h-4 text-sky-600" />
+                Exam Duration / Time Limit
+              </div>
+              <span className="text-[11px] text-ink-muted">
+                {durationMode === "untimed"
+                  ? "Untimed (No Timer)"
+                  : `${durationMode === "preset" ? selectedDuration : customDuration || 0} mins`}
+              </span>
+            </div>
+
+            {/* Duration Mode Tabs */}
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setDurationMode("preset")}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  durationMode === "preset"
+                    ? "bg-sky-600 text-white shadow-soft"
+                    : "bg-white border border-mist text-ink hover:bg-slate-100"
+                }`}
+              >
+                Quick Presets
+              </button>
+              <button
+                type="button"
+                onClick={() => setDurationMode("custom")}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  durationMode === "custom"
+                    ? "bg-sky-600 text-white shadow-soft"
+                    : "bg-white border border-mist text-ink hover:bg-slate-100"
+                }`}
+              >
+                Custom Minutes
+              </button>
+              <button
+                type="button"
+                onClick={() => setDurationMode("untimed")}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  durationMode === "untimed"
+                    ? "bg-sky-600 text-white shadow-soft"
+                    : "bg-white border border-mist text-ink hover:bg-slate-100"
+                }`}
+              >
+                Untimed Practice
+              </button>
+            </div>
+
+            {/* Presets Grid */}
+            {durationMode === "preset" && (
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 pt-1">
+                {[15, 30, 45, 60, 90, 180].map((mins) => (
+                  <button
+                    key={mins}
+                    type="button"
+                    onClick={() => setSelectedDuration(mins)}
+                    className={`py-2 px-1 text-center rounded-xl border text-xs font-bold transition-all ${
+                      selectedDuration === mins
+                        ? "bg-sky-50 border-sky-500 text-sky-800 ring-2 ring-sky-500/20"
+                        : "bg-white border-mist text-ink hover:border-slate-300"
+                    }`}
+                  >
+                    <div>{mins}m</div>
+                    <div className="text-[10px] font-normal text-ink-faint">
+                      {mins === 15 ? "Speed" : mins === 45 ? "Section" : mins === 180 ? "3 Hrs" : `${mins} min`}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Custom Minutes Input */}
+            {durationMode === "custom" && (
+              <div className="flex items-center gap-3 pt-1">
+                <Input
+                  label="Enter Duration in Minutes"
+                  type="number"
+                  min="1"
+                  max="1440"
+                  step="1"
+                  value={customDuration}
+                  onChange={(e) => setCustomDuration(e.target.value)}
+                  placeholder="e.g. 20, 75, 120"
+                  helperText="Enforces live countdown during quiz taking and auto-submits upon expiry."
+                />
+              </div>
+            )}
+
+            {durationMode === "untimed" && (
+              <p className="text-[11px] text-ink-faint italic pt-1">
+                Students will be able to take this quiz at their own pace without a countdown timer.
+              </p>
+            )}
           </div>
 
           {/* Schedule / Live Date */}

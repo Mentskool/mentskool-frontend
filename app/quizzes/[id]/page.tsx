@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
@@ -16,8 +16,10 @@ import {
   CheckCircle2,
   Clock,
   HelpCircle,
+  LogIn,
   Play,
   Send,
+  Timer,
   Trophy,
   XCircle,
 } from "lucide-react";
@@ -26,9 +28,9 @@ export default function QuizDetailPage() {
   const params = useParams();
   const router = useRouter();
   const quizId = params.id as string;
-  const { user } = useAuthStore();
+  const { user, isAuthenticated, isLoading: authLoading } = useAuthStore();
 
-  const { data: quiz, isLoading, isError, refetch } = useQuiz(quizId);
+  const { data: quiz, isLoading, isError, error, refetch } = useQuiz(quizId);
   const startAttemptMutation = useStartQuizAttempt();
   const submitAttemptMutation = useSubmitQuizAttempt();
 
@@ -40,30 +42,27 @@ export default function QuizDetailPage() {
   const [submitError, setSubmitError] = useState("");
   const [submittedResult, setSubmittedResult] = useState<any>(null);
 
-  if (isLoading) {
-    return (
-      <div className="max-w-4xl mx-auto py-16 text-center text-ink-faint animate-pulse">
-        Loading exam test...
-      </div>
-    );
-  }
+  // Timer states
+  const [timeLeftSeconds, setTimeLeftSeconds] = useState<number | null>(null);
+  const [isTimeUpModalOpen, setIsTimeUpModalOpen] = useState(false);
+  const [isAutoSubmitting, setIsAutoSubmitting] = useState(false);
 
-  if (isError || !quiz) {
-    return (
-      <div className="max-w-2xl mx-auto py-16 text-center space-y-4">
-        <p className="text-sm text-ink-muted">Unable to load quiz.</p>
-        <Link href="/quizzes">
-          <Button variant="secondary" size="sm">
-            Back to Quizzes
-          </Button>
-        </Link>
-      </div>
-    );
-  }
-
+  // Derived state (calculated unconditionally without hook violations)
   const isMentor = user?.role === "MENTOR" || user?.role === "ADMIN";
-  const isSubmitted = quiz.attempt_status === "SUBMITTED" || !!submittedResult;
-  const isInProgress = quiz.attempt_status === "IN_PROGRESS" && !isSubmitted;
+  const isSubmitted = Boolean(quiz?.attempt_status === "SUBMITTED" || submittedResult);
+  const isInProgress = Boolean(quiz?.attempt_status === "IN_PROGRESS" && !isSubmitted);
+
+  // Count answered questions (unconditional useMemo)
+  const answeredCount = useMemo(() => {
+    if (!quiz?.questions) return 0;
+    return quiz.questions.filter((q) => {
+      const a = answers[q.id];
+      if (q.question_type === "NAT") {
+        return a && a.natAnswer.trim() !== "";
+      }
+      return a && a.selectedOptionIds && a.selectedOptionIds.length > 0;
+    }).length;
+  }, [quiz?.questions, answers]);
 
   // Option selection handlers
   const handleSingleOptionSelect = (qId: string, optionId: string) => {
@@ -104,6 +103,7 @@ export default function QuizDetailPage() {
 
   // Start attempt
   const handleStartAttempt = async () => {
+    if (!quiz) return;
     try {
       await startAttemptMutation.mutateAsync(quiz.id);
       await refetch();
@@ -114,15 +114,19 @@ export default function QuizDetailPage() {
 
   // Submit attempt
   const handleSubmitQuiz = async () => {
-    if (!quiz.attempt_id) return;
+    if (!quiz || !quiz.attempt_id) return;
     setSubmitError("");
 
     const payloadAnswers = quiz.questions.map((q) => {
       const ans = answers[q.id];
-      const natVal = ans?.natAnswer && !isNaN(Number(ans.natAnswer)) ? Number(ans.natAnswer) : null;
+      const natVal =
+        ans?.natAnswer && !isNaN(Number(ans.natAnswer)) ? Number(ans.natAnswer) : null;
       return {
         question_id: q.id,
-        selected_option_ids: ans?.selectedOptionIds && ans.selectedOptionIds.length > 0 ? ans.selectedOptionIds : null,
+        selected_option_ids:
+          ans?.selectedOptionIds && ans.selectedOptionIds.length > 0
+            ? ans.selectedOptionIds
+            : null,
         nat_answer_given: natVal,
       };
     });
@@ -136,38 +140,206 @@ export default function QuizDetailPage() {
 
       setSubmittedResult(result);
       setIsSubmitModalOpen(false);
+      setIsTimeUpModalOpen(false);
       await refetch();
     } catch (err: any) {
       setSubmitError(err.detail || "Failed to submit quiz");
+      setIsAutoSubmitting(false);
     }
   };
 
-  // Count answered questions
-  const answeredCount = useMemo(() => quiz.questions.filter((q) => {
-    const a = answers[q.id];
-    if (q.question_type === "NAT") {
-      return a && a.natAnswer.trim() !== "";
+  // Synchronized countdown timer
+  useEffect(() => {
+    if (!isInProgress || !quiz?.duration_minutes) {
+      setTimeLeftSeconds(null);
+      return;
     }
-    return a && a.selectedOptionIds.length > 0;
-  }).length, [quiz.questions, answers]);
+
+    const durationMs = quiz.duration_minutes * 60 * 1000;
+    const startedTimestamp = quiz.attempt_started_at
+      ? new Date(quiz.attempt_started_at).getTime()
+      : Date.now();
+    const expiresAt = startedTimestamp + durationMs;
+
+    const tick = () => {
+      const now = Date.now();
+      const remainingSec = Math.max(0, Math.floor((expiresAt - now) / 1000));
+      setTimeLeftSeconds(remainingSec);
+
+      if (remainingSec <= 0) {
+        setIsTimeUpModalOpen(true);
+      }
+    };
+
+    tick();
+    const interval = setInterval(tick, 1000);
+    return () => clearInterval(interval);
+  }, [isInProgress, quiz?.duration_minutes, quiz?.attempt_started_at]);
+
+  // Auto-submit when time is up
+  const hasAutoSubmittedRef = useRef(false);
+  useEffect(() => {
+    if (
+      timeLeftSeconds === 0 &&
+      isInProgress &&
+      !isSubmitted &&
+      !hasAutoSubmittedRef.current
+    ) {
+      hasAutoSubmittedRef.current = true;
+      setIsAutoSubmitting(true);
+      handleSubmitQuiz();
+    }
+  }, [timeLeftSeconds, isInProgress, isSubmitted]);
+
+  // Format seconds into MM:SS or HH:MM:SS
+  const formatTimer = (totalSeconds: number | null) => {
+    if (totalSeconds === null) return "";
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    if (hours > 0) {
+      return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    }
+    return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  };
+
+  const scrollToQuestion = (qId: string) => {
+    const el = document.getElementById(`question-${qId}`);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
+  // ============================================================================
+  // CONDITIONAL RENDERING GATES (ALL HOOKS CALLED UNCONDITIONALLY ABOVE)
+  // ============================================================================
+
+  // 1. Auth Loading State
+  if (authLoading) {
+    return (
+      <div className="max-w-4xl mx-auto py-20 px-4 text-center space-y-4 animate-pulse">
+        <div className="w-12 h-12 rounded-2xl bg-sky-100 flex items-center justify-center mx-auto text-sky-600">
+          <Clock className="w-6 h-6 animate-spin" />
+        </div>
+        <p className="text-sm font-medium text-ink-muted">Authenticating user session...</p>
+      </div>
+    );
+  }
+
+  // 2. Unauthenticated State (prevent 401 crash and display clean sign-in card)
+  if (!isAuthenticated) {
+    return (
+      <div className="max-w-md mx-auto py-16 px-4 space-y-6 animate-fade-in text-center">
+        <Card variant="default" className="p-8 bg-white border-mist shadow-lift space-y-5">
+          <div className="w-14 h-14 rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center mx-auto text-sky-600">
+            <LogIn className="w-7 h-7" />
+          </div>
+
+          <div className="space-y-2">
+            <h1 className="text-xl font-bold font-display text-ink">Sign In to Access Quiz</h1>
+            <p className="text-xs text-ink-muted leading-relaxed">
+              Diagnostic tests and exams are protected. Please sign in to verify your cohort enrolment
+              and record your score.
+            </p>
+          </div>
+
+          <div className="pt-2 flex flex-col gap-2.5">
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => router.push(`/login?redirect=/quizzes/${quizId}`)}
+              className="w-full rounded-xl shadow-soft"
+            >
+              Sign In to Continue →
+            </Button>
+            <Link href="/quizzes">
+              <Button variant="secondary" size="sm" className="w-full rounded-xl">
+                Back to All Quizzes
+              </Button>
+            </Link>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  // 3. Quiz Data Loading State
+  if (isLoading) {
+    return (
+      <div className="max-w-4xl mx-auto py-20 px-4 text-center space-y-4 animate-pulse">
+        <div className="w-12 h-12 rounded-2xl bg-sky-100 flex items-center justify-center mx-auto text-sky-600">
+          <Award className="w-6 h-6 animate-pulse" />
+        </div>
+        <p className="text-sm font-medium text-ink-muted">Loading exam and questions...</p>
+      </div>
+    );
+  }
+
+  // 4. Error State (Subscription required or Quiz not found)
+  if (isError || !quiz) {
+    const errorDetail = (error as any)?.detail || "";
+    const isSubscriptionErr =
+      errorDetail.toLowerCase().includes("subscription") || (error as any)?.status === 403;
+
+    return (
+      <div className="max-w-lg mx-auto py-16 px-4 text-center space-y-6 animate-fade-in">
+        <Card variant="default" className="p-8 bg-white border-mist shadow-lift space-y-4">
+          <div className="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center mx-auto text-amber-600">
+            <AlertCircle className="w-7 h-7" />
+          </div>
+
+          <div className="space-y-1.5">
+            <h2 className="text-xl font-bold font-display text-ink">
+              {isSubscriptionErr ? "Mentor Subscription Required" : "Unable to Load Quiz"}
+            </h2>
+            <p className="text-xs text-ink-muted leading-relaxed">
+              {errorDetail ||
+                "This quiz could not be loaded. It may have expired, or you may need an active subscription with the authoring mentor."}
+            </p>
+          </div>
+
+          <div className="flex items-center justify-center gap-3 pt-3">
+            {isSubscriptionErr && (
+              <Button
+                variant="primary"
+                size="md"
+                onClick={() => router.push("/mentors")}
+                className="rounded-xl shadow-soft"
+              >
+                Browse Mentors
+              </Button>
+            )}
+            <Link href="/quizzes">
+              <Button variant="secondary" size="md" className="rounded-xl">
+                Back to Quizzes
+              </Button>
+            </Link>
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-4xl mx-auto py-8 space-y-8 animate-fade-in">
+    <div className="max-w-4xl mx-auto py-6 sm:py-8 px-3 sm:px-4 space-y-6 sm:space-y-8 animate-fade-in">
       {/* Mentor Notice Banner */}
       {isMentor && (
-        <div className="p-4 bg-sky-50 border border-sky-200 rounded-2xl flex items-center justify-between gap-4">
+        <div className="p-4 bg-sky-50 border border-sky-200 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
           <div className="text-xs text-sky-900">
             <strong>Author Mode:</strong> You are previewing this quiz with the answer key revealed.
           </div>
           <Link href={`/quizzes/${quiz.id}/edit`}>
-            <Button variant="primary" size="sm" className="rounded-xl">
+            <Button variant="primary" size="sm" className="rounded-xl shrink-0">
               Open Quiz Builder
             </Button>
           </Link>
         </div>
       )}
 
-      {/* VIEW 1: POST-SUBMISSION RESULTS & BREAKDOWN */}
+      {/* ==================================================================== */}
+      {/* VIEW 1: POST-SUBMISSION RESULTS & BREAKDOWN                          */}
+      {/* ==================================================================== */}
       {isSubmitted ? (
         <div className="space-y-6">
           {/* Header Banner */}
@@ -188,13 +360,13 @@ export default function QuizDetailPage() {
 
               <div className="flex items-center gap-2">
                 <Link href={`/quizzes/${quiz.id}/leaderboard`}>
-                  <Button variant="primary" size="md" className="rounded-lg shadow-soft">
+                  <Button variant="primary" size="md" className="rounded-xl shadow-soft">
                     <Trophy className="w-4 h-4 mr-1.5 text-amber-300" />
-                    View Leaderboard
+                    Leaderboard
                   </Button>
                 </Link>
                 <Link href="/quizzes">
-                  <Button variant="secondary" size="md" className="rounded-lg">
+                  <Button variant="secondary" size="md" className="rounded-xl">
                     Back to Quizzes
                   </Button>
                 </Link>
@@ -204,28 +376,28 @@ export default function QuizDetailPage() {
             {/* Scorecard */}
             {submittedResult && (
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-blue-200/60">
-                <div className="p-3 bg-white/80 rounded-lg border border-blue-100">
+                <div className="p-3 bg-white/80 rounded-xl border border-blue-100">
                   <div className="text-[11px] text-ink-faint uppercase font-bold">Total Score</div>
                   <div className="text-xl font-black text-ink font-display">
                     {submittedResult.total_score}
                   </div>
                 </div>
 
-                <div className="p-3 bg-white/80 rounded-lg border border-blue-100">
+                <div className="p-3 bg-white/80 rounded-xl border border-blue-100">
                   <div className="text-[11px] text-ink-faint uppercase font-bold">Max Marks</div>
                   <div className="text-xl font-black text-ink font-display">
                     {submittedResult.max_score}
                   </div>
                 </div>
 
-                <div className="p-3 bg-white/80 rounded-lg border border-blue-100">
+                <div className="p-3 bg-white/80 rounded-xl border border-blue-100">
                   <div className="text-[11px] text-ink-faint uppercase font-bold">Percentage</div>
                   <div className="text-xl font-black text-blue-700 font-display">
                     {submittedResult.percentage}%
                   </div>
                 </div>
 
-                <div className="p-3 bg-white/80 rounded-lg border border-blue-100">
+                <div className="p-3 bg-white/80 rounded-xl border border-blue-100">
                   <div className="text-[11px] text-ink-faint uppercase font-bold">Status</div>
                   <div className="text-sm font-bold text-ink mt-1">Graded & Recorded</div>
                 </div>
@@ -283,7 +455,7 @@ export default function QuizDetailPage() {
                     </div>
                   </div>
 
-                  {/* Question Text */}
+                  {/* Question Text with KaTeX */}
                   <div className="text-sm font-medium text-ink leading-relaxed">
                     <MathText text={item.question_text} />
                   </div>
@@ -361,7 +533,11 @@ export default function QuizDetailPage() {
             ) : (
               /* Fallback view of past submitted attempt */
               quiz.questions.map((q, idx) => (
-                <Card key={q.id} variant="default" className="p-5 bg-white border-mist space-y-3 rounded-xl">
+                <Card
+                  key={q.id}
+                  variant="default"
+                  className="p-5 bg-white border-mist space-y-3 rounded-xl"
+                >
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-ink">Question {idx + 1}</span>
                     <Badge variant="DEFAULT">{q.question_type}</Badge>
@@ -401,7 +577,9 @@ export default function QuizDetailPage() {
           </div>
         </div>
       ) : !isInProgress && !quiz.has_attempted ? (
-        /* VIEW 2: QUIZ START LANDING SCREEN */
+        /* ==================================================================== */
+        /* VIEW 2: QUIZ START LANDING SCREEN                                   */
+        /* ==================================================================== */
         <div className="max-w-2xl mx-auto space-y-6">
           <Link href="/quizzes">
             <Button variant="secondary" size="sm" className="rounded-xl">
@@ -410,7 +588,7 @@ export default function QuizDetailPage() {
             </Button>
           </Link>
 
-          <Card variant="default" className="p-8 bg-white border-mist shadow-lift space-y-6 text-center">
+          <Card variant="default" className="p-6 sm:p-8 bg-white border-mist shadow-lift space-y-6 text-center">
             <div className="w-14 h-14 rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center mx-auto text-sky-600">
               <Award className="w-8 h-8" />
             </div>
@@ -429,11 +607,19 @@ export default function QuizDetailPage() {
               )}
             </div>
 
-            {/* Test Stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 bg-slate-50/80 rounded-2xl border border-mist text-left">
+            {/* Test Stats Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-slate-50/80 rounded-2xl border border-mist text-left">
               <div>
                 <div className="text-[11px] text-ink-faint uppercase font-bold">Questions</div>
                 <div className="text-base font-black text-ink">{quiz.questions.length} Items</div>
+              </div>
+
+              <div>
+                <div className="text-[11px] text-ink-faint uppercase font-bold">Duration</div>
+                <div className="text-base font-black text-sky-700 flex items-center gap-1">
+                  <Clock className="w-4 h-4" />
+                  {quiz.duration_minutes ? `${quiz.duration_minutes} Mins` : "Untimed"}
+                </div>
               </div>
 
               <div>
@@ -443,7 +629,7 @@ export default function QuizDetailPage() {
                 </div>
               </div>
 
-              <div className="col-span-2 sm:col-span-1">
+              <div>
                 <div className="text-[11px] text-ink-faint uppercase font-bold">Deadline</div>
                 <div className="text-xs font-semibold text-ink mt-0.5">
                   {quiz.has_deadline && quiz.deadline_at
@@ -453,7 +639,7 @@ export default function QuizDetailPage() {
               </div>
             </div>
 
-            {/* Rules */}
+            {/* Guidelines */}
             <div className="p-4 bg-amber-50/60 border border-amber-200/60 rounded-xl text-left text-xs text-amber-900 space-y-1.5">
               <div className="font-bold flex items-center gap-1.5">
                 <AlertCircle className="w-4 h-4 text-amber-600" />
@@ -461,13 +647,24 @@ export default function QuizDetailPage() {
               </div>
               <ul className="list-disc list-inside space-y-1 text-amber-800 leading-relaxed">
                 <li>
-                  <strong>One-attempt rule:</strong> Once started, you cannot retake this quiz.
+                  <strong>One-attempt rule:</strong> Once started, you cannot restart or retake this test.
+                </li>
+                {quiz.duration_minutes ? (
+                  <li>
+                    <strong>Timed exam:</strong> You have exactly{" "}
+                    <strong>{quiz.duration_minutes} minutes</strong>. The timer starts immediately and
+                    the exam will automatically submit when the clock reaches zero.
+                  </li>
+                ) : (
+                  <li>
+                    <strong>Untimed practice:</strong> You may take as much time as needed before submitting.
+                  </li>
+                )}
+                <li>
+                  <strong>Server-side grading:</strong> Marks are calibrated to JEE/NEET/GATE standard formulas.
                 </li>
                 <li>
-                  <strong>Server-side grading:</strong> Marks are awarded or deducted per JEE/NEET/GATE standard formulas.
-                </li>
-                <li>
-                  <strong>Full-scroll mode:</strong> You can review, revise, and answer questions in any order before submitting.
+                  <strong>Full-scroll mode:</strong> You can review and revise answers in any order before submitting.
                 </li>
               </ul>
             </div>
@@ -478,7 +675,7 @@ export default function QuizDetailPage() {
                 size="lg"
                 onClick={handleStartAttempt}
                 isLoading={startAttemptMutation.isPending}
-                className="w-full sm:w-auto px-8 rounded-xl shadow-soft"
+                className="w-full sm:w-auto px-8 rounded-xl shadow-soft font-bold text-sm"
               >
                 <Play className="w-4 h-4 mr-2" />
                 Start Quiz Attempt Now
@@ -487,29 +684,84 @@ export default function QuizDetailPage() {
           </Card>
         </div>
       ) : (
-        /* VIEW 3: ACTIVE FULL-SCROLL QUIZ TAKING */
+        /* ==================================================================== */
+        /* VIEW 3: ACTIVE FULL-SCROLL QUIZ TAKING                              */
+        /* ==================================================================== */
         <div className="space-y-6">
           {/* Sticky Header Bar */}
-          <div className="sticky top-2 z-40 p-4 bg-white/95 backdrop-blur-md border border-mist rounded-2xl shadow-lift flex items-center justify-between gap-4">
-            <div>
-              <h2 className="text-base font-bold font-display text-ink truncate max-w-sm sm:max-w-md">
-                {quiz.title}
-              </h2>
-              <div className="text-xs text-ink-muted">
-                Answered <strong className="text-sky-700">{answeredCount}</strong> of{" "}
-                {quiz.questions.length} questions
+          <div className="sticky top-2 z-40 p-3 sm:p-4 bg-white/95 backdrop-blur-md border border-mist rounded-2xl shadow-lift space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="min-w-0">
+                <h2 className="text-sm sm:text-base font-bold font-display text-ink truncate">
+                  {quiz.title}
+                </h2>
+                <div className="text-xs text-ink-muted flex items-center gap-2 mt-0.5">
+                  <span>
+                    Answered <strong className="text-sky-700">{answeredCount}</strong> of{" "}
+                    {quiz.questions.length} questions
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+                {/* Countdown Timer Badge */}
+                {timeLeftSeconds !== null && (
+                  <div
+                    className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 font-mono text-xs sm:text-sm font-bold shadow-xs transition-colors ${
+                      timeLeftSeconds <= 60
+                        ? "bg-rose-50 text-rose-700 border-rose-300 animate-pulse"
+                        : timeLeftSeconds <= 300
+                        ? "bg-amber-50 text-amber-800 border-amber-300"
+                        : "bg-sky-50 text-sky-800 border-sky-200"
+                    }`}
+                    title="Time remaining"
+                  >
+                    <Timer className="w-4 h-4 shrink-0" />
+                    <span>{formatTimer(timeLeftSeconds)}</span>
+                  </div>
+                )}
+
+                <Button
+                  variant="primary"
+                  size="md"
+                  onClick={() => setIsSubmitModalOpen(true)}
+                  className="rounded-xl shadow-soft font-bold text-xs sm:text-sm"
+                >
+                  <Send className="w-3.5 h-3.5 mr-1.5" />
+                  Submit Quiz
+                </Button>
               </div>
             </div>
 
-            <Button
-              variant="primary"
-              size="md"
-              onClick={() => setIsSubmitModalOpen(true)}
-              className="rounded-xl shadow-soft"
-            >
-              <Send className="w-4 h-4 mr-1.5" />
-              Submit Quiz
-            </Button>
+            {/* Quick Question Jump Palette */}
+            <div className="pt-2 border-t border-mist/60 flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+              <span className="text-[11px] text-ink-faint font-semibold uppercase tracking-wider shrink-0 mr-1">
+                Jump To:
+              </span>
+              {quiz.questions.map((q, idx) => {
+                const ans = answers[q.id];
+                const isAnswered =
+                  q.question_type === "NAT"
+                    ? ans && ans.natAnswer.trim() !== ""
+                    : ans && ans.selectedOptionIds && ans.selectedOptionIds.length > 0;
+
+                return (
+                  <button
+                    key={q.id}
+                    type="button"
+                    onClick={() => scrollToQuestion(q.id)}
+                    className={`w-7 h-7 rounded-lg text-xs font-bold transition-all shrink-0 flex items-center justify-center ${
+                      isAnswered
+                        ? "bg-sky-600 text-white shadow-xs"
+                        : "bg-slate-100 hover:bg-slate-200 text-ink-muted border border-mist"
+                    }`}
+                    title={`Question ${idx + 1} (${isAnswered ? "Answered" : "Not answered"})`}
+                  >
+                    {idx + 1}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Full-Scroll Question List */}
@@ -519,8 +771,9 @@ export default function QuizDetailPage() {
               return (
                 <Card
                   key={q.id}
+                  id={`question-${q.id}`}
                   variant="default"
-                  className="p-6 bg-white border-mist shadow-soft space-y-4"
+                  className="p-5 sm:p-6 bg-white border-mist shadow-soft space-y-4 rounded-2xl scroll-mt-28"
                 >
                   <div className="flex items-center justify-between pb-2 border-b border-mist">
                     <div className="flex items-center gap-2">
@@ -541,7 +794,7 @@ export default function QuizDetailPage() {
                     </span>
                   </div>
 
-                  {/* Question Text with KaTeX */}
+                  {/* Question Text with KaTeX Rendering */}
                   <div className="text-sm font-medium text-ink leading-relaxed">
                     <MathText text={q.question_text} />
                   </div>
@@ -653,7 +906,7 @@ export default function QuizDetailPage() {
           </div>
 
           {/* Bottom Submit Bar */}
-          <div className="p-6 bg-white border border-mist rounded-2xl shadow-soft flex items-center justify-between">
+          <div className="p-5 sm:p-6 bg-white border border-mist rounded-2xl shadow-soft flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="text-xs text-ink-muted">
               Ready to submit? Your answers will be graded immediately on the server.
             </div>
@@ -661,7 +914,7 @@ export default function QuizDetailPage() {
               variant="primary"
               size="lg"
               onClick={() => setIsSubmitModalOpen(true)}
-              className="rounded-xl shadow-soft"
+              className="rounded-xl shadow-soft font-bold"
             >
               <Send className="w-4 h-4 mr-2" />
               Submit Quiz ({answeredCount}/{quiz.questions.length})
@@ -670,7 +923,7 @@ export default function QuizDetailPage() {
         </div>
       )}
 
-      {/* Submit Confirmation Modal */}
+      {/* Manual Submit Confirmation Modal */}
       {isSubmitModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/40 backdrop-blur-sm animate-fade-in">
           <div className="w-full max-w-md bg-white rounded-2xl shadow-lift border border-mist p-6 space-y-5 text-center">
@@ -685,7 +938,7 @@ export default function QuizDetailPage() {
               <p className="text-xs text-ink-muted leading-relaxed">
                 You have answered <strong className="text-ink">{answeredCount}</strong> out of{" "}
                 <strong className="text-ink">{quiz.questions.length}</strong> questions.
-                Submission is final and irreversible.
+                Submission is final and cannot be modified.
               </p>
             </div>
 
@@ -714,6 +967,37 @@ export default function QuizDetailPage() {
                 Confirm & Submit
               </Button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Time Up Auto-Submit Notification Modal */}
+      {isTimeUpModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/50 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-md bg-white rounded-2xl shadow-lift border border-rose-200 p-6 space-y-4 text-center">
+            <div className="w-12 h-12 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center mx-auto text-rose-600 animate-pulse">
+              <Timer className="w-6 h-6" />
+            </div>
+
+            <div className="space-y-1.5">
+              <h3 className="text-lg font-bold font-display text-ink">Exam Time Has Expired!</h3>
+              <p className="text-xs text-ink-muted leading-relaxed">
+                The allotted time limit for this exam has ended. Your answers are being graded and
+                recorded automatically.
+              </p>
+            </div>
+
+            {isAutoSubmitting && (
+              <div className="p-3 text-xs font-semibold text-sky-700 bg-sky-50 border border-sky-200 rounded-xl animate-pulse">
+                Grading and submitting attempt...
+              </div>
+            )}
+
+            {submitError && (
+              <div className="p-3 text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200 rounded-xl">
+                {submitError}
+              </div>
+            )}
           </div>
         </div>
       )}

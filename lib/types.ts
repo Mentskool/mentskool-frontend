@@ -333,6 +333,7 @@ export interface Quiz {
   status: QuizStatus;
   default_positive_marks: number | string;
   default_negative_marks: number | string;
+  duration_minutes?: number | null;
   question_count: number;
   total_marks: number | string;
   attempt_count: number;
@@ -345,6 +346,7 @@ export interface QuizDetail extends Quiz {
   has_attempted: boolean;
   attempt_id?: string | null;
   attempt_status?: AttemptStatus | null;
+  attempt_started_at?: string | null;
 }
 
 export interface StudentQuizItem {
@@ -359,6 +361,7 @@ export interface StudentQuizItem {
   status: QuizStatus;
   default_positive_marks: number | string;
   default_negative_marks: number | string;
+  duration_minutes?: number | null;
   question_count: number;
   total_marks: number | string;
   has_attempted: boolean;
