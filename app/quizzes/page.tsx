@@ -219,7 +219,7 @@ export default function QuizzesPage() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs text-ink-muted">
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs text-ink-muted">
                       <div>
                         <span className="text-[10px] uppercase font-bold text-ink-faint block">
                           Questions
@@ -234,6 +234,15 @@ export default function QuizzesPage() {
                           Total Marks
                         </span>
                         <span className="font-semibold text-ink">{quiz.total_marks} Marks</span>
+                      </div>
+
+                      <div>
+                        <span className="text-[10px] uppercase font-bold text-ink-faint block">
+                          Duration
+                        </span>
+                        <span className="font-semibold text-sky-800">
+                          {quiz.duration_minutes ? `${quiz.duration_minutes} min` : "Untimed"}
+                        </span>
                       </div>
 
                       <div>
@@ -363,7 +372,10 @@ export default function QuizzesPage() {
                     <div className="space-y-3 pt-3 border-t border-mist text-xs text-ink-muted">
                       <div className="flex items-center justify-between">
                         <span>{quiz.question_count} Questions • {quiz.total_marks} Marks</span>
-                        <span>+{quiz.default_positive_marks} / -{quiz.default_negative_marks}</span>
+                        <span className="inline-flex items-center gap-1 font-semibold text-sky-700 bg-sky-50 px-2 py-0.5 rounded text-[11px]">
+                          <Clock className="w-3 h-3" />
+                          {quiz.duration_minutes ? `${quiz.duration_minutes} min` : "Untimed"}
+                        </span>
                       </div>
 
                       <div className="flex items-center gap-1.5 text-[11px]">

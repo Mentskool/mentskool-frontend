@@ -310,6 +310,13 @@ export default function MentorQuizBuilderPage() {
         )}
 
         <div className="flex flex-wrap items-center gap-4 pt-1 text-xs text-ink-muted">
+          <div className="flex items-center gap-1.5 bg-sky-50 px-2.5 py-1 rounded-lg border border-sky-100 text-sky-800 font-semibold">
+            <Clock className="w-4 h-4 text-sky-600" />
+            <span>
+              Duration: {quiz.duration_minutes ? `${quiz.duration_minutes} Minutes` : "Untimed Practice"}
+            </span>
+          </div>
+
           <div className="flex items-center gap-1.5">
             <Clock className="w-4 h-4 text-sky-600" />
             <span>

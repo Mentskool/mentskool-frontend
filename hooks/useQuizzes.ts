@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api-client";
+import { useAuthStore } from "@/store/authStore";
 import {
   LeaderboardEntry,
   QuestionType,
@@ -28,10 +29,15 @@ export function useStudentQuizzes() {
 }
 
 export function useQuiz(quizId: string | undefined) {
+  const { isAuthenticated, isLoading: authLoading } = useAuthStore();
   return useQuery<QuizDetail>({
     queryKey: ["quiz", quizId],
     queryFn: () => apiClient.get<QuizDetail>(`/quizzes/${quizId}`),
-    enabled: !!quizId,
+    enabled: !!quizId && !authLoading && isAuthenticated,
+    retry: (failureCount, error: any) => {
+      if (error?.status === 401 || error?.status === 403 || error?.status === 404) return false;
+      return failureCount < 2;
+    },
   });
 }
 
@@ -90,6 +96,7 @@ export function useCreateQuiz() {
       live_at?: string | null;
       default_positive_marks?: number;
       default_negative_marks?: number;
+      duration_minutes?: number | null;
     }) => apiClient.post<Quiz>("/quizzes", payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["quizzes"] });
