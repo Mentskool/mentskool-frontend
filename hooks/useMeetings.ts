@@ -1,13 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api";
 import { Meeting, MeetingStatus } from "@/lib/types";
+import { useAuthStore } from "@/store/authStore";
 
 export const useMyMeetings = () => {
+  const { isAuthenticated, isLoading } = useAuthStore();
   return useQuery<Meeting[]>({
     queryKey: ["meetings", "me"],
     queryFn: async () => {
       return apiClient.get<Meeting[]>("/meetings/me");
     },
+    enabled: !isLoading && isAuthenticated,
   });
 };
 

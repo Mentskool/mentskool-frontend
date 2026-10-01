@@ -6,6 +6,7 @@ import {
   TaskListResponse,
   TaskStatus,
 } from "@/lib/types";
+import { useAuthStore } from "@/store/authStore";
 
 export function useStudentTasks(
   status?: TaskStatus,
@@ -13,6 +14,7 @@ export function useStudentTasks(
   limit = 50,
   offset = 0
 ) {
+  const { isAuthenticated, isLoading } = useAuthStore();
   const params = new URLSearchParams();
   if (status) params.set("status", status);
   if (weekStart) params.set("week_start", weekStart);
@@ -22,6 +24,7 @@ export function useStudentTasks(
   return useQuery({
     queryKey: ["studentTasks", { status, weekStart, limit, offset }],
     queryFn: () => apiClient<TaskListResponse>(`/tasks/me?${params.toString()}`),
+    enabled: !isLoading && isAuthenticated,
   });
 }
 

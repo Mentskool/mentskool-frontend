@@ -20,6 +20,9 @@ export async function apiClient<T>(
   // Attach fresh Firebase ID token if user is signed in
   if (!headers.has("Authorization")) {
     try {
+      if (typeof window !== "undefined" && typeof auth.authStateReady === "function") {
+        await auth.authStateReady();
+      }
       const currentUser = auth.currentUser;
       if (currentUser) {
         const idToken = await currentUser.getIdToken();
@@ -47,17 +50,25 @@ export async function apiClient<T>(
   }
 
   // Handle 401: Refresh ID token once and retry
-  if (response.status === 401 && auth.currentUser) {
-    try {
-      // Force refresh the token
-      const freshToken = await auth.currentUser.getIdToken(true);
-      headers.set("Authorization", `Bearer ${freshToken}`);
-      const retryRes = await fetch(url, { ...options, headers });
-
-      if (retryRes.ok) {
-        if (retryRes.status === 204) return {} as T;
-        return (await retryRes.json()) as T;
+  if (response.status === 401) {
+    if (!auth.currentUser && typeof window !== "undefined" && typeof auth.authStateReady === "function") {
+      try {
+        await auth.authStateReady();
+      } catch {
+        // ignore
       }
+    }
+    if (auth.currentUser) {
+      try {
+        // Force refresh the token
+        const freshToken = await auth.currentUser.getIdToken(true);
+        headers.set("Authorization", `Bearer ${freshToken}`);
+        const retryRes = await fetch(url, { ...options, headers });
+
+        if (retryRes.ok) {
+          if (retryRes.status === 204) return {} as T;
+          return (await retryRes.json()) as T;
+        }
 
       if (retryRes.status === 401) {
         // Still unauthorized after force refresh: sign out cleanly
@@ -75,6 +86,7 @@ export async function apiClient<T>(
       throw await parseErrorResponse(response);
     }
   }
+}
 
   if (!response.ok) {
     throw await parseErrorResponse(response);
