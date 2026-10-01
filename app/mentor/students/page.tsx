@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/Textarea";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { CardSkeleton } from "@/components/ui/Skeleton";
 import { Subscription } from "@/lib/types";
-import { Users, Trophy, FileText, CheckCircle2, Award } from "lucide-react";
+import { Users, Trophy, FileText, CheckCircle2, Award, Target } from "lucide-react";
 
 interface StudentRowProps {
   subscription: Subscription;
@@ -78,20 +78,62 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
     <Card className="bg-white border-mist transition-all">
       {/* Main Student Row */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="space-y-1">
-          <div className="flex items-center gap-3">
-            <Link
-              href={`/mentor/students/${subscription.student_id}`}
-              className="text-base font-bold font-display text-ink hover:text-brand hover:underline transition-colors"
-            >
-              {subscription.student_name}
-            </Link>
-            <Badge variant={subscription.status}>{subscription.status}</Badge>
+        <div className="flex items-center gap-3.5">
+          {/* Student Avatar */}
+          {subscription.student_avatar_url ? (
+            <img
+              src={subscription.student_avatar_url}
+              alt={subscription.student_name}
+              className="w-12 h-12 rounded-2xl object-cover border border-slate-200 flex-shrink-0 shadow-xs"
+            />
+          ) : (
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-200 text-blue-700 flex items-center justify-center font-display font-bold text-base flex-shrink-0 shadow-xs">
+              {subscription.student_name.charAt(0).toUpperCase()}
+            </div>
+          )}
+
+          <div className="space-y-1">
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <Link
+                href={`/mentor/students/${subscription.student_id}`}
+                className="text-base font-bold font-display text-ink hover:text-brand hover:underline transition-colors"
+              >
+                {subscription.student_name}
+              </Link>
+              <Badge variant={subscription.status}>{subscription.status}</Badge>
+
+              {/* Target Exam Badge */}
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/80">
+                <Target className="w-3 h-3 text-indigo-600" />
+                <span>
+                  {subscription.student_target_exam
+                    ? `${subscription.student_target_exam}${
+                        subscription.student_target_year
+                          ? ` '${String(subscription.student_target_year).slice(-2)}`
+                          : ""
+                      }`
+                    : "JEE / NEET Aspirant"}
+                </span>
+              </span>
+
+              {subscription.student_prep_stage && (
+                <span className="text-[10px] font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
+                  {subscription.student_prep_stage}
+                </span>
+              )}
+            </div>
+
+            <p className="text-[11px] text-ink-faint">
+              Enrolled since:{" "}
+              <span className="font-semibold text-slate-600">
+                {new Date(subscription.started_at).toLocaleDateString("en-IN", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                })}
+              </span>
+            </p>
           </div>
-          <p className="text-xs text-ink-muted">{subscription.student_email}</p>
-          <p className="text-[11px] text-ink-faint pt-0.5">
-            Subscribed: {new Date(subscription.started_at).toLocaleDateString()}
-          </p>
         </div>
 
         {/* Efficiency & Quiz Exam Stats */}
