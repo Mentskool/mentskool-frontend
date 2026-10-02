@@ -12,12 +12,14 @@ import {
 } from "@/hooks/useTasks";
 import { TaskStatus } from "@/lib/types";
 import { TaskCard } from "@/components/TaskCard";
+import { MissionTimeline } from "@/components/MissionTimeline";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { CardSkeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { LayoutList, GanttChart } from "lucide-react";
 import { ApiError } from "@/lib/types";
 
 function MentorTasksContent() {
@@ -31,6 +33,7 @@ function MentorTasksContent() {
   const [selectedStatus, setSelectedStatus] = useState<TaskStatus | undefined>(
     undefined
   );
+  const [viewMode, setViewMode] = useState<"list" | "timeline">("list");
   const [showAssignModal, setShowAssignModal] = useState(false);
   const [reviewingTaskId, setReviewingTaskId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -167,17 +170,46 @@ function MentorTasksContent() {
           </p>
         </div>
 
-        <Button
-          size="sm"
-          variant="primary"
-          onClick={() => {
-            setErrorMessage(null);
-            setShowAssignModal(true);
-          }}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-soft whitespace-nowrap rounded-lg"
-        >
-          + Assign New Task
-        </Button>
+        <div className="flex items-center gap-2 self-start sm:self-center">
+          <div className="inline-flex rounded-lg border border-slate-200 overflow-hidden">
+            <button
+              onClick={() => setViewMode("list")}
+              className={`flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
+                viewMode === "list"
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-slate-500 hover:text-slate-700"
+              }`}
+              aria-label="List view"
+            >
+              <LayoutList className="w-3.5 h-3.5" />
+              List
+            </button>
+            <button
+              onClick={() => setViewMode("timeline")}
+              className={`flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
+                viewMode === "timeline"
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-slate-500 hover:text-slate-700"
+              }`}
+              aria-label="Timeline view"
+            >
+              <GanttChart className="w-3.5 h-3.5" />
+              Timeline
+            </button>
+          </div>
+
+          <Button
+            size="sm"
+            variant="primary"
+            onClick={() => {
+              setErrorMessage(null);
+              setShowAssignModal(true);
+            }}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-soft whitespace-nowrap rounded-lg"
+          >
+            + Assign New Task
+          </Button>
+        </div>
       </div>
 
       {/* Task Creation Modal / Panel */}
@@ -274,94 +306,107 @@ function MentorTasksContent() {
         </Card>
       )}
 
-      {/* Filter Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-2">
-        <div className="flex flex-wrap items-center gap-2">
-          {(
-            [
-              { label: "All Tasks" },
-              { label: "Assigned", value: "ASSIGNED" },
-              { label: "Pending Review", value: "MARKED_COMPLETE" },
-              { label: "Approved", value: "APPROVED" },
-              { label: "Rejected", value: "REJECTED" },
-            ] as Array<{ label: string; value?: TaskStatus }>
-          ).map((filter) => {
-            const isSelected = selectedStatus === filter.value;
-            return (
-              <button
-                key={filter.label}
-                onClick={() => setSelectedStatus(filter.value)}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all ${
-                  isSelected
-                    ? "bg-blue-600 text-white border-blue-600 shadow-soft"
-                    : "bg-white text-ink-muted border-mist hover:text-ink hover:border-blue-200"
-                }`}
-              >
-                {filter.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Student Filter Dropdown */}
-        {rosterData && rosterData.items.length > 0 && (
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-ink-faint">Student:</span>
-            <select
-              value={selectedStudentId || ""}
-              onChange={(e) => setSelectedStudentId(e.target.value || undefined)}
-              className="text-xs px-2.5 py-1 bg-white text-ink rounded-control border border-mist focus:outline-none focus:border-brand"
-            >
-              <option value="">All Students</option>
-              {rosterData.items.map((s) => (
-                <option key={s.student_id} value={s.student_id}>
-                  {s.student_name}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-      </div>
-
-      {/* Task List */}
-      {tasksLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <CardSkeleton key={i} />
-          ))}
-        </div>
-      ) : isError ? (
-        <div className="py-12 text-center rounded-card border border-mist bg-white p-8">
-          <p className="text-sm text-ink-muted mb-4">
-            Unable to load assigned tasks.
-          </p>
-          <Button variant="secondary" size="sm" onClick={() => refetch()}>
-            Retry
-          </Button>
-        </div>
-      ) : !tasksData || tasksData.items.length === 0 ? (
-        <EmptyState
-          title="No tasks found"
-          description={
-            selectedStatus
-              ? `No tasks with status '${selectedStatus}'.`
-              : "You have not assigned any tasks yet. Click 'Assign New Task' to begin."
-          }
-          actionLabel="+ Assign First Task"
-          onAction={() => setShowAssignModal(true)}
+      {/* ── TIMELINE VIEW ─────────────────────────────────────────── */}
+      {viewMode === "timeline" && (
+        <MissionTimeline
+          tasks={tasksData?.items ?? []}
+          viewer="mentor"
         />
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {tasksData.items.map((task) => (
-            <TaskCard
-              key={task.id}
-              task={task}
-              isStudentView={false}
-              isActionLoading={reviewingTaskId === task.id}
-              onReview={handleReview}
+      )}
+
+      {/* ── LIST VIEW (existing) ──────────────────────────────────── */}
+      {viewMode === "list" && (
+        <>
+          {/* Filter Toolbar */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pb-2">
+            <div className="flex flex-wrap items-center gap-2">
+              {(
+                [
+                  { label: "All Tasks" },
+                  { label: "Assigned", value: "ASSIGNED" },
+                  { label: "Pending Review", value: "MARKED_COMPLETE" },
+                  { label: "Approved", value: "APPROVED" },
+                  { label: "Rejected", value: "REJECTED" },
+                ] as Array<{ label: string; value?: TaskStatus }>
+              ).map((filter) => {
+                const isSelected = selectedStatus === filter.value;
+                return (
+                  <button
+                    key={filter.label}
+                    onClick={() => setSelectedStatus(filter.value)}
+                    className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all ${
+                      isSelected
+                        ? "bg-blue-600 text-white border-blue-600 shadow-soft"
+                        : "bg-white text-ink-muted border-mist hover:text-ink hover:border-blue-200"
+                    }`}
+                  >
+                    {filter.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Student Filter Dropdown */}
+            {rosterData && rosterData.items.length > 0 && (
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-ink-faint">Student:</span>
+                <select
+                  value={selectedStudentId || ""}
+                  onChange={(e) => setSelectedStudentId(e.target.value || undefined)}
+                  className="text-xs px-2.5 py-1 bg-white text-ink rounded-control border border-mist focus:outline-none focus:border-brand"
+                >
+                  <option value="">All Students</option>
+                  {rosterData.items.map((s) => (
+                    <option key={s.student_id} value={s.student_id}>
+                      {s.student_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
+
+          {/* Task List */}
+          {tasksLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <CardSkeleton key={i} />
+              ))}
+            </div>
+          ) : isError ? (
+            <div className="py-12 text-center rounded-card border border-mist bg-white p-8">
+              <p className="text-sm text-ink-muted mb-4">
+                Unable to load assigned tasks.
+              </p>
+              <Button variant="secondary" size="sm" onClick={() => refetch()}>
+                Retry
+              </Button>
+            </div>
+          ) : !tasksData || tasksData.items.length === 0 ? (
+            <EmptyState
+              title="No tasks found"
+              description={
+                selectedStatus
+                  ? `No tasks with status '${selectedStatus}'.`
+                  : "You have not assigned any tasks yet. Click 'Assign New Task' to begin."
+              }
+              actionLabel="+ Assign First Task"
+              onAction={() => setShowAssignModal(true)}
             />
-          ))}
-        </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {tasksData.items.map((task) => (
+                <TaskCard
+                  key={task.id}
+                  task={task}
+                  isStudentView={false}
+                  isActionLoading={reviewingTaskId === task.id}
+                  onReview={handleReview}
+                />
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

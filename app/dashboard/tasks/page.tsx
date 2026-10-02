@@ -9,6 +9,7 @@ import { StudentTaskRow } from "@/components/StudentTaskRow";
 import { TaskDetailModal } from "@/components/TaskDetailModal";
 import { FocusBanner } from "@/components/FocusBanner";
 import { TaskOverviewDonut } from "@/components/TaskOverviewDonut";
+import { MissionTimeline } from "@/components/MissionTimeline";
 import { CardSkeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Button } from "@/components/ui/Button";
@@ -24,6 +25,8 @@ import {
   ChevronRight,
   BarChart3,
   Check,
+  LayoutList,
+  GanttChart,
 } from "lucide-react";
 
 const STATUS_FILTERS: Array<{ label: string; value?: TaskStatus }> = [
@@ -36,6 +39,7 @@ const STATUS_FILTERS: Array<{ label: string; value?: TaskStatus }> = [
 
 export default function StudentTasksPage() {
   const { user, isAuthenticated, isLoading: authLoading } = useAuthStore();
+  const [viewMode, setViewMode] = useState<"list" | "timeline">("list");
   const [selectedStatus, setSelectedStatus] = useState<TaskStatus | undefined>(
     undefined
   );
@@ -162,266 +166,309 @@ export default function StudentTasksPage() {
           </div>
         </div>
 
-        {/* Date Range Badge */}
-        <div className="inline-flex items-center gap-2 self-start md:self-center px-3.5 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 shadow-xs">
-          <Calendar className="w-3.5 h-3.5 text-slate-400" />
-          <span>{cycleDateRange}</span>
-        </div>
-      </div>
-
-      {/* 2. Stat Metric Cards (4 Cards) */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
-        {/* Completed */}
-        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-          <div className="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0 text-emerald-600">
-            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+        {/* Date Range Badge + View Toggle */}
+        <div className="flex items-center gap-2 self-start md:self-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 shadow-xs">
+            <Calendar className="w-3.5 h-3.5 text-slate-400" />
+            <span>{cycleDateRange}</span>
           </div>
-          <div>
-            <p className="text-xs text-slate-500 font-medium">Completed</p>
-            <p className="text-xl sm:text-2xl font-black font-display text-slate-900">
-              {stats.completed}
-            </p>
-          </div>
-        </div>
-
-        {/* In Progress */}
-        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-          <div className="w-10 h-10 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0 text-blue-600">
-            <Clock className="w-5 h-5 text-blue-600" />
-          </div>
-          <div>
-            <p className="text-xs text-slate-500 font-medium">In Progress</p>
-            <p className="text-xl sm:text-2xl font-black font-display text-slate-900">
-              {stats.inProgress}
-            </p>
-          </div>
-        </div>
-
-        {/* Pending Review */}
-        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-          <div className="w-10 h-10 rounded-full bg-amber-50 border border-amber-100 flex items-center justify-center flex-shrink-0 text-amber-600">
-            <Hourglass className="w-5 h-5 text-amber-600" />
-          </div>
-          <div>
-            <p className="text-xs text-slate-500 font-medium">Pending Review</p>
-            <p className="text-xl sm:text-2xl font-black font-display text-slate-900">
-              {stats.pendingReview}
-            </p>
-          </div>
-        </div>
-
-        {/* Rejected */}
-        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-          <div className="w-10 h-10 rounded-full bg-rose-50 border border-rose-100 flex items-center justify-center flex-shrink-0 text-rose-600">
-            <AlertCircle className="w-5 h-5 text-rose-600" />
-          </div>
-          <div>
-            <p className="text-xs text-slate-500 font-medium">Rejected</p>
-            <p className="text-xl sm:text-2xl font-black font-display text-slate-900">
-              {stats.rejected}
-            </p>
+          <div className="inline-flex rounded-lg border border-slate-200 overflow-hidden">
+            <button
+              onClick={() => setViewMode("list")}
+              className={`flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
+                viewMode === "list"
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-slate-500 hover:text-slate-700"
+              }`}
+              aria-label="List view"
+            >
+              <LayoutList className="w-3.5 h-3.5" />
+              List
+            </button>
+            <button
+              onClick={() => setViewMode("timeline")}
+              className={`flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
+                viewMode === "timeline"
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-slate-500 hover:text-slate-700"
+              }`}
+              aria-label="Timeline view"
+            >
+              <GanttChart className="w-3.5 h-3.5" />
+              Timeline
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Success Notification Alert */}
-      {successToast && (
-        <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-2xl text-xs text-emerald-800 font-semibold flex items-center justify-between shadow-xs animate-fade-in">
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-            <span>{successToast}</span>
-          </div>
-          <button
-            onClick={() => setSuccessToast(null)}
-            className="text-xs text-emerald-700 hover:text-emerald-900"
-          >
-            ✕
-          </button>
-        </div>
+      {/* ── TIMELINE VIEW ─────────────────────────────────────────── */}
+      {viewMode === "timeline" && (
+        <MissionTimeline
+          tasks={allTasksData?.items ?? []}
+          viewer="student"
+          onComplete={handleMarkComplete}
+          isCompletingId={completingTaskId}
+        />
       )}
 
-      {/* 3. Filter Pills */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
-        {STATUS_FILTERS.map((filter) => {
-          const isSelected = selectedStatus === filter.value;
-          return (
-            <button
-              key={filter.label}
-              onClick={() => setSelectedStatus(filter.value)}
-              className={`px-4 py-1.5 text-xs font-semibold rounded-full border transition-all whitespace-nowrap ${
-                isSelected
-                  ? "bg-blue-600 text-white border-blue-600 shadow-xs"
-                  : "bg-white text-slate-600 border-slate-200/90 hover:text-slate-900 hover:bg-slate-50"
-              }`}
-            >
-              {filter.label}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* 4. Two-Column Dashboard Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column: Tasks Feed (8 cols) */}
-        <div className="lg:col-span-8 space-y-3.5">
-          {allLoading ? (
-            <div className="space-y-3">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <CardSkeleton key={i} />
-              ))}
-            </div>
-          ) : isError ? (
-            <div className="py-12 text-center rounded-2xl border border-slate-200 bg-white p-8">
-              <p className="text-sm text-slate-500 mb-4">
-                Unable to load tasks at this time.
-              </p>
-              <Button variant="secondary" size="sm" onClick={() => refetch()}>
-                Retry
-              </Button>
-            </div>
-          ) : filteredTasks.length === 0 ? (
-            <EmptyState
-              title="No tasks found"
-              description={
-                selectedStatus
-                  ? `No tasks currently matching '${selectedStatus}'.`
-                  : "You do not have any tasks assigned in this cycle yet."
-              }
-              actionLabel="Find Mentors"
-              onAction={() => window.location.assign("/mentors")}
-            />
-          ) : (
-            <div className="space-y-3.5">
-              {filteredTasks.map((task) => (
-                <StudentTaskRow
-                  key={task.id}
-                  task={task}
-                  onViewDetails={(t) => setActiveDetailTask(t)}
-                  onMarkComplete={handleMarkComplete}
-                  isActionLoading={completingTaskId === task.id}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Right Column: Sticky Widgets (4 cols) */}
-        <div className="lg:col-span-4 space-y-5 lg:sticky lg:top-6">
-          {/* Motivational Quote Banner */}
-          <FocusBanner />
-
-          {/* Task Overview Donut Gauge */}
-          <TaskOverviewDonut
-            completed={stats.completed}
-            inProgress={stats.inProgress}
-            pendingReview={stats.pendingReview}
-            rejected={stats.rejected}
-            onViewAll={() => setSelectedStatus(undefined)}
-          />
-
-          {/* Quick Actions Card */}
-          <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs space-y-3">
-            <div className="flex items-center gap-2">
-              <Zap className="w-4 h-4 text-slate-700" />
-              <h3 className="text-sm font-bold text-slate-900">Quick Actions</h3>
-            </div>
-
-            <div className="space-y-2 pt-1">
-              <Link
-                href="/schedule"
-                className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50/70 border border-slate-200/70 hover:border-blue-200 transition-all text-xs font-semibold text-slate-700 group"
-              >
-                <div className="flex items-center gap-2.5">
-                  <Calendar className="w-4 h-4 text-blue-600" />
-                  <span>View Schedule</span>
-                </div>
-                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
-              </Link>
-
-              <Link
-                href="/quizzes"
-                className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50/70 border border-slate-200/70 hover:border-blue-200 transition-all text-xs font-semibold text-slate-700 group"
-              >
-                <div className="flex items-center gap-2.5">
-                  <BookOpen className="w-4 h-4 text-blue-600" />
-                  <span>Browse Quizzes</span>
-                </div>
-                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
-              </Link>
-
-              <Link
-                href="/dashboard/efficiency"
-                className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50/70 border border-slate-200/70 hover:border-blue-200 transition-all text-xs font-semibold text-slate-700 group"
-              >
-                <div className="flex items-center gap-2.5">
-                  <BarChart3 className="w-4 h-4 text-blue-600" />
-                  <span>Efficiency Rating</span>
-                </div>
-                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
-              </Link>
-            </div>
-          </div>
-
-          {/* Recent Activity Card */}
-          <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-slate-700" />
-                <h3 className="text-sm font-bold text-slate-900">Recent Activity</h3>
+      {/* ── LIST VIEW (existing) ──────────────────────────────────── */}
+      {viewMode === "list" && (
+        <>
+          {/* 2. Stat Metric Cards (4 Cards) */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+            {/* Completed */}
+            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0 text-emerald-600">
+                <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+              </div>
+              <div>
+                <p className="text-xs text-slate-500 font-medium">Completed</p>
+                <p className="text-xl sm:text-2xl font-black font-display text-slate-900">
+                  {stats.completed}
+                </p>
               </div>
             </div>
 
-            <div className="space-y-3 pt-1 text-xs">
-              {allTasksData?.items && allTasksData.items.length > 0 ? (
-                allTasksData.items.slice(0, 4).map((task) => (
-                  <div key={task.id} className="flex items-start gap-2.5">
-                    {task.status === "APPROVED" ? (
-                      <div className="w-6 h-6 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0 text-emerald-600 mt-0.5">
-                        <Check className="w-3 h-3" />
-                      </div>
-                    ) : task.status === "REJECTED" ? (
-                      <div className="w-6 h-6 rounded-full bg-rose-50 border border-rose-100 flex items-center justify-center flex-shrink-0 text-rose-600 mt-0.5">
-                        <AlertCircle className="w-3 h-3" />
-                      </div>
-                    ) : task.status === "MARKED_COMPLETE" ? (
-                      <div className="w-6 h-6 rounded-full bg-amber-50 border border-amber-100 flex items-center justify-center flex-shrink-0 text-amber-600 mt-0.5">
-                        <Hourglass className="w-3 h-3" />
-                      </div>
-                    ) : (
-                      <div className="w-6 h-6 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0 text-blue-600 mt-0.5">
-                        <Clock className="w-3 h-3" />
-                      </div>
-                    )}
-
-                    <div className="min-w-0 flex-1">
-                      <p className="font-semibold text-slate-800 truncate">
-                        {task.status === "APPROVED"
-                          ? `Task approved: ${task.title}`
-                          : task.status === "MARKED_COMPLETE"
-                          ? `Submitted: ${task.title}`
-                          : task.status === "REJECTED"
-                          ? `Revision requested: ${task.title}`
-                          : `Assigned: ${task.title}`}
-                      </p>
-                      <p className="text-[11px] text-slate-400">
-                        {task.reviewed_at
-                          ? new Date(task.reviewed_at).toLocaleDateString()
-                          : task.week_start}
-                      </p>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className="text-slate-400 text-xs italic">
-                  No recent task activities yet.
+            {/* In Progress */}
+            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0 text-blue-600">
+                <Clock className="w-5 h-5 text-blue-600" />
+              </div>
+              <div>
+                <p className="text-xs text-slate-500 font-medium">In Progress</p>
+                <p className="text-xl sm:text-2xl font-black font-display text-slate-900">
+                  {stats.inProgress}
                 </p>
-              )}
+              </div>
+            </div>
+
+            {/* Pending Review */}
+            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-full bg-amber-50 border border-amber-100 flex items-center justify-center flex-shrink-0 text-amber-600">
+                <Hourglass className="w-5 h-5 text-amber-600" />
+              </div>
+              <div>
+                <p className="text-xs text-slate-500 font-medium">Pending Review</p>
+                <p className="text-xl sm:text-2xl font-black font-display text-slate-900">
+                  {stats.pendingReview}
+                </p>
+              </div>
+            </div>
+
+            {/* Rejected */}
+            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-full bg-rose-50 border border-rose-100 flex items-center justify-center flex-shrink-0 text-rose-600">
+                <AlertCircle className="w-5 h-5 text-rose-600" />
+              </div>
+              <div>
+                <p className="text-xs text-slate-500 font-medium">Rejected</p>
+                <p className="text-xl sm:text-2xl font-black font-display text-slate-900">
+                  {stats.rejected}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Task Detail Modal */}
+          {/* Success Notification Alert */}
+          {successToast && (
+            <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-2xl text-xs text-emerald-800 font-semibold flex items-center justify-between shadow-xs animate-fade-in">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                <span>{successToast}</span>
+              </div>
+              <button
+                onClick={() => setSuccessToast(null)}
+                className="text-xs text-emerald-700 hover:text-emerald-900"
+              >
+                ✕
+              </button>
+            </div>
+          )}
+
+          {/* 3. Filter Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+            {STATUS_FILTERS.map((filter) => {
+              const isSelected = selectedStatus === filter.value;
+              return (
+                <button
+                  key={filter.label}
+                  onClick={() => setSelectedStatus(filter.value)}
+                  className={`px-4 py-1.5 text-xs font-semibold rounded-full border transition-all whitespace-nowrap ${
+                    isSelected
+                      ? "bg-blue-600 text-white border-blue-600 shadow-xs"
+                      : "bg-white text-slate-600 border-slate-200/90 hover:text-slate-900 hover:bg-slate-50"
+                  }`}
+                >
+                  {filter.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* 4. Two-Column Dashboard Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            {/* Left Column: Tasks Feed (8 cols) */}
+            <div className="lg:col-span-8 space-y-3.5">
+              {allLoading ? (
+                <div className="space-y-3">
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <CardSkeleton key={i} />
+                  ))}
+                </div>
+              ) : isError ? (
+                <div className="py-12 text-center rounded-2xl border border-slate-200 bg-white p-8">
+                  <p className="text-sm text-slate-500 mb-4">
+                    Unable to load tasks at this time.
+                  </p>
+                  <Button variant="secondary" size="sm" onClick={() => refetch()}>
+                    Retry
+                  </Button>
+                </div>
+              ) : filteredTasks.length === 0 ? (
+                <EmptyState
+                  title="No tasks found"
+                  description={
+                    selectedStatus
+                      ? `No tasks currently matching '${selectedStatus}'.`
+                      : "You do not have any tasks assigned in this cycle yet."
+                  }
+                  actionLabel="Find Mentors"
+                  onAction={() => window.location.assign("/mentors")}
+                />
+              ) : (
+                <div className="space-y-3.5">
+                  {filteredTasks.map((task) => (
+                    <StudentTaskRow
+                      key={task.id}
+                      task={task}
+                      onViewDetails={(t) => setActiveDetailTask(t)}
+                      onMarkComplete={handleMarkComplete}
+                      isActionLoading={completingTaskId === task.id}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Right Column: Sticky Widgets (4 cols) */}
+            <div className="lg:col-span-4 space-y-5 lg:sticky lg:top-6">
+              {/* Motivational Quote Banner */}
+              <FocusBanner />
+
+              {/* Task Overview Donut Gauge */}
+              <TaskOverviewDonut
+                completed={stats.completed}
+                inProgress={stats.inProgress}
+                pendingReview={stats.pendingReview}
+                rejected={stats.rejected}
+                onViewAll={() => setSelectedStatus(undefined)}
+              />
+
+              {/* Quick Actions Card */}
+              <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs space-y-3">
+                <div className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-slate-700" />
+                  <h3 className="text-sm font-bold text-slate-900">Quick Actions</h3>
+                </div>
+
+                <div className="space-y-2 pt-1">
+                  <Link
+                    href="/schedule"
+                    className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50/70 border border-slate-200/70 hover:border-blue-200 transition-all text-xs font-semibold text-slate-700 group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Calendar className="w-4 h-4 text-blue-600" />
+                      <span>View Schedule</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
+                  </Link>
+
+                  <Link
+                    href="/quizzes"
+                    className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50/70 border border-slate-200/70 hover:border-blue-200 transition-all text-xs font-semibold text-slate-700 group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <BookOpen className="w-4 h-4 text-blue-600" />
+                      <span>Browse Quizzes</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
+                  </Link>
+
+                  <Link
+                    href="/dashboard/efficiency"
+                    className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50/70 border border-slate-200/70 hover:border-blue-200 transition-all text-xs font-semibold text-slate-700 group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <BarChart3 className="w-4 h-4 text-blue-600" />
+                      <span>Efficiency Rating</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Recent Activity Card */}
+              <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-slate-700" />
+                    <h3 className="text-sm font-bold text-slate-900">Recent Activity</h3>
+                  </div>
+                </div>
+
+                <div className="space-y-3 pt-1 text-xs">
+                  {allTasksData?.items && allTasksData.items.length > 0 ? (
+                    allTasksData.items.slice(0, 4).map((task) => (
+                      <div key={task.id} className="flex items-start gap-2.5">
+                        {task.status === "APPROVED" ? (
+                          <div className="w-6 h-6 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0 text-emerald-600 mt-0.5">
+                            <Check className="w-3 h-3" />
+                          </div>
+                        ) : task.status === "REJECTED" ? (
+                          <div className="w-6 h-6 rounded-full bg-rose-50 border border-rose-100 flex items-center justify-center flex-shrink-0 text-rose-600 mt-0.5">
+                            <AlertCircle className="w-3 h-3" />
+                          </div>
+                        ) : task.status === "MARKED_COMPLETE" ? (
+                          <div className="w-6 h-6 rounded-full bg-amber-50 border border-amber-100 flex items-center justify-center flex-shrink-0 text-amber-600 mt-0.5">
+                            <Hourglass className="w-3 h-3" />
+                          </div>
+                        ) : (
+                          <div className="w-6 h-6 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0 text-blue-600 mt-0.5">
+                            <Clock className="w-3 h-3" />
+                          </div>
+                        )}
+
+                        <div className="min-w-0 flex-1">
+                          <p className="font-semibold text-slate-800 truncate">
+                            {task.status === "APPROVED"
+                              ? `Task approved: ${task.title}`
+                              : task.status === "MARKED_COMPLETE"
+                              ? `Submitted: ${task.title}`
+                              : task.status === "REJECTED"
+                              ? `Revision requested: ${task.title}`
+                              : `Assigned: ${task.title}`}
+                          </p>
+                          <p className="text-[11px] text-slate-400">
+                            {task.reviewed_at
+                              ? new Date(task.reviewed_at).toLocaleDateString()
+                              : task.week_start}
+                          </p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-slate-400 text-xs italic">
+                      No recent task activities yet.
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Task Detail Modal (shared across views) */}
       <TaskDetailModal
         task={activeDetailTask}
         isOpen={!!activeDetailTask}
