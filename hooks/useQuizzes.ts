@@ -22,9 +22,11 @@ import {
 // ==============================================================================
 
 export function useStudentQuizzes() {
+  const { isAuthenticated, isLoading: authLoading } = useAuthStore();
   return useQuery<StudentQuizItem[]>({
     queryKey: ["quizzes", "me"],
     queryFn: () => apiClient.get<StudentQuizItem[]>("/quizzes/me"),
+    enabled: !authLoading && isAuthenticated,
   });
 }
 

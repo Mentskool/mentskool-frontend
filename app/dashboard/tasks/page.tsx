@@ -118,34 +118,28 @@ export default function StudentTasksPage() {
     }
   };
 
-  if (authLoading) {
-    return (
-      <div className="py-16 text-center text-slate-400 animate-pulse">
-        Loading tasks workspace...
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <div className="py-20 text-center max-w-md mx-auto space-y-4">
-        <h2 className="text-xl font-bold font-display text-slate-900">
-          Sign In Required
-        </h2>
-        <p className="text-xs text-slate-500">
-          Please sign in to inspect your assigned weekly tasks and accountability rating.
-        </p>
-        <Link href="/login">
-          <Button variant="primary" size="md">
-            Sign In
-          </Button>
-        </Link>
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-6">
+      {authLoading ? (
+        <div className="py-16 text-center text-slate-400 animate-pulse">
+          Loading tasks workspace...
+        </div>
+      ) : !isAuthenticated ? (
+        <div className="py-20 text-center max-w-md mx-auto space-y-4">
+          <h2 className="text-xl font-bold font-display text-slate-900">
+            Sign In Required
+          </h2>
+          <p className="text-xs text-slate-500">
+            Please sign in to inspect your assigned weekly tasks and accountability rating.
+          </p>
+          <Link href="/login">
+            <Button variant="primary" size="md">
+              Sign In
+            </Button>
+          </Link>
+        </div>
+      ) : (
+        <>
       {/* 1. Hero Card */}
       <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-start gap-4">
@@ -476,6 +470,8 @@ export default function StudentTasksPage() {
         onMarkComplete={handleMarkComplete}
         isActionLoading={completingTaskId === activeDetailTask?.id}
       />
+        </>
+      )}
     </div>
   );
 }
