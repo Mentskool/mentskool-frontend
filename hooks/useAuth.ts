@@ -7,6 +7,7 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signInWithRedirect,
   signOut,
 } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
@@ -122,8 +123,22 @@ export function useAuth() {
   const googleAuth = async (defaultRole?: "STUDENT" | "MENTOR"): Promise<{ user?: User; needsRole: boolean }> => {
     setIsGoogleAuthPending(true);
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const fbUser = result.user;
+      let fbUser;
+      try {
+        const result = await signInWithPopup(auth, googleProvider);
+        fbUser = result.user;
+      } catch (popupErr: any) {
+        // If popup is blocked by COOP or closed unexpectedly, fall back to seamless redirect
+        if (
+          popupErr.code === "auth/popup-blocked" ||
+          popupErr.code === "auth/popup-closed-by-user" ||
+          popupErr.code === "auth/cancelled-popup-request"
+        ) {
+          await signInWithRedirect(auth, googleProvider);
+          return { needsRole: false };
+        }
+        throw popupErr;
+      }
 
       setFirebaseState({
         firebaseUid: fbUser.uid,
