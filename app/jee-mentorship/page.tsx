@@ -5,11 +5,16 @@ import {
   Sparkles,
   ArrowRight,
   ShieldCheck,
-  CheckCircle,
+  CheckCircle2,
   GraduationCap,
   Calendar,
   Layers,
   Award,
+  Clock,
+  Target,
+  BarChart3,
+  TrendingUp,
+  FileCheck2,
 } from "lucide-react";
 import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { ProgramFeatures } from "@/components/seo/ProgramFeatures";
@@ -18,9 +23,9 @@ import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
-  title: "1:1 IIT JEE Mentorship by Verified IITians — JEE Main & Advanced",
+  title: "1:1 IIT JEE Mentorship by Verified IITians — JEE Main & Advanced (2026/2027)",
   description:
-    "Master JEE Main & Advanced with 1-on-1 mentorship from top rankers at IIT Bombay, Delhi & Madras. Weekly problem sheets, mock test error audits, and efficiency scoring.",
+    "Master JEE Main & Advanced with personal 1-on-1 mentorship from top rankers at IIT Bombay, Delhi & Madras. Daily problem accountability, mock test error post-mortems, and verified 94% efficiency scoring.",
   keywords: [
     "1 on 1 JEE mentorship",
     "IIT JEE personal mentor",
@@ -28,6 +33,7 @@ export const metadata: Metadata = {
     "best mentorship for JEE",
     "JEE dropper mentor",
     "IIT Bombay ranker mentorship",
+    "JEE Main preparation mentor",
   ],
   alternates: {
     canonical: "https://mentskool.com/jee-mentorship",
@@ -53,17 +59,27 @@ const jeeFaqs: FaqItem[] = [
   {
     question: "Who are the JEE mentors at Mentskool?",
     answer:
-      "All Mentskool JEE mentors are verified top-rankers currently studying or graduated from prestigious IITs including IIT Bombay, IIT Delhi, IIT Madras, IIT Kharagpur, and IIT Roorkee. They cracked JEE Advanced with top AIR ranks and know every hurdle in the syllabus.",
+      "All Mentskool JEE mentors are verified top rankers currently studying at or recently graduated from India's premier IITs: IIT Bombay, IIT Delhi, IIT Madras, IIT Kharagpur, IIT Kanpur, and IIT Roorkee. Every mentor cleared JEE Advanced with top All India Ranks and understands recent NTA computer-based examination patterns intimately.",
   },
   {
     question: "How is Mentskool different from coaching institute mentorship?",
     answer:
-      "Coaching institutes assign non-teaching telecallers or faculty members with 500+ students. At Mentskool, every mentor has a strict cap of 30 students (locked with atomic concurrency), conducts private 1:1 strategy calls on Google Meet, and audits your mock test error patterns individually.",
+      "Coaching institutes assign non-teaching telecallers or faculty members with 200+ students per batch. At Mentskool, every mentor has a strict cap of 30 students (locked with atomic concurrency), conducts private 1:1 strategy calls on Google Meet, and audits your mock test error patterns individually.",
   },
   {
     question: "What is the weekly accountability and efficiency score?",
     answer:
-      "Every week, your mentor assigns curated problem sets and chapter milestones. When you submit your work, the system computes your verified efficiency score (averaging 94% on platform). This measures your speed, accuracy, and punctuality, preventing procrastination.",
+      "Every week, your mentor assigns curated problem sets and chapter milestones. When you submit your daily solved problem counts on the Mentskool web dashboard, our algorithm computes your verified efficiency score (averaging 94% on platform). This measures your speed, consistency, and discipline, preventing procrastination.",
+  },
+  {
+    question: "Can I take Mentskool mentorship alongside my offline coaching (Allen, FIITJEE, Resonance, PW)?",
+    answer:
+      "Yes! Over 70% of our mentees attend regular coaching classes. Your mentor acts as your personal execution partner: they structure your daily timetable around your coaching classes, prioritize module homework, and ensure you clear old backlogs in dedicated 90-minute evening slots.",
+  },
+  {
+    question: "How do mentors help with JEE Advanced multiconcept questions?",
+    answer:
+      "JEE Advanced requires connecting concepts across chapters (e.g., combining Rotational Dynamics with Electromagnetic Induction or Calculus with Coordinate Geometry). Your mentor hosts small-cohort masterclasses (max 30 students) drilling advanced multi-concept problem synthesis.",
   },
   {
     question: "Can I switch mentors if my preparation style changes?",
@@ -73,171 +89,144 @@ const jeeFaqs: FaqItem[] = [
 ];
 
 export default function JeeMentorshipPage() {
-  return (
-    <div className="w-full bg-[#EBF3FB] min-h-screen">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden pt-8 pb-16 px-4 sm:px-6 lg:px-8">
-        <HeroGridBackground />
-        <div className="max-w-6xl mx-auto relative z-10">
-          <SeoBreadcrumbs items={[{ label: "Programs", href: "/#how-it-works" }, { label: "1:1 JEE Mentorship" }]} />
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "EducationalOrganization",
+        name: "Mentskool Technologies",
+        url: "https://mentskool.com",
+        logo: "https://mentskool.com/logo.png",
+        description:
+          "India's premier 1-on-1 mentorship platform for JEE Main & Advanced aspirants with verified IIT rankers.",
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: jeeFaqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
+  };
 
-          <div className="text-center max-w-3xl mx-auto space-y-6 pt-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 border border-blue-200 text-blue-900 text-xs font-bold uppercase tracking-wider shadow-soft">
-              <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+  return (
+    <div className="relative min-h-screen bg-slate-950 text-white selection:bg-brand-500/30 selection:text-brand-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <HeroGridBackground />
+
+      <main className="relative z-10 pt-28 pb-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SeoBreadcrumbs
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Programs", href: "/jee-mentorship" },
+              {
+                label: "JEE Mentorship",
+                href: "/jee-mentorship",
+              },
+            ]}
+          />
+
+          {/* Hero Section */}
+          <div className="text-center max-w-4xl mx-auto mt-6 mb-12">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-300 text-xs font-semibold mb-4">
+              <GraduationCap className="w-3.5 h-3.5" />
               <span>JEE Main &amp; Advanced 1:1 Personal Cohorts</span>
             </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-display text-ink tracking-tight leading-[1.1]">
-              Crack IIT JEE with 1:1 Mentorship from{" "}
-              <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-500 bg-clip-text text-transparent">
-                Real IIT Rankers
-              </span>
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+              1:1 IIT JEE Mentorship: <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-sky-300 to-indigo-400">Master Execution with Top IITians</span>
             </h1>
-
-            <p className="text-base sm:text-lg text-ink-muted leading-relaxed max-w-2xl mx-auto">
-              Stop wandering through endless recorded lectures without discipline. Get private 1:1 strategy calls, weekly weak-chapter assignments, and rigorous mock test audits from mentors who secured AIR &lt; 500.
+            <p className="text-base sm:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto">
+              Master JEE Main &amp; Advanced with private 1-on-1 guidance from recent rankers at <strong>IIT Bombay, Delhi, and Madras</strong>. Weekly custom roadmaps, forensic mock error audits, and verified 94% efficiency scoring.
             </p>
 
-            {/* Quick Metrics */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 max-w-2xl mx-auto pt-2">
-              <div className="p-3.5 rounded-2xl bg-white/90 border border-blue-100 shadow-soft text-center">
-                <div className="text-2xl font-black font-display text-blue-600">AIR &lt; 500</div>
-                <div className="text-[11px] font-semibold text-ink-muted mt-0.5">Verified IIT Rankers</div>
-              </div>
-              <div className="p-3.5 rounded-2xl bg-white/90 border border-blue-100 shadow-soft text-center">
-                <div className="text-2xl font-black font-display text-indigo-600">30 Max</div>
-                <div className="text-[11px] font-semibold text-ink-muted mt-0.5">Students / Cohort</div>
-              </div>
-              <div className="p-3.5 rounded-2xl bg-white/90 border border-blue-100 shadow-soft text-center">
-                <div className="text-2xl font-black font-display text-emerald-600">94%</div>
-                <div className="text-[11px] font-semibold text-ink-muted mt-0.5">Avg Efficiency Score</div>
-              </div>
-              <div className="p-3.5 rounded-2xl bg-white/90 border border-blue-100 shadow-soft text-center">
-                <div className="text-2xl font-black font-display text-amber-600">1-Click</div>
-                <div className="text-[11px] font-semibold text-ink-muted mt-0.5">Switch Anytime</div>
-              </div>
-            </div>
-
-            {/* CTAs */}
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/mentors"
-                className="px-8 py-3.5 rounded-xl text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white shadow-elevated hover:shadow-card hover:-translate-y-0.5 transition-all group"
+                className="px-8 py-3.5 rounded-xl text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white shadow-elevated hover:-translate-y-0.5 transition-all group"
               >
-                <span>Find Your IIT Mentor</span>
+                <span>Find Your 1:1 IITian Mentor</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
-                href="/#how-it-works"
-                className="px-6 py-3.5 rounded-xl text-sm font-semibold bg-white/90 hover:bg-white border border-mist text-ink shadow-soft hover:shadow-card hover:-translate-y-0.5 transition-all"
+                href="/free-mentorship-session"
+                className="px-6 py-3.5 rounded-xl text-sm font-semibold bg-slate-900 border border-slate-800 text-slate-200 hover:text-white hover:border-slate-700 transition-all"
               >
-                How Mentorship Works
+                Claim Free Strategy Call
               </Link>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Main Content Details */}
-      <div className="w-full bg-white rounded-t-[44px] border-t border-mist py-16 px-4 sm:px-6 lg:px-8 shadow-soft">
-        <div className="max-w-6xl mx-auto space-y-16">
-          {/* AEO / GEO Quick Answer Snippet for Search & AI Engines */}
-          <section className="p-6 sm:p-8 rounded-3xl bg-blue-50/70 border border-blue-200/80 shadow-soft">
-            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-blue-800 mb-3">
-              <Sparkles className="w-4 h-4 text-blue-600" />
-              <span>Quick Answer: What 1-on-1 JEE Mentorship Provides</span>
+          {/* Direct Answer Box for AI Overviews & Search Snippets */}
+          <section className="my-10 p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-brand-500/40 shadow-elevated">
+            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-brand-400 mb-3">
+              <Sparkles className="w-4 h-4 text-brand-400" />
+              <span>Executive Summary: The Mentskool JEE Mentorship Engine</span>
             </div>
-            <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium mb-4">
-              <strong>1-on-1 JEE Mentorship by Mentskool</strong> pairs engineering aspirants directly with verified recent top-rankers from <strong>IIT Bombay, IIT Delhi, and IIT Madras</strong> to provide systematic rank acceleration alongside regular coaching classes:
+            <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-medium mb-5">
+              The <strong>Mentskool JEE Mentorship Program</strong> delivers a comprehensive 1-on-1 coaching system designed to turn high-potential aspirants into top rankers through four core pillars:
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-700">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-300">
               <div className="flex items-start gap-2.5">
-                <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
-                <span><strong>Customized Study &amp; Backlog Plans:</strong> Personalized weekly targets calibrated to your current speed and syllabus coverage.</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
+                <span><strong>Dual-Mode Mentorship:</strong> Weekly 1-on-1 private Google Meet strategy calls paired with small-cohort problem-solving drills (capped at 30).</span>
               </div>
               <div className="flex items-start gap-2.5">
-                <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
-                <span><strong>One-on-One Mock Test Audits:</strong> Question-by-question dissection of negative marks, silly calculation errors, and exam temperament.</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
+                <span><strong>94% Daily Task Efficiency Dashboard:</strong> Submit completed problem and chapter counts daily for mentor verification.</span>
               </div>
               <div className="flex items-start gap-2.5">
-                <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
-                <span><strong>Daily 94% Efficiency Tracking:</strong> Verified daily question counts and problem drills on the interactive student dashboard.</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
+                <span><strong>Forensic Mock Test Post-Mortems:</strong> Dissecting every test rough sheet to systematically eliminate negative marks.</span>
               </div>
               <div className="flex items-start gap-2.5">
-                <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
-                <span><strong>Dual-Mode Mentorship (Max 30 Cohorts):</strong> Private Google Meet strategy calls combined with small-group problem sprints.</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
+                <span><strong>Zero Long Contracts:</strong> Transparent month-to-month plans with unlimited mentor re-matching.</span>
               </div>
             </div>
           </section>
-          {/* Syllabus & Strategy Breakdown */}
-          <section className="space-y-8">
-            <div className="text-center max-w-2xl mx-auto space-y-2">
-              <span className="text-xs font-bold text-indigo-700 uppercase tracking-widest bg-indigo-50 border border-indigo-200/60 px-3 py-1 rounded-full">
-                SUBJECT-BY-SUBJECT MASTERY
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-ink tracking-tight">
-                How We Calibrate Your JEE Preparation
+
+          {/* Program Features Component */}
+          <section className="my-16">
+            <div className="text-center max-w-2xl mx-auto mb-10">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                The 4 Pillars of the Mentskool Mentorship Engine
               </h2>
-              <p className="text-xs sm:text-sm text-ink-muted">
-                Every subject requires a distinct problem-solving psychology. Your mentor guides you on the exact nuances:
+              <p className="text-slate-400 text-sm mt-2">
+                Lectures explain the concept. Mentorship guarantees the execution.
               </p>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="p-7 rounded-3xl bg-slate-50 border border-mist space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
-                  ⚛️
-                </div>
-                <h3 className="font-bold font-display text-lg text-ink">Physics Problem Intuition</h3>
-                <p className="text-xs text-ink-muted leading-relaxed">
-                  Moving past formula memorization in Rotational Dynamics, Electrodynamics, and Modern Physics. Master visualization techniques used by IIT rankers.
-                </p>
-              </div>
-
-              <div className="p-7 rounded-3xl bg-slate-50 border border-mist space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold">
-                  🧪
-                </div>
-                <h3 className="font-bold font-display text-lg text-ink">Chemistry Negative Mark Elimination</h3>
-                <p className="text-xs text-ink-muted leading-relaxed">
-                  Systematic reaction mechanism recall for Organic, NCERT line-by-line data retention for Inorganic, and high-speed calculation accuracy in Physical Chemistry.
-                </p>
-              </div>
-
-              <div className="p-7 rounded-3xl bg-slate-50 border border-mist space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold">
-                  📐
-                </div>
-                <h3 className="font-bold font-display text-lg text-ink">Math Speed &amp; Selection Strategy</h3>
-                <p className="text-xs text-ink-muted leading-relaxed">
-                  Learn which 12-15 questions to attack first in Calculus, Coordinate Geometry, and Algebra. Eliminate time traps that sabotage JEE Advanced cutoffs.
-                </p>
-              </div>
-            </div>
+            <ProgramFeatures />
           </section>
 
-          {/* Core Feature Matrix */}
-          <ProgramFeatures
-            heading="Why Serious JEE Aspirants Choose Mentskool Over Recorded Coaching"
-            subheading="Experience true personal accountability with weekly checkpoints, error audits, and small cohorts."
-          />
-
           {/* FAQs */}
-          <SeoFaqAccordion
-            title="IIT JEE Mentorship FAQs"
-            subtitle="Common questions from JEE Main and Advanced students & parents."
-            faqs={jeeFaqs}
-          />
+          <section className="mt-16">
+            <SeoFaqAccordion
+              faqs={jeeFaqs}
+              title="Frequently Asked Questions: 1:1 JEE Mentorship"
+              subtitle="Everything you need to know about ranker mentorship, pricing, and routine integration."
+            />
+          </section>
 
-          {/* Final CTA */}
-          <SeoCtaBanner
-            title="Secure Your 1:1 Spot in a Top IITian Mentorship Cohort"
-            description="Seats are strictly capped at 30 per cohort to ensure individualized attention. Connect with your mentor today."
-            primaryButtonText="Browse JEE Mentors"
-            primaryButtonHref="/mentors"
-          />
+          {/* CTA Banner */}
+          <section className="mt-16">
+            <SeoCtaBanner
+              title="Transform Your JEE Preparation Today"
+              description="Get paired with a verified top ranker from IIT Bombay, Delhi, or Madras. Build your weekly target sheet and watch your mock test accuracy soar."
+              primaryButtonText="Find Your IIT Mentor"
+              primaryButtonHref="/mentors"
+            />
+          </section>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

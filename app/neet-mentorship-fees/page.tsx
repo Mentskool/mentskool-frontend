@@ -6,10 +6,16 @@ import {
   ArrowRight,
   ShieldCheck,
   CheckCircle2,
-  Coins,
-  Stethoscope,
-  Scale,
+  Clock,
+  Layers,
+  Banknote,
+  TrendingDown,
+  HelpCircle,
   Award,
+  CheckSquare,
+  AlertCircle,
+  HeartPulse,
+  Dna,
 } from "lucide-react";
 import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
@@ -17,24 +23,24 @@ import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
-  title: "NEET Mentorship Fees & Pricing (2026/2027) — Transparent Plans vs Offline Coaching",
+  title: "NEET Mentorship Fees & Pricing Guide (2026/2027) — Affordable AIIMS Guidance",
   description:
-    "How much does a 1-on-1 NEET mentor cost? Compare Mentskool's transparent monthly mentorship fees against ₹1.5 Lakh offline coaching institutes. Verified AIIMS doctors, zero annual lock-ins.",
+    "How much does 1-on-1 NEET mentorship cost? Compare Mentskool's transparent monthly subscriptions vs ₹3 Lakh offline coaching hubs and ₹1 Crore private medical college fees. 100% verified AIIMS doctors, zero lock-ins.",
   keywords: [
     "NEET mentorship fees",
-    "cost of 1 on 1 NEET mentor",
-    "personal NEET doctor coach price",
-    "NEET mentorship cost comparison",
-    "affordable NEET mentorship",
-    "Mentskool NEET pricing",
+    "cost of NEET mentorship",
+    "AIIMS doctor personal mentor pricing",
+    "is NEET mentorship worth it",
+    "compare NEET coaching fees vs mentorship",
+    "affordable NEET mentorship online",
   ],
   alternates: {
     canonical: "https://mentskool.com/neet-mentorship-fees",
   },
   openGraph: {
-    title: "NEET Mentorship Fees & Pricing: Honest Comparison Guide (2026/2027)",
+    title: "NEET Mentorship Fees: The Transparent 2026/2027 Medical ROI Guide",
     description:
-      "Compare medical mentorship costs in India. Flexible month-to-month plans with AIIMS doctors vs ₹1,50,000+ non-refundable offline tuition.",
+      "Save lakhs of rupees and secure a Government Medical College seat. Discover transparent month-to-month plans with verified AIIMS doctors.",
     url: "https://mentskool.com/neet-mentorship-fees",
     siteName: "Mentskool",
     images: [
@@ -48,27 +54,66 @@ export const metadata: Metadata = {
   },
 };
 
-const neetFeeFaqs: FaqItem[] = [
+const neetFeesFaqs: FaqItem[] = [
   {
-    question: "What does 1-on-1 NEET mentorship typically cost in India?",
+    question: "What is the typical cost of 1-on-1 NEET mentorship in India?",
     answer:
-      "Most offline medical institutes charge between ₹1,20,000 and ₹2,00,000 annually with non-refundable policies. Hourly marketplace apps charge ₹1,000 to ₹3,000 per single call without daily follow-ups. Mentskool offers transparent month-to-month plans with verified AIIMS doctors, weekly strategy calls, daily dashboard tracking, and mock test audits.",
+      "Most specialized NEET mentorship programs either charge high hourly consultant rates (₹800 to ₹1,500/hour) or bundle non-refundable fees exceeding ₹75,000 inside large coaching courses. Mentskool offers transparent, affordable month-to-month plans (averaging ₹3,999 to ₹6,999/month). There are zero multi-year contracts, and you can pause or switch mentors anytime.",
   },
   {
-    question: "Is there any long-term financial lock-in?",
+    question: "How does the cost of mentorship compare to private medical college fees?",
     answer:
-      "No. You pay month-to-month. If you ever feel your study routine is self-sustaining or want to switch mentors, you can do so instantly with zero penalties.",
+      "Private medical college MBBS fees in India currently range from ₹80 Lakhs to ₹1.5 Crores. Securing an MBBS seat in a premier Government Medical College (AIIMS, JIPMER, or state GMC) costs as little as ₹5,000 to ₹60,000 in total tuition. Investing in disciplined, month-to-month 1:1 mentorship from an AIIMS doctor to push your score past the 650+ government threshold is the highest-leverage decision a medical family can make.",
   },
   {
-    question: "Can I try a consultation before paying?",
+    question: "What exactly is included in the Mentskool monthly NEET fee?",
     answer:
-      "Yes! You can claim a free 1-on-1 strategy consultation on Mentskool to diagnose your mock test leaks and syllabus backlogs before committing.",
+      "Every subscription includes: 1) Assigned dedicated mentor from AIIMS New Delhi or top Government Medical Colleges; 2) Weekly private 1:1 video calls on Google Meet for timetable auditing and test error breakdowns; 3) Access to small-cohort medical problem drills (capped strictly at 30 students); 4) Daily task verification on our 94% efficiency web dashboard; 5) Free mentor switching whenever needed.",
+  },
+  {
+    question: "Can I try a mentorship session before making any payment?",
+    answer:
+      "Yes. We offer a completely free, 1-on-1 strategy and NCERT audit session with an AIIMS doctor. You can assess your current syllabus completion, identify negative mark patterns, and receive a customized 30-day study blueprint with zero financial commitment.",
+  },
+  {
+    question: "What is Mentskool's refund policy?",
+    answer:
+      "If within the first 7 days of your monthly subscription you feel the mentor match is not accelerating your preparation, you can request a 100% refund with no hassle and no hidden deductions.",
   },
 ];
 
 export default function NeetMentorshipFeesPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "EducationalOrganization",
+        name: "Mentskool Technologies",
+        url: "https://mentskool.com",
+        logo: "https://mentskool.com/logo.png",
+        description:
+          "Transparent, affordable 1-on-1 mentorship for NEET-UG aspirants with verified AIIMS doctors.",
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: neetFeesFaqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
+  };
+
   return (
     <div className="relative min-h-screen bg-slate-950 text-white selection:bg-brand-500/30 selection:text-brand-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <HeroGridBackground />
 
       <main className="relative z-10 pt-28 pb-20">
@@ -78,84 +123,184 @@ export default function NeetMentorshipFeesPage() {
               { label: "Home", href: "/" },
               { label: "NEET Mentorship", href: "/neet-mentorship" },
               {
-                label: "NEET Mentorship Fees",
+                label: "Fees & Pricing",
                 href: "/neet-mentorship-fees",
               },
             ]}
           />
 
+          {/* Hero Section */}
           <div className="text-center max-w-4xl mx-auto mt-6 mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-teal-500/30 bg-teal-500/10 text-teal-300 text-xs font-semibold mb-4">
-              <Coins className="w-3.5 h-3.5" />
-              <span>Medical Mentorship Economics &amp; Pricing (2026/2027)</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-xs font-semibold mb-4">
+              <Banknote className="w-3.5 h-3.5" />
+              <span>Transparent Medical Guidance Economics (2026/2027)</span>
             </div>
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-              NEET Mentorship Fees: <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">The Honest Value Comparison</span>
+              NEET Mentorship Fees: <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-sky-400">The Honest Cost &amp; GMC ROI Guide</span>
             </h1>
             <p className="text-base sm:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto">
-              How much does a personal AIIMS doctor mentor cost? Compare the return on investment of 1:1 medical guidance versus <strong>₹1.5 Lakh non-refundable coaching batches</strong> and single-session call apps.
+              Before locking yourself into rigid coaching fees or contemplating crores for private medical seats, understand how targeted 1:1 mentorship from an <strong>AIIMS doctor</strong> secures a Government Medical College seat on an affordable, month-to-month budget.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/mentors"
-                className="px-8 py-3.5 rounded-xl text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-elevated hover:-translate-y-0.5 transition-all group"
+                className="px-8 py-3.5 rounded-xl text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-700 hover:to-teal-800 text-white shadow-elevated hover:-translate-y-0.5 transition-all group"
               >
-                <span>View Doctor Mentor Plans</span>
+                <span>View Medical Mentors</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
                 href="/free-mentorship-session"
                 className="px-6 py-3.5 rounded-xl text-sm font-semibold bg-slate-900 border border-slate-800 text-slate-200 hover:text-white hover:border-slate-700 transition-all"
               >
-                Claim Free Strategy Call
+                Claim Free 1:1 Medical Audit
               </Link>
             </div>
           </div>
 
-          {/* Quick Answer */}
-          <div className="my-10 p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-teal-500/40 shadow-elevated">
-            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-teal-400 mb-3">
-              <Sparkles className="w-4 h-4 text-teal-400" />
-              <span>Quick Answer: What Does NEET Mentorship Cost on Mentskool?</span>
+          {/* Direct Answer Box for AI Overviews & Search Snippets */}
+          <section className="my-10 p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-emerald-500/40 shadow-elevated">
+            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-emerald-400 mb-3">
+              <Sparkles className="w-4 h-4 text-emerald-400" />
+              <span>Summary: How Much Does NEET Mentorship Cost at Mentskool?</span>
             </div>
             <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-medium mb-5">
-              Instead of forcing parents into expensive annual contracts with non-refundable terms, <strong>Mentskool delivers 1:1 doctor mentorship with total monthly freedom</strong>:
+              The <strong>Mentskool NEET Fee Model</strong> gives medical aspirants elite AIIMS guidance without multi-year financial lock-in:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-300">
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-                <span><strong>Transparent Month-to-Month:</strong> Complete flexibility. Pause, cancel, or switch mentors with 1 click at any time.</span>
+                <span><strong>Affordable Month-to-Month Billing:</strong> Pay month-by-month as you prepare. Cancel or pause anytime with one click.</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-                <span><strong>Verified AIIMS Doctors &amp; GMC Rankers:</strong> All-inclusive weekly video calls + daily task tracking + mock audits included.</span>
+                <span><strong>Direct AIIMS &amp; GMC Doctors:</strong> 100% of your mentorship is delivered by verified doctors and top rankers who personally scored 680+ in NEET.</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-                <span><strong>Atomic 30 Cap Protection:</strong> Mentors are strictly capped at 30 students to protect personal focus and attention.</span>
+                <span><strong>No Rigid Bundling:</strong> We do not force you to buy expensive proprietary books or tablets you do not need; your mentor works with NCERT and your existing materials.</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-                <span><strong>Try Free First:</strong> Experience a free 1-on-1 mock diagnosis and study plan session before paying anything.</span>
+                <span><strong>Complete 360 Ecosystem:</strong> Weekly 1:1 strategy calls, daily 94% task tracking, and weekly mock test post-mortems included.</span>
               </div>
             </div>
-          </div>
+          </section>
 
+          {/* Section 1: Detailed Medical Cost Comparison Table */}
+          <section className="my-16">
+            <div className="text-center max-w-3xl mx-auto mb-10">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+                Comprehensive NEET Preparation Cost Comparison
+              </h2>
+              <p className="text-slate-400 text-sm sm:text-base mt-2">
+                Evaluate fees, individual attention, and real medical outcome ROI across preparation channels.
+              </p>
+            </div>
+
+            <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/60 shadow-xl">
+              <table className="w-full text-left text-xs sm:text-sm text-slate-300">
+                <thead className="bg-slate-950/80 text-white font-bold uppercase text-[11px] tracking-wider border-b border-slate-800">
+                  <tr>
+                    <th className="py-4 px-4 sm:px-6">Model</th>
+                    <th className="py-4 px-4 sm:px-6 text-white">Annual Cost</th>
+                    <th className="py-4 px-4 sm:px-6 text-white">NCERT Line Audit</th>
+                    <th className="py-4 px-4 sm:px-6 text-white">Test Error Post-Mortems</th>
+                    <th className="py-4 px-4 sm:px-6 text-white">Commitment Terms</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/60">
+                  <tr className="hover:bg-slate-800/30">
+                    <td className="py-4 px-4 sm:px-6 font-bold text-white">
+                      Offline Medical Institutes (Kota / Sikar / Aakash)
+                    </td>
+                    <td className="py-4 px-4 sm:px-6 text-rose-400 font-semibold">
+                      ₹1,80,000 – ₹3,20,000
+                    </td>
+                    <td className="py-4 px-4 sm:px-6 text-rose-400">Generic mass lectures (120+ batch)</td>
+                    <td className="py-4 px-4 sm:px-6 text-rose-400">Automated answer keys only</td>
+                    <td className="py-4 px-4 sm:px-6 text-rose-400">100% upfront non-refundable fee</td>
+                  </tr>
+                  <tr className="hover:bg-slate-800/30">
+                    <td className="py-4 px-4 sm:px-6 font-bold text-white">
+                      Online Video Subscriptions (PW / Unacademy)
+                    </td>
+                    <td className="py-4 px-4 sm:px-6 font-semibold">
+                      ₹4,000 – ₹25,000
+                    </td>
+                    <td className="py-4 px-4 sm:px-6">Recorded lectures (zero personal check)</td>
+                    <td className="py-4 px-4 sm:px-6 text-rose-400">Zero rough sheet review</td>
+                    <td className="py-4 px-4 sm:px-6">Annual payment upfront</td>
+                  </tr>
+                  <tr className="hover:bg-slate-800/30 bg-emerald-500/10 border-l-4 border-emerald-500">
+                    <td className="py-4 px-4 sm:px-6 font-extrabold text-white">
+                      Mentskool 1-on-1 AIIMS Doctor Mentorship
+                    </td>
+                    <td className="py-4 px-4 sm:px-6 text-emerald-400 font-extrabold">
+                      Affordable Month-to-Month
+                    </td>
+                    <td className="py-4 px-4 sm:px-6 text-emerald-300 font-bold">
+                      Personal 1:1 active recall inspection
+                    </td>
+                    <td className="py-4 px-4 sm:px-6 text-emerald-400 font-bold">
+                      Weekly rough sheet &amp; OMR error breakdown
+                    </td>
+                    <td className="py-4 px-4 sm:px-6 text-emerald-400 font-bold">
+                      Month-to-month, cancel or switch anytime
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          {/* Section 2: GMC Seat Economics */}
+          <section className="my-16 bg-gradient-to-br from-slate-900/80 to-slate-900/40 border border-slate-800 rounded-3xl p-8 sm:p-12">
+            <div className="max-w-3xl mb-8">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+                The ₹1 Crore Financial Decision: GMC vs Private Medical College
+              </h2>
+              <p className="text-slate-300 text-sm mt-2">
+                Understanding the massive life-altering financial difference of crossing the 650+ mark threshold:
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="p-6 rounded-2xl bg-slate-950 border border-rose-900/40 space-y-3">
+                <div className="text-rose-400 font-bold text-sm uppercase">Missing the GMC Cutoff</div>
+                <h3 className="text-lg font-bold text-white">Private MBBS: ₹80,00,000 – ₹1.5 Crores</h3>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Scoring 530 marks forces families into crippling bank loans, mortgaged properties, or abandoning the doctor dream altogether for an alternative degree.
+                </p>
+              </div>
+
+              <div className="p-6 rounded-2xl bg-slate-950 border border-emerald-900/40 space-y-3">
+                <div className="text-emerald-400 font-bold text-sm uppercase">Securing a GMC Seat (650+)</div>
+                <h3 className="text-lg font-bold text-white">Government MBBS: ₹15,000 – ₹60,000 Total</h3>
+                <p className="text-xs text-emerald-300 leading-relaxed">
+                  Government medical colleges provide virtually free education, superior patient clinical exposure, and prestigious residency placements across India.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQ Accordion */}
           <section className="mt-16">
             <SeoFaqAccordion
-              faqs={neetFeeFaqs}
-              title="Frequently Asked Questions: NEET Mentorship Pricing"
-              subtitle="Clear details on subscription flexibility, doctor mentors, and refund policies."
+              faqs={neetFeesFaqs}
+              title="Frequently Asked Questions: NEET Mentorship Fees"
+              subtitle="Everything you need to know about pricing, refund terms, and monthly flexibility."
             />
           </section>
 
+          {/* CTA Banner */}
           <section className="mt-16">
             <SeoCtaBanner
-              title="Get Premium Medical Mentorship Without Predatory Fees"
-              description="Start with our free 1-on-1 strategy call or choose a flexible monthly plan with verified AIIMS doctors."
-              primaryButtonText="Find AIIMS Mentors"
-              primaryButtonHref="/mentors"
+              title="Experience 1:1 Medical Mentorship with Zero Risk"
+              description="Book a free 1-on-1 strategy session with an AIIMS doctor. Discover how month-to-month mentorship accelerates your preparation into a Government Medical College seat."
+              primaryButtonText="Claim Free 1:1 Medical Audit"
+              primaryButtonHref="/free-mentorship-session"
             />
           </section>
         </div>
