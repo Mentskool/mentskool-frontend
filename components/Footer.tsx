@@ -179,134 +179,182 @@ export function Footer() {
           </div>
         </div>
 
-        {/* SEO Directory: Programs & Comparisons */}
-        <div className="mt-12 pt-8 border-t border-slate-800/80 grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+        {/* SEO Directory: Programs, Strategies, Subjects & Comparisons */}
+        <div className="mt-12 pt-8 border-t border-slate-800/80 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-xs">
+          {/* Column 1: Core Programs */}
           <div>
             <h5 className="font-bold text-white font-display text-xs uppercase tracking-wider mb-2.5">
-              Targeted Preparation Programs
+              Preparation Programs
             </h5>
-            <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-slate-400">
-              <Link href="/best-jee-mentorship" className="hover:text-sky-400 transition-colors font-semibold text-slate-300">
+            <div className="flex flex-col space-y-1.5 text-slate-400">
+              <Link href="/best-jee-mentorship" className="hover:text-sky-400 transition-colors font-medium text-slate-300">
                 Best JEE Mentorship
               </Link>
-              <span>•</span>
-              <Link href="/best-neet-mentorship" className="hover:text-sky-400 transition-colors font-semibold text-slate-300">
+              <Link href="/best-neet-mentorship" className="hover:text-sky-400 transition-colors font-medium text-slate-300">
                 Best NEET Mentorship
               </Link>
-              <span>•</span>
-              <Link href="/free-mentorship-session" className="hover:text-emerald-400 transition-colors font-semibold text-emerald-400">
+              <Link href="/free-mentorship-session" className="hover:text-emerald-400 transition-colors font-medium text-emerald-400">
                 Free 1:1 Strategy Session
               </Link>
               <Link href="/jee-mentorship-2027" className="hover:text-sky-400 transition-colors">
-                JEE 2027 Sprint
+                JEE 2027 Mentorship Sprint
               </Link>
-              <span>•</span>
               <Link href="/neet-mentorship-2027" className="hover:text-sky-400 transition-colors">
-                NEET 2027 Roadmap
+                NEET 2027 Mentorship Roadmap
               </Link>
-              <span>•</span>
+              <Link href="/jee-advanced-mentorship" className="hover:text-sky-400 transition-colors font-medium text-amber-300/90">
+                JEE Advanced Mentorship
+              </Link>
+              <Link href="/personalized-jee-mentorship" className="hover:text-sky-400 transition-colors">
+                Personalized JEE Mentorship
+              </Link>
+              <Link href="/personalized-neet-mentorship" className="hover:text-sky-400 transition-colors">
+                Personalized NEET Mentorship
+              </Link>
               <Link href="/jee-1-on-1-mentorship" className="hover:text-sky-400 transition-colors">
                 1-on-1 JEE Mentorship
               </Link>
-              <span>•</span>
               <Link href="/neet-1-on-1-mentorship" className="hover:text-sky-400 transition-colors">
                 1-on-1 NEET Mentorship
               </Link>
-              <span>•</span>
-              <Link href="/jee-study-plan-with-mentor" className="hover:text-sky-400 transition-colors">
-                JEE Study Plan with Mentor
-              </Link>
-              <span>•</span>
-              <Link href="/neet-study-plan-with-mentor" className="hover:text-sky-400 transition-colors">
-                NEET Study Plan with Mentor
-              </Link>
-              <span>•</span>
-              <Link href="/jee-backlog-management" className="hover:text-amber-400 transition-colors">
-                JEE Backlog Clearance
-              </Link>
-              <span>•</span>
-              <Link href="/neet-backlog-management" className="hover:text-amber-400 transition-colors">
-                NEET Backlog Clearance
-              </Link>
-              <span>•</span>
-              <Link href="/jee-mock-test-analysis" className="hover:text-sky-400 transition-colors">
-                JEE Mock Test Analysis
-              </Link>
-              <span>•</span>
-              <Link href="/neet-mock-test-analysis" className="hover:text-sky-400 transition-colors">
-                NEET Mock Test Analysis
-              </Link>
-              <span>•</span>
               <Link href="/jee-droppers" className="hover:text-sky-400 transition-colors">
-                JEE Droppers
+                JEE Droppers Mentorship
               </Link>
-              <span>•</span>
               <Link href="/neet-repeaters" className="hover:text-sky-400 transition-colors">
-                NEET Repeaters
+                NEET Repeaters Mentorship
               </Link>
-              <span>•</span>
-              <Link href="/jee-mentorship-fees" className="hover:text-emerald-400 transition-colors">
-                JEE Mentorship Fees
-              </Link>
-              <span>•</span>
-              <Link href="/neet-mentorship-fees" className="hover:text-emerald-400 transition-colors">
-                NEET Mentorship Fees
-              </Link>
-              <span>•</span>
-              <Link href="/mentor-vs-coaching-for-jee-neet" className="hover:text-indigo-400 transition-colors">
-                Mentor vs Coaching
-              </Link>
-              <span>•</span>
               <Link href="/class-11-12-mentorship" className="hover:text-sky-400 transition-colors">
                 Class 11 &amp; 12 Foundation
               </Link>
+              <Link href="/jee-mentorship-fees" className="hover:text-emerald-400 transition-colors">
+                JEE Mentorship Fees &amp; Pricing
+              </Link>
+              <Link href="/neet-mentorship-fees" className="hover:text-emerald-400 transition-colors">
+                NEET Mentorship Fees &amp; Pricing
+              </Link>
+              <Link href="/mentor-vs-coaching-for-jee-neet" className="hover:text-indigo-400 transition-colors">
+                Mentor vs Coaching Guide
+              </Link>
             </div>
           </div>
+
+          {/* Column 2: Strategy & Problem Resolution */}
           <div>
             <h5 className="font-bold text-white font-display text-xs uppercase tracking-wider mb-2.5">
-              Mentorship Comparisons &amp; Reviews
+              Strategy &amp; Score Recovery
             </h5>
-            <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-slate-400">
+            <div className="flex flex-col space-y-1.5 text-slate-400">
+              <Link href="/jee-backlog-management" className="hover:text-amber-400 transition-colors">
+                JEE Backlog Clearance Protocol
+              </Link>
+              <Link href="/neet-backlog-management" className="hover:text-amber-400 transition-colors">
+                NEET Backlog Recovery System
+              </Link>
+              <Link href="/jee-mock-test-analysis" className="hover:text-sky-400 transition-colors">
+                JEE Mock Test Error Post-Mortem
+              </Link>
+              <Link href="/neet-mock-test-analysis" className="hover:text-sky-400 transition-colors">
+                NEET Mock Test Analysis
+              </Link>
+              <Link href="/low-mock-test-score-jee-neet" className="hover:text-rose-400 transition-colors font-medium">
+                Low Mock Score 72h Recovery
+              </Link>
+              <Link href="/jee-revision-plan" className="hover:text-sky-400 transition-colors">
+                JEE 45-Day Revision Blueprint
+              </Link>
+              <Link href="/neet-revision-plan" className="hover:text-sky-400 transition-colors">
+                NEET 60-Day NCERT Revision
+              </Link>
+              <Link href="/jee-weak-topic-tracking" className="hover:text-sky-400 transition-colors">
+                JEE Weak Topic Diagnostic Matrix
+              </Link>
+              <Link href="/neet-weak-topic-tracking" className="hover:text-sky-400 transition-colors">
+                NEET Weak Topic Auditing
+              </Link>
+              <Link href="/jee-study-plan-with-mentor" className="hover:text-sky-400 transition-colors">
+                JEE Study Plan with Mentor
+              </Link>
+              <Link href="/neet-study-plan-with-mentor" className="hover:text-sky-400 transition-colors">
+                NEET Study Plan with Mentor
+              </Link>
+              <Link href="/jee-accountability-mentor" className="hover:text-sky-400 transition-colors">
+                JEE Daily Accountability System
+              </Link>
+              <Link href="/neet-accountability-mentor" className="hover:text-sky-400 transition-colors">
+                NEET Consistency &amp; Habit Mentor
+              </Link>
+              <Link href="/parents-guide-jee-neet" className="hover:text-indigo-400 transition-colors font-medium">
+                Parents Guide: Supporting Aspirants
+              </Link>
+            </div>
+          </div>
+
+          {/* Column 3: Subject Mentorship & CBT */}
+          <div>
+            <h5 className="font-bold text-white font-display text-xs uppercase tracking-wider mb-2.5">
+              Subject Mentors &amp; CBT Prep
+            </h5>
+            <div className="flex flex-col space-y-1.5 text-slate-400">
+              <Link href="/jee-physics-mentor" className="hover:text-sky-400 transition-colors">
+                JEE Physics 1-on-1 Mentor
+              </Link>
+              <Link href="/jee-maths-mentor" className="hover:text-sky-400 transition-colors">
+                JEE Maths 1-on-1 Mentor
+              </Link>
+              <Link href="/jee-chemistry-mentor" className="hover:text-sky-400 transition-colors">
+                JEE Chemistry 1-on-1 Mentor
+              </Link>
+              <Link href="/neet-biology-mentor" className="hover:text-emerald-400 transition-colors font-medium">
+                NEET Biology 360/360 Mentor
+              </Link>
+              <Link href="/neet-physics-mentor" className="hover:text-sky-400 transition-colors">
+                NEET Physics Numerical Mentor
+              </Link>
+              <Link href="/neet-chemistry-mentor" className="hover:text-sky-400 transition-colors">
+                NEET Chemistry 165+ Mentor
+              </Link>
+              <Link href="/neet-2027-cbt-preparation" className="hover:text-cyan-400 transition-colors font-medium">
+                NEET 2027 CBT Online Guide
+              </Link>
+            </div>
+          </div>
+
+          {/* Column 4: Comparisons & Alternatives */}
+          <div>
+            <h5 className="font-bold text-white font-display text-xs uppercase tracking-wider mb-2.5">
+              Comparisons &amp; Alternatives
+            </h5>
+            <div className="flex flex-col space-y-1.5 text-slate-400">
               <Link href="/compare/mentorprep-alternative" className="hover:text-sky-400 transition-colors">
                 Mentor Prep Alternative
               </Link>
-              <span>•</span>
               <Link href="/compare/mentorkhoj-alternative" className="hover:text-sky-400 transition-colors">
                 MentorKhoj Alternative
               </Link>
-              <span>•</span>
               <Link href="/compare/pw-disha-alternative" className="hover:text-sky-400 transition-colors">
                 PW Disha Alternative
               </Link>
-              <span>•</span>
               <Link href="/compare/esaral-alternative" className="hover:text-sky-400 transition-colors">
                 eSaral Alternative
               </Link>
-              <span>•</span>
               <Link href="/compare/jeetneeti-alternative" className="hover:text-sky-400 transition-colors">
                 JeetNeeti Alternative
               </Link>
-              <span>•</span>
               <Link href="/compare/toppersclubs-alternative" className="hover:text-sky-400 transition-colors">
                 ToppersClubs Alternative
               </Link>
-              <span>•</span>
               <Link href="/compare/jeesociety-alternative" className="hover:text-sky-400 transition-colors">
                 JEE Society Alternative
               </Link>
-              <span>•</span>
               <Link href="/compare/mindpeak-alternative" className="hover:text-sky-400 transition-colors">
                 MindPeak Alternative
               </Link>
-              <span>•</span>
               <Link href="/compare/campuspoint-alternative" className="hover:text-sky-400 transition-colors">
                 CampusPoint Alternative
               </Link>
-              <span>•</span>
               <Link href="/compare/mentors-eduserv-alternative" className="hover:text-sky-400 transition-colors">
                 Mentors Eduserv Alternative
               </Link>
-              <span>•</span>
               <Link href="/compare/hello-mentor-alternative" className="hover:text-sky-400 transition-colors">
                 Hello Mentor Alternative
               </Link>
