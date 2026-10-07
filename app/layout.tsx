@@ -134,6 +134,62 @@ export default function RootLayout({
           "query-input": "required name=search_term_string",
         },
       },
+      {
+        "@type": "ItemList",
+        "@id": "https://mentskool.com/#sitenavigation",
+        name: "Mentskool Main Navigation",
+        itemListElement: [
+          {
+            "@type": "SiteNavigationElement",
+            position: 1,
+            name: "Find Mentors",
+            description: "Browse verified mentors from IIT Bombay, IIT Delhi, and AIIMS",
+            url: "https://mentskool.com/mentors",
+          },
+          {
+            "@type": "SiteNavigationElement",
+            position: 2,
+            name: "Best JEE Mentorship",
+            description: "1-on-1 personalized JEE Main and Advanced mentorship program",
+            url: "https://mentskool.com/best-jee-mentorship",
+          },
+          {
+            "@type": "SiteNavigationElement",
+            position: 3,
+            name: "Best NEET Mentorship",
+            description: "680+ score roadmap and AIIMS doctor guidance for NEET-UG",
+            url: "https://mentskool.com/best-neet-mentorship",
+          },
+          {
+            "@type": "SiteNavigationElement",
+            position: 4,
+            name: "Free 1:1 Strategy Session",
+            description: "Book a free diagnostic audit call with an IIT or AIIMS ranker",
+            url: "https://mentskool.com/free-mentorship-session",
+          },
+          {
+            "@type": "SiteNavigationElement",
+            position: 5,
+            name: "Become a Mentor",
+            description: "Apply to mentor JEE and NEET aspirants with Mentskool",
+            url: "https://mentskool.com/mentor/onboarding",
+          },
+          {
+            "@type": "SiteNavigationElement",
+            position: 6,
+            name: "JEE 2027 Mentorship Sprint",
+            description: "100-day countdown and tactical roadmap for JEE Main Session 1",
+            url: "https://mentskool.com/jee-mentorship-2027",
+          },
+          {
+            "@type": "SiteNavigationElement",
+            position: 7,
+            name: "NEET 2027 Mentorship Roadmap",
+            description: "NCERT milestone plan and speed drills leading to May 2027",
+            url: "https://mentskool.com/neet-mentorship-2027",
+          },
+        ],
+      },
     ],
   };
 
