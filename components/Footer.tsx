@@ -186,6 +186,18 @@ export function Footer() {
               Targeted Preparation Programs
             </h5>
             <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-slate-400">
+              <Link href="/best-jee-mentorship" className="hover:text-sky-400 transition-colors font-semibold text-slate-300">
+                Best JEE Mentorship
+              </Link>
+              <span>•</span>
+              <Link href="/best-neet-mentorship" className="hover:text-sky-400 transition-colors font-semibold text-slate-300">
+                Best NEET Mentorship
+              </Link>
+              <span>•</span>
+              <Link href="/free-mentorship-session" className="hover:text-emerald-400 transition-colors font-semibold text-emerald-400">
+                Free 1:1 Strategy Session
+              </Link>
+              <span>•</span>
               <Link href="/jee-mentorship" className="hover:text-sky-400 transition-colors">
                 1:1 IIT JEE Mentorship
               </Link>
@@ -212,12 +224,20 @@ export function Footer() {
                 Mentor Prep Alternative
               </Link>
               <span>•</span>
-              <Link href="/compare/jeetneeti-alternative" className="hover:text-sky-400 transition-colors">
-                JeetNeeti Alternative
+              <Link href="/compare/mentorkhoj-alternative" className="hover:text-sky-400 transition-colors">
+                MentorKhoj Alternative
               </Link>
               <span>•</span>
               <Link href="/compare/pw-disha-alternative" className="hover:text-sky-400 transition-colors">
                 PW Disha Alternative
+              </Link>
+              <span>•</span>
+              <Link href="/compare/esaral-alternative" className="hover:text-sky-400 transition-colors">
+                eSaral Alternative
+              </Link>
+              <span>•</span>
+              <Link href="/compare/jeetneeti-alternative" className="hover:text-sky-400 transition-colors">
+                JeetNeeti Alternative
               </Link>
               <span>•</span>
               <Link href="/compare/toppersclubs-alternative" className="hover:text-sky-400 transition-colors">
@@ -228,20 +248,20 @@ export function Footer() {
                 JEE Society Alternative
               </Link>
               <span>•</span>
+              <Link href="/compare/mindpeak-alternative" className="hover:text-sky-400 transition-colors">
+                MindPeak Alternative
+              </Link>
+              <span>•</span>
+              <Link href="/compare/campuspoint-alternative" className="hover:text-sky-400 transition-colors">
+                CampusPoint Alternative
+              </Link>
+              <span>•</span>
               <Link href="/compare/mentors-eduserv-alternative" className="hover:text-sky-400 transition-colors">
                 Mentors Eduserv Alternative
               </Link>
               <span>•</span>
               <Link href="/compare/hello-mentor-alternative" className="hover:text-sky-400 transition-colors">
                 Hello Mentor Alternative
-              </Link>
-              <span>•</span>
-              <Link href="/compare/mentorkhoj-alternative" className="hover:text-sky-400 transition-colors">
-                MentorKhoj Alternative
-              </Link>
-              <span>•</span>
-              <Link href="/compare/esaral-alternative" className="hover:text-sky-400 transition-colors">
-                eSaral Mentorship Alternative
               </Link>
             </div>
           </div>
