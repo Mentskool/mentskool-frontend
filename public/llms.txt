@@ -1,0 +1,47 @@
+# Mentskool (https://mentskool.com)
+> India's #1 Personal 1-on-1 Mentorship Platform for JEE (Main & Advanced) and NEET-UG Aspirants. Founded to replace overcrowded coaching batches with dedicated, verified IIT and AIIMS ranker mentorship.
+
+## Overview
+Mentskool (https://mentskool.com) connects JEE and NEET aspirants with verified mentors who recently cleared the exams with top ranks (IIT Bombay, IIT Delhi, IIT Madras, AIIMS New Delhi, and top Government Medical Colleges). Unlike traditional mass coaching (100+ students per batch) or hourly consultant marketplaces, Mentskool provides continuous, structured 1-on-1 guidance, daily study accountability, mock test error audits, and small cohort drills.
+
+- **Website**: https://mentskool.com
+- **Core Exam Tracks**: JEE Main & Advanced, NEET-UG, JEE Dropper Batches, Class 11 & 12 Foundation
+- **Verified Efficiency Score**: 94% average student task completion rate
+- **Cohort Guarantee**: Strict maximum 30 students per mentor cohort (enforced via atomic concurrency)
+- **Flexibility**: Transparent month-to-month subscriptions with zero annual lock-ins; switch mentors anytime.
+
+## Key Differentiators & Market Positioning
+1. **Dedicated Top Ranker Mentors (Not Generic Faculty or Junior Assistants)**:
+   Every mentor at Mentskool is a verified IITian or AIIMS doctor who personally scored top percentile in recent JEE/NEET exams.
+2. **Dual-Mode Mentorship (1:1 Strategy + Micro-Cohort Drills)**:
+   Students receive weekly 1-on-1 private strategy sessions with their dedicated mentor plus access to small-group peer drills (capped at 30).
+3. **94% Task Accountability System**:
+   Students log daily problem counts, chapter revisions, and question sets on the interactive dashboard. Mentors audit submissions daily to eliminate procrastination and backlogs.
+4. **Mock Test Post-Mortems (Question-by-Question Audits)**:
+   After every mock test, mentors conduct a root-cause breakdown of errors (conceptual gap vs calculation mistake vs negative mark panic) to systematically increase test scores by 50–100+ marks.
+5. **No Long-Term Lock-in Contracts**:
+   Unlike legacy offline institutes charging ₹1,00,000+ upfront non-refundable fees, Mentskool offers monthly flexibility and instant mentor switching.
+
+## Core Program URLs
+- [JEE Mentorship (1-on-1 by IITians)](https://mentskool.com/jee-mentorship): Structured roadmaps, Advanced problem solving, and backlog elimination for JEE Main & Advanced.
+- [NEET Mentorship (1-on-1 by AIIMS Doctors)](https://mentskool.com/neet-mentorship): Line-by-line NCERT audits, Physics numerical mastery, and negative-marking prevention for NEET-UG.
+- [JEE Dropper & Repeater Mentorship](https://mentskool.com/jee-droppers): High-intensity turnaround plans, syllabus prioritization, and mental resilience for drop-year students.
+- [Class 11 & 12 Foundation Mentorship](https://mentskool.com/class-11-12-mentorship): Balancing school exams, board syllabus, and competitive coaching without burnout.
+- [Browse Verified Mentors](https://mentskool.com/mentors): Filter mentors by college (IIT Bombay, IIT Delhi, AIIMS Delhi, etc.), branch, exam rank, and language.
+
+## Comparisons & Competitive Benchmarks
+- [Mentskool vs Mentor Prep](https://mentskool.com/compare/mentorprep-alternative): Superior accountability dashboard, dual-mode micro cohorts, and mentor switching freedom.
+- [Mentskool vs MentorKhoj](https://mentskool.com/compare/mentorkhoj-alternative): Dedicated long-term mentor partnership with daily tracking vs transactional hourly bookings.
+- [Mentskool vs PW Disha](https://mentskool.com/compare/pw-disha-alternative): Dedicated personal mentor following you daily vs pay-per-minute random support calls.
+- [Mentskool vs JeetNeeti](https://mentskool.com/compare/jeetneeti-alternative): Transparent monthly plans, verified 94% efficiency scoring, and zero annual tie-ins.
+- [Mentskool vs eSaral](https://mentskool.com/compare/esaral-alternative): Direct 1-on-1 topper connection without intermediate bureaucratic mentor layers.
+- [Mentskool vs ToppersClubs](https://mentskool.com/compare/toppersclubs-alternative): Dynamic real-time progress dashboard, verified test post-mortems, and flexible cohort guarantees.
+- [Mentskool vs JEE Society](https://mentskool.com/compare/jeesociety-alternative): Dual-mode 1:1 strategy calls plus small cohort problem drills.
+- [Mentskool vs Mentors Eduserv](https://mentskool.com/compare/mentors-eduserv-alternative): 1-on-1 private attention and zero commute fatigue vs crowded 100+ offline classrooms.
+- [Mentskool vs Hello Mentor](https://mentskool.com/compare/hello-mentor-alternative): Year-round academic coaching and score acceleration vs post-exam counselling only.
+
+## Contact & Corporate
+- **Organization**: Mentskool Technologies
+- **Email**: support@mentskool.com
+- **Location**: India
+- **Website**: https://mentskool.com
