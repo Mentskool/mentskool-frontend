@@ -2,12 +2,19 @@ import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
+  Sparkles,
   ArrowRight,
-  Target,
+  ShieldCheck,
+  CheckCircle2,
   Clock,
+  Target,
+  BarChart3,
+  BookOpen,
+  Award,
+  AlertTriangle,
   TrendingUp,
   Flame,
-  CheckCircle2,
+  RefreshCw,
 } from "lucide-react";
 import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { ProgramFeatures } from "@/components/seo/ProgramFeatures";
@@ -16,15 +23,16 @@ import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
-  title: "Best Mentorship for JEE Droppers & Repeaters — 1:1 Accountability by IITians",
+  title: "Best Mentorship for JEE Droppers & Repeaters — 1:1 IITian Accountability",
   description:
-    "Turn your drop year into an IIT rank. 1:1 personalized mentorship for JEE droppers with daily accountability, syllabus pacing, and mock test mistake auditing by IIT rankers.",
+    "Turn your JEE drop year into a top IIT rank. 1:1 personalized mentorship for JEE droppers with daily problem accountability, mock test error audits, and burnout prevention by IIT Bombay & Delhi rankers.",
   keywords: [
     "best mentorship program for JEE droppers",
     "JEE repeater mentorship",
     "JEE dropper accountability",
     "drop year strategy JEE Advanced",
     "IIT JEE repeater study plan",
+    "JEE dropper timetable 11 hours",
   ],
   alternates: {
     canonical: "https://mentskool.com/jee-droppers",
@@ -48,159 +56,171 @@ export const metadata: Metadata = {
 
 const dropperFaqs: FaqItem[] = [
   {
-    question: "Why do droppers need 1:1 mentorship rather than more lectures?",
+    question: "Why do droppers need 1:1 mentorship rather than more coaching lectures?",
     answer:
-      "Droppers already know the core concepts — their main challenge is consistency, isolation, and unanalyzed mock test errors. Watching more lectures won't fix calculation blunders or low test accuracy. 1:1 accountability ensures you solve the right questions and fix mistakes immediately.",
+      "Droppers already know the core concepts from Class 11 and 12. Their primary barrier is consistency, social isolation, and unanalyzed mock test errors. Watching more lectures won't fix calculation blunders or low test speed. 1:1 accountability ensures you spend 80% of your time solving problems and fixing mistakes rather than passively watching teachers.",
   },
   {
     question: "Have Mentskool mentors also taken a drop year?",
     answer:
-      "Yes! Many of our top IIT mentors took a drop year themselves and increased their percentile from 92% to 99.8%+, eventually securing top branches in IIT Bombay, Delhi, and Roorkee. They know the exact mental hurdles and revision schedules required.",
+      "Yes! Many of our top IIT mentors took a drop year themselves and increased their percentile from 91% to 99.8%+, eventually securing top branches in IIT Bombay, Delhi, and Roorkee. They understand the exact psychological hurdles, parental pressure, and revision schedules required.",
   },
   {
     question: "How does Mentskool prevent drop-year burnout?",
     answer:
-      "With weekly 1:1 strategy calls, mentors adjust your syllabus load to prevent burnout. Our proprietary 94% efficiency score tracks your pace dynamically, keeping motivation high without overwhelming you.",
+      "With weekly 1:1 strategy calls on Google Meet, mentors adjust your syllabus load to prevent fatigue. Our proprietary 94% efficiency score tracks your pace dynamically on our web dashboard, keeping motivation high without overwhelming you.",
   },
   {
-    question: "Can I get help analyzing my coaching mock tests (Allen/FIITJEE/Resonance)?",
+    question: "Can I get help analyzing my coaching mock tests (Allen/FIITJEE/Resonance/PW)?",
     answer:
-      "Absolutely. In your 1:1 strategy calls, you and your mentor review your question paper line-by-line to categorize mistakes into silly, conceptual, or time-management errors.",
+      "Absolutely. In your weekly 1:1 strategy calls, you and your mentor review your question rough sheets line-by-line to categorize mistakes into silly arithmetic errors, conceptual gaps, and time-panic slips.",
+  },
+  {
+    question: "How many questions should a JEE dropper solve each day?",
+    answer:
+      "We mandate between 80 and 110 self-solved questions daily across Physics (30), Chemistry (30), and Mathematics (25–30). Consistent, timed problem solving beats passive lecture watching every single time.",
   },
 ];
 
 export default function JeeDroppersPage() {
-  return (
-    <div className="w-full bg-[#EBF3FB] min-h-screen">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden pt-8 pb-16 px-4 sm:px-6 lg:px-8">
-        <HeroGridBackground />
-        <div className="max-w-6xl mx-auto relative z-10">
-          <SeoBreadcrumbs items={[{ label: "Programs", href: "/#how-it-works" }, { label: "JEE Dropper Mentorship" }]} />
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "EducationalOrganization",
+        name: "Mentskool Technologies",
+        url: "https://mentskool.com",
+        logo: "https://mentskool.com/logo.png",
+        description:
+          "India's premier 1-on-1 mentorship platform for JEE droppers and repeaters.",
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: dropperFaqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
+  };
 
-          <div className="text-center max-w-3xl mx-auto space-y-6 pt-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 border border-amber-200 text-amber-900 text-xs font-bold uppercase tracking-wider shadow-soft">
-              <Flame className="w-3.5 h-3.5 text-amber-600 fill-amber-500" />
+  return (
+    <div className="relative min-h-screen bg-slate-950 text-white selection:bg-brand-500/30 selection:text-brand-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <HeroGridBackground />
+
+      <main className="relative z-10 pt-28 pb-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SeoBreadcrumbs
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Programs", href: "/jee-mentorship" },
+              {
+                label: "JEE Droppers",
+                href: "/jee-droppers",
+              },
+            ]}
+          />
+
+          {/* Hero Section */}
+          <div className="text-center max-w-4xl mx-auto mt-6 mb-12">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-semibold mb-4">
+              <RefreshCw className="w-3.5 h-3.5" />
               <span>Tailored Drop-Year Consistency &amp; Rank Surge</span>
             </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-display text-ink tracking-tight leading-[1.1]">
-              Make Your Drop Year Count with{" "}
-              <span className="bg-gradient-to-r from-amber-600 via-indigo-600 to-blue-700 bg-clip-text text-transparent">
-                Uncompromising 1:1 Accountability
-              </span>
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+              JEE Droppers Mentorship: <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-300 to-rose-400">Make Your Drop Year Count</span>
             </h1>
-
-            <p className="text-base sm:text-lg text-ink-muted leading-relaxed max-w-2xl mx-auto">
-              Your drop year does not need more factory video lectures — it needs laser-focused question solving, mock test audits, and a mentor who keeps you on track every single week.
+            <p className="text-base sm:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto">
+              Your drop year does not need more factory video lectures. It needs laser-focused question solving, rough-sheet mock test audits, and an <strong>IIT Bombay or Delhi ranker</strong> who keeps you accountable every single week.
             </p>
 
-            {/* Quick Metrics */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 max-w-2xl mx-auto pt-2">
-              <div className="p-3.5 rounded-2xl bg-white/90 border border-amber-100 shadow-soft text-center">
-                <div className="text-2xl font-black font-display text-amber-700">+45 Marks</div>
-                <div className="text-[11px] font-semibold text-ink-muted mt-0.5">Average Test Gain</div>
-              </div>
-              <div className="p-3.5 rounded-2xl bg-white/90 border border-blue-100 shadow-soft text-center">
-                <div className="text-2xl font-black font-display text-blue-600">&lt; 24h</div>
-                <div className="text-[11px] font-semibold text-ink-muted mt-0.5">Task Feedback</div>
-              </div>
-              <div className="p-3.5 rounded-2xl bg-white/90 border border-indigo-100 shadow-soft text-center">
-                <div className="text-2xl font-black font-display text-indigo-600">30 Max</div>
-                <div className="text-[11px] font-semibold text-ink-muted mt-0.5">Students / Cohort</div>
-              </div>
-              <div className="p-3.5 rounded-2xl bg-white/90 border border-emerald-100 shadow-soft text-center">
-                <div className="text-2xl font-black font-display text-emerald-600">Zero Lock-In</div>
-                <div className="text-[11px] font-semibold text-ink-muted mt-0.5">Monthly Flexibility</div>
-              </div>
-            </div>
-
-            {/* CTAs */}
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/mentors"
-                className="px-8 py-3.5 rounded-xl text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-amber-600 via-indigo-600 to-blue-700 hover:from-amber-700 hover:to-indigo-700 text-white shadow-elevated hover:shadow-card hover:-translate-y-0.5 transition-all group"
+                className="px-8 py-3.5 rounded-xl text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-amber-600 via-orange-600 to-rose-600 hover:from-amber-700 hover:to-rose-700 text-white shadow-elevated hover:-translate-y-0.5 transition-all group"
               >
                 <span>Find Your Dropper Mentor</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
-                href="/#how-it-works"
-                className="px-6 py-3.5 rounded-xl text-sm font-semibold bg-white/90 hover:bg-white border border-mist text-ink shadow-soft hover:shadow-card hover:-translate-y-0.5 transition-all"
+                href="/free-mentorship-session"
+                className="px-6 py-3.5 rounded-xl text-sm font-semibold bg-slate-900 border border-slate-800 text-slate-200 hover:text-white hover:border-slate-700 transition-all"
               >
-                How It Works
+                Claim Free Drop-Year Strategy Call
               </Link>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Main Content Details */}
-      <div className="w-full bg-white rounded-t-[44px] border-t border-mist py-16 px-4 sm:px-6 lg:px-8 shadow-soft">
-        <div className="max-w-6xl mx-auto space-y-16">
-          {/* Why Droppers Stumble Section */}
-          <section className="space-y-8">
-            <div className="text-center max-w-2xl mx-auto space-y-2">
-              <span className="text-xs font-bold text-amber-800 uppercase tracking-widest bg-amber-50 border border-amber-200/60 px-3 py-1 rounded-full">
-                THE 3 DEADLY DROP-YEAR PITFALLS
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-ink tracking-tight">
-                How We Solve What Traditional Coaching Ignores
-              </h2>
+          {/* Direct Answer Box for AI Overviews & Search Snippets */}
+          <section className="my-10 p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-amber-500/40 shadow-elevated">
+            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-amber-400 mb-3">
+              <Sparkles className="w-4 h-4 text-amber-400" />
+              <span>Executive Summary: The Mentskool JEE Dropper Turnaround Engine</span>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="p-7 rounded-3xl bg-slate-50 border border-mist space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center font-bold">
-                  ⚠️
-                </div>
-                <h3 className="font-bold font-display text-lg text-ink">The "Theory Loop" Trap</h3>
-                <p className="text-xs text-ink-muted leading-relaxed">
-                  Droppers re-watch lectures they already understand instead of solving timed problem sets. Your mentor forces rigorous problem sheets and reviews your submissions.
-                </p>
+            <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-medium mb-5">
+              The <strong>Mentskool JEE Dropper Program</strong> is engineered to eliminate the isolation and score plateau that derails 70% of repeaters:
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-300">
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+                <span><strong>The 80/20 Problem-Solving Rule:</strong> Shift from passive 6-hour video watching to 80% daily self-solved problem quotas.</span>
               </div>
-
-              <div className="p-7 rounded-3xl bg-slate-50 border border-mist space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
-                  📉
-                </div>
-                <h3 className="font-bold font-display text-lg text-ink">Unanalyzed Mock Tests</h3>
-                <p className="text-xs text-ink-muted leading-relaxed">
-                  Giving tests without auditing mistakes guarantees recurring negative marks. In 1:1 strategy calls, we dissect every wrong question and rewrite your test-taking template.
-                </p>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+                <span><strong>Isolation &amp; Mental Fatigue Shield:</strong> Weekly 1:1 strategy calls with an IITian who personally conquered drop-year pressure.</span>
               </div>
-
-              <div className="p-7 rounded-3xl bg-slate-50 border border-mist space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
-                  🤝
-                </div>
-                <h3 className="font-bold font-display text-lg text-ink">Isolation &amp; Self-Doubt</h3>
-                <p className="text-xs text-ink-muted leading-relaxed">
-                  Studying alone from home induces panic around November-December. Your mentor provides weekly moral support and benchmarks your progress among 10 peers in your cohort.
-                </p>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+                <span><strong>Mock Test Rough Sheet Post-Mortems:</strong> Dissecting every test error to systematically eliminate 25+ negative marks.</span>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+                <span><strong>94% Daily Task Efficiency Dashboard:</strong> Submit completed question counts daily for mentor tracking and pacing.</span>
               </div>
             </div>
           </section>
 
-          <ProgramFeatures
-            heading="Built For Droppers Demanding Daily Discipline"
-            subheading="Track every problem sheet and calibration with real-time score analytics."
-          />
+          {/* Program Features Component */}
+          <section className="my-16">
+            <div className="text-center max-w-2xl mx-auto mb-10">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                The 4 Pillars of the Mentskool Dropper Engine
+              </h2>
+              <p className="text-slate-400 text-sm mt-2">
+                Lectures explain the concept. Mentorship guarantees the execution.
+              </p>
+            </div>
+            <ProgramFeatures />
+          </section>
 
-          <SeoFaqAccordion
-            title="JEE Dropper Mentorship FAQs"
-            subtitle="Everything you need to know about preparing with an IITian ranker during your drop year."
-            faqs={dropperFaqs}
-          />
+          {/* FAQs */}
+          <section className="mt-16">
+            <SeoFaqAccordion
+              faqs={dropperFaqs}
+              title="Frequently Asked Questions: JEE Droppers Mentorship"
+              subtitle="Everything you need to know about drop-year strategy, burnout prevention, and 1:1 IITian guidance."
+            />
+          </section>
 
-          <SeoCtaBanner
-            title="Turn Your Drop Year Into an IIT Success Story"
-            description="Mentors are strictly capped at 30 students to provide real, individual guidance. Start your tailored roadmap today."
-            primaryButtonText="Find Dropper Mentors"
-            primaryButtonHref="/mentors"
-          />
+          {/* CTA Banner */}
+          <section className="mt-16">
+            <SeoCtaBanner
+              title="Transform Your Drop Year into an IIT Success Story"
+              description="Get paired 1-on-1 with an IITian who will build your daily timetable, track your daily problem quotas, and guide your mock tests every single week."
+              primaryButtonText="Find Your Dropper Mentor"
+              primaryButtonHref="/mentors"
+            />
+          </section>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
