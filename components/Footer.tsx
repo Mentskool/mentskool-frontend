@@ -197,17 +197,64 @@ export function Footer() {
               <Link href="/free-mentorship-session" className="hover:text-emerald-400 transition-colors font-semibold text-emerald-400">
                 Free 1:1 Strategy Session
               </Link>
-              <span>•</span>
-              <Link href="/jee-mentorship" className="hover:text-sky-400 transition-colors">
-                1:1 IIT JEE Mentorship
+              <Link href="/jee-mentorship-2027" className="hover:text-sky-400 transition-colors">
+                JEE 2027 Sprint
               </Link>
               <span>•</span>
-              <Link href="/neet-mentorship" className="hover:text-sky-400 transition-colors">
-                1:1 NEET-UG Mentorship
+              <Link href="/neet-mentorship-2027" className="hover:text-sky-400 transition-colors">
+                NEET 2027 Roadmap
+              </Link>
+              <span>•</span>
+              <Link href="/jee-1-on-1-mentorship" className="hover:text-sky-400 transition-colors">
+                1-on-1 JEE Mentorship
+              </Link>
+              <span>•</span>
+              <Link href="/neet-1-on-1-mentorship" className="hover:text-sky-400 transition-colors">
+                1-on-1 NEET Mentorship
+              </Link>
+              <span>•</span>
+              <Link href="/jee-study-plan-with-mentor" className="hover:text-sky-400 transition-colors">
+                JEE Study Plan with Mentor
+              </Link>
+              <span>•</span>
+              <Link href="/neet-study-plan-with-mentor" className="hover:text-sky-400 transition-colors">
+                NEET Study Plan with Mentor
+              </Link>
+              <span>•</span>
+              <Link href="/jee-backlog-management" className="hover:text-amber-400 transition-colors">
+                JEE Backlog Clearance
+              </Link>
+              <span>•</span>
+              <Link href="/neet-backlog-management" className="hover:text-amber-400 transition-colors">
+                NEET Backlog Clearance
+              </Link>
+              <span>•</span>
+              <Link href="/jee-mock-test-analysis" className="hover:text-sky-400 transition-colors">
+                JEE Mock Test Analysis
+              </Link>
+              <span>•</span>
+              <Link href="/neet-mock-test-analysis" className="hover:text-sky-400 transition-colors">
+                NEET Mock Test Analysis
               </Link>
               <span>•</span>
               <Link href="/jee-droppers" className="hover:text-sky-400 transition-colors">
-                JEE Dropper &amp; Repeater Program
+                JEE Droppers
+              </Link>
+              <span>•</span>
+              <Link href="/neet-repeaters" className="hover:text-sky-400 transition-colors">
+                NEET Repeaters
+              </Link>
+              <span>•</span>
+              <Link href="/jee-mentorship-fees" className="hover:text-emerald-400 transition-colors">
+                JEE Mentorship Fees
+              </Link>
+              <span>•</span>
+              <Link href="/neet-mentorship-fees" className="hover:text-emerald-400 transition-colors">
+                NEET Mentorship Fees
+              </Link>
+              <span>•</span>
+              <Link href="/mentor-vs-coaching-for-jee-neet" className="hover:text-indigo-400 transition-colors">
+                Mentor vs Coaching
               </Link>
               <span>•</span>
               <Link href="/class-11-12-mentorship" className="hover:text-sky-400 transition-colors">
