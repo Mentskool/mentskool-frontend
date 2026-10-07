@@ -178,6 +178,74 @@ export function Footer() {
             </ul>
           </div>
         </div>
+
+        {/* SEO Directory: Programs & Comparisons */}
+        <div className="mt-12 pt-8 border-t border-slate-800/80 grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+          <div>
+            <h5 className="font-bold text-white font-display text-xs uppercase tracking-wider mb-2.5">
+              Targeted Preparation Programs
+            </h5>
+            <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-slate-400">
+              <Link href="/jee-mentorship" className="hover:text-sky-400 transition-colors">
+                1:1 IIT JEE Mentorship
+              </Link>
+              <span>•</span>
+              <Link href="/neet-mentorship" className="hover:text-sky-400 transition-colors">
+                1:1 NEET-UG Mentorship
+              </Link>
+              <span>•</span>
+              <Link href="/jee-droppers" className="hover:text-sky-400 transition-colors">
+                JEE Dropper &amp; Repeater Program
+              </Link>
+              <span>•</span>
+              <Link href="/class-11-12-mentorship" className="hover:text-sky-400 transition-colors">
+                Class 11 &amp; 12 Foundation
+              </Link>
+            </div>
+          </div>
+          <div>
+            <h5 className="font-bold text-white font-display text-xs uppercase tracking-wider mb-2.5">
+              Mentorship Comparisons &amp; Reviews
+            </h5>
+            <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-slate-400">
+              <Link href="/compare/mentorprep-alternative" className="hover:text-sky-400 transition-colors">
+                Mentor Prep Alternative
+              </Link>
+              <span>•</span>
+              <Link href="/compare/jeetneeti-alternative" className="hover:text-sky-400 transition-colors">
+                JeetNeeti Alternative
+              </Link>
+              <span>•</span>
+              <Link href="/compare/pw-disha-alternative" className="hover:text-sky-400 transition-colors">
+                PW Disha Alternative
+              </Link>
+              <span>•</span>
+              <Link href="/compare/toppersclubs-alternative" className="hover:text-sky-400 transition-colors">
+                ToppersClubs Alternative
+              </Link>
+              <span>•</span>
+              <Link href="/compare/jeesociety-alternative" className="hover:text-sky-400 transition-colors">
+                JEE Society Alternative
+              </Link>
+              <span>•</span>
+              <Link href="/compare/mentors-eduserv-alternative" className="hover:text-sky-400 transition-colors">
+                Mentors Eduserv Alternative
+              </Link>
+              <span>•</span>
+              <Link href="/compare/hello-mentor-alternative" className="hover:text-sky-400 transition-colors">
+                Hello Mentor Alternative
+              </Link>
+              <span>•</span>
+              <Link href="/compare/mentorkhoj-alternative" className="hover:text-sky-400 transition-colors">
+                MentorKhoj Alternative
+              </Link>
+              <span>•</span>
+              <Link href="/compare/esaral-alternative" className="hover:text-sky-400 transition-colors">
+                eSaral Mentorship Alternative
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Bottom Sub-Footer Bar */}
