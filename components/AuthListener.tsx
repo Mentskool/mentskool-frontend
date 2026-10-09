@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import posthog from "posthog-js";
 import { auth } from "@/lib/firebase";
 import { apiClient } from "@/lib/api-client";
 import { useAuthStore } from "@/store/authStore";
@@ -35,6 +36,17 @@ export function AuthListener() {
         try {
           const profile = await apiClient.get<User>("/auth/me");
           setUser(profile);
+
+          if (typeof window !== "undefined") {
+            posthog.identify(profile.id, {
+              email: profile.email,
+              name: profile.full_name,
+              role: profile.role,
+              target_exam: profile.target_exam,
+              target_year: profile.target_year,
+              prep_stage: profile.prep_stage,
+            });
+          }
         } catch (err) {
           const apiErr = err as ApiError;
           if (apiErr.code === "PROFILE_NOT_CREATED" || apiErr.status === 404) {
@@ -42,6 +54,9 @@ export function AuthListener() {
           } else if (apiErr.status === 401 || apiErr.status === 403) {
             // Token disabled or invalid
             await signOut(auth);
+            if (typeof window !== "undefined") {
+              posthog.reset();
+            }
             logout();
           } else {
             console.error("Failed to fetch user profile:", err);
@@ -49,6 +64,9 @@ export function AuthListener() {
           }
         }
       } else {
+        if (typeof window !== "undefined") {
+          posthog.reset();
+        }
         logout();
       }
     });
