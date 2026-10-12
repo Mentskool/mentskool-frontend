@@ -45,9 +45,6 @@ export const metadata: Metadata = {
     "JeetNeeti alternative",
     "JEE Society alternative",
   ],
-  alternates: {
-    canonical: "https://mentskool.com",
-  },
   openGraph: {
     type: "website",
     locale: "en_IN",
