@@ -1,11 +1,12 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Scale } from "lucide-react";
+import { ArrowRight, Scale, Award, ShieldCheck, Sparkles } from "lucide-react";
 import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { ComparisonTable, ComparisonRow } from "@/components/seo/ComparisonTable";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
@@ -92,63 +93,104 @@ const faqs: FaqItem[] = [
 ];
 
 export default function JeetneetiAlternativePage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Product",
+        name: "Mentskool Mentorship Platform — Alternative to JeetNeeti",
+        description:
+          "High-accountability 1-on-1 mentorship with verified IIT and AIIMS rankers, flexible monthly pricing, and automated task efficiency scoring.",
+        brand: {
+          "@type": "Brand",
+          name: "Mentskool",
+        },
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.answer,
+          },
+        })),
+      },
+    ],
+  };
+
   return (
-    <div className="w-full bg-[#EBF3FB] min-h-screen">
-      <div className="relative overflow-hidden pt-8 pb-16 px-4 sm:px-6 lg:px-8">
-        <HeroGridBackground />
-        <div className="max-w-6xl mx-auto relative z-10">
+    <div className="relative min-h-screen bg-slate-950 text-white selection:bg-brand-500/30 selection:text-brand-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <HeroGridBackground />
+
+      <main className="relative z-10 pt-28 pb-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <SeoBreadcrumbs
             items={[
-              { label: "Comparisons", href: "/#how-it-works" },
-              { label: "JeetNeeti Alternative" },
+              { label: "Home", href: "/" },
+              { label: "Comparisons", href: "/#comparisons" },
+              {
+                label: "JeetNeeti Alternative",
+                href: "/compare/jeetneeti-alternative",
+              },
             ]}
           />
 
-          <div className="text-center max-w-3xl mx-auto space-y-6 pt-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 border border-indigo-200 text-indigo-900 text-xs font-bold uppercase tracking-wider shadow-soft">
-              <Scale className="w-3.5 h-3.5 text-indigo-600" />
-              <span>COMPREHENSIVE MENTORSHIP AUDIT</span>
+          <div className="text-center max-w-4xl mx-auto mt-6 mb-12">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-semibold mb-4">
+              <Scale className="w-3.5 h-3.5 text-indigo-400" />
+              <span>Comprehensive Mentorship Audit (2027/2028)</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-display text-ink tracking-tight leading-[1.1]">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-5 leading-tight">
               The Smarter{" "}
-              <span className="bg-gradient-to-r from-indigo-700 via-blue-600 to-sky-500 bg-clip-text text-transparent">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-blue-300 to-sky-400">
                 JeetNeeti Alternative
               </span>{" "}
               With Complete Pricing Freedom
             </h1>
 
-            <p className="text-base sm:text-lg text-ink-muted leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto">
               Get genuine 1:1 strategy calls with top IIT rankers, verified task checkpoints, and an objective 94% efficiency score — without high upfront packages or long annual lock-ins.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/mentors"
-                className="px-8 py-3.5 rounded-xl text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-indigo-600 via-blue-600 to-indigo-700 hover:from-indigo-700 hover:to-blue-700 text-white shadow-elevated hover:shadow-card hover:-translate-y-0.5 transition-all group"
+                className="px-8 py-3.5 rounded-xl text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-indigo-600 via-blue-600 to-indigo-700 hover:from-indigo-700 hover:to-blue-700 text-white shadow-elevated hover:-translate-y-0.5 transition-all group"
               >
                 <span>Browse Mentskool Mentors</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
-                href="#comparison-matrix"
-                className="px-6 py-3.5 rounded-xl text-sm font-semibold bg-white/90 hover:bg-white border border-mist text-ink shadow-soft hover:shadow-card hover:-translate-y-0.5 transition-all"
+                href="/free-mentorship-session"
+                className="px-6 py-3.5 rounded-xl text-sm font-semibold bg-slate-900 border border-slate-800 text-slate-200 hover:text-white hover:border-slate-700 transition-all"
               >
-                Compare Features
+                Claim Free Strategy Call
               </Link>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className="w-full bg-white rounded-t-[44px] border-t border-mist py-16 px-4 sm:px-6 lg:px-8 shadow-soft">
-        <div className="max-w-6xl mx-auto space-y-16">
-          <div id="comparison-matrix">
+          <div className="my-8 p-6 rounded-2xl border border-indigo-500/20 bg-indigo-950/20">
+            <h2 className="text-xs uppercase font-black tracking-widest text-indigo-400 mb-2">
+              Quick Answer: Why Choose Mentskool Over JeetNeeti?
+            </h2>
+            <p className="text-slate-300 text-sm leading-relaxed">
+              Unlike <strong>JeetNeeti</strong> which often requires rigid annual commitments, <strong>Mentskool</strong> gives you transparent monthly pricing, 1-click mentor re-matching, automated daily homework audits, and strict 30-student cohort caps with top rankers from IIT Bombay and AIIMS New Delhi.
+            </p>
+          </div>
+
+          <div id="comparison-matrix" className="mt-12">
             <div className="text-center max-w-2xl mx-auto space-y-2 mb-8">
-              <span className="text-xs font-bold text-indigo-700 uppercase tracking-widest bg-indigo-50 border border-indigo-200/60 px-3 py-1 rounded-full">
+              <span className="text-xs font-bold text-indigo-400 uppercase tracking-widest bg-indigo-500/10 border border-indigo-500/30 px-3 py-1 rounded-full">
                 HEAD-TO-HEAD COMPARISON
               </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-ink tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
                 Mentskool vs JeetNeeti
               </h2>
             </div>
@@ -156,20 +198,55 @@ export default function JeetneetiAlternativePage() {
             <ComparisonTable competitorName="JeetNeeti" rows={comparisonRows} />
           </div>
 
-          <SeoFaqAccordion
-            title="JeetNeeti vs Mentskool FAQs"
-            subtitle="Comparing mentors, accountability tools, and pricing models."
-            faqs={faqs}
-          />
+          <section className="mt-16 bg-gradient-to-br from-slate-900/90 to-slate-900/50 border border-slate-800 rounded-3xl p-8 sm:p-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 text-center">
+              Student-First Architecture Built on Results
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="p-6 rounded-2xl bg-slate-950/70 border border-slate-800">
+                <div className="text-indigo-400 text-2xl font-black mb-2">01</div>
+                <h3 className="text-lg font-semibold text-white mb-2">Zero Annual Lock-in</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  Subscribe on a flexible month-to-month basis. Stay because your scores are demonstrably improving, not because of a non-refundable contract.
+                </p>
+              </div>
+              <div className="p-6 rounded-2xl bg-slate-950/70 border border-slate-800">
+                <div className="text-indigo-400 text-2xl font-black mb-2">02</div>
+                <h3 className="text-lg font-semibold text-white mb-2">94% Efficiency Engine</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  Track every study hour, question solved, and revision cycle on an algorithmic dashboard reviewed live by your mentor each week.
+                </p>
+              </div>
+              <div className="p-6 rounded-2xl bg-slate-950/70 border border-slate-800">
+                <div className="text-indigo-400 text-2xl font-black mb-2">03</div>
+                <h3 className="text-lg font-semibold text-white mb-2">Instant Mentor Switch</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  If your frequency doesn't match your mentor, switch to another IITian or AIIMS ranker with 1-click in your portal at zero extra fee.
+                </p>
+              </div>
+            </div>
+          </section>
 
-          <SeoCtaBanner
-            title="Choose Personal Mentorship Built on Freedom &amp; Verified Results"
-            description="Start your 1:1 journey with top IIT & AIIMS rankers. Switch mentors anytime with 1-click."
-            primaryButtonText="Find Your Mentor"
-            primaryButtonHref="/mentors"
-          />
+          <SeoMentorFunnel examFocus="JEE" />
+
+          <section className="mt-16">
+            <SeoFaqAccordion
+              title="JeetNeeti vs Mentskool FAQs"
+              subtitle="Comparing mentors, accountability tools, and pricing models."
+              faqs={faqs}
+            />
+          </section>
+
+          <section className="mt-16">
+            <SeoCtaBanner
+              title="Choose Personal Mentorship Built on Freedom &amp; Verified Results"
+              description="Start your 1:1 journey with top IIT & AIIMS rankers. Switch mentors anytime with 1-click."
+              primaryButtonText="Find Your Mentor"
+              primaryButtonHref="/mentors"
+            />
+          </section>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
