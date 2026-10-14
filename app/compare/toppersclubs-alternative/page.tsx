@@ -1,11 +1,12 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Scale } from "lucide-react";
+import { ArrowRight, Scale, Award, ShieldCheck, Sparkles } from "lucide-react";
 import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { ComparisonTable, ComparisonRow } from "@/components/seo/ComparisonTable";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
@@ -92,63 +93,104 @@ const faqs: FaqItem[] = [
 ];
 
 export default function ToppersclubsAlternativePage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Product",
+        name: "Mentskool Mentorship Platform — Alternative to ToppersClubs",
+        description:
+          "Structured preparation workspace with verified deadlines, 94% efficiency scoring, and 1:1 strategy calls with verified IIT and AIIMS rankers.",
+        brand: {
+          "@type": "Brand",
+          name: "Mentskool",
+        },
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.answer,
+          },
+        })),
+      },
+    ],
+  };
+
   return (
-    <div className="w-full bg-[#EBF3FB] min-h-screen">
-      <div className="relative overflow-hidden pt-8 pb-16 px-4 sm:px-6 lg:px-8">
-        <HeroGridBackground />
-        <div className="max-w-6xl mx-auto relative z-10">
+    <div className="relative min-h-screen bg-slate-950 text-white selection:bg-brand-500/30 selection:text-brand-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <HeroGridBackground />
+
+      <main className="relative z-10 pt-28 pb-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <SeoBreadcrumbs
             items={[
-              { label: "Comparisons", href: "/#how-it-works" },
-              { label: "ToppersClubs Alternative" },
+              { label: "Home", href: "/" },
+              { label: "Comparisons", href: "/#comparisons" },
+              {
+                label: "ToppersClubs Alternative",
+                href: "/compare/toppersclubs-alternative",
+              },
             ]}
           />
 
-          <div className="text-center max-w-3xl mx-auto space-y-6 pt-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 border border-emerald-200 text-emerald-900 text-xs font-bold uppercase tracking-wider shadow-soft">
-              <Scale className="w-3.5 h-3.5 text-emerald-600" />
-              <span>STRUCTURED PLATFORM VS INFORMAL MESSAGING</span>
+          <div className="text-center max-w-4xl mx-auto mt-6 mb-12">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-xs font-semibold mb-4">
+              <Scale className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Structured Platform vs Informal Messaging (2027/2028)</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-display text-ink tracking-tight leading-[1.1]">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-5 leading-tight">
               The Structured{" "}
-              <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 bg-clip-text text-transparent">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-sky-400">
                 ToppersClubs Alternative
               </span>{" "}
               With Verified Accountability
             </h1>
 
-            <p className="text-base sm:text-lg text-ink-muted leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto">
               Replace messy WhatsApp chats with a purpose-built preparation workspace. Track chapter task completion, dynamic 94% efficiency scores, and 1:1 strategy calls with verified IIT &amp; AIIMS rankers.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/mentors"
-                className="px-8 py-3.5 rounded-xl text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-elevated hover:shadow-card hover:-translate-y-0.5 transition-all group"
+                className="px-8 py-3.5 rounded-xl text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-elevated hover:-translate-y-0.5 transition-all group"
               >
                 <span>Find Your Mentor</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
-                href="#comparison-matrix"
-                className="px-6 py-3.5 rounded-xl text-sm font-semibold bg-white/90 hover:bg-white border border-mist text-ink shadow-soft hover:shadow-card hover:-translate-y-0.5 transition-all"
+                href="/free-mentorship-session"
+                className="px-6 py-3.5 rounded-xl text-sm font-semibold bg-slate-900 border border-slate-800 text-slate-200 hover:text-white hover:border-slate-700 transition-all"
               >
-                Compare Features
+                Claim Free Strategy Call
               </Link>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className="w-full bg-white rounded-t-[44px] border-t border-mist py-16 px-4 sm:px-6 lg:px-8 shadow-soft">
-        <div className="max-w-6xl mx-auto space-y-16">
-          <div id="comparison-matrix">
+          <div className="my-8 p-6 rounded-2xl border border-emerald-500/20 bg-emerald-950/20">
+            <h2 className="text-xs uppercase font-black tracking-widest text-emerald-400 mb-2">
+              Quick Answer: Why Choose Mentskool Over ToppersClubs?
+            </h2>
+            <p className="text-slate-300 text-sm leading-relaxed">
+              Unlike <strong>ToppersClubs</strong> where mentoring often happens casually inside WhatsApp groups, <strong>Mentskool</strong> provides an enterprise-grade learning workspace: scheduled face-to-face Google Meet strategy sessions, verified daily task uploads with 94% efficiency scoring, atomic 30-student cohort caps, and complete monthly payment freedom.
+            </p>
+          </div>
+
+          <div id="comparison-matrix" className="mt-12">
             <div className="text-center max-w-2xl mx-auto space-y-2 mb-8">
-              <span className="text-xs font-bold text-emerald-700 uppercase tracking-widest bg-emerald-50 border border-emerald-200/60 px-3 py-1 rounded-full">
+              <span className="text-xs font-bold text-emerald-400 uppercase tracking-widest bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full">
                 PLATFORM AUDIT
               </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-ink tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
                 Mentskool vs ToppersClubs
               </h2>
             </div>
@@ -156,20 +198,55 @@ export default function ToppersclubsAlternativePage() {
             <ComparisonTable competitorName="ToppersClubs" rows={comparisonRows} />
           </div>
 
-          <SeoFaqAccordion
-            title="ToppersClubs vs Mentskool FAQs"
-            subtitle="Comparing workflow, daily accountability, and commitment flexibility."
-            faqs={faqs}
-          />
+          <section className="mt-16 bg-gradient-to-br from-slate-900/90 to-slate-900/50 border border-slate-800 rounded-3xl p-8 sm:p-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 text-center">
+              Why Serious Aspirants Choose Platform Infrastructure
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="p-6 rounded-2xl bg-slate-950/70 border border-slate-800">
+                <div className="text-emerald-400 text-2xl font-black mb-2">01</div>
+                <h3 className="text-lg font-semibold text-white mb-2">No Distracting Social Chats</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  No notifications from random groups or lost attachments. Everything lives on your dedicated Mentskool student dashboard.
+                </p>
+              </div>
+              <div className="p-6 rounded-2xl bg-slate-950/70 border border-slate-800">
+                <div className="text-emerald-400 text-2xl font-black mb-2">02</div>
+                <h3 className="text-lg font-semibold text-white mb-2">Verified Task Deadlines</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  Upload daily problem count photos and chapter notes directly into weekly task checkpoints audited personally by your mentor.
+                </p>
+              </div>
+              <div className="p-6 rounded-2xl bg-slate-950/70 border border-slate-800">
+                <div className="text-emerald-400 text-2xl font-black mb-2">03</div>
+                <h3 className="text-lg font-semibold text-white mb-2">100% Monthly Freedom</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  Zero expensive lock-ins. Switch mentors with 1-click anytime or pause your subscription with zero penalty.
+                </p>
+              </div>
+            </div>
+          </section>
 
-          <SeoCtaBanner
-            title="Upgrade to a Structured Preparation Platform"
-            description="Experience 1:1 mentorship backed by automated tracking, verified test reviews, and zero annual lock-in."
-            primaryButtonText="Find Mentors"
-            primaryButtonHref="/mentors"
-          />
+          <SeoMentorFunnel examFocus="BOTH" />
+
+          <section className="mt-16">
+            <SeoFaqAccordion
+              title="ToppersClubs vs Mentskool FAQs"
+              subtitle="Comparing workflow, daily accountability, and commitment flexibility."
+              faqs={faqs}
+            />
+          </section>
+
+          <section className="mt-16">
+            <SeoCtaBanner
+              title="Step Up from Informal Messaging to Engineered Mentorship"
+              description="Learn directly from verified IIT & AIIMS rankers with guaranteed small cohorts and zero lock-in."
+              primaryButtonText="Find Your Mentor"
+              primaryButtonHref="/mentors"
+            />
+          </section>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

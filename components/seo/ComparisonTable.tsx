@@ -15,69 +15,69 @@ interface ComparisonTableProps {
 
 export function ComparisonTable({ competitorName, rows }: ComparisonTableProps) {
   return (
-    <div className="w-full my-12 overflow-hidden rounded-3xl border border-mist bg-white shadow-card">
+    <div className="w-full my-12 overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/80 backdrop-blur-xl shadow-2xl">
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-mist bg-slate-50/70">
-              <th className="p-4 sm:p-6 text-xs font-bold uppercase tracking-wider text-ink-muted w-1/2">
+            <tr className="border-b border-slate-800 bg-slate-950/80">
+              <th className="p-4 sm:p-6 text-xs font-bold uppercase tracking-wider text-slate-400 w-1/2">
                 Preparation Dimension
               </th>
-              <th className="p-4 sm:p-6 text-center w-1/4 bg-blue-50/60 border-x border-blue-100">
-                <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-blue-700 bg-blue-100 px-3 py-1 rounded-full">
-                  <Award className="w-3.5 h-3.5" />
+              <th className="p-4 sm:p-6 text-center w-1/4 bg-brand-500/10 border-x border-slate-800">
+                <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-brand-300 bg-brand-500/20 px-3 py-1 rounded-full border border-brand-500/30">
+                  <Award className="w-3.5 h-3.5 text-brand-400" />
                   <span>Mentskool</span>
                 </div>
               </th>
-              <th className="p-4 sm:p-6 text-center text-xs font-bold uppercase tracking-wider text-slate-500 w-1/4">
+              <th className="p-4 sm:p-6 text-center text-xs font-bold uppercase tracking-wider text-slate-400 w-1/4">
                 <span>{competitorName}</span>
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-mist text-xs sm:text-sm">
+          <tbody className="divide-y divide-slate-800/60 text-xs sm:text-sm">
             {rows.map((row, idx) => (
               <tr
                 key={idx}
-                className="hover:bg-slate-50/50 transition-colors"
+                className="hover:bg-slate-800/30 transition-colors"
               >
                 <td className="p-4 sm:p-6 align-top">
-                  <div className="font-bold text-ink font-display text-sm sm:text-base">
+                  <div className="font-bold text-white font-display text-sm sm:text-base">
                     {row.feature}
                   </div>
-                  <div className="text-ink-muted text-xs mt-0.5 leading-relaxed">
+                  <div className="text-slate-400 text-xs mt-1 leading-relaxed">
                     {row.description}
                   </div>
                 </td>
-                <td className="p-4 sm:p-6 text-center align-middle bg-blue-50/30 border-x border-blue-100 font-semibold text-blue-900">
+                <td className="p-4 sm:p-6 text-center align-middle bg-brand-500/5 border-x border-slate-800 font-semibold text-brand-300">
                   {typeof row.mentskool === "boolean" ? (
                     row.mentskool ? (
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 mx-auto">
+                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 mx-auto">
                         <Check className="w-4 h-4 stroke-[2.5]" />
                       </span>
                     ) : (
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-rose-100 text-rose-700 mx-auto">
+                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-rose-500/20 border border-rose-500/30 text-rose-400 mx-auto">
                         <X className="w-4 h-4 stroke-[2.5]" />
                       </span>
                     )
                   ) : (
-                    <span className="text-xs font-bold text-blue-700 bg-blue-100 px-2.5 py-1 rounded-lg inline-block">
+                    <span className="text-xs font-bold text-brand-300 bg-brand-500/20 border border-brand-500/30 px-2.5 py-1 rounded-lg inline-block">
                       {row.mentskool}
                     </span>
                   )}
                 </td>
-                <td className="p-4 sm:p-6 text-center align-middle text-slate-500 font-medium">
+                <td className="p-4 sm:p-6 text-center align-middle text-slate-400 font-medium">
                   {typeof row.competitor === "boolean" ? (
                     row.competitor ? (
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-50 text-emerald-600 mx-auto">
+                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 mx-auto">
                         <Check className="w-4 h-4" />
                       </span>
                     ) : (
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-100 text-slate-400 mx-auto">
+                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-800 text-slate-400 mx-auto">
                         <X className="w-4 h-4" />
                       </span>
                     )
                   ) : (
-                    <span className="text-xs text-slate-600">
+                    <span className="text-xs text-slate-400">
                       {row.competitor}
                     </span>
                   )}
@@ -87,9 +87,9 @@ export function ComparisonTable({ competitorName, rows }: ComparisonTableProps) 
           </tbody>
         </table>
       </div>
-      <div className="p-4 bg-slate-50 border-t border-mist flex items-center justify-between text-xs text-ink-muted">
-        <span className="flex items-center gap-1.5 text-slate-500">
-          <ShieldAlert className="w-3.5 h-3.5 text-blue-600" />
+      <div className="p-4 bg-slate-950/80 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+        <span className="flex items-center gap-1.5 text-slate-400">
+          <ShieldAlert className="w-3.5 h-3.5 text-brand-400" />
           <span>Objective comparison based on publicly verifiable platform architecture and features.</span>
         </span>
       </div>
