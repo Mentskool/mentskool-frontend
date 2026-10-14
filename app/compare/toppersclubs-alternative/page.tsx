@@ -9,7 +9,7 @@ import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
-  title: "ToppersClubs Alternative & Review (2026) — Structured Tasks vs WhatsApp Calls",
+  title: "ToppersClubs Alternative & Review (2027/2028) — Structured Tasks vs WhatsApp Calls",
   description:
     "Comparing ToppersClubs vs Mentskool? Discover why JEE & NEET students choose Mentskool for automated task tracking, verified 94% efficiency scores, and capped 30-seat cohorts.",
   keywords: [

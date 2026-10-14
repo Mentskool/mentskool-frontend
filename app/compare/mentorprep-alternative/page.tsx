@@ -9,7 +9,7 @@ import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
-  title: "Mentor Prep Alternative & Review (2026) — Why Students Switch to Mentskool",
+  title: "Mentor Prep Alternative & Review (2027/2028) — Why Students Switch to Mentskool",
   description:
     "Looking for a Mentor Prep alternative for JEE & NEET? Compare verified task accountability, dynamic 94% efficiency scoring, strict 30-student cohort caps, and flexible monthly pricing.",
   keywords: [

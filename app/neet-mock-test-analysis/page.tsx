@@ -20,6 +20,7 @@ import {
 import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
@@ -313,6 +314,13 @@ export default function NeetMockTestAnalysisPage() {
               </table>
             </div>
           </section>
+
+          {/* Live Mentor Funnel Bridge */}
+          <SeoMentorFunnel
+            examFocus="NEET"
+            title="Diagnose Your NEET Mock Test Errors With an AIIMS Doctor"
+            subtitle="Get question-by-question post-mortems from top medical rankers. Stop bleeding marks in Physics and Botany for 2027 & 2028."
+          />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

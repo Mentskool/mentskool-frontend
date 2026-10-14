@@ -9,7 +9,7 @@ import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
-  title: "Mentors Eduserv Alternative & Review (2026) — 1:1 Online vs Mass Offline Batches",
+  title: "Mentors Eduserv Alternative & Review (2027/2028) — 1:1 Online vs Mass Offline Batches",
   description:
     "Comparing Mentors Eduserv with 1:1 online mentorship? See why JEE & NEET aspirants choose Mentskool for personal 1-on-1 guidance by IITians & AIIMS doctors over 100+ student offline classroom batches.",
   keywords: [
@@ -130,7 +130,7 @@ export default function MentorsEduservAlternativePage() {
           <div className="text-center max-w-3xl mx-auto mt-6 mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-300 text-xs font-semibold mb-4">
               <Scale className="w-3.5 h-3.5" />
-              <span>Independent Feature & Experience Comparison (2026)</span>
+              <span>Independent Feature & Experience Comparison (2027/2028)</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-5 leading-tight">
               Looking for a <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-sky-300 to-emerald-400">Mentors Eduserv Alternative?</span>

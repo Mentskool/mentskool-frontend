@@ -14,6 +14,7 @@ import {
 import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
@@ -150,6 +151,13 @@ export default function FreeMentorshipSessionPage() {
               </p>
             </div>
           </div>
+
+          {/* Live Mentor Funnel Bridge */}
+          <SeoMentorFunnel
+            examFocus="BOTH"
+            title="Book Your Free Diagnostic Call With an IIT or AIIMS Ranker"
+            subtitle="Choose your target track (JEE or NEET). Get your study plan audited, backlogs diagnosed, and targets set for 2027 & 2028."
+          />
 
           <section className="mt-16">
             <SeoFaqAccordion

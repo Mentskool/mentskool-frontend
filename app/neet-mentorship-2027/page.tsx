@@ -22,6 +22,7 @@ import {
 import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
@@ -511,6 +512,13 @@ export default function NeetMentorship2027Page() {
               </div>
             </div>
           </section>
+
+          {/* Live Mentor Funnel Bridge */}
+          <SeoMentorFunnel
+            examFocus="NEET"
+            title="Claim Your Spot With Verified AIIMS Doctors"
+            subtitle="Don't prepare alone. Partner 1-on-1 with an AIIMS doctor who will build your daily timetable, audit your NCERT lines, and guide your mock tests for 2027 & 2028."
+          />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

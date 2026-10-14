@@ -20,6 +20,7 @@ import {
 import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
@@ -375,6 +376,13 @@ export default function JeeBacklogManagementPage() {
               </div>
             </div>
           </section>
+
+          {/* Live Mentor Funnel Bridge */}
+          <SeoMentorFunnel
+            examFocus="JEE"
+            title="Clear Your Backlogs With an IITian Specialist"
+            subtitle="Get a personalized 3-Box backlog recovery roadmap designed by top rankers. Turn unfinished chapters into high-scoring strengths for 2027 & 2028."
+          />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

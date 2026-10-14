@@ -21,6 +21,7 @@ import {
 import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
@@ -569,6 +570,13 @@ export default function JeeMentorship2027Page() {
               </div>
             </div>
           </section>
+
+          {/* Live Mentor Funnel Bridge */}
+          <SeoMentorFunnel
+            examFocus="JEE"
+            title="Claim Your Spot With Verified IIT Bombay & Delhi Rankers"
+            subtitle="Don't prepare in isolation. Partner with top rankers who will build your weekly sprint, audit your errors, and keep you accountable for JEE 2027 & 2028."
+          />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

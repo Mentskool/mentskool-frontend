@@ -9,7 +9,7 @@ import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
-  title: "PW Disha Alternative & Honest Review (2026) — 1:1 Attention vs Mass Batches",
+  title: "PW Disha Alternative & Honest Review (2027/2028) — 1:1 Attention vs Mass Batches",
   description:
     "Looking for a PW Disha mentorship alternative? Compare true 1:1 face-to-face attention from IIT & AIIMS rankers, capped 30-student cohorts, and weekly verified accountability scoring.",
   keywords: [

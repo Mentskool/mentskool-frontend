@@ -12,6 +12,11 @@ interface SeoBreadcrumbsProps {
 }
 
 export function SeoBreadcrumbs({ items }: SeoBreadcrumbsProps) {
+  // Deduplicate and filter out any accidental "Home" items
+  const cleanItems = items.filter(
+    (item) => item.label.trim().toLowerCase() !== "home" && item.href !== "/"
+  );
+
   const breadcrumbListJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -22,7 +27,7 @@ export function SeoBreadcrumbs({ items }: SeoBreadcrumbsProps) {
         name: "Home",
         item: "https://mentskool.com",
       },
-      ...items.map((item, index) => ({
+      ...cleanItems.map((item, index) => ({
         "@type": "ListItem",
         position: index + 2,
         name: item.label,
@@ -32,35 +37,35 @@ export function SeoBreadcrumbs({ items }: SeoBreadcrumbsProps) {
   };
 
   return (
-    <nav aria-label="Breadcrumb" className="mb-6">
+    <nav aria-label="Breadcrumb" className="mb-6 inline-flex max-w-full">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbListJsonLd) }}
       />
-      <ol className="flex flex-wrap items-center gap-1.5 text-xs text-ink-muted">
+      <ol className="flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-800/80 text-xs text-slate-400 backdrop-blur-md shadow-soft">
         <li className="inline-flex items-center">
           <Link
             href="/"
-            className="inline-flex items-center gap-1 hover:text-brand transition-colors text-ink-muted font-medium"
+            className="inline-flex items-center gap-1.5 hover:text-sky-400 transition-colors text-slate-400 font-medium"
           >
-            <Home className="w-3.5 h-3.5" />
+            <Home className="w-3.5 h-3.5 text-sky-400" />
             <span>Home</span>
           </Link>
         </li>
-        {items.map((item, idx) => {
-          const isLast = idx === items.length - 1;
+        {cleanItems.map((item, idx) => {
+          const isLast = idx === cleanItems.length - 1;
           return (
-            <li key={idx} className="inline-flex items-center gap-1.5">
-              <ChevronRight className="w-3 h-3 text-slate-400" />
+            <li key={idx} className="inline-flex items-center gap-2">
+              <ChevronRight className="w-3.5 h-3.5 text-slate-600 shrink-0" />
               {item.href && !isLast ? (
                 <Link
                   href={item.href}
-                  className="hover:text-brand transition-colors font-medium text-ink-muted"
+                  className="hover:text-sky-400 transition-colors font-medium text-slate-300"
                 >
                   {item.label}
                 </Link>
               ) : (
-                <span className="font-semibold text-ink line-clamp-1">
+                <span className="font-semibold text-white truncate max-w-[220px] sm:max-w-none">
                   {item.label}
                 </span>
               )}

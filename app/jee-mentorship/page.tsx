@@ -23,7 +23,7 @@ import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
-  title: "1:1 IIT JEE Mentorship by Verified IITians — JEE Main & Advanced (2026/2027)",
+  title: "1:1 IIT JEE Mentorship by Verified IITians — JEE Main & Advanced (2027/2028)",
   description:
     "Master JEE Main & Advanced with personal 1-on-1 mentorship from top rankers at IIT Bombay, Delhi & Madras. Daily problem accountability, mock test error post-mortems, and verified 94% efficiency scoring.",
   keywords: [
