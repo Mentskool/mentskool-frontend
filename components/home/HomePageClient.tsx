@@ -30,7 +30,7 @@ export default function HomePage() {
   return (
     <div className="relative overflow-hidden bg-[#EBF3FB]">
       {/* 1. Luminous Soft Sky-Blue Gradient with Architectural Square Grid Pattern */}
-      <HeroGridBackground />
+      <HeroGridBackground variant="light" />
 
       {/* 2. Top Hero Section - 2-Column Desktop Layout */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-16 pb-14 sm:pb-20 relative z-10">

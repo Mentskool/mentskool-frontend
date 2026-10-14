@@ -9,7 +9,7 @@ import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
-  title: "JeetNeeti Alternative & Review (2026) — Pricing & Features Compared",
+  title: "JeetNeeti Alternative & Review (2027/2028) — Pricing & Features Compared",
   description:
     "Comparing JeetNeeti vs Mentskool for JEE & NEET mentorship? See why students prefer Mentskool's verified task checkpoints, 94% efficiency scoring, and transparent monthly pricing.",
   keywords: [

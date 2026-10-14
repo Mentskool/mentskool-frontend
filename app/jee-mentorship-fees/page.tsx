@@ -21,7 +21,7 @@ import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
-  title: "JEE Mentorship Fees & Pricing Guide (2026/2027) — Honest Cost Comparison",
+  title: "JEE Mentorship Fees & Pricing Guide (2027/2028) — Honest Cost Comparison",
   description:
     "How much does 1-on-1 JEE mentorship cost? Compare Mentskool's flexible monthly plans vs ₹2.5 Lakh offline Kota coaching and expensive hourly marketplace platforms. Zero annual lock-ins, 94% efficiency scoring.",
   keywords: [
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     canonical: "https://mentskool.com/jee-mentorship-fees",
   },
   openGraph: {
-    title: "JEE Mentorship Fees: The Honest 2026/2027 Cost & ROI Guide",
+    title: "JEE Mentorship Fees: The Honest 2027/2028 Cost & ROI Guide",
     description:
       "Why spending ₹2.5L on mass coaching fails without 1:1 execution. Discover transparent month-to-month pricing with verified IITian mentors.",
     url: "https://mentskool.com/jee-mentorship-fees",
@@ -136,7 +136,7 @@ export default function JeeMentorshipFeesPage() {
           <div className="text-center max-w-4xl mx-auto mt-6 mb-12">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-300 text-xs font-semibold mb-4">
               <Banknote className="w-3.5 h-3.5" />
-              <span>Transparent Cost &amp; ROI Guide (2026/2027)</span>
+              <span>Transparent Cost &amp; ROI Guide (2027/2028)</span>
             </div>
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
               JEE Mentorship Fees: <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-sky-300 to-indigo-400">The Honest Cost &amp; ROI Comparison</span>

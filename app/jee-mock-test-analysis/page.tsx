@@ -18,6 +18,7 @@ import {
 import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
@@ -309,6 +310,13 @@ export default function JeeMockTestAnalysisPage() {
               </table>
             </div>
           </section>
+
+          {/* Live Mentor Funnel Bridge */}
+          <SeoMentorFunnel
+            examFocus="JEE"
+            title="Diagnose Your Mock Test Errors With an IITian"
+            subtitle="Get question-by-question post-mortems from top rankers. Eliminate 15–25 negative marks per test for 2027 & 2028."
+          />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

@@ -23,7 +23,7 @@ import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
-  title: "NEET Mentorship Fees & Pricing Guide (2026/2027) — Affordable AIIMS Guidance",
+  title: "NEET Mentorship Fees & Pricing Guide (2027/2028) — Affordable AIIMS Guidance",
   description:
     "How much does 1-on-1 NEET mentorship cost? Compare Mentskool's transparent monthly subscriptions vs ₹3 Lakh offline coaching hubs and ₹1 Crore private medical college fees. 100% verified AIIMS doctors, zero lock-ins.",
   keywords: [
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     canonical: "https://mentskool.com/neet-mentorship-fees",
   },
   openGraph: {
-    title: "NEET Mentorship Fees: The Transparent 2026/2027 Medical ROI Guide",
+    title: "NEET Mentorship Fees: The Transparent 2027/2028 Medical ROI Guide",
     description:
       "Save lakhs of rupees and secure a Government Medical College seat. Discover transparent month-to-month plans with verified AIIMS doctors.",
     url: "https://mentskool.com/neet-mentorship-fees",
@@ -133,7 +133,7 @@ export default function NeetMentorshipFeesPage() {
           <div className="text-center max-w-4xl mx-auto mt-6 mb-12">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-xs font-semibold mb-4">
               <Banknote className="w-3.5 h-3.5" />
-              <span>Transparent Medical Guidance Economics (2026/2027)</span>
+              <span>Transparent Medical Guidance Economics (2027/2028)</span>
             </div>
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
               NEET Mentorship Fees: <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-sky-400">The Honest Cost &amp; GMC ROI Guide</span>

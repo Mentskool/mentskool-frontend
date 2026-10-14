@@ -21,10 +21,11 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { ProgramFeatures } from "@/components/seo/ProgramFeatures";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
-  title: "Best Mentorship Program for NEET-UG (2026/2027) — The Definitive Medical Guide",
+  title: "Best Mentorship Program for NEET-UG (2027/2028) — The Definitive Medical Guide",
   description:
     "Searching for the best mentorship for NEET? Discover how 1-on-1 mentorship by AIIMS New Delhi & premier GMC doctors delivers NCERT active recall, Physics numerical confidence, and mock error elimination.",
   keywords: [
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
     "best mentorship for NEET droppers",
     "top NEET mentors online",
     "NEET personal mentor 1 on 1",
-    "NEET 2026 mentorship",
+    "NEET 2028 mentorship",
     "NEET 2027 mentorship",
   ],
   alternates: {
@@ -146,7 +147,7 @@ export default function BestNeetMentorshipPage() {
           <div className="text-center max-w-4xl mx-auto mt-6 mb-12">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-xs font-semibold mb-4">
               <Award className="w-3.5 h-3.5" />
-              <span>The Definitive Selection Guide &amp; Medical Benchmark (2026/2027)</span>
+              <span>The Definitive Selection Guide &amp; Medical Benchmark (2027/2028)</span>
             </div>
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
               Best Mentorship Program for <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-sky-400">NEET-UG &amp; AIIMS Aspirants</span>
@@ -290,6 +291,13 @@ export default function BestNeetMentorshipPage() {
             </div>
             <ProgramFeatures />
           </section>
+
+          {/* Live Mentor Funnel Bridge */}
+          <SeoMentorFunnel
+            examFocus="NEET"
+            title="Connect With Verified AIIMS New Delhi & Top GMC Doctors"
+            subtitle="Learn directly from medical rankers who recently scored 680+ in NEET-UG. 1:1 strategy calls and daily task auditing for 2027 & 2028."
+          />
 
           {/* FAQs */}
           <section className="mt-16">

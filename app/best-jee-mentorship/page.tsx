@@ -20,10 +20,11 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { ProgramFeatures } from "@/components/seo/ProgramFeatures";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
-  title: "Best Mentorship Program for JEE (Mains & Advanced 2026/2027) — The Definitive Selection Guide",
+  title: "Best Mentorship Program for JEE (Mains & Advanced 2027/2028) — The Definitive Selection Guide",
   description:
     "Looking for the best mentorship for JEE? Compare 1:1 ranker platforms vs mass coaching. Discover how Mentskool's IIT Bombay & Delhi mentors deliver 94% task accountability, mock test error audits, and backlog elimination.",
   keywords: [
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
     "best mentorship for JEE droppers",
     "top JEE mentors online",
     "IIT JEE 1 on 1 personal mentor",
-    "JEE 2026 mentorship",
+    "JEE 2028 mentorship",
     "JEE 2027 mentorship",
   ],
   alternates: {
@@ -150,7 +151,7 @@ export default function BestJeeMentorshipPage() {
           <div className="text-center max-w-4xl mx-auto mt-6 mb-12">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-300 text-xs font-semibold mb-4">
               <Award className="w-3.5 h-3.5" />
-              <span>The Definitive Selection Guide &amp; Platform Benchmark (2026/2027)</span>
+              <span>The Definitive Selection Guide &amp; Platform Benchmark (2027/2028)</span>
             </div>
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
               Best Mentorship Program for <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-sky-300 to-indigo-400">JEE Mains &amp; Advanced</span>
@@ -357,6 +358,13 @@ export default function BestJeeMentorshipPage() {
             </div>
             <ProgramFeatures />
           </section>
+
+          {/* Live Mentor Funnel Bridge */}
+          <SeoMentorFunnel
+            examFocus="JEE"
+            title="Connect With Verified IIT Bombay & Delhi Rankers"
+            subtitle="Learn directly from mentors who recently scored top percentiles in JEE Advanced. 1:1 strategy calls and daily task auditing for 2027 & 2028."
+          />
 
           {/* FAQs */}
           <section className="mt-16">

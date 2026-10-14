@@ -9,7 +9,7 @@ import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
 
 export const metadata: Metadata = {
-  title: "JEE Society Alternative & Review (2026) — 1:1 + Small Cohort Mentorship",
+  title: "JEE Society Alternative & Review (2027/2028) — 1:1 + Small Cohort Mentorship",
   description:
     "Comparing JEE Society vs Mentskool? Discover Mentskool's dual-mode 1:1 strategy calls plus small cohort drills, verified 94% efficiency scoring, and atomic 30-student cohort caps.",
   keywords: [
