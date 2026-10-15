@@ -216,7 +216,7 @@ export default function RootLayout({
         {/* Google tag (gtag.js) */}
         <script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-B5LEC5Y2B2"
+          src="https://www.googletagmanager.com/gtag/js?id=G-16WK7KBJLF"
         />
         <script
           id="google-tag-gtag"
@@ -225,6 +225,7 @@ export default function RootLayout({
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
+              gtag('config', 'G-16WK7KBJLF');
               gtag('config', 'G-B5LEC5Y2B2');
             `,
           }}

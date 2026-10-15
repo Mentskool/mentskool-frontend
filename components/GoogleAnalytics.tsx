@@ -2,7 +2,7 @@ import React from "react";
 import Script from "next/script";
 
 export const GA_MEASUREMENT_ID =
-  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-B5LEC5Y2B2";
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-16WK7KBJLF";
 
 export function GoogleAnalytics() {
   return (
