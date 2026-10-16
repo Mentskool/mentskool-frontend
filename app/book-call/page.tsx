@@ -66,29 +66,34 @@ export default function BookCallDirectoryPage() {
         </span>
       </div>
 
-      {/* Header Banner */}
-      <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-10 shadow-xs relative overflow-hidden">
-        <div className="max-w-3xl space-y-3.5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/70 text-blue-700 text-xs font-bold">
-            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+      {/* Dark Hero Banner (User's preferred style) */}
+      <div className="bg-slate-900 text-white rounded-3xl border border-slate-800 p-8 sm:p-12 relative overflow-hidden shadow-xl text-center">
+        {/* Subtle radial glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/40 via-slate-900/10 to-transparent pointer-events-none" />
+
+        <div className="max-w-3xl mx-auto space-y-4 relative z-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300 text-xs font-semibold">
+            <Video className="w-3.5 h-3.5 text-blue-400" />
             <span>Instant 1-on-1 Mentorship Sessions</span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold font-display text-slate-900 tracking-tight">
-            Book a 1:1 Video Call with <span className="text-blue-600">Verified Top Rankers</span>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black font-display tracking-tight text-white">
+            Book 1-on-1 with Top <span className="text-blue-400">IIT & NEET Rankers</span>
           </h1>
 
-          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl">
-            Get personalized advice on preparation strategy, subject doubts, exam mindset, and college selection. Pick your preferred date and time slot — no long-term commitment required.
+          <p className="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            Personalized exam strategy, backlog clearance, mock paper review, and college guidance. Secure your 30-minute private video call in seconds.
           </p>
 
-          <div className="pt-2 flex items-center gap-3 flex-wrap">
-            <Link
-              href="/mentors"
-              className="text-xs font-semibold text-slate-600 hover:text-blue-600 inline-flex items-center gap-1 transition-colors"
-            >
-              <span>Looking for monthly cohort guidance? Explore cohort mentors</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+          <div className="pt-2 flex items-center justify-center gap-3">
+            <Link href="/mentors">
+              <Button
+                variant="secondary"
+                size="sm"
+                className="text-xs bg-slate-800/90 text-slate-200 border-slate-700 hover:bg-slate-700 hover:text-white transition-colors"
+              >
+                Looking for Monthly Cohorts? →
+              </Button>
             </Link>
           </div>
         </div>
