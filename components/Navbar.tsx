@@ -43,22 +43,30 @@ export const Navbar: React.FC = () => {
           <BrandLogo href="/" size="md" />
 
           {/* Navigation Links for Public Pages */}
-          <nav className="hidden sm:flex items-center gap-3">
-            {isExploreMentorsPage ? (
-              <Link
-                href="/"
-                className="text-xs font-semibold text-ink-muted hover:text-ink px-3 py-1.5 rounded-lg hover:bg-mist/40 transition-colors"
-              >
-                Home
-              </Link>
-            ) : (
-              <Link
-                href="/mentors"
-                className="text-xs font-semibold text-ink-muted hover:text-ink px-3 py-1.5 rounded-lg hover:bg-mist/40 transition-colors"
-              >
-                Explore Mentors
-              </Link>
-            )}
+          <nav className="hidden sm:flex items-center gap-1.5">
+            <Link
+              href="/mentors"
+              className={`text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors ${
+                pathname === "/mentors"
+                  ? "text-blue-600 bg-blue-50"
+                  : "text-ink-muted hover:text-ink hover:bg-mist/40"
+              }`}
+            >
+              Cohorts
+            </Link>
+            <Link
+              href="/book-call"
+              className={`text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 ${
+                pathname === "/book-call"
+                  ? "text-blue-600 bg-blue-50"
+                  : "text-ink-muted hover:text-ink hover:bg-mist/40"
+              }`}
+            >
+              <span>1:1 Sessions</span>
+              <span className="text-[10px] bg-blue-100 text-blue-700 font-bold px-1.5 py-0.5 rounded-full">
+                New
+              </span>
+            </Link>
           </nav>
         </div>
 

@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/Button";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { ApiError, CATEGORY_LABELS, MentorProfile } from "@/lib/types";
 import { ActivityHeatmap } from "@/components/ActivityHeatmap";
+import { Book1on1Modal } from "@/components/sessions/Book1on1Modal";
 import {
   GraduationCap,
   Trophy,
@@ -85,6 +86,7 @@ export default function MentorDetailClient({
     type: "success" | "error";
     message: string;
   } | null>(null);
+  const [isBook1on1Open, setIsBook1on1Open] = useState(false);
 
   const targetMentorId = mentor?.user_id || mentorId;
   const { data: reviewsData, refetch: refetchReviews } = useMentorReviews(targetMentorId);
@@ -1059,11 +1061,20 @@ export default function MentorDetailClient({
                   <Button
                     size="md"
                     variant="secondary"
-                    onClick={handleMessageMentor}
-                    className="w-full text-center py-2.5 text-xs font-medium text-slate-700 border-slate-200 hover:border-slate-300"
+                    onClick={() => setIsBook1on1Open(true)}
+                    className="w-full text-center py-2.5 text-xs font-semibold text-blue-700 bg-blue-50/70 border border-blue-200 hover:bg-blue-100 hover:border-blue-300 transition-colors flex items-center justify-center gap-1.5 shadow-sm"
                   >
-                    <MessageSquare className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
-                    Ask a Question
+                    <Video className="w-3.5 h-3.5 text-blue-600" />
+                    Book a 1:1 Call
+                    {Number(mentor.one_on_one_price || 0) > 0 ? (
+                      <span className="text-[10px] bg-blue-200/80 text-blue-800 px-1.5 py-0.5 rounded-full font-bold ml-1">
+                        ₹{Number(mentor.one_on_one_price).toLocaleString("en-IN")}
+                      </span>
+                    ) : (
+                      <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded-full font-bold ml-1">
+                        Free
+                      </span>
+                    )}
                   </Button>
                 </>
               )}
@@ -1100,6 +1111,14 @@ export default function MentorDetailClient({
           </div>
         </div>
       </div>
+
+      {mentor && (
+        <Book1on1Modal
+          isOpen={isBook1on1Open}
+          onClose={() => setIsBook1on1Open(false)}
+          mentor={mentor}
+        />
+      )}
     </div>
   );
 }
