@@ -18,6 +18,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { ApiError, CATEGORY_LABELS, MentorProfile } from "@/lib/types";
 import { ActivityHeatmap } from "@/components/ActivityHeatmap";
 import { Book1on1Modal } from "@/components/sessions/Book1on1Modal";
+import { initiateRazorpayCheckout } from "@/lib/razorpay";
 import {
   GraduationCap,
   Trophy,
@@ -165,6 +166,57 @@ export default function MentorDetailClient({
       return;
     }
 
+    const priceNum = Number(mentor?.price_per_month || 0);
+
+    if (priceNum > 0) {
+      await initiateRazorpayCheckout({
+        amountInPaise: Math.round(priceNum * 100),
+        currency: "INR",
+        name: "Mentskool",
+        description: `1-Month Cohort with ${mentor?.full_name}`,
+        prefill: {
+          name: user?.full_name || "",
+          email: user?.email || "",
+        },
+        notes: {
+          mentor_id: targetMentorId,
+          type: "cohort_subscription",
+        },
+        onSuccess: async (verification) => {
+          try {
+            await subscribeMutation.mutateAsync({
+              mentorId: targetMentorId,
+              paymentId: verification.payment_id,
+            });
+            setFeedback({
+              type: "success",
+              message: "Successfully subscribed for 30 days! You now have full access to assignments, chat, and meetings.",
+            });
+            refetch();
+            refetchSubs();
+          } catch (enrollErr: any) {
+            setFeedback({
+              type: "error",
+              message: enrollErr?.detail || "Payment verified, but cohort enrollment failed. Please contact support.",
+            });
+          }
+        },
+        onError: (err) => {
+          setFeedback({
+            type: "error",
+            message: err,
+          });
+        },
+        onDismiss: () => {
+          setFeedback({
+            type: "error",
+            message: "Payment was cancelled. Your cohort seat was not reserved.",
+          });
+        },
+      });
+      return;
+    }
+
     try {
       await subscribeMutation.mutateAsync(targetMentorId);
       setFeedback({
@@ -175,6 +227,7 @@ export default function MentorDetailClient({
       refetchSubs();
     } catch (err) {
       const apiErr = err as ApiError;
+
       if (apiErr.status === 409) {
         if (
           apiErr.code === "ALREADY_IN_COHORT" ||

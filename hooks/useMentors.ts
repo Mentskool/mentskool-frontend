@@ -43,11 +43,14 @@ export function useSubscribeMentor() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (mentorId: string) =>
-      apiClient<Subscription>("/subscriptions", {
+    mutationFn: (args: string | { mentorId: string; paymentId?: string }) => {
+      const mentor_id = typeof args === "string" ? args : args.mentorId;
+      const payment_id = typeof args === "string" ? undefined : args.paymentId;
+      return apiClient<Subscription>("/subscriptions", {
         method: "POST",
-        body: JSON.stringify({ mentor_id: mentorId }),
-      }),
+        body: JSON.stringify({ mentor_id, payment_id }),
+      });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["mentors"] });
       queryClient.invalidateQueries({ queryKey: ["mentor"] });
@@ -55,6 +58,7 @@ export function useSubscribeMentor() {
     },
   });
 }
+
 
 export function useMyMentorProfile() {
   const { isAuthenticated, isLoading } = useAuthStore();
