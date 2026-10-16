@@ -43,18 +43,8 @@ export default function RefundPolicyPage() {
             <span>•</span>
             <span className="text-sky-400">30-Seat Atomic Allocation Architecture</span>
           </div>
-
-          {/* Preliminary Legal Draft Notice */}
-          <div className="mt-4 p-4 rounded-xl bg-amber-950/30 border border-amber-800/50 text-amber-200/90 text-xs leading-relaxed flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-            <div>
-              <strong className="text-amber-300 font-semibold block mb-0.5">
-                Preliminary Legal Draft Notice
-              </strong>
-              This Refund &amp; Cancellation Policy reflects Mentskool&apos;s operational seat locking and billing mechanics. It is a first draft provided for platform transparency and should be reviewed and ratified by qualified legal counsel or a corporate legal service (e.g., Vakilsearch) before real commercial payments go live.
-            </div>
-          </div>
         </div>
+
 
         {/* Core Policy Highlight Card */}
         <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-[#0F172A] to-[#1E293B] border-2 border-sky-500/30 shadow-xl space-y-4">

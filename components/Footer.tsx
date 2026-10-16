@@ -178,11 +178,20 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link
+                  href="/shipping-policy"
+                  className="hover:text-sky-400 transition-colors"
+                >
+                  Shipping &amp; Delivery
+                </Link>
+              </li>
+              <li>
                 <div className="text-[11px] text-slate-500 pt-1">
                   Razorpay SSL 256-bit Secure Gateway
                 </div>
               </li>
             </ul>
+
           </div>
         </div>
       </div>
