@@ -62,7 +62,7 @@ export const Navbar: React.FC = () => {
                   : "text-ink-muted hover:text-ink hover:bg-mist/40"
               }`}
             >
-              <span>1:1 Sessions</span>
+              <span>Book 1:1 Call</span>
               <span className="text-[10px] bg-blue-100 text-blue-700 font-bold px-1.5 py-0.5 rounded-full">
                 New
               </span>

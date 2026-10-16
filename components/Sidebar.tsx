@@ -33,7 +33,7 @@ interface NavItem {
 const STUDENT_NAV_ITEMS: NavItem[] = [
   { label: "My Tasks", href: "/dashboard/tasks", icon: CheckSquare },
   { label: "Efficiency", href: "/dashboard/efficiency", icon: BarChart3 },
-  { label: "1:1 Calls", href: "/book-call", icon: Video },
+  { label: "1:1 Bookings", href: "/dashboard/sessions", icon: Video },
   { label: "Cohort", href: "/cohort", icon: Users },
   { label: "Messages", href: "/messages", icon: MessageSquare },
   { label: "Schedule", href: "/schedule", icon: Calendar },

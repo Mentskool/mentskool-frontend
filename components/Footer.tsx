@@ -3,7 +3,6 @@ import Link from "next/link";
 import {
   ShieldCheck,
   Lock,
-  ArrowUpRight,
   Mail,
   GraduationCap,
 } from "lucide-react";
@@ -69,13 +68,21 @@ export function Footer() {
               </li>
               <li>
                 <Link
+                  href="/book-call"
+                  className="hover:text-sky-400 transition-colors inline-flex items-center gap-1"
+                >
+                  <span>Book 1:1 Call</span>
+                  <span className="text-[10px] bg-sky-950 text-sky-400 border border-sky-800 px-1.5 py-0.2 rounded font-bold">
+                    New
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/mentor/onboarding"
                   className="hover:text-sky-400 transition-colors inline-flex items-center gap-1 text-sky-300 font-medium"
                 >
                   <span>Become a Mentor</span>
-                  <span className="text-[10px] bg-sky-950 text-sky-400 border border-sky-800 px-1.5 py-0.2 rounded font-bold">
-                    Join
-                  </span>
                 </Link>
               </li>
               <li>
@@ -178,189 +185,6 @@ export function Footer() {
             </ul>
           </div>
         </div>
-
-        {/* SEO Directory: Programs, Strategies, Subjects & Comparisons */}
-        <div className="mt-12 pt-8 border-t border-slate-800/80 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-xs">
-          {/* Column 1: Core Programs */}
-          <div>
-            <h5 className="font-bold text-white font-display text-xs uppercase tracking-wider mb-2.5">
-              Preparation Programs
-            </h5>
-            <div className="flex flex-col space-y-1.5 text-slate-400">
-              <Link href="/best-jee-mentorship" className="hover:text-sky-400 transition-colors font-medium text-slate-300">
-                Best JEE Mentorship
-              </Link>
-              <Link href="/best-neet-mentorship" className="hover:text-sky-400 transition-colors font-medium text-slate-300">
-                Best NEET Mentorship
-              </Link>
-              <Link href="/free-mentorship-session" className="hover:text-emerald-400 transition-colors font-medium text-emerald-400">
-                Free 1:1 Strategy Session
-              </Link>
-              <Link href="/jee-mentorship-2027" className="hover:text-sky-400 transition-colors">
-                JEE 2027 Mentorship Sprint
-              </Link>
-              <Link href="/neet-mentorship-2027" className="hover:text-sky-400 transition-colors">
-                NEET 2027 Mentorship Roadmap
-              </Link>
-              <Link href="/jee-advanced-mentorship" className="hover:text-sky-400 transition-colors font-medium text-amber-300/90">
-                JEE Advanced Mentorship
-              </Link>
-              <Link href="/personalized-jee-mentorship" className="hover:text-sky-400 transition-colors">
-                Personalized JEE Mentorship
-              </Link>
-              <Link href="/personalized-neet-mentorship" className="hover:text-sky-400 transition-colors">
-                Personalized NEET Mentorship
-              </Link>
-              <Link href="/jee-1-on-1-mentorship" className="hover:text-sky-400 transition-colors">
-                1-on-1 JEE Mentorship
-              </Link>
-              <Link href="/neet-1-on-1-mentorship" className="hover:text-sky-400 transition-colors">
-                1-on-1 NEET Mentorship
-              </Link>
-              <Link href="/jee-droppers" className="hover:text-sky-400 transition-colors">
-                JEE Droppers Mentorship
-              </Link>
-              <Link href="/neet-repeaters" className="hover:text-sky-400 transition-colors">
-                NEET Repeaters Mentorship
-              </Link>
-              <Link href="/class-11-12-mentorship" className="hover:text-sky-400 transition-colors">
-                Class 11 &amp; 12 Foundation
-              </Link>
-              <Link href="/jee-mentorship-fees" className="hover:text-emerald-400 transition-colors">
-                JEE Mentorship Fees &amp; Pricing
-              </Link>
-              <Link href="/neet-mentorship-fees" className="hover:text-emerald-400 transition-colors">
-                NEET Mentorship Fees &amp; Pricing
-              </Link>
-              <Link href="/mentor-vs-coaching-for-jee-neet" className="hover:text-indigo-400 transition-colors">
-                Mentor vs Coaching Guide
-              </Link>
-            </div>
-          </div>
-
-          {/* Column 2: Strategy & Problem Resolution */}
-          <div>
-            <h5 className="font-bold text-white font-display text-xs uppercase tracking-wider mb-2.5">
-              Strategy &amp; Score Recovery
-            </h5>
-            <div className="flex flex-col space-y-1.5 text-slate-400">
-              <Link href="/jee-backlog-management" className="hover:text-amber-400 transition-colors">
-                JEE Backlog Clearance Protocol
-              </Link>
-              <Link href="/neet-backlog-management" className="hover:text-amber-400 transition-colors">
-                NEET Backlog Recovery System
-              </Link>
-              <Link href="/jee-mock-test-analysis" className="hover:text-sky-400 transition-colors">
-                JEE Mock Test Error Post-Mortem
-              </Link>
-              <Link href="/neet-mock-test-analysis" className="hover:text-sky-400 transition-colors">
-                NEET Mock Test Analysis
-              </Link>
-              <Link href="/low-mock-test-score-jee-neet" className="hover:text-rose-400 transition-colors font-medium">
-                Low Mock Score 72h Recovery
-              </Link>
-              <Link href="/jee-revision-plan" className="hover:text-sky-400 transition-colors">
-                JEE 45-Day Revision Blueprint
-              </Link>
-              <Link href="/neet-revision-plan" className="hover:text-sky-400 transition-colors">
-                NEET 60-Day NCERT Revision
-              </Link>
-              <Link href="/jee-weak-topic-tracking" className="hover:text-sky-400 transition-colors">
-                JEE Weak Topic Diagnostic Matrix
-              </Link>
-              <Link href="/neet-weak-topic-tracking" className="hover:text-sky-400 transition-colors">
-                NEET Weak Topic Auditing
-              </Link>
-              <Link href="/jee-study-plan-with-mentor" className="hover:text-sky-400 transition-colors">
-                JEE Study Plan with Mentor
-              </Link>
-              <Link href="/neet-study-plan-with-mentor" className="hover:text-sky-400 transition-colors">
-                NEET Study Plan with Mentor
-              </Link>
-              <Link href="/jee-accountability-mentor" className="hover:text-sky-400 transition-colors">
-                JEE Daily Accountability System
-              </Link>
-              <Link href="/neet-accountability-mentor" className="hover:text-sky-400 transition-colors">
-                NEET Consistency &amp; Habit Mentor
-              </Link>
-              <Link href="/parents-guide-jee-neet" className="hover:text-indigo-400 transition-colors font-medium">
-                Parents Guide: Supporting Aspirants
-              </Link>
-            </div>
-          </div>
-
-          {/* Column 3: Subject Mentorship & CBT */}
-          <div>
-            <h5 className="font-bold text-white font-display text-xs uppercase tracking-wider mb-2.5">
-              Subject Mentors &amp; CBT Prep
-            </h5>
-            <div className="flex flex-col space-y-1.5 text-slate-400">
-              <Link href="/jee-physics-mentor" className="hover:text-sky-400 transition-colors">
-                JEE Physics 1-on-1 Mentor
-              </Link>
-              <Link href="/jee-maths-mentor" className="hover:text-sky-400 transition-colors">
-                JEE Maths 1-on-1 Mentor
-              </Link>
-              <Link href="/jee-chemistry-mentor" className="hover:text-sky-400 transition-colors">
-                JEE Chemistry 1-on-1 Mentor
-              </Link>
-              <Link href="/neet-biology-mentor" className="hover:text-emerald-400 transition-colors font-medium">
-                NEET Biology 360/360 Mentor
-              </Link>
-              <Link href="/neet-physics-mentor" className="hover:text-sky-400 transition-colors">
-                NEET Physics Numerical Mentor
-              </Link>
-              <Link href="/neet-chemistry-mentor" className="hover:text-sky-400 transition-colors">
-                NEET Chemistry 165+ Mentor
-              </Link>
-              <Link href="/neet-2027-cbt-preparation" className="hover:text-cyan-400 transition-colors font-medium">
-                NEET 2027 CBT Online Guide
-              </Link>
-            </div>
-          </div>
-
-          {/* Column 4: Comparisons & Alternatives */}
-          <div>
-            <h5 className="font-bold text-white font-display text-xs uppercase tracking-wider mb-2.5">
-              Comparisons &amp; Alternatives
-            </h5>
-            <div className="flex flex-col space-y-1.5 text-slate-400">
-              <Link href="/compare/mentorprep-alternative" className="hover:text-sky-400 transition-colors">
-                Mentor Prep Alternative
-              </Link>
-              <Link href="/compare/mentorkhoj-alternative" className="hover:text-sky-400 transition-colors">
-                MentorKhoj Alternative
-              </Link>
-              <Link href="/compare/pw-disha-alternative" className="hover:text-sky-400 transition-colors">
-                PW Disha Alternative
-              </Link>
-              <Link href="/compare/esaral-alternative" className="hover:text-sky-400 transition-colors">
-                eSaral Alternative
-              </Link>
-              <Link href="/compare/jeetneeti-alternative" className="hover:text-sky-400 transition-colors">
-                JeetNeeti Alternative
-              </Link>
-              <Link href="/compare/toppersclubs-alternative" className="hover:text-sky-400 transition-colors">
-                ToppersClubs Alternative
-              </Link>
-              <Link href="/compare/jeesociety-alternative" className="hover:text-sky-400 transition-colors">
-                JEE Society Alternative
-              </Link>
-              <Link href="/compare/mindpeak-alternative" className="hover:text-sky-400 transition-colors">
-                MindPeak Alternative
-              </Link>
-              <Link href="/compare/campuspoint-alternative" className="hover:text-sky-400 transition-colors">
-                CampusPoint Alternative
-              </Link>
-              <Link href="/compare/mentors-eduserv-alternative" className="hover:text-sky-400 transition-colors">
-                Mentors Eduserv Alternative
-              </Link>
-              <Link href="/compare/hello-mentor-alternative" className="hover:text-sky-400 transition-colors">
-                Hello Mentor Alternative
-              </Link>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Bottom Sub-Footer Bar */}
@@ -377,19 +201,6 @@ export function Footer() {
 
           {/* Social Icons */}
           <div className="flex items-center gap-3">
-            {/* X / Twitter */}
-            <a
-              href="https://x.com/mentskool"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Follow Mentskool on X (Twitter)"
-              className="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-sky-400 hover:border-sky-500/40 hover:scale-105 transition-all"
-            >
-              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
-            </a>
-
             {/* LinkedIn */}
             <a
               href="https://linkedin.com/company/mentskool"
@@ -426,24 +237,24 @@ export function Footer() {
             >
               <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-              </svg>
-            </a>
+            </svg>
+          </a>
 
-            {/* GitHub */}
-            <a
-              href="https://github.com/Mentskool"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="View Mentskool on GitHub"
-              className="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-slate-700 hover:scale-105 transition-all"
-            >
-              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-              </svg>
-            </a>
-          </div>
+          {/* GitHub */}
+          <a
+            href="https://github.com/Mentskool"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View Mentskool on GitHub"
+            className="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-slate-700 hover:scale-105 transition-all"
+          >
+            <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+            </svg>
+          </a>
         </div>
       </div>
-    </footer>
-  );
+    </div>
+  </footer>
+);
 }
