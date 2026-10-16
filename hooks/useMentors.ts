@@ -10,7 +10,12 @@ import {
 } from "@/lib/types";
 import { useAuthStore } from "@/store/authStore";
 
-export function useMentors(category?: string, limit = 20, offset = 0) {
+export function useMentors(
+  category?: string,
+  limit = 20,
+  offset = 0,
+  initialData?: MentorListResponse
+) {
   const queryParams = new URLSearchParams();
   if (category) queryParams.set("category", category);
   queryParams.set("limit", limit.toString());
@@ -21,6 +26,7 @@ export function useMentors(category?: string, limit = 20, offset = 0) {
     queryFn: () =>
       apiClient<MentorListResponse>(`/mentors?${queryParams.toString()}`),
     staleTime: 30000,
+    initialData: (!category && offset === 0) ? initialData : undefined,
   });
 }
 
