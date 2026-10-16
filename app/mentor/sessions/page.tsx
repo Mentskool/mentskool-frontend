@@ -61,14 +61,51 @@ export default function MentorSessionsPage() {
   const [price, setPrice] = useState<number>(0);
   const [duration, setDuration] = useState<number>(30);
   const [defaultLink, setDefaultLink] = useState<string>("");
+  const [weeklySchedule, setWeeklySchedule] = useState<Record<string, { enabled: boolean; startTime: string; endTime: string }>>({
+    mon: { enabled: true, startTime: "18:00", endTime: "21:00" },
+    tue: { enabled: true, startTime: "18:00", endTime: "21:00" },
+    wed: { enabled: true, startTime: "18:00", endTime: "21:00" },
+    thu: { enabled: true, startTime: "18:00", endTime: "21:00" },
+    fri: { enabled: true, startTime: "18:00", endTime: "21:00" },
+    sat: { enabled: true, startTime: "11:00", endTime: "19:00" },
+    sun: { enabled: true, startTime: "11:00", endTime: "19:00" },
+  });
   const [settingsSuccess, setSettingsSuccess] = useState<string>("");
 
   React.useEffect(() => {
     if (settingsData) {
-      setIsEnabled(settingsData.one_on_one_enabled);
+      setIsEnabled(settingsData.one_on_one_enabled !== false);
       setPrice(Number(settingsData.one_on_one_price || 0));
       setDuration(settingsData.one_on_one_duration_minutes || 30);
       setDefaultLink(settingsData.default_meeting_link || "");
+
+      if (settingsData.weekly_availability && typeof settingsData.weekly_availability === "object") {
+        const days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+        const loaded: Record<string, { enabled: boolean; startTime: string; endTime: string }> = {
+          mon: { enabled: true, startTime: "18:00", endTime: "21:00" },
+          tue: { enabled: true, startTime: "18:00", endTime: "21:00" },
+          wed: { enabled: true, startTime: "18:00", endTime: "21:00" },
+          thu: { enabled: true, startTime: "18:00", endTime: "21:00" },
+          fri: { enabled: true, startTime: "18:00", endTime: "21:00" },
+          sat: { enabled: true, startTime: "11:00", endTime: "19:00" },
+          sun: { enabled: true, startTime: "11:00", endTime: "19:00" },
+        };
+        for (const day of days) {
+          const windows = (settingsData.weekly_availability as any)[day];
+          if (Array.isArray(windows) && windows.length > 0) {
+            const first = windows[0];
+            if (typeof first === "string" && first.includes("-")) {
+              const [st, et] = first.split("-");
+              loaded[day] = { enabled: true, startTime: st.trim(), endTime: et.trim() };
+            } else if (typeof first === "object" && first?.start && first?.end) {
+              loaded[day] = { enabled: true, startTime: first.start.trim(), endTime: first.end.trim() };
+            }
+          } else if (Array.isArray(windows) && windows.length === 0) {
+            loaded[day] = { enabled: false, startTime: "18:00", endTime: "21:00" };
+          }
+        }
+        setWeeklySchedule(loaded);
+      }
     }
   }, [settingsData]);
 
@@ -119,14 +156,27 @@ export default function MentorSessionsPage() {
   const handleSaveSettings = async (e: React.FormEvent) => {
     e.preventDefault();
     setSettingsSuccess("");
+
+    const DAYS_ORDER = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+    const formattedAvailability: Record<string, string[]> = {};
+    for (const d of DAYS_ORDER) {
+      const dayData = weeklySchedule[d];
+      if (dayData && dayData.enabled && dayData.startTime && dayData.endTime) {
+        formattedAvailability[d] = [`${dayData.startTime}-${dayData.endTime}`];
+      } else {
+        formattedAvailability[d] = [];
+      }
+    }
+
     try {
       await updateSettingsMutation.mutateAsync({
         one_on_one_enabled: isEnabled,
         one_on_one_price: price,
         one_on_one_duration_minutes: duration,
         default_meeting_link: defaultLink.trim() || undefined,
+        weekly_availability: formattedAvailability,
       });
-      setSettingsSuccess("Settings updated successfully!");
+      setSettingsSuccess("1-on-1 availability schedule & pricing saved successfully!");
       refetchSettings();
     } catch (err: any) {
       // Handled
@@ -443,101 +493,279 @@ export default function MentorSessionsPage() {
 
         {/* Tab 4: 1:1 Pricing & Availability Settings */}
         {activeTab === "settings" && (
-          <Card className="p-6 bg-white border border-slate-200 max-w-2xl">
-            <h3 className="font-bold text-slate-900 text-base mb-1">1-on-1 Session Offering Settings</h3>
-            <p className="text-xs text-slate-500 mb-6">
-              Configure how students can book 1-on-1 private calls with you on Mentskool.
-            </p>
-
+          <div className="space-y-6 max-w-3xl">
             {settingsSuccess && (
-              <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs rounded-xl flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>{settingsSuccess}</span>
+              <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-2xl flex items-center gap-2.5 shadow-xs">
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                <span className="font-semibold">{settingsSuccess}</span>
               </div>
             )}
 
-            <form onSubmit={handleSaveSettings} className="space-y-4">
-              {/* Enable toggle */}
-              <div className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 bg-slate-50">
-                <div>
-                  <label className="text-xs font-bold text-slate-900 block">Accept 1-on-1 Bookings</label>
-                  <p className="text-[11px] text-slate-500">Allow students to book 1-on-1 sessions from your profile</p>
+            <form onSubmit={handleSaveSettings} className="space-y-6">
+              {/* Card 1: Pricing & Call Options */}
+              <Card className="p-6 bg-white border border-slate-200 space-y-5">
+                <div className="border-b border-slate-100 pb-3">
+                  <h3 className="font-bold text-slate-900 text-base">Pricing & Call Preferences</h3>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Configure your 1-on-1 session fees, duration, and default Google Meet link.
+                  </p>
                 </div>
-                <input
-                  type="checkbox"
-                  checked={isEnabled}
-                  onChange={(e) => setIsEnabled(e.target.checked)}
-                  className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-                />
-              </div>
 
-              {/* Price */}
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  Session Fee (in INR ₹)
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-2.5 text-xs text-slate-400 font-bold">₹</span>
+                {/* Enable toggle */}
+                <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50/70">
+                  <div>
+                    <label className="text-xs font-bold text-slate-900 block">Accept 1-on-1 Bookings</label>
+                    <p className="text-[11px] text-slate-500">Allow students to discover you and book calls on /book-call</p>
+                  </div>
                   <input
-                    type="number"
-                    min={0}
-                    step={50}
-                    value={price}
-                    onChange={(e) => setPrice(Number(e.target.value))}
-                    className="w-full pl-7 pr-3 py-2 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                    type="checkbox"
+                    checked={isEnabled}
+                    onChange={(e) => setIsEnabled(e.target.checked)}
+                    className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500 cursor-pointer"
                   />
                 </div>
-                <p className="text-[11px] text-slate-400 mt-1">
-                  Tip: Set ₹0 to offer a <strong>Free Discovery Call</strong> to attract new students to your cohort!
-                </p>
-              </div>
 
-              {/* Duration */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Price */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Session Fee (in INR ₹) *
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-2.5 text-xs text-slate-400 font-bold">₹</span>
+                      <input
+                        type="number"
+                        min={0}
+                        step={50}
+                        value={price}
+                        onChange={(e) => setPrice(Math.max(0, Number(e.target.value)))}
+                        className="w-full pl-7 pr-3 py-2 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
+                      />
+                    </div>
+                    <p className="text-[11px] text-slate-500 mt-1">
+                      Set ₹0 for a <strong>Free Discovery Call</strong>, or set your fee (e.g. ₹199, ₹499).
+                    </p>
+                  </div>
+
+                  {/* Duration */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Session Duration *
+                    </label>
+                    <select
+                      value={duration}
+                      onChange={(e) => setDuration(Number(e.target.value))}
+                      className="w-full px-3 py-2 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
+                    >
+                      <option value={30}>30 Minutes</option>
+                      <option value={45}>45 Minutes</option>
+                      <option value={60}>60 Minutes</option>
+                    </select>
+                    <p className="text-[11px] text-slate-500 mt-1">
+                      Standard duration per student checkpoint call.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Default Meet Link */}
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Default Google Meet / Zoom Link
+                  </label>
+                  <input
+                    type="url"
+                    placeholder="https://meet.google.com/xyz-abc-def"
+                    value={defaultLink}
+                    onChange={(e) => setDefaultLink(e.target.value)}
+                    className="w-full px-3 py-2 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
+                  />
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    Auto-populated whenever you approve a student&apos;s booking request.
+                  </p>
+                </div>
+              </Card>
+
+              {/* Card 2: Weekly Availability & Open Slots */}
+              <Card className="p-6 bg-white border border-slate-200 space-y-5">
+                <div className="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-base flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-blue-600" />
+                      Weekly Availability Schedule
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Select which days and time windows you are open for 1-on-1 calls.
+                    </p>
+                  </div>
+
+                  {/* Preset Buttons */}
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setWeeklySchedule({
+                          mon: { enabled: true, startTime: "18:00", endTime: "21:00" },
+                          tue: { enabled: true, startTime: "18:00", endTime: "21:00" },
+                          wed: { enabled: true, startTime: "18:00", endTime: "21:00" },
+                          thu: { enabled: true, startTime: "18:00", endTime: "21:00" },
+                          fri: { enabled: true, startTime: "18:00", endTime: "21:00" },
+                          sat: { enabled: false, startTime: "11:00", endTime: "19:00" },
+                          sun: { enabled: false, startTime: "11:00", endTime: "19:00" },
+                        });
+                      }}
+                      className="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                    >
+                      Weekdays (6-9 PM)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setWeeklySchedule({
+                          mon: { enabled: false, startTime: "18:00", endTime: "21:00" },
+                          tue: { enabled: false, startTime: "18:00", endTime: "21:00" },
+                          wed: { enabled: false, startTime: "18:00", endTime: "21:00" },
+                          thu: { enabled: false, startTime: "18:00", endTime: "21:00" },
+                          fri: { enabled: false, startTime: "18:00", endTime: "21:00" },
+                          sat: { enabled: true, startTime: "11:00", endTime: "19:00" },
+                          sun: { enabled: true, startTime: "11:00", endTime: "19:00" },
+                        });
+                      }}
+                      className="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                    >
+                      Weekends Only
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setWeeklySchedule({
+                          mon: { enabled: true, startTime: "17:00", endTime: "21:00" },
+                          tue: { enabled: true, startTime: "17:00", endTime: "21:00" },
+                          wed: { enabled: true, startTime: "17:00", endTime: "21:00" },
+                          thu: { enabled: true, startTime: "17:00", endTime: "21:00" },
+                          fri: { enabled: true, startTime: "17:00", endTime: "21:00" },
+                          sat: { enabled: true, startTime: "11:00", endTime: "19:00" },
+                          sun: { enabled: true, startTime: "11:00", endTime: "19:00" },
+                        });
+                      }}
+                      className="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                    >
+                      All 7 Days
+                    </button>
+                  </div>
+                </div>
+
+                {/* Day-by-Day List */}
+                <div className="space-y-2.5 divide-y divide-slate-100">
+                  {[
+                    { key: "mon", label: "Monday" },
+                    { key: "tue", label: "Tuesday" },
+                    { key: "wed", label: "Wednesday" },
+                    { key: "thu", label: "Thursday" },
+                    { key: "fri", label: "Friday" },
+                    { key: "sat", label: "Saturday" },
+                    { key: "sun", label: "Sunday" },
+                  ].map((day) => {
+                    const dayState = weeklySchedule[day.key] || {
+                      enabled: false,
+                      startTime: "18:00",
+                      endTime: "21:00",
+                    };
+
+                    return (
+                      <div
+                        key={day.key}
+                        className={`pt-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-2.5 rounded-xl transition-all ${
+                          dayState.enabled ? "bg-slate-50/70" : "opacity-60 bg-transparent"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3 w-36">
+                          <input
+                            type="checkbox"
+                            id={`day-${day.key}`}
+                            checked={dayState.enabled}
+                            onChange={(e) => {
+                              setWeeklySchedule((prev) => ({
+                                ...prev,
+                                [day.key]: {
+                                  ...dayState,
+                                  enabled: e.target.checked,
+                                },
+                              }));
+                            }}
+                            className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500 cursor-pointer"
+                          />
+                          <label
+                            htmlFor={`day-${day.key}`}
+                            className="text-xs font-bold text-slate-800 cursor-pointer select-none"
+                          >
+                            {day.label}
+                          </label>
+                        </div>
+
+                        {dayState.enabled ? (
+                          <div className="flex items-center gap-2 text-xs">
+                            <span className="text-slate-500 text-[11px] font-medium">From:</span>
+                            <input
+                              type="time"
+                              value={dayState.startTime}
+                              onChange={(e) => {
+                                setWeeklySchedule((prev) => ({
+                                  ...prev,
+                                  [day.key]: {
+                                    ...dayState,
+                                    startTime: e.target.value,
+                                  },
+                                }));
+                              }}
+                              className="px-2.5 py-1 text-xs rounded-lg border border-slate-200 bg-white font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                            />
+                            <span className="text-slate-500 text-[11px] font-medium">To:</span>
+                            <input
+                              type="time"
+                              value={dayState.endTime}
+                              onChange={(e) => {
+                                setWeeklySchedule((prev) => ({
+                                  ...prev,
+                                  [day.key]: {
+                                    ...dayState,
+                                    endTime: e.target.value,
+                                  },
+                                }));
+                              }}
+                              className="px-2.5 py-1 text-xs rounded-lg border border-slate-200 bg-white font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                            />
+                          </div>
+                        ) : (
+                          <span className="text-xs font-semibold text-slate-400 italic">
+                            Unavailable / Off
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="p-3 bg-blue-50/60 border border-blue-100 rounded-xl text-[11px] text-blue-800 flex items-start gap-2">
+                  <Sparkles className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                  <p>
+                    Students booking on <span className="font-bold">mentskool.com/book-call</span> will automatically see available {duration}-minute booking slots generated within your configured windows.
+                  </p>
+                </div>
+              </Card>
+
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  Session Duration (Minutes)
-                </label>
-                <select
-                  value={duration}
-                  onChange={(e) => setDuration(Number(e.target.value))}
-                  className="w-full px-3 py-2 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
-                >
-                  <option value={30}>30 Minutes</option>
-                  <option value={45}>45 Minutes</option>
-                  <option value={60}>60 Minutes</option>
-                </select>
-              </div>
-
-              {/* Default Meet Link */}
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  Default Google Meet / Zoom Link
-                </label>
-                <input
-                  type="url"
-                  placeholder="https://meet.google.com/xyz-abc-def"
-                  value={defaultLink}
-                  onChange={(e) => setDefaultLink(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
-                />
-                <p className="text-[11px] text-slate-400 mt-1">
-                  Auto-populated whenever you approve a session.
-                </p>
-              </div>
-
-              <div className="pt-2">
                 <Button
                   type="submit"
                   size="md"
                   variant="primary"
                   isLoading={updateSettingsMutation.isPending}
-                  className="w-full py-2.5 text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white"
+                  className="w-full py-3 text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-sm"
                 >
-                  Save Settings
+                  Save Availability & Pricing Settings
                 </Button>
               </div>
             </form>
-          </Card>
+          </div>
         )}
       </div>
 
