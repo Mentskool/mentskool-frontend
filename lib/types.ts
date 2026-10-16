@@ -58,6 +58,11 @@ export interface MentorProfile {
   seat_limit: number;
   available_seats: number;
   price_per_month: number | string;
+  one_on_one_enabled?: boolean;
+  one_on_one_price?: number | string;
+  one_on_one_duration_minutes?: number;
+  default_meeting_link?: string | null;
+  weekly_availability?: Record<string, any> | null;
   is_active: boolean;
   is_available?: boolean;
   verification_status: MentorVerificationStatus;
@@ -456,4 +461,86 @@ export interface CohortQuizSummaryResponse {
   cohort_average_percentage?: number | string | null;
   rankings: StudentCohortRankItem[];
 }
+
+// -------------------------------------------------------------
+// 1-on-1 Sessions, Availability, and Reviews
+// -------------------------------------------------------------
+
+export type SessionBookingStatus =
+  | "PENDING_APPROVAL"
+  | "CONFIRMED"
+  | "REJECTED"
+  | "COMPLETED"
+  | "CANCELLED"
+  | "REFUNDED";
+
+export interface SessionReview {
+  id: string;
+  booking_id: string;
+  mentor_id: string;
+  student_id: string;
+  student_name?: string | null;
+  student_avatar_url?: string | null;
+  rating: number;
+  comment: string;
+  created_at: string;
+}
+
+export interface SessionBooking {
+  id: string;
+  mentor_id: string;
+  mentor_name?: string | null;
+  mentor_avatar_url?: string | null;
+  mentor_college?: string | null;
+  student_id: string;
+  student_name?: string | null;
+  student_avatar_url?: string | null;
+  scheduled_at: string;
+  duration_minutes: number;
+  agenda_notes: string;
+  amount_paid: number | string;
+  meeting_link?: string | null;
+  status: SessionBookingStatus;
+  rejection_reason?: string | null;
+  created_at: string;
+  review?: SessionReview | null;
+}
+
+export interface Mentor1on1Card {
+  mentor_id: string;
+  slug?: string | null;
+  name: string;
+  avatar_url?: string | null;
+  college?: string | null;
+  exam_rank?: string | null;
+  category: string;
+  bio: string;
+  intro_youtube_url?: string | null;
+  one_on_one_enabled: boolean;
+  one_on_one_price: number | string;
+  one_on_one_duration_minutes: number;
+  default_meeting_link?: string | null;
+  rating: number;
+  total_reviews: number;
+  total_sessions_delivered: number;
+  weekly_availability?: Record<string, any> | null;
+  reviews?: SessionReview[];
+}
+
+export interface AvailableSlotsResponse {
+  mentor_id: string;
+  date: string;
+  duration_minutes: number;
+  slots: string[];
+}
+
+export interface MentorSessionSettings {
+  mentor_id: string;
+  one_on_one_enabled: boolean;
+  one_on_one_price: number | string;
+  one_on_one_duration_minutes: number;
+  default_meeting_link?: string | null;
+  weekly_availability?: Record<string, any> | null;
+}
+
 
