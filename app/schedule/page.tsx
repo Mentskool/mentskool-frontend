@@ -12,13 +12,15 @@ import {
 } from "@/hooks/useMeetings";
 import { useSubscriptions } from "@/hooks/useSubscriptions";
 import { useMentorRoster } from "@/hooks/useTasks";
+import { useMySessionBookings } from "@/hooks/useSessions";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { CardSkeleton } from "@/components/ui/Skeleton";
-import { Meeting } from "@/lib/types";
+import { Meeting, SessionBooking } from "@/lib/types";
+import { SessionReviewModal } from "@/components/sessions/SessionReviewModal";
 import {
   Calendar,
   Pencil,
@@ -59,6 +61,11 @@ function ScheduleContent() {
   const createMeetingMutation = useCreateMeeting();
   const updateMeetingMutation = useUpdateMeeting();
   const deleteMeetingMutation = useDeleteMeeting();
+
+  // 1-on-1 Private Sessions
+  const { data: sessionBookings, refetch: refetchSessions } = useMySessionBookings();
+  const [reviewingBooking, setReviewingBooking] = useState<SessionBooking | null>(null);
+  const [sessionFilter, setSessionFilter] = useState<"all" | "1on1" | "cohort">("all");
 
   // For students to know which mentor they are requesting with
   const { data: subsData } = useSubscriptions();
@@ -690,6 +697,154 @@ function ScheduleContent() {
         </div>
       ) : (
         <div className="space-y-8">
+          {/* 1-on-1 Private Sessions Block */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-600" />
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
+                  <Video className="w-4 h-4 text-blue-600" />
+                  1-on-1 Private Calls ({sessionBookings?.length || 0})
+                </h3>
+              </div>
+
+              {isMentor ? (
+                <Link
+                  href="/mentor/sessions"
+                  className="text-xs text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1"
+                >
+                  Manage 1:1 Requests & Availability →
+                </Link>
+              ) : (
+                <Link
+                  href="/book-call"
+                  className="text-xs text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1"
+                >
+                  Book Another Mentor Call →
+                </Link>
+              )}
+            </div>
+
+            {sessionBookings && sessionBookings.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                {sessionBookings.map((b) => (
+                  <div
+                    key={b.id}
+                    className="bg-white rounded-2xl border border-slate-200/80 p-4 space-y-3 shadow-xs hover:border-slate-300 transition-all"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 overflow-hidden shrink-0 flex items-center justify-center font-bold text-slate-600 text-xs">
+                          {(isMentor ? b.student_avatar_url : b.mentor_avatar_url) ? (
+                            <img
+                              src={(isMentor ? b.student_avatar_url : b.mentor_avatar_url) || ""}
+                              alt=""
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            (isMentor ? b.student_name : b.mentor_name)?.charAt(0) || "M"
+                          )}
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-sm text-slate-900">
+                            {isMentor ? b.student_name : b.mentor_name}
+                          </h4>
+                          <p className="text-[11px] text-slate-500">
+                            {isMentor ? "1:1 Mentee" : b.mentor_college || "Verified Mentor"}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div>
+                        {b.status === "PENDING_APPROVAL" && (
+                          <span className="text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-full">
+                            Pending Approval
+                          </span>
+                        )}
+                        {b.status === "CONFIRMED" && (
+                          <span className="text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full">
+                            Confirmed
+                          </span>
+                        )}
+                        {b.status === "COMPLETED" && (
+                          <span className="text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200 px-2 py-0.5 rounded-full">
+                            Completed
+                          </span>
+                        )}
+                        {b.status === "REFUNDED" && (
+                          <span className="text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200 px-2 py-0.5 rounded-full">
+                            Refunded
+                          </span>
+                        )}
+                        {b.status === "REJECTED" && (
+                          <span className="text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200 px-2 py-0.5 rounded-full">
+                            Declined
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1 text-xs">
+                      <div className="flex items-center gap-1.5 text-slate-700 font-medium">
+                        <Clock className="w-3.5 h-3.5 text-blue-500" />
+                        <span>
+                          {new Date(b.scheduled_at).toLocaleString("en-IN", {
+                            dateStyle: "medium",
+                            timeStyle: "short",
+                          })}{" "}
+                          ({b.duration_minutes}m)
+                        </span>
+                      </div>
+                      <p className="text-slate-600 text-[11px] line-clamp-2 italic">
+                        &ldquo;{b.agenda_notes}&rdquo;
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2 pt-1">
+                      {b.status === "CONFIRMED" && b.meeting_link && (
+                        <a
+                          href={b.meeting_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 py-1.5 px-3 text-xs font-semibold text-center rounded-lg bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-1.5 shadow-sm"
+                        >
+                          <Video className="w-3.5 h-3.5" />
+                          Join Call
+                        </a>
+                      )}
+
+                      {!isMentor && b.status === "COMPLETED" && !b.review && (
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          onClick={() => setReviewingBooking(b)}
+                          className="w-full text-xs font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 flex items-center justify-center gap-1.5"
+                        >
+                          <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                          Rate & Review Call
+                        </Button>
+                      )}
+
+                      {!isMentor && b.status === "COMPLETED" && b.review && (
+                        <div className="w-full text-center text-[11px] text-slate-500 font-medium">
+                          ⭐ You rated {b.review.rating}/5
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-4 text-center rounded-2xl bg-white border border-slate-200/80 text-xs text-slate-500">
+                You have no private 1-on-1 calls booked yet.{" "}
+                <Link href="/book-call" className="text-blue-600 underline font-semibold">
+                  Browse verified mentors to book a call
+                </Link>
+                .
+              </div>
+            )}
+          </div>
+
           {/* Pending / Requested Queue */}
           {requestedMeetings.length > 0 && (
             <div className="space-y-3">
@@ -873,6 +1028,14 @@ function ScheduleContent() {
             )}
           </div>
         </div>
+      )}
+
+      {reviewingBooking && (
+        <SessionReviewModal
+          booking={reviewingBooking}
+          onClose={() => setReviewingBooking(null)}
+          onSuccess={() => refetchSessions()}
+        />
       )}
     </div>
   );
