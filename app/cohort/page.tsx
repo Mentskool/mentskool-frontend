@@ -11,7 +11,8 @@ import {
   useCreateResource,
   useDeleteResource,
 } from "@/hooks/useCohort";
-import { useSubscriptions, useLeaveActiveCohort } from "@/hooks/useSubscriptions";
+import { useSubscriptions, useLeaveActiveCohort, useRenewSubscription } from "@/hooks/useSubscriptions";
+import { initiateRazorpayCheckout } from "@/lib/razorpay";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -49,6 +50,67 @@ export default function CohortPage() {
       });
     }
   };
+
+  const renewCohortMutation = useRenewSubscription();
+  const [isRenewing, setIsRenewing] = useState(false);
+  const [renewFeedback, setRenewFeedback] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+
+  const expiresDate = activeSub?.expires_at ? new Date(activeSub.expires_at) : null;
+  const daysRemaining = expiresDate
+    ? Math.max(0, Math.ceil((expiresDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
+    : null;
+
+  const handleRenewCohort = async () => {
+    if (!activeSub) return;
+    setIsRenewing(true);
+    setRenewFeedback(null);
+
+    await initiateRazorpayCheckout({
+      amountInPaise: 199900,
+      currency: "INR",
+      name: "Mentskool",
+      description: `Renew Mentorship with ${activeSub.mentor_name}`,
+      prefill: {
+        name: user?.full_name || "",
+        email: user?.email || "",
+      },
+      notes: {
+        mentor_id: activeSub.mentor_id,
+        type: "cohort_renewal",
+      },
+      onSuccess: async (verification) => {
+        try {
+          await renewCohortMutation.mutateAsync({
+            mentorId: activeSub.mentor_id,
+            paymentId: verification.payment_id,
+          });
+          setRenewFeedback({
+            type: "success",
+            message: "Mentorship successfully renewed for another 30 days! Your access has been extended.",
+          });
+          refetchSubs();
+        } catch (err: any) {
+          setRenewFeedback({
+            type: "error",
+            message: err?.detail || "Failed to finalize renewal record. Please contact support.",
+          });
+        } finally {
+          setIsRenewing(false);
+        }
+      },
+      onError: (err) => {
+        setRenewFeedback({ type: "error", message: err });
+        setIsRenewing(false);
+      },
+      onDismiss: () => {
+        setIsRenewing(false);
+      },
+    });
+  };
+
 
   const [activeTab, setActiveTab] = useState<"announcements" | "resources">("announcements");
 
@@ -177,23 +239,58 @@ export default function CohortPage() {
             </div>
           )}
 
+          {renewFeedback && (
+            <div
+              className={`p-3 rounded-control text-xs font-semibold ${
+                renewFeedback.type === "success"
+                  ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
+                  : "bg-red-50 text-red-700 border border-red-200"
+              }`}
+            >
+              {renewFeedback.message}
+            </div>
+          )}
+
           {activeSub ? (
             <div className="p-4 rounded-card bg-white border border-mist flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-xs font-bold px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200/80">
                     Active Enrollment
                   </span>
                   <span className="font-display font-bold text-base text-ink">
                     Mentor: {activeSub.mentor_name}
                   </span>
+                  {daysRemaining !== null && (
+                    <span
+                      className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${
+                        daysRemaining <= 5
+                          ? "bg-red-100 text-red-700"
+                          : daysRemaining <= 10
+                          ? "bg-amber-100 text-amber-700"
+                          : "bg-emerald-100 text-emerald-700"
+                      }`}
+                    >
+                      {daysRemaining} {daysRemaining === 1 ? "day" : "days"} left
+                    </span>
+                  )}
                 </div>
                 <p className="text-xs text-ink-muted mt-1">
-                  You are actively enrolled in this cohort. Leaving releases your seat and allows you to join another mentor.
+                  Valid until {expiresDate ? expiresDate.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) : "30 days"}. Renew anytime to extend your mentorship by 30 days.
                 </p>
               </div>
 
               <div className="flex items-center gap-2 self-start sm:self-center flex-wrap">
+                <Button
+                  size="sm"
+                  variant="primary"
+                  isLoading={isRenewing}
+                  onClick={handleRenewCohort}
+                  className="text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs"
+                >
+                  Renew for 30 Days
+                </Button>
+
                 <Link href={`/mentors/${activeSub.mentor_id}?tab=reviews`}>
                   <Button
                     size="sm"
@@ -201,9 +298,10 @@ export default function CohortPage() {
                     className="text-xs font-semibold text-amber-800 bg-amber-50 hover:bg-amber-100 border-amber-200/80 shadow-xs flex items-center gap-1.5"
                   >
                     <span>⭐</span>
-                    <span>Rate & Review Mentor</span>
+                    <span>Rate Mentor</span>
                   </Button>
                 </Link>
+
 
                 {!showLeaveConfirm ? (
                   <Button
