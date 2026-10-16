@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { useAvailableSlots, useBookSession } from "@/hooks/useSessions";
+import { initiateRazorpayCheckout } from "@/lib/razorpay";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import {
@@ -80,17 +81,54 @@ export function Book1on1Modal({ isOpen, onClose, mentor }: Book1on1ModalProps) {
       return;
     }
 
-    try {
-      // Build ISO string in Indian Standard Time offset (+05:30)
-      const scheduledAtIso = `${selectedDate}T${selectedTime}:00+05:30`;
+    const scheduledAtIso = `${selectedDate}T${selectedTime}:00+05:30`;
 
+    if (priceNum > 0) {
+      await initiateRazorpayCheckout({
+        amountInPaise: Math.round(priceNum * 100),
+        currency: "INR",
+        name: "Mentskool",
+        description: `1-on-1 Session with ${mentor.full_name}`,
+        prefill: {
+          name: user?.full_name || "",
+          email: user?.email || "",
+          contact: "",
+        },
+        notes: {
+          mentor_id: mentorIdentifier,
+          scheduled_at: scheduledAtIso,
+        },
+        onSuccess: async (verification) => {
+          try {
+            await bookMutation.mutateAsync({
+              mentor_id: mentorIdentifier,
+              scheduled_at: scheduledAtIso,
+              agenda_notes: agenda.trim(),
+              payment_id: verification.payment_id,
+            });
+            setIsSuccess(true);
+          } catch (bookErr: any) {
+            setErrorMsg(
+              bookErr?.detail || bookErr?.message || "Failed to finalize session booking."
+            );
+          }
+        },
+        onError: (err) => {
+          setErrorMsg(err);
+        },
+        onDismiss: () => {
+          setErrorMsg("Payment was cancelled. Your session has not been booked.");
+        },
+      });
+      return;
+    }
+
+    try {
       await bookMutation.mutateAsync({
         mentor_id: mentorIdentifier,
         scheduled_at: scheduledAtIso,
         agenda_notes: agenda.trim(),
-        payment_id: priceNum > 0 ? "mock_pay_" + Date.now() : undefined,
       });
-
       setIsSuccess(true);
     } catch (err: any) {
       setErrorMsg(
@@ -98,6 +136,7 @@ export function Book1on1Modal({ isOpen, onClose, mentor }: Book1on1ModalProps) {
       );
     }
   };
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">

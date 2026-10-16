@@ -65,3 +65,23 @@ export function useLeaveActiveCohort() {
     },
   });
 }
+
+export function useRenewSubscription() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ mentorId, paymentId }: { mentorId: string; paymentId?: string }) =>
+      apiClient.post<Subscription>("/subscriptions/renew", {
+        mentor_id: mentorId,
+        payment_id: paymentId,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["mySubscriptions"] });
+      queryClient.invalidateQueries({ queryKey: ["mentors"] });
+      queryClient.invalidateQueries({ queryKey: ["mentor"] });
+      queryClient.invalidateQueries({ queryKey: ["announcements"] });
+      queryClient.invalidateQueries({ queryKey: ["resources"] });
+    },
+  });
+}
+
