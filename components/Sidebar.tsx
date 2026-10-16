@@ -19,6 +19,7 @@ import {
   Menu,
   X,
   Compass,
+  Video,
 } from "lucide-react";
 
 import { BrandLogo } from "./BrandLogo";
@@ -32,6 +33,7 @@ interface NavItem {
 const STUDENT_NAV_ITEMS: NavItem[] = [
   { label: "My Tasks", href: "/dashboard/tasks", icon: CheckSquare },
   { label: "Efficiency", href: "/dashboard/efficiency", icon: BarChart3 },
+  { label: "1:1 Calls", href: "/book-call", icon: Video },
   { label: "Cohort", href: "/cohort", icon: Users },
   { label: "Messages", href: "/messages", icon: MessageSquare },
   { label: "Schedule", href: "/schedule", icon: Calendar },
@@ -41,6 +43,7 @@ const STUDENT_NAV_ITEMS: NavItem[] = [
 
 const MENTOR_NAV_ITEMS: NavItem[] = [
   { label: "Students", href: "/mentor/students", icon: UserCheck },
+  { label: "1:1 Sessions", href: "/mentor/sessions", icon: Video },
   { label: "Tasks", href: "/mentor/tasks", icon: CheckSquare },
   { label: "Cohort", href: "/cohort", icon: Users },
   { label: "Messages", href: "/messages", icon: MessageSquare },

@@ -66,6 +66,12 @@ export default function MentorProfilePage() {
   const [seatLimit, setSeatLimit] = useState(10);
   const [pricePerMonth, setPricePerMonth] = useState(1500);
 
+  // 1-on-1 Sessions Settings
+  const [oneOnOneEnabled, setOneOnOneEnabled] = useState(true);
+  const [oneOnOnePrice, setOneOnOnePrice] = useState(0);
+  const [oneOnOneDuration, setOneOnOneDuration] = useState(30);
+  const [defaultMeetingLink, setDefaultMeetingLink] = useState("");
+
   // Payout Details
   const [payoutUpiId, setPayoutUpiId] = useState("");
   const [payoutAccountNumber, setPayoutAccountNumber] = useState("");
@@ -99,6 +105,10 @@ export default function MentorProfilePage() {
       setPricePerMonth(
         profile.price_per_month ? Math.min(Number(profile.price_per_month), 2000) : 1500
       );
+      setOneOnOneEnabled(profile.one_on_one_enabled !== false);
+      setOneOnOnePrice(profile.one_on_one_price != null ? Number(profile.one_on_one_price) : 0);
+      setOneOnOneDuration(profile.one_on_one_duration_minutes || 30);
+      setDefaultMeetingLink(profile.default_meeting_link || "");
       setCollegeIdProofUrl(profile.college_id_proof_url || "");
       setScorecardProofUrl(profile.scorecard_proof_url || "");
       setPayoutUpiId(profile.payout_upi_id || "");
@@ -224,6 +234,10 @@ export default function MentorProfilePage() {
       intro_youtube_url: youtubeUrl.trim() || null,
       seat_limit: validatedSeats,
       price_per_month: validatedPrice,
+      one_on_one_enabled: oneOnOneEnabled,
+      one_on_one_price: Math.max(0, Number(oneOnOnePrice) || 0),
+      one_on_one_duration_minutes: Number(oneOnOneDuration) || 30,
+      default_meeting_link: defaultMeetingLink.trim() || null,
       payout_upi_id: payoutMethod === "UPI" ? payoutUpiId.trim() || null : null,
       payout_account_number: payoutMethod === "BANK" ? payoutAccountNumber.trim() || null : null,
       payout_ifsc: payoutMethod === "BANK" ? payoutIfsc.trim().toUpperCase() || null : null,
@@ -711,6 +725,85 @@ export default function MentorProfilePage() {
               onChange={(e) => setSeatLimit(Math.min(30, Number(e.target.value)))}
               helperText="Platform cap: maximum 30 concurrent students allowed."
               required
+            />
+          </div>
+        </Card>
+
+        {/* ========================================================================= */}
+        {/* 1-on-1 SESSIONS & INSTANT CALL CONFIGURATION */}
+        {/* ========================================================================= */}
+        <Card className="p-6 bg-white border border-mist rounded-2xl shadow-soft space-y-5">
+          <div className="border-b border-mist pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <span className="p-1.5 rounded-lg bg-blue-50 text-blue-600">
+                <Video className="w-4 h-4" />
+              </span>
+              <div>
+                <h3 className="text-sm font-bold text-ink">1-on-1 Private Call Settings</h3>
+                <p className="text-xs text-ink-muted">Set pricing and preferences for individual 1:1 sessions</p>
+              </div>
+            </div>
+            <Link
+              href="/mentor/sessions"
+              className="text-xs text-blue-600 hover:text-blue-800 font-bold flex items-center gap-1 self-start sm:self-auto"
+            >
+              Open Slot Scheduler & Requests →
+            </Link>
+          </div>
+
+          <div className="flex items-center justify-between p-3.5 rounded-xl border border-mist bg-paper">
+            <div>
+              <label className="text-xs font-bold text-ink block">Accept 1-on-1 Bookings</label>
+              <p className="text-[11px] text-ink-muted">
+                Allow students to discover you and book 1-on-1 calls on <span className="font-semibold text-blue-600">mentskool.com/book-call</span>
+              </p>
+            </div>
+            <input
+              type="checkbox"
+              checked={oneOnOneEnabled}
+              onChange={(e) => setOneOnOneEnabled(e.target.checked)}
+              className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500 cursor-pointer"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <Input
+                label="1-on-1 Call Fee in INR (₹) *"
+                type="number"
+                min={0}
+                step={50}
+                value={oneOnOnePrice}
+                onChange={(e) => setOneOnOnePrice(Math.max(0, Number(e.target.value)))}
+                helperText="Set ₹0 to offer a Free Discovery Call, or specify your fee (e.g. ₹199, ₹499)."
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-ink mb-1">
+                Call Duration *
+              </label>
+              <select
+                value={oneOnOneDuration}
+                onChange={(e) => setOneOnOneDuration(Number(e.target.value))}
+                className="w-full px-3 py-2.5 text-xs rounded-xl border border-mist bg-white text-ink focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium"
+              >
+                <option value={30}>30 Minutes</option>
+                <option value={45}>45 Minutes</option>
+                <option value={60}>60 Minutes</option>
+              </select>
+              <p className="text-[11px] text-ink-muted mt-1">Recommended: 30 minutes for standard mentorship check-ins.</p>
+            </div>
+          </div>
+
+          <div>
+            <Input
+              label="Default Google Meet or Zoom Link"
+              type="url"
+              placeholder="https://meet.google.com/xyz-abc-def"
+              value={defaultMeetingLink}
+              onChange={(e) => setDefaultMeetingLink(e.target.value)}
+              helperText="Auto-populated whenever you approve a student's call request."
             />
           </div>
         </Card>
