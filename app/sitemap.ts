@@ -352,7 +352,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.5,
     },
     {
+      url: `${SITE_URL}/shipping-policy`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
       url: `${SITE_URL}/login`,
+
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.4,
