@@ -11,14 +11,19 @@ export interface FaqItem {
 interface SeoFaqAccordionProps {
   title?: string;
   subtitle?: string;
-  faqs: FaqItem[];
+  faqs?: FaqItem[];
+  items?: FaqItem[];
+  hideHeader?: boolean;
 }
 
 export function SeoFaqAccordion({
-  title = "Frequently Asked Questions",
-  subtitle = "Everything you need to know about Mentskool 1:1 mentorship & daily accountability.",
+  title,
+  subtitle,
   faqs,
+  items,
+  hideHeader,
 }: SeoFaqAccordionProps) {
+  const faqList = faqs || items || [];
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggle = (idx: number) => {
@@ -28,7 +33,7 @@ export function SeoFaqAccordion({
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
+    mainEntity: faqList.map((faq) => ({
       "@type": "Question",
       name: faq.question,
       acceptedAnswer: {
@@ -38,28 +43,36 @@ export function SeoFaqAccordion({
     })),
   };
 
+  const shouldShowHeader = !hideHeader && (title ? true : !items);
+  const displayTitle = title || "Frequently Asked Questions";
+  const displaySubtitle =
+    subtitle ||
+    "Everything you need to know about Mentskool 1:1 mentorship & daily accountability.";
+
   return (
-    <section className="w-full my-16">
+    <div className={`w-full ${shouldShowHeader ? "my-16" : ""}`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-10 space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-400 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
-            <HelpCircle className="w-3.5 h-3.5" />
-            <span>Targeting 2027 &amp; 2028 Aspirants</span>
+        {shouldShowHeader && (
+          <div className="text-center mb-10 space-y-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-400 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
+              <HelpCircle className="w-3.5 h-3.5" />
+              <span>Targeting 2027 &amp; 2028 Aspirants</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-display text-white tracking-tight">
+              {displayTitle}
+            </h2>
+            <p className="text-sm sm:text-base text-slate-400 max-w-xl mx-auto leading-relaxed">
+              {displaySubtitle}
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-display text-white tracking-tight">
-            {title}
-          </h2>
-          <p className="text-sm sm:text-base text-slate-400 max-w-xl mx-auto leading-relaxed">
-            {subtitle}
-          </p>
-        </div>
+        )}
 
         <div className="space-y-3">
-          {faqs.map((faq, idx) => {
+          {faqList.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div
@@ -79,9 +92,10 @@ export function SeoFaqAccordion({
                     }`}
                   />
                 </button>
+
                 {isOpen && (
-                  <div className="px-6 pb-5 pt-1 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/80 bg-slate-950/40">
-                    <p>{faq.answer}</p>
+                  <div className="px-6 pb-5 pt-1 text-slate-300 text-sm leading-relaxed border-t border-slate-800/60 bg-slate-950/40">
+                    {faq.answer}
                   </div>
                 )}
               </div>
@@ -89,6 +103,6 @@ export function SeoFaqAccordion({
           })}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

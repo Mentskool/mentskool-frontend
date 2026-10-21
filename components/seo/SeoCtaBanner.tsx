@@ -5,20 +5,42 @@ import { ArrowRight, Star, ShieldCheck, CheckCircle2, Sparkles, Calendar } from 
 interface SeoCtaBannerProps {
   title?: string;
   description?: string;
+  subtitle?: string;
   primaryButtonText?: string;
+  primaryBtnText?: string;
   primaryButtonHref?: string;
+  primaryBtnHref?: string;
   secondaryButtonText?: string;
+  secondaryBtnText?: string;
   secondaryButtonHref?: string;
+  secondaryBtnHref?: string;
 }
 
 export function SeoCtaBanner({
   title = "Ready to Boost Your Exam Rank with Real Accountability?",
-  description = "Connect with a verified ranker from IIT or AIIMS who mastered your exact exam. 1:1 strategy calls, daily task tracking, and zero annual lock-ins.",
-  primaryButtonText = "Find Your Mentor (IIT & AIIMS)",
-  primaryButtonHref = "/mentors",
-  secondaryButtonText = "Claim Free 1:1 Strategy Session",
-  secondaryButtonHref = "/free-mentorship-session",
+  description,
+  subtitle,
+  primaryButtonText,
+  primaryBtnText,
+  primaryButtonHref,
+  primaryBtnHref,
+  secondaryButtonText,
+  secondaryBtnText,
+  secondaryButtonHref,
+  secondaryBtnHref,
 }: SeoCtaBannerProps) {
+  const finalDescription =
+    description ||
+    subtitle ||
+    "Connect with a verified ranker from IIT or AIIMS who mastered your exact exam. 1:1 strategy calls, daily task tracking, and zero annual lock-ins.";
+  const finalPrimaryText =
+    primaryButtonText || primaryBtnText || "Find Your Mentor (IIT & AIIMS)";
+  const finalPrimaryHref = primaryButtonHref || primaryBtnHref || "/mentors";
+  const finalSecondaryText =
+    secondaryButtonText || secondaryBtnText || "Claim Free 1:1 Strategy Session";
+  const finalSecondaryHref =
+    secondaryButtonHref || secondaryBtnHref || "/free-mentorship-session";
+
   return (
     <section className="w-full my-16 rounded-[36px] bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0A0E1A] text-white p-8 sm:p-14 relative overflow-hidden shadow-elevated border border-slate-800">
       {/* Ambient background glow */}
@@ -54,7 +76,7 @@ export function SeoCtaBanner({
         </h2>
 
         <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto">
-          {description}
+          {finalDescription}
         </p>
 
         {/* Benefits checklist */}
@@ -76,18 +98,18 @@ export function SeoCtaBanner({
         {/* Dual Conversion Funnel Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
           <Link
-            href={primaryButtonHref}
+            href={finalPrimaryHref}
             className="px-8 py-3.5 rounded-xl text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-sky-500 via-indigo-600 to-blue-600 hover:from-sky-600 hover:to-indigo-700 text-white shadow-elevated hover:shadow-card hover:-translate-y-0.5 transition-all group"
           >
-            <span>{primaryButtonText}</span>
+            <span>{finalPrimaryText}</span>
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
           <Link
-            href={secondaryButtonHref}
+            href={finalSecondaryHref}
             className="px-6 py-3.5 rounded-xl text-sm font-semibold bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-slate-200 hover:text-white backdrop-blur-sm hover:-translate-y-0.5 transition-all flex items-center gap-2"
           >
             <Sparkles className="w-4 h-4 text-amber-400" />
-            <span>{secondaryButtonText}</span>
+            <span>{finalSecondaryText}</span>
           </Link>
         </div>
 
