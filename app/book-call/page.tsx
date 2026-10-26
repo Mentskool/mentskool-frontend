@@ -153,7 +153,10 @@ export default function BookCallDirectoryPage() {
                   <div className="space-y-4">
                     {/* Header: Avatar, Name, College, Rank */}
                     <div className="flex items-start gap-3.5">
-                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden border border-slate-200 shrink-0 shadow-xs flex items-center justify-center font-bold text-slate-700 text-lg">
+                      <Link
+                        href={`/book-call/${m.slug || m.mentor_id}`}
+                        className="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden border border-slate-200 shrink-0 shadow-xs flex items-center justify-center font-bold text-slate-700 text-lg hover:opacity-90 transition-opacity"
+                      >
                         {m.avatar_url ? (
                           <img
                             src={m.avatar_url}
@@ -163,13 +166,16 @@ export default function BookCallDirectoryPage() {
                         ) : (
                           m.name.charAt(0).toUpperCase()
                         )}
-                      </div>
+                      </Link>
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5">
-                          <h3 className="font-bold text-slate-900 text-sm truncate group-hover:text-blue-600 transition-colors">
+                          <Link
+                            href={`/book-call/${m.slug || m.mentor_id}`}
+                            className="font-bold text-slate-900 text-sm truncate hover:text-blue-600 transition-colors"
+                          >
                             {m.name}
-                          </h3>
+                          </Link>
                           <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
                         </div>
 
@@ -237,15 +243,16 @@ export default function BookCallDirectoryPage() {
                       </div>
                     </div>
 
-                    <Button
-                      size="sm"
-                      variant="primary"
-                      onClick={() => setBookingMentor(m)}
-                      className="w-full text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-xs flex items-center justify-center gap-1.5 py-2.5 rounded-xl"
-                    >
-                      <Video className="w-3.5 h-3.5" />
-                      Book 1-on-1 Call
-                    </Button>
+                    <Link href={`/book-call/${m.slug || m.mentor_id}`} className="w-full block">
+                      <Button
+                        size="sm"
+                        variant="primary"
+                        className="w-full text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-xs flex items-center justify-center gap-1.5 py-2.5 rounded-xl"
+                      >
+                        <Video className="w-3.5 h-3.5" />
+                        Book 1-on-1 Call
+                      </Button>
+                    </Link>
 
                     <div className="text-center">
                       <Link

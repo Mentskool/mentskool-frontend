@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
+import { useMyMentorProfile } from "@/hooks/useMentors";
 import {
   useMySessionBookings,
   useApproveSession,
@@ -30,11 +31,34 @@ import {
   ExternalLink,
   MessageSquare,
   Star,
+  Copy,
+  Check,
+  Share2,
 } from "lucide-react";
 
 export default function MentorSessionsPage() {
   const { user, isAuthenticated } = useAuthStore();
+  const { data: myProfile } = useMyMentorProfile();
   const [activeTab, setActiveTab] = useState<"requests" | "confirmed" | "completed" | "settings">("requests");
+  const [copiedLink, setCopiedLink] = useState(false);
+
+  const mentorIdentifier = myProfile?.slug || myProfile?.user_id || user?.id || "";
+  const publicBookingUrl = typeof window !== "undefined"
+    ? `${window.location.origin}/book-call/${mentorIdentifier}`
+    : `https://mentskool.com/book-call/${mentorIdentifier}`;
+
+  const handleCopyBookingLink = () => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(publicBookingUrl);
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 2500);
+    }
+  };
+
+  const handleShareWhatsApp = () => {
+    const text = `Book a 1-on-1 mentorship session with me on Mentskool: ${publicBookingUrl}`;
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, "_blank");
+  };
 
   // Booking queries
   const { data: allBookings, isLoading, refetch } = useMySessionBookings();
@@ -217,6 +241,63 @@ export default function MentorSessionsPage() {
             </Button>
           </div>
         </div>
+
+        {/* Shareable 1:1 Public Profile Banner */}
+        {mentorIdentifier && (
+          <div className="bg-gradient-to-r from-slate-900 to-blue-950 text-white rounded-2xl p-5 border border-slate-800 shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-300 bg-blue-500/20 px-2.5 py-0.5 rounded-full border border-blue-400/30">
+                  <Sparkles className="w-3 h-3 text-blue-400" />
+                  Your Shareable 1:1 Booking Link
+                </span>
+              </div>
+              <p className="text-xs text-slate-300 font-mono select-all break-all">
+                {publicBookingUrl}
+              </p>
+              <p className="text-[11px] text-slate-400">
+                Share this direct link on your Instagram bio, LinkedIn, or WhatsApp for student bookings.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0 flex-wrap">
+              <button
+                type="button"
+                onClick={handleCopyBookingLink}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white text-slate-900 hover:bg-slate-100 text-xs font-bold transition-all shadow-xs active:scale-95"
+              >
+                {copiedLink ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5 text-slate-600" />
+                    <span>Copy Link</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={handleShareWhatsApp}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#25D366] border border-[#25D366]/40 text-xs font-bold transition-all active:scale-95"
+              >
+                <span>WhatsApp</span>
+              </button>
+
+              <Link
+                href={`/book-call/${mentorIdentifier}`}
+                target="_blank"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition-all"
+              >
+                <span>Preview Page</span>
+                <ExternalLink className="w-3 h-3 text-slate-400" />
+              </Link>
+            </div>
+          </div>
+        )}
 
         {/* Tab Navigation */}
         <div className="flex items-center gap-2 border-b border-slate-200">
