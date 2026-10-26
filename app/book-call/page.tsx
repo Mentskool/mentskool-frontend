@@ -66,34 +66,43 @@ export default function BookCallDirectoryPage() {
         </span>
       </div>
 
-      {/* Dark Hero Banner (User's preferred style) */}
-      <div className="bg-slate-900 text-white rounded-3xl border border-slate-800 p-8 sm:p-12 relative overflow-hidden shadow-xl text-center">
-        {/* Subtle radial glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/40 via-slate-900/10 to-transparent pointer-events-none" />
+      {/* Sleek, Compact Hero Banner */}
+      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white rounded-3xl border border-slate-800/80 p-6 sm:p-8 relative overflow-hidden shadow-xl">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-600/20 via-transparent to-transparent pointer-events-none" />
 
-        <div className="max-w-3xl mx-auto space-y-4 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300 text-xs font-semibold">
+        <div className="max-w-4xl mx-auto text-center space-y-3.5 relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300 text-xs font-semibold shadow-xs">
             <Video className="w-3.5 h-3.5 text-blue-400" />
-            <span>Instant 1-on-1 Mentorship Sessions</span>
+            <span>Direct 1-on-1 Mentorship Video Calls</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black font-display tracking-tight text-white">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black font-display tracking-tight text-white">
             Book 1-on-1 with Top <span className="text-blue-400">IIT & NEET Rankers</span>
           </h1>
 
           <p className="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Personalized exam strategy, backlog clearance, mock paper review, and college guidance. Secure your 30-minute private video call in seconds.
+            Personalized exam strategy, backlog clearance, mock paper diagnosis, and syllabus roadmaps. Pick a mentor, inspect their profile & available slots, and book a private session in seconds.
           </p>
 
-          <div className="pt-2 flex items-center justify-center gap-3">
-            <Link href="/mentors">
-              <Button
-                variant="secondary"
-                size="sm"
-                className="text-xs bg-slate-800/90 text-slate-200 border-slate-700 hover:bg-slate-700 hover:text-white transition-colors"
-              >
-                Looking for Monthly Cohorts? →
-              </Button>
+          {/* Trust Highlights Bar */}
+          <div className="pt-2 flex items-center justify-center gap-4 sm:gap-6 flex-wrap text-[11px] text-slate-300 font-medium">
+            <span className="flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              100% Verified Top Rankers
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 text-blue-400" />
+              Private 30-Min Consultations
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              Instant Calendar Booking
+            </span>
+            <Link
+              href="/mentors"
+              className="text-blue-300 hover:text-white underline font-semibold transition-colors"
+            >
+              Need 30-Day Cohort Instead? →
             </Link>
           </div>
         </div>
@@ -148,20 +157,34 @@ export default function BookCallDirectoryPage() {
               return (
                 <Card
                   key={m.mentor_id}
-                  className="bg-white border border-slate-200/90 hover:border-blue-400/80 transition-all hover:shadow-md p-5 flex flex-col justify-between rounded-2xl group"
+                  className="bg-white border border-slate-200/90 hover:border-blue-400/80 transition-all duration-200 hover:shadow-lg p-5 flex flex-col justify-between rounded-2xl group relative"
                 >
                   <div className="space-y-4">
+                    {/* Top Status & Slug Row */}
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        1:1 Available
+                      </span>
+                      {m.slug && (
+                        <span className="font-mono text-slate-400 text-[10px]">
+                          @{m.slug}
+                        </span>
+                      )}
+                    </div>
+
                     {/* Header: Avatar, Name, College, Rank */}
                     <div className="flex items-start gap-3.5">
                       <Link
                         href={`/book-call/${m.slug || m.mentor_id}`}
-                        className="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden border border-slate-200 shrink-0 shadow-xs flex items-center justify-center font-bold text-slate-700 text-lg hover:opacity-90 transition-opacity"
+                        className="w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden border border-slate-200 shrink-0 shadow-xs flex items-center justify-center font-bold text-slate-700 text-xl group-hover:ring-2 group-hover:ring-blue-500/30 transition-all"
+                        title="View 1:1 Profile"
                       >
                         {m.avatar_url ? (
                           <img
                             src={m.avatar_url}
                             alt={m.name}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                         ) : (
                           m.name.charAt(0).toUpperCase()
@@ -232,7 +255,7 @@ export default function BookCallDirectoryPage() {
 
                       <div>
                         {priceNum > 0 ? (
-                          <span className="text-sm font-extrabold text-slate-900">
+                          <span className="text-base font-extrabold text-slate-900">
                             ₹{priceNum.toLocaleString("en-IN")}
                           </span>
                         ) : (
@@ -243,23 +266,37 @@ export default function BookCallDirectoryPage() {
                       </div>
                     </div>
 
-                    <Link href={`/book-call/${m.slug || m.mentor_id}`} className="w-full block">
-                      <Button
-                        size="sm"
-                        variant="primary"
-                        className="w-full text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-xs flex items-center justify-center gap-1.5 py-2.5 rounded-xl"
-                      >
-                        <Video className="w-3.5 h-3.5" />
-                        Book 1-on-1 Call
-                      </Button>
-                    </Link>
+                    {/* Action Buttons: Book Call + View Profile */}
+                    <div className="grid grid-cols-2 gap-2">
+                      <Link href={`/book-call/${m.slug || m.mentor_id}#booking-section`} className="w-full">
+                        <Button
+                          size="sm"
+                          variant="primary"
+                          className="w-full text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-xs flex items-center justify-center gap-1 py-2.5 rounded-xl"
+                        >
+                          <Video className="w-3.5 h-3.5" />
+                          Book 1:1 Call
+                        </Button>
+                      </Link>
 
-                    <div className="text-center">
+                      <Link href={`/book-call/${m.slug || m.mentor_id}`} className="w-full">
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          className="w-full text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-200 shadow-xs flex items-center justify-center gap-1 py-2.5 rounded-xl"
+                        >
+                          View Profile ↗
+                        </Button>
+                      </Link>
+                    </div>
+
+                    <div className="text-center pt-1 border-t border-slate-50">
                       <Link
                         href={`/mentors/${m.slug || m.mentor_id}`}
-                        className="text-[11px] text-slate-500 hover:text-slate-800 underline font-medium"
+                        className="text-[11px] text-slate-500 hover:text-blue-600 transition-colors font-medium inline-flex items-center gap-1"
                       >
-                        View Full Cohort Profile →
+                        <span>Looking for monthly cohort?</span>
+                        <span className="underline font-semibold">View Cohort →</span>
                       </Link>
                     </div>
                   </div>
@@ -293,7 +330,7 @@ export default function BookCallDirectoryPage() {
         )}
       </div>
 
-      {/* Booking Modal */}
+      {/* Booking Modal (if opened directly) */}
       {bookingMentor && (
         <Book1on1Modal
           isOpen={!!bookingMentor}

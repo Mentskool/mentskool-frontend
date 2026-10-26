@@ -8,7 +8,7 @@ import { use1on1MentorDetail, useAvailableSlots, useBookSession } from "@/hooks/
 import { initiateRazorpayCheckout } from "@/lib/razorpay";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { Mentor1on1Card, CATEGORY_LABELS, MentorCategory } from "@/lib/types";
+import { Mentor1on1Card, CATEGORY_LABELS } from "@/lib/types";
 import {
   Video,
   Star,
@@ -26,8 +26,6 @@ import {
   CheckCircle2,
   AlertCircle,
   MessageSquare,
-  HelpCircle,
-  ExternalLink,
   Target,
   BookOpen,
   TrendingUp,
@@ -130,6 +128,36 @@ export default function BookCallDetailClient({
       return timeStr;
     }
   };
+
+  // Reviews System: Star breakdown, filter pills, and expandable pagination
+  const allReviews = useMemo(() => mentor?.reviews || [], [mentor?.reviews]);
+  const [selectedRatingFilter, setSelectedRatingFilter] = useState<number | null>(null);
+  const [reviewsDisplayLimit, setReviewsDisplayLimit] = useState<number>(4);
+
+  const ratingCounts = useMemo(() => {
+    const counts: Record<number, number> = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+    for (const r of allReviews) {
+      if (r.rating >= 1 && r.rating <= 5) {
+        counts[r.rating] = (counts[r.rating] || 0) + 1;
+      }
+    }
+    return counts;
+  }, [allReviews]);
+
+  const filteredReviews = useMemo(() => {
+    if (selectedRatingFilter === null) return allReviews;
+    return allReviews.filter((r) => r.rating === selectedRatingFilter);
+  }, [allReviews, selectedRatingFilter]);
+
+  const displayedReviews = useMemo(() => {
+    return filteredReviews.slice(0, reviewsDisplayLimit);
+  }, [filteredReviews, reviewsDisplayLimit]);
+
+  const averageRatingScore = useMemo(() => {
+    if (allReviews.length === 0) return mentor?.rating ? Number(mentor.rating).toFixed(1) : "5.0";
+    const sum = allReviews.reduce((acc, r) => acc + r.rating, 0);
+    return (sum / allReviews.length).toFixed(1);
+  }, [allReviews, mentor?.rating]);
 
   const handleBookSession = async () => {
     if (!isAuthenticated) {
@@ -255,13 +283,21 @@ export default function BookCallDetailClient({
             <span className="text-slate-200 font-semibold truncate">{mentor.name}</span>
           </div>
 
-          <Link
-            href="/book-call"
-            className="inline-flex items-center gap-1 text-slate-400 hover:text-white transition-colors shrink-0"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>All Mentors</span>
-          </Link>
+          <div className="flex items-center gap-3 shrink-0">
+            <Link
+              href={`/mentors/${mentor.slug || mentor.mentor_id}`}
+              className="text-xs text-blue-400 hover:text-blue-300 font-medium transition-colors hidden sm:inline"
+            >
+              View Full Cohort Profile →
+            </Link>
+            <Link
+              href="/book-call"
+              className="inline-flex items-center gap-1 text-slate-400 hover:text-white transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>All Mentors</span>
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -327,7 +363,7 @@ export default function BookCallDetailClient({
                   ))}
                 </div>
                 <span className="text-sm font-bold text-white">
-                  {mentor.rating ? mentor.rating.toFixed(1) : "5.0"}
+                  {averageRatingScore}
                 </span>
                 <span className="text-slate-500">•</span>
                 <span className="text-xs text-slate-300 font-medium">
@@ -399,6 +435,14 @@ export default function BookCallDetailClient({
                     </>
                   )}
                 </button>
+
+                <Link
+                  href={`/mentors/${mentor.slug || mentor.mentor_id}`}
+                  className="inline-flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 ml-auto transition-colors"
+                >
+                  <span>Cohort Profile</span>
+                  <ChevronRight className="w-3 h-3" />
+                </Link>
               </div>
             </div>
 
@@ -426,7 +470,7 @@ export default function BookCallDetailClient({
                 {/* Top-Right Floating Star Badge */}
                 <div className="absolute top-4 right-4 backdrop-blur-md bg-slate-900/80 border border-white/10 text-white px-3 py-1.5 rounded-2xl flex items-center gap-1 text-xs font-bold shadow-lg">
                   <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                  <span>{mentor.rating ? mentor.rating.toFixed(1) : "5.0"}</span>
+                  <span>{averageRatingScore}</span>
                 </div>
 
                 {/* Bottom-Left Floating Verified Badge */}
@@ -452,7 +496,7 @@ export default function BookCallDetailClient({
             <div>
               <p className="text-xs text-slate-500 font-medium">Student Rating</p>
               <h4 className="text-base font-extrabold text-slate-900">
-                {mentor.rating ? mentor.rating.toFixed(1) : "5.0"} / 5.0
+                {averageRatingScore} / 5.0
               </h4>
             </div>
           </Card>
@@ -780,52 +824,182 @@ export default function BookCallDetailClient({
             </Card>
           </div>
 
-          {/* Right Column: Verified 1:1 Reviews */}
+          {/* Right Column: Verified 1:1 Reviews with Rating Breakdown & Pagination */}
           <div className="lg:col-span-5 space-y-6">
-            <Card className="p-6 sm:p-8 bg-white border border-slate-200 rounded-3xl space-y-5">
+            <Card className="p-6 sm:p-8 bg-white border border-slate-200 rounded-3xl space-y-6 shadow-xs">
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-                <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                  <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                  <span>Verified 1:1 Reviews</span>
-                </h3>
-                <span className="text-xs font-semibold text-slate-500">
-                  {mentor.reviews ? mentor.reviews.length : 0} reviews
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                    <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+                    <span>Verified 1:1 Reviews</span>
+                  </h3>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    Real feedback from students who took private calls
+                  </p>
+                </div>
+                <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">
+                  {allReviews.length} {allReviews.length === 1 ? "review" : "reviews"}
                 </span>
               </div>
 
-              {mentor.reviews && mentor.reviews.length > 0 ? (
-                <div className="space-y-4">
-                  {mentor.reviews.map((rev) => (
-                    <div
-                      key={rev.id}
-                      className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs">
-                            {rev.student_avatar_url ? (
-                              <img
-                                src={rev.student_avatar_url}
-                                alt={rev.student_name || "Student"}
-                                className="w-full h-full rounded-full object-cover"
-                              />
-                            ) : (
-                              (rev.student_name || "S").charAt(0).toUpperCase()
-                            )}
-                          </div>
-                          <span className="text-xs font-bold text-slate-900">
-                            {rev.student_name || "Student"}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-0.5 text-amber-400">
-                          {Array.from({ length: rev.rating }).map((_, i) => (
-                            <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
-                          ))}
-                        </div>
+              {allReviews.length > 0 ? (
+                <div className="space-y-6">
+                  {/* Rating Breakdown & Average Score Box */}
+                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col sm:flex-row items-center gap-5">
+                    <div className="text-center sm:text-left shrink-0">
+                      <div className="text-3xl font-black text-slate-900">
+                        {averageRatingScore}
                       </div>
-                      <p className="text-xs text-slate-600 italic">"{rev.comment}"</p>
+                      <div className="flex items-center gap-1 text-amber-400 my-1 justify-center sm:justify-start">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <Star key={s} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                        ))}
+                      </div>
+                      <p className="text-[10px] text-slate-500 font-medium">
+                        Based on {allReviews.length} verified sessions
+                      </p>
                     </div>
-                  ))}
+
+                    {/* Progress bars for 5, 4, 3, 2, 1 */}
+                    <div className="flex-1 w-full space-y-1.5 text-xs">
+                      {[5, 4, 3, 2, 1].map((starVal) => {
+                        const count = ratingCounts[starVal] || 0;
+                        const pct = allReviews.length > 0 ? Math.round((count / allReviews.length) * 100) : 0;
+                        return (
+                          <div key={starVal} className="flex items-center gap-2 text-[11px] text-slate-600">
+                            <span className="w-4 font-bold text-right">{starVal}★</span>
+                            <div className="flex-1 h-2 bg-slate-200 rounded-full overflow-hidden">
+                              <div
+                                className="h-full bg-amber-400 rounded-full transition-all duration-300"
+                                style={{ width: `${pct}%` }}
+                              />
+                            </div>
+                            <span className="w-6 text-[10px] text-slate-400 text-right">{count}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Filter Tabs */}
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedRatingFilter(null);
+                        setReviewsDisplayLimit(4);
+                      }}
+                      className={`text-xs px-3 py-1 rounded-xl font-semibold transition-colors ${
+                        selectedRatingFilter === null
+                          ? "bg-blue-600 text-white"
+                          : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      }`}
+                    >
+                      All ({allReviews.length})
+                    </button>
+                    {[5, 4, 3].map((starVal) => {
+                      const count = ratingCounts[starVal] || 0;
+                      if (count === 0 && selectedRatingFilter !== starVal) return null;
+                      return (
+                        <button
+                          key={starVal}
+                          type="button"
+                          onClick={() => {
+                            setSelectedRatingFilter(selectedRatingFilter === starVal ? null : starVal);
+                            setReviewsDisplayLimit(4);
+                          }}
+                          className={`text-xs px-2.5 py-1 rounded-xl font-semibold transition-colors flex items-center gap-1 ${
+                            selectedRatingFilter === starVal
+                              ? "bg-amber-500 text-white"
+                              : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                          }`}
+                        >
+                          <span>{starVal}★</span>
+                          <span className="text-[10px] opacity-80">({count})</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Paginated Review List */}
+                  <div className="space-y-3.5">
+                    {displayedReviews.map((rev) => (
+                      <div
+                        key={rev.id}
+                        className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2 hover:border-slate-200 transition-colors"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2.5">
+                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-700 flex items-center justify-center font-bold text-xs border border-blue-200/50 shrink-0">
+                              {rev.student_avatar_url ? (
+                                <img
+                                  src={rev.student_avatar_url}
+                                  alt={rev.student_name || "Student"}
+                                  className="w-full h-full rounded-full object-cover"
+                                />
+                              ) : (
+                                (rev.student_name || "S").charAt(0).toUpperCase()
+                              )}
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-xs font-bold text-slate-900">
+                                  {rev.student_name || "Student"}
+                                </span>
+                                <span className="text-[10px] text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded-md font-medium border border-emerald-200/60">
+                                  ✓ Verified 1:1 Call
+                                </span>
+                              </div>
+                              <p className="text-[10px] text-slate-400">
+                                {new Date(rev.created_at).toLocaleDateString("en-IN", {
+                                  day: "numeric",
+                                  month: "short",
+                                  year: "numeric",
+                                })}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-0.5 text-amber-400">
+                            {Array.from({ length: rev.rating }).map((_, i) => (
+                              <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                            ))}
+                          </div>
+                        </div>
+
+                        <p className="text-xs text-slate-600 leading-relaxed italic pt-0.5">
+                          "{rev.comment}"
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Show More / Show Less Controls */}
+                  <div className="pt-2 flex items-center justify-center gap-2">
+                    {filteredReviews.length > reviewsDisplayLimit && (
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => setReviewsDisplayLimit((prev) => prev + 5)}
+                        className="text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200"
+                      >
+                        Show More Reviews ({filteredReviews.length - reviewsDisplayLimit} remaining) ↓
+                      </Button>
+                    )}
+
+                    {reviewsDisplayLimit > 4 && (
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => setReviewsDisplayLimit(4)}
+                        className="text-xs font-semibold text-slate-500 hover:text-slate-700"
+                      >
+                        Show Less ↑
+                      </Button>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div className="text-center py-8 space-y-2 text-slate-500">
