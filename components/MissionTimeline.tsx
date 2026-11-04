@@ -115,14 +115,14 @@ export function MissionTimeline({
       {/* ── Two-column layout: timeline + detail ────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-[1.35fr_1fr] gap-4 items-start">
         {/* ── Timeline chart ──────────────────────────────────────────── */}
-        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
           {/* Header */}
-          <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-slate-100 flex-wrap">
+          <div className="bg-gradient-to-r from-slate-50 via-blue-50/30 to-white flex items-center justify-between gap-3 px-5 py-4 border-b border-slate-200/80 flex-wrap">
             <div>
               <h2 className="text-base font-bold font-display text-slate-900">
                 Mission Timeline
               </h2>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-500 mt-0.5">
                 Interactive schedule of your weekly syllabus targets and deadlines
               </p>
             </div>
@@ -284,8 +284,15 @@ function StatCard({
   label: string;
   value: number;
 }) {
+  const borderAccent =
+    label === "Completed"
+      ? "border-emerald-200/90 border-t-4 border-t-emerald-500"
+      : label === "In Progress"
+        ? "border-blue-200/90 border-t-4 border-t-blue-500"
+        : "border-amber-200/90 border-t-4 border-t-amber-500";
+
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-4 flex items-center gap-3.5 hover:border-slate-300 transition-colors">
+    <div className={`bg-white rounded-2xl border shadow-xs p-4 flex items-center gap-3.5 hover:shadow-md transition-all ${borderAccent}`}>
       <div
         className={`w-10 h-10 rounded-2xl border flex items-center justify-center shrink-0 shadow-xs ${bgClass}`}
       >

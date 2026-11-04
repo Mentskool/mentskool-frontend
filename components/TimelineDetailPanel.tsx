@@ -45,16 +45,22 @@ export function TimelineDetailPanel({
 }: TimelineDetailPanelProps) {
   if (!task) {
     return (
-      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-8 flex flex-col items-center justify-center text-center min-h-[360px]">
-        <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center mb-3 text-blue-600 shadow-xs">
-          <Calendar className="w-6 h-6 text-blue-600" />
+      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden flex flex-col min-h-[360px]">
+        <div className="bg-gradient-to-r from-slate-50 to-blue-50/30 px-5 py-3.5 border-b border-slate-100 flex items-center gap-2">
+          <Calendar className="w-4 h-4 text-blue-600" />
+          <h3 className="text-sm font-bold text-slate-900">Task Details</h3>
         </div>
-        <p className="text-sm font-bold font-display text-slate-800">
-          Select a task from the timeline
-        </p>
-        <p className="text-xs text-slate-400 mt-1 max-w-xs leading-relaxed">
-          Click any task row or schedule bar on the timeline to inspect full details, notes, and actions.
-        </p>
+        <div className="p-8 flex flex-col items-center justify-center text-center flex-1">
+          <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center mb-3 text-blue-600 shadow-xs">
+            <Calendar className="w-6 h-6 text-blue-600" />
+          </div>
+          <p className="text-sm font-bold font-display text-slate-800">
+            Select a task from the timeline
+          </p>
+          <p className="text-xs text-slate-400 mt-1 max-w-xs leading-relaxed">
+            Click any task row or schedule bar on the timeline to inspect full details, notes, and actions.
+          </p>
+        </div>
       </div>
     );
   }
@@ -146,9 +152,9 @@ function TimelineDetailPanelContent({
     task.dbStatus === "ASSIGNED";
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 space-y-4">
-      {/* ── Status header ─────────────────────────────────────────────── */}
-      <div className="flex items-start gap-4">
+    <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
+      {/* ── Status header with colored background strip ─────────────────── */}
+      <div className="bg-gradient-to-r from-slate-50 via-blue-50/30 to-white p-5 border-b border-slate-100 flex items-start gap-4">
         {/* Status ring */}
         <div
           className={`w-14 h-14 rounded-2xl border flex items-center justify-center shrink-0 text-xl shadow-xs ${
@@ -174,10 +180,10 @@ function TimelineDetailPanelContent({
           >
             {status.icon} {status.label}
           </span>
-          <h3 className="text-base font-bold font-display text-ink mt-1 leading-tight">
+          <h3 className="text-base font-bold font-display text-slate-900 mt-1 leading-tight">
             {task.title}
           </h3>
-          <p className="text-xs text-ink-faint mt-0.5">
+          <p className="text-xs text-slate-500 mt-0.5">
             {formatShortDate(task.startDate)} → {formatShortDate(task.deadline)}
             {" · "}
             {task.mentorName}
@@ -195,6 +201,8 @@ function TimelineDetailPanelContent({
           </p>
         </div>
       </div>
+
+      <div className="p-5 space-y-4">
 
       {/* ── Mini calendar strip ───────────────────────────────────────── */}
       <div>
@@ -361,6 +369,7 @@ function TimelineDetailPanelContent({
           )}
         </div>
       )}
+      </div>
     </div>
   );
 }

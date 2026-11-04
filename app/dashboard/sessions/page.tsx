@@ -70,12 +70,11 @@ export default function StudentSessionsPage() {
   return (
     <div className="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8 space-y-8">
       {/* Header Banner */}
-      <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="space-y-1.5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/70 text-blue-700 text-xs font-bold">
-            <Video className="w-3.5 h-3.5 text-blue-600" />
-            <span>1-on-1 Mentorship</span>
-          </div>
+      <div className="bg-gradient-to-r from-blue-50/90 via-indigo-50/40 to-white rounded-2xl border border-blue-200/80 p-6 sm:p-7 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <span className="text-[11px] font-bold text-blue-600 uppercase tracking-wider block">
+            1-on-1 Mentorship
+          </span>
           <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-slate-900 tracking-tight">
             My 1:1 Bookings
           </h1>
@@ -96,37 +95,37 @@ export default function StudentSessionsPage() {
         </Link>
       </div>
 
-      {/* Summary Stats Cards */}
+      {/* Summary Stats Cards with distinct top border accents */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Card className="p-5 bg-white border border-slate-200/80 rounded-2xl flex items-center gap-4">
-          <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+        <div className="p-5 bg-white border border-emerald-200/90 border-t-4 border-t-emerald-500 rounded-2xl shadow-xs hover:shadow-md transition-all flex items-center gap-4">
+          <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 shadow-xs">
             <CheckCircle2 className="w-6 h-6" />
           </div>
           <div>
             <p className="text-xs text-slate-500 font-medium">Confirmed Calls</p>
-            <p className="text-xl font-extrabold text-slate-900">{confirmedSessions.length}</p>
+            <p className="text-2xl font-extrabold text-slate-900">{confirmedSessions.length}</p>
           </div>
-        </Card>
+        </div>
 
-        <Card className="p-5 bg-white border border-slate-200/80 rounded-2xl flex items-center gap-4">
-          <div className="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+        <div className="p-5 bg-white border border-amber-200/90 border-t-4 border-t-amber-500 rounded-2xl shadow-xs hover:shadow-md transition-all flex items-center gap-4">
+          <div className="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 shadow-xs">
             <Clock className="w-6 h-6" />
           </div>
           <div>
             <p className="text-xs text-slate-500 font-medium">Pending Approval</p>
-            <p className="text-xl font-extrabold text-slate-900">{pendingSessions.length}</p>
+            <p className="text-2xl font-extrabold text-slate-900">{pendingSessions.length}</p>
           </div>
-        </Card>
+        </div>
 
-        <Card className="p-5 bg-white border border-slate-200/80 rounded-2xl flex items-center gap-4">
-          <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+        <div className="p-5 bg-white border border-blue-200/90 border-t-4 border-t-blue-500 rounded-2xl shadow-xs hover:shadow-md transition-all flex items-center gap-4">
+          <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 shadow-xs">
             <Star className="w-6 h-6" />
           </div>
           <div>
             <p className="text-xs text-slate-500 font-medium">Completed Sessions</p>
-            <p className="text-xl font-extrabold text-slate-900">{completedSessions.length}</p>
+            <p className="text-2xl font-extrabold text-slate-900">{completedSessions.length}</p>
           </div>
-        </Card>
+        </div>
       </div>
 
       {/* Filter Tabs */}
@@ -183,15 +182,21 @@ export default function StudentSessionsPage() {
         ) : displayedBookings.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {displayedBookings.map((b) => (
-              <Card
+              <div
                 key={b.id}
-                className="bg-white rounded-2xl border border-slate-200/90 p-5 space-y-4 hover:border-slate-300 transition-all shadow-xs flex flex-col justify-between"
+                className={`bg-white rounded-2xl border border-slate-200/90 hover:border-blue-300 transition-all shadow-xs hover:shadow-md flex flex-col justify-between overflow-hidden ${
+                  b.status === "CONFIRMED"
+                    ? "border-l-4 border-l-emerald-500"
+                    : b.status === "PENDING_APPROVAL"
+                      ? "border-l-4 border-l-amber-500"
+                      : "border-l-4 border-l-slate-300"
+                }`}
               >
-                <div className="space-y-3.5">
-                  {/* Mentor Header */}
-                  <div className="flex items-start justify-between gap-3">
+                <div>
+                  {/* Card Header with subtle background */}
+                  <div className="bg-gradient-to-r from-slate-50 to-blue-50/30 px-5 py-3.5 border-b border-slate-100 flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 flex items-center justify-center font-bold text-slate-700 text-sm">
+                      <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 flex items-center justify-center font-bold text-slate-700 text-sm shadow-2xs">
                         {b.mentor_avatar_url ? (
                           <img
                             src={b.mentor_avatar_url}
@@ -247,37 +252,39 @@ export default function StudentSessionsPage() {
                     </div>
                   </div>
 
-                  {/* Scheduled Time & Details */}
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 space-y-1.5 text-xs">
-                    <div className="flex items-center gap-1.5 text-slate-800 font-semibold">
-                      <Clock className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-                      <span>
-                        {new Date(b.scheduled_at).toLocaleString("en-IN", {
-                          dateStyle: "medium",
-                          timeStyle: "short",
-                        })}{" "}
-                        ({b.duration_minutes} mins)
-                      </span>
-                    </div>
-
-                    {b.agenda_notes && (
-                      <div className="text-slate-600 text-[11px] leading-relaxed pt-1">
-                        <span className="font-semibold text-slate-700">Agenda: </span>
-                        &ldquo;{b.agenda_notes}&rdquo;
+                  {/* Scheduled Time & Details Body */}
+                  <div className="p-5 space-y-3.5">
+                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 space-y-1.5 text-xs">
+                      <div className="flex items-center gap-1.5 text-slate-800 font-semibold">
+                        <Clock className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                        <span>
+                          {new Date(b.scheduled_at).toLocaleString("en-IN", {
+                            dateStyle: "medium",
+                            timeStyle: "short",
+                          })}{" "}
+                          ({b.duration_minutes} mins)
+                        </span>
                       </div>
-                    )}
 
-                    {b.status === "PENDING_APPROVAL" && (
-                      <p className="text-[11px] text-amber-700 font-medium pt-1">
-                        Waiting for mentor to approve and provide the Google Meet link.
-                      </p>
-                    )}
+                      {b.agenda_notes && (
+                        <div className="text-slate-600 text-[11px] leading-relaxed pt-1">
+                          <span className="font-semibold text-slate-700">Agenda: </span>
+                          &ldquo;{b.agenda_notes}&rdquo;
+                        </div>
+                      )}
 
-                    {b.status === "REJECTED" && b.rejection_reason && (
-                      <p className="text-[11px] text-rose-700 font-medium pt-1">
-                        Reason: {b.rejection_reason}
-                      </p>
-                    )}
+                      {b.status === "PENDING_APPROVAL" && (
+                        <p className="text-[11px] text-amber-700 font-medium pt-1">
+                          Waiting for mentor to approve and provide the Google Meet link.
+                        </p>
+                      )}
+
+                      {b.status === "REJECTED" && b.rejection_reason && (
+                        <p className="text-[11px] text-rose-700 font-medium pt-1">
+                          Reason: {b.rejection_reason}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
 
@@ -333,7 +340,7 @@ export default function StudentSessionsPage() {
                     </div>
                   )}
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         ) : (

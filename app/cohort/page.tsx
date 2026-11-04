@@ -195,9 +195,9 @@ export default function CohortPage() {
   return (
     <div className="space-y-6">
       {/* 1. Header Banner */}
-      <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-blue-50/90 via-indigo-50/40 to-white rounded-2xl p-6 border border-blue-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0 text-blue-600 shadow-xs">
+          <div className="w-12 h-12 rounded-2xl bg-white border border-blue-200 flex items-center justify-center flex-shrink-0 text-blue-600 shadow-xs">
             <Users className="w-6 h-6 text-blue-600" />
           </div>
 
@@ -310,9 +310,9 @@ export default function CohortPage() {
           )}
 
           {activeSub ? (
-            <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-5">
+            <div className="bg-gradient-to-r from-emerald-50/40 via-white to-blue-50/20 rounded-2xl p-5 sm:p-6 border border-emerald-200/90 border-l-4 border-l-emerald-500 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-5">
               <div className="flex items-start sm:items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0 font-bold text-lg shadow-xs">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center flex-shrink-0 font-bold text-lg shadow-xs">
                   {activeSub.mentor_name ? activeSub.mentor_name[0].toUpperCase() : "M"}
                 </div>
 
@@ -530,18 +530,21 @@ export default function CohortPage() {
               {announcements.map((ann) => (
                 <div
                   key={ann.id}
-                  className="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 space-y-3 shadow-xs hover:border-slate-300 transition-colors"
+                  className="bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md hover:border-blue-300 transition-all overflow-hidden"
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <span className="text-[11px] uppercase font-bold tracking-wider text-blue-600 block">
+                  <div className="bg-gradient-to-r from-slate-50 to-blue-50/40 px-5 py-3.5 border-b border-slate-100 flex items-center justify-between flex-wrap gap-2">
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 rounded-lg bg-blue-100/80 flex items-center justify-center text-blue-700">
+                        <Megaphone className="w-3.5 h-3.5" />
+                      </div>
+                      <span className="text-xs font-bold text-slate-900">
                         {ann.mentor_name || "Mentor Broadcast"}
                       </span>
-                      <h3 className="font-display font-bold text-lg text-slate-900 mt-0.5">
-                        {ann.title}
-                      </h3>
-                      <p className="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
-                        <Clock className="w-3 h-3" />
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <p className="text-[11px] text-slate-400 flex items-center gap-1.5 font-medium">
+                        <Clock className="w-3 h-3 text-slate-400" />
                         <span>
                           {new Date(ann.created_at).toLocaleDateString("en-IN", {
                             day: "numeric",
@@ -552,23 +555,28 @@ export default function CohortPage() {
                           })}
                         </span>
                       </p>
-                    </div>
 
-                    {isMentor && (
-                      <button
-                        onClick={() => deleteAnnMutation.mutate(ann.id)}
-                        disabled={deleteAnnMutation.isPending}
-                        className="text-slate-400 hover:text-rose-600 p-2 rounded-lg hover:bg-rose-50 transition-colors"
-                        title="Delete announcement"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    )}
+                      {isMentor && (
+                        <button
+                          onClick={() => deleteAnnMutation.mutate(ann.id)}
+                          disabled={deleteAnnMutation.isPending}
+                          className="text-slate-400 hover:text-rose-600 p-1 rounded-lg hover:bg-rose-50 transition-colors"
+                          title="Delete announcement"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-slate-600 whitespace-pre-line leading-relaxed bg-slate-50/50 p-4 rounded-xl border border-slate-100">
-                    {ann.body}
-                  </p>
+                  <div className="p-5 sm:p-6 space-y-2.5">
+                    <h3 className="font-display font-bold text-lg text-slate-900">
+                      {ann.title}
+                    </h3>
+                    <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                      {ann.body}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -672,21 +680,42 @@ export default function CohortPage() {
               {resources.map((res) => (
                 <div
                   key={res.id}
-                  className="bg-white rounded-2xl border border-slate-200/80 p-5 flex flex-col justify-between space-y-4 shadow-xs hover:border-slate-300 transition-colors"
+                  className="bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md hover:border-blue-300 transition-all overflow-hidden flex flex-col justify-between"
                 >
-                  <div className="space-y-1.5">
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-blue-600 block">
-                      {res.mentor_name || "Mentor Resource"}
-                    </span>
-                    <h3 className="font-display font-bold text-base text-slate-900 line-clamp-2">
-                      {res.title}
-                    </h3>
-                    <p className="text-[11px] text-slate-400 break-all line-clamp-1">
-                      {res.url}
-                    </p>
+                  <div>
+                    <div className="bg-gradient-to-r from-slate-50 to-indigo-50/40 px-5 py-3 border-b border-slate-100 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 rounded-md bg-blue-100/80 flex items-center justify-center text-blue-700">
+                          <BookOpen className="w-3 h-3" />
+                        </div>
+                        <span className="text-[11px] font-bold text-slate-800 uppercase tracking-wider">
+                          {res.mentor_name || "Mentor Resource"}
+                        </span>
+                      </div>
+
+                      {isMentor && (
+                        <button
+                          onClick={() => deleteResMutation.mutate(res.id)}
+                          disabled={deleteResMutation.isPending}
+                          className="text-slate-400 hover:text-rose-600 p-1 rounded-md hover:bg-rose-50 transition-colors text-xs"
+                          title="Delete resource"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="p-5 space-y-1.5">
+                      <h3 className="font-display font-bold text-base text-slate-900 line-clamp-2">
+                        {res.title}
+                      </h3>
+                      <p className="text-[11px] text-slate-400 break-all line-clamp-1">
+                        {res.url}
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="flex items-center justify-between pt-3 border-t border-slate-100">
+                  <div className="p-5 pt-0 flex items-center justify-between">
                     <a
                       href={res.url}
                       target="_blank"
@@ -696,17 +725,6 @@ export default function CohortPage() {
                       <span>Open Document</span>
                       <ExternalLink className="w-3.5 h-3.5" />
                     </a>
-
-                    {isMentor && (
-                      <button
-                        onClick={() => deleteResMutation.mutate(res.id)}
-                        disabled={deleteResMutation.isPending}
-                        className="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition-colors text-xs"
-                        title="Delete resource"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    )}
                   </div>
                 </div>
               ))}
