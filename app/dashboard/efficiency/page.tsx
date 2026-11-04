@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
 import { useStudentEfficiency } from "@/hooks/useEfficiency";
@@ -17,10 +17,20 @@ import {
   AlertCircle,
   HelpCircle,
   Zap,
+  TrendingUp,
+  Sparkles,
+  ChevronDown,
+  ChevronUp,
+  Target,
+  Clock,
+  ShieldCheck,
+  Video,
 } from "lucide-react";
 
 export default function StudentEfficiencyPage() {
   const { user, isAuthenticated, isLoading: authLoading } = useAuthStore();
+  const [showFormulaDetails, setShowFormulaDetails] = useState(false);
+
   const {
     data: efficiency,
     isLoading: effLoading,
@@ -55,6 +65,13 @@ export default function StudentEfficiencyPage() {
     );
   }
 
+  // Quiz score formatting: handle negative numbers due to exam penalty marking
+  const rawAvg = quizRanking?.average_percentage;
+  const numAvg = rawAvg !== null && rawAvg !== undefined ? Number(rawAvg) : null;
+  const hasAvg = numAvg !== null && !isNaN(numAvg);
+  const isNegativeScore = hasAvg && numAvg < 0;
+  const displayScore = hasAvg ? `${numAvg.toFixed(1)}%` : "No data";
+
   return (
     <div className="space-y-6">
       {/* 1. Hero Header */}
@@ -72,7 +89,7 @@ export default function StudentEfficiencyPage() {
               Accountability & Efficiency
             </h1>
             <p className="text-xs text-slate-500 max-w-xl">
-              Real-time performance score computed directly from your weekly mentor reviews.
+              Track your execution rhythm, verified task completions, and weekly accountability score.
             </p>
           </div>
         </div>
@@ -89,7 +106,7 @@ export default function StudentEfficiencyPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
         {/* Efficiency Score */}
         <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-          <div className="w-10 h-10 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0 text-blue-600">
+          <div className="w-10 h-10 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0 text-blue-600 shadow-xs">
             <BarChart3 className="w-5 h-5 text-blue-600" />
           </div>
           <div>
@@ -104,7 +121,7 @@ export default function StudentEfficiencyPage() {
 
         {/* Approved Tasks */}
         <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-          <div className="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0 text-emerald-600">
+          <div className="w-10 h-10 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0 text-emerald-600 shadow-xs">
             <CheckCircle2 className="w-5 h-5 text-emerald-600" />
           </div>
           <div>
@@ -117,7 +134,7 @@ export default function StudentEfficiencyPage() {
 
         {/* Cohort Standing */}
         <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-          <div className="w-10 h-10 rounded-full bg-amber-50 border border-amber-100 flex items-center justify-center flex-shrink-0 text-amber-600">
+          <div className="w-10 h-10 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center flex-shrink-0 text-amber-600 shadow-xs">
             <Trophy className="w-5 h-5 text-amber-600" />
           </div>
           <div>
@@ -130,7 +147,7 @@ export default function StudentEfficiencyPage() {
 
         {/* Tests Attempted */}
         <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-          <div className="w-10 h-10 rounded-full bg-sky-50 border border-sky-100 flex items-center justify-center flex-shrink-0 text-sky-600">
+          <div className="w-10 h-10 rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center flex-shrink-0 text-sky-600 shadow-xs">
             <BookOpen className="w-5 h-5 text-sky-600" />
           </div>
           <div>
@@ -144,7 +161,7 @@ export default function StudentEfficiencyPage() {
 
       {/* 3. Main Two-Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column (8 cols): Visual Score & Explanations */}
+        {/* Left Column (8 cols): Visual Score & Concise Insights */}
         <div className="lg:col-span-8 space-y-6">
           {isError ? (
             <div className="py-12 text-center rounded-2xl border border-slate-200 bg-white p-8">
@@ -159,56 +176,75 @@ export default function StudentEfficiencyPage() {
             <EfficiencyScore efficiency={efficiency ?? null} isLoading={effLoading} />
           )}
 
-          {/* Explanation Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* The Scoring Formula */}
-            <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs space-y-3">
+          {/* Clean Performance Insights Card */}
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-xs space-y-4">
+            <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <HelpCircle className="w-4 h-4 text-blue-600" />
-                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                  The Scoring Formula
+                <TrendingUp className="w-4 h-4 text-blue-600" />
+                <h3 className="text-sm font-bold text-slate-900">
+                  Accountability Insights & Best Practices
                 </h3>
               </div>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Your efficiency score is mathematically computed as:
-              </p>
-              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs font-mono text-slate-800 font-bold text-center">
-                Approved / (Assigned - Rejected) × 100
-              </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
-                If no approved or pending tasks exist yet, the dashboard displays &ldquo;No data&rdquo; rather than an artificial 0%.
-              </p>
+              <button
+                onClick={() => setShowFormulaDetails(!showFormulaDetails)}
+                className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700 bg-blue-50/70 hover:bg-blue-100/70 px-3 py-1 rounded-lg transition-colors"
+              >
+                <span>{showFormulaDetails ? "Hide Formula" : "How Score Works"}</span>
+                {showFormulaDetails ? (
+                  <ChevronUp className="w-3.5 h-3.5" />
+                ) : (
+                  <ChevronDown className="w-3.5 h-3.5" />
+                )}
+              </button>
             </div>
 
-            {/* Deliberate Product Rules */}
-            <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs space-y-3">
-              <div className="flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 text-sky-600" />
-                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                  Scoring Principles
-                </h3>
+            {/* Concise Bullet Highlights */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="p-3.5 rounded-xl bg-slate-50/80 border border-slate-200/70 space-y-1">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Fair Scoring</span>
+                </div>
+                <p className="text-[11px] text-slate-500 leading-relaxed">
+                  Rejected tasks are never penalized in your denominator.
+                </p>
               </div>
-              <ul className="text-xs text-slate-600 space-y-2 leading-relaxed">
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 flex-shrink-0" />
-                  <span>
-                    <strong className="text-slate-800">Rejected tasks excluded:</strong> Removed from denominator to not unfairly penalize.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0" />
-                  <span>
-                    <strong className="text-slate-800">Late submissions flagged:</strong> Submissions after cycle end show late tags.
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0" />
-                  <span>
-                    <strong className="text-slate-800">Review finality:</strong> Reviewed scores are locked for integrity.
-                  </span>
-                </li>
-              </ul>
+
+              <div className="p-3.5 rounded-xl bg-slate-50/80 border border-slate-200/70 space-y-1">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
+                  <Clock className="w-3.5 h-3.5 text-blue-600" />
+                  <span>Submit Early</span>
+                </div>
+                <p className="text-[11px] text-slate-500 leading-relaxed">
+                  Submissions before cycle end qualify for early bonus milestones.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-50/80 border border-slate-200/70 space-y-1">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
+                  <Target className="w-3.5 h-3.5 text-amber-600" />
+                  <span>80%+ Target</span>
+                </div>
+                <p className="text-[11px] text-slate-500 leading-relaxed">
+                  Maintain 80%+ efficiency to remain in top-tier cohort standing.
+                </p>
+              </div>
             </div>
+
+            {/* Collapsible Explainer Box */}
+            {showFormulaDetails && (
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2.5 animate-fade-in text-xs text-slate-600">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <span className="font-bold text-slate-800">Mathematical Formula:</span>
+                  <code className="px-2.5 py-1 bg-white border border-slate-300/80 rounded-md font-mono font-semibold text-slate-900 text-xs">
+                    Approved / (Assigned - Rejected) × 100
+                  </code>
+                </div>
+                <p className="text-[11px] text-slate-500 leading-relaxed">
+                  If you have submitted tasks awaiting mentor verification, your score temporarily reflects pending status rather than an artificial zero. Once your mentor reviews your work, your score is locked in for that cycle.
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -229,20 +265,30 @@ export default function StudentEfficiencyPage() {
             </div>
 
             <div className="space-y-3">
-              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
-                <p className="text-[10px] text-slate-400 uppercase font-bold">Average Exam Score</p>
-                <p className="text-2xl font-black font-display text-slate-900 mt-0.5">
-                  {quizRanking?.average_percentage !== null && quizRanking?.average_percentage !== undefined
-                    ? `${quizRanking.average_percentage}%`
-                    : "No data"}
+              <div className="p-3.5 bg-slate-50/80 rounded-xl border border-slate-200/70">
+                <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">
+                  Average Exam Score
                 </p>
-                <p className="text-[11px] text-slate-400 mt-1">
-                  Across all attempted mock drills
-                </p>
+                <div className="flex items-baseline gap-2 mt-0.5">
+                  <p className="text-2xl font-black font-display text-slate-900">
+                    {displayScore}
+                  </p>
+                </div>
+                {isNegativeScore ? (
+                  <p className="text-[10px] text-amber-600 font-medium mt-1">
+                    * Negative score reflects exam marking penalty (-1 for incorrect answers).
+                  </p>
+                ) : (
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    Across all attempted mock drills
+                  </p>
+                )}
               </div>
 
-              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
-                <p className="text-[10px] text-slate-400 uppercase font-bold">Cohort Peer Rank</p>
+              <div className="p-3.5 bg-slate-50/80 rounded-xl border border-slate-200/70">
+                <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">
+                  Cohort Peer Rank
+                </p>
                 <p className="text-2xl font-black font-display text-blue-600 mt-0.5">
                   {quizRanking?.rank ? `Rank #${quizRanking.rank}` : "Unranked"}
                 </p>
@@ -253,6 +299,12 @@ export default function StudentEfficiencyPage() {
                 </p>
               </div>
             </div>
+
+            <Link href="/quizzes" className="block pt-1">
+              <Button variant="secondary" size="sm" className="w-full text-xs font-semibold">
+                Start New Practice Drill
+              </Button>
+            </Link>
           </div>
 
           {/* Quick Actions Card */}
@@ -265,24 +317,35 @@ export default function StudentEfficiencyPage() {
             <div className="space-y-2 pt-1">
               <Link
                 href="/dashboard/tasks"
-                className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50/70 border border-slate-200/70 hover:border-blue-200 transition-all text-xs font-semibold text-slate-700"
+                className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50/70 border border-slate-200/70 hover:border-blue-200 transition-all text-xs font-semibold text-slate-700 group"
               >
                 <div className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span>My Tasks</span>
+                  <span>My Weekly Tasks</span>
                 </div>
-                <span>→</span>
+                <span className="text-slate-400 group-hover:text-blue-600 transition-colors">→</span>
+              </Link>
+
+              <Link
+                href="/cohort"
+                className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50/70 border border-slate-200/70 hover:border-blue-200 transition-all text-xs font-semibold text-slate-700 group"
+              >
+                <div className="flex items-center gap-2.5">
+                  <Sparkles className="w-4 h-4 text-amber-500" />
+                  <span>Cohort Hub & Resources</span>
+                </div>
+                <span className="text-slate-400 group-hover:text-blue-600 transition-colors">→</span>
               </Link>
 
               <Link
                 href="/schedule"
-                className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50/70 border border-slate-200/70 hover:border-blue-200 transition-all text-xs font-semibold text-slate-700"
+                className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50/70 border border-slate-200/70 hover:border-blue-200 transition-all text-xs font-semibold text-slate-700 group"
               >
                 <div className="flex items-center gap-2.5">
                   <Calendar className="w-4 h-4 text-blue-600" />
-                  <span>Live Schedule</span>
+                  <span>Live Schedule & Sessions</span>
                 </div>
-                <span>→</span>
+                <span className="text-slate-400 group-hover:text-blue-600 transition-colors">→</span>
               </Link>
             </div>
           </div>

@@ -89,9 +89,9 @@ export function MissionTimeline({
   const LABEL_W = 180;
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {/* ── Stat cards ──────────────────────────────────────────────── */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <StatCard
           icon={<CheckCircle2 className="w-4 h-4 text-emerald-600" />}
           bgClass="bg-emerald-50 border-emerald-100"
@@ -101,49 +101,54 @@ export function MissionTimeline({
         <StatCard
           icon={<Clock className="w-4 h-4 text-blue-600" />}
           bgClass="bg-blue-50 border-blue-100"
-          label="In progress"
+          label="In Progress"
           value={stats.active}
         />
         <StatCard
           icon={<AlertTriangle className="w-4 h-4 text-amber-600" />}
           bgClass="bg-amber-50 border-amber-100"
-          label="Needs attention"
+          label="Needs Attention"
           value={stats.attention}
         />
       </div>
 
       {/* ── Two-column layout: timeline + detail ────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1.35fr_1fr] gap-3 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.35fr_1fr] gap-4 items-start">
         {/* ── Timeline chart ──────────────────────────────────────────── */}
-        <div className="bg-white rounded-card border border-mist shadow-soft overflow-hidden">
+        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
           {/* Header */}
-          <div className="flex items-center justify-between gap-3 px-4 pt-4 pb-2 flex-wrap">
-            <h2 className="text-lg font-bold font-display text-ink">
-              Mission Timeline
-            </h2>
+          <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-slate-100 flex-wrap">
+            <div>
+              <h2 className="text-base font-bold font-display text-slate-900">
+                Mission Timeline
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Interactive schedule of your weekly syllabus targets and deadlines
+              </p>
+            </div>
             <div className="flex items-center gap-1.5">
               <button
                 onClick={() => setNavOffset((p) => p - 7)}
-                className="p-1.5 rounded-control border border-mist hover:bg-surface-hover text-ink-muted transition-colors"
+                className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors"
                 aria-label="Previous week"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setNavOffset(0)}
-                className="px-2.5 py-1 rounded-control border border-mist hover:bg-surface-hover text-xs font-semibold text-ink-muted transition-colors"
+                className="px-2.5 py-1 rounded-lg border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors"
               >
-                <CalendarDays className="w-3.5 h-3.5 inline mr-1 -mt-0.5" />
+                <CalendarDays className="w-3.5 h-3.5 inline mr-1 -mt-0.5 text-blue-600" />
                 Today
               </button>
               <button
                 onClick={() => setNavOffset((p) => p + 7)}
-                className="p-1.5 rounded-control border border-mist hover:bg-surface-hover text-ink-muted transition-colors"
+                className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors"
                 aria-label="Next week"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
-              <span className="text-[11px] text-ink-faint ml-1 hidden sm:inline">
+              <span className="text-xs text-slate-500 font-medium ml-1 hidden sm:inline">
                 {formatShortDate(win.startDate)} –{" "}
                 {formatShortDate(win.endDate)}
               </span>
@@ -232,21 +237,21 @@ export function MissionTimeline({
           </div>
 
           {/* Legend */}
-          <div className="flex items-center gap-4 flex-wrap text-[11px] text-ink-faint px-4 py-2.5 border-t border-mist bg-slate-50/60">
-            <span className="flex items-center gap-1">
-              <span className="w-0.5 h-3.5 bg-blue-500 rounded-full" />
+          <div className="flex items-center gap-4 flex-wrap text-xs text-slate-500 font-medium px-5 py-3 border-t border-slate-100 bg-slate-50/70">
+            <span className="flex items-center gap-1.5">
+              <span className="w-1.5 h-3.5 bg-blue-600 rounded-full" />
               Today
             </span>
-            <span>🚩 Deadline</span>
-            <span className="flex items-center gap-1">
-              <span className="w-4 h-2 bg-blue-500 rounded-sm" /> Active
+            <span className="flex items-center gap-1">🚩 Deadline</span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-3.5 h-2 bg-blue-600 rounded-xs" /> Active
             </span>
-            <span className="flex items-center gap-1">
-              <span className="w-4 h-2 bg-emerald-500 rounded-sm" /> Done
+            <span className="flex items-center gap-1.5">
+              <span className="w-3.5 h-2 bg-emerald-500 rounded-xs" /> Done
             </span>
-            <span className="flex items-center gap-1">
-              <span className="w-4 h-2 border border-dashed border-emerald-400 rounded-sm" />{" "}
-              Days saved
+            <span className="flex items-center gap-1.5">
+              <span className="w-3.5 h-2 border border-dashed border-emerald-500 rounded-xs" />{" "}
+              Days Saved
             </span>
           </div>
         </div>
@@ -280,15 +285,15 @@ function StatCard({
   value: number;
 }) {
   return (
-    <div className="bg-white rounded-card border border-mist shadow-soft p-3.5 flex items-center gap-3">
+    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-4 flex items-center gap-3.5 hover:border-slate-300 transition-colors">
       <div
-        className={`w-9 h-9 rounded-full border flex items-center justify-center shrink-0 ${bgClass}`}
+        className={`w-10 h-10 rounded-2xl border flex items-center justify-center shrink-0 shadow-xs ${bgClass}`}
       >
         {icon}
       </div>
       <div>
-        <p className="text-[11px] text-ink-faint font-medium">{label}</p>
-        <p className="text-xl font-black font-display text-ink">{value}</p>
+        <p className="text-xs text-slate-500 font-medium">{label}</p>
+        <p className="text-xl sm:text-2xl font-black font-display text-slate-900">{value}</p>
       </div>
     </div>
   );

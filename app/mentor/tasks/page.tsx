@@ -154,47 +154,46 @@ function MentorTasksContent() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header Banner */}
-      <div className="rounded-2xl bg-gradient-to-r from-sky-50 via-blue-50/40 to-white border border-sky-100/80 p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-soft">
+      <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-sky-100/80 border border-sky-200 text-[11px] font-bold text-sky-900 uppercase tracking-wider mb-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+          <span className="text-[11px] font-bold text-blue-600 uppercase tracking-wider block">
             Task Administration
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold font-display text-ink tracking-tight">
+          </span>
+          <h1 className="text-2xl font-bold font-display text-slate-900 mt-0.5">
             Manage Assigned Tasks
           </h1>
-          <p className="text-sm text-ink-muted mt-1.5">
+          <p className="text-xs text-slate-500 mt-1 max-w-xl">
             Assign weekly objectives to cohort students and review their completed submissions.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 self-start sm:self-center">
-          <div className="inline-flex rounded-lg border border-slate-200 overflow-hidden">
+        <div className="flex items-center gap-2.5 self-start sm:self-center flex-wrap">
+          <div className="inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200/80 shadow-2xs">
             <button
               onClick={() => setViewMode("list")}
-              className={`flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
                 viewMode === "list"
-                  ? "bg-blue-600 text-white"
-                  : "bg-white text-slate-500 hover:text-slate-700"
+                  ? "bg-white text-blue-700 shadow-xs"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
               aria-label="List view"
             >
               <LayoutList className="w-3.5 h-3.5" />
-              List
+              <span>List</span>
             </button>
             <button
               onClick={() => setViewMode("timeline")}
-              className={`flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
                 viewMode === "timeline"
-                  ? "bg-blue-600 text-white"
-                  : "bg-white text-slate-500 hover:text-slate-700"
+                  ? "bg-white text-blue-700 shadow-xs"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
               aria-label="Timeline view"
             >
               <GanttChart className="w-3.5 h-3.5" />
-              Timeline
+              <span>Timeline</span>
             </button>
           </div>
 
@@ -205,7 +204,7 @@ function MentorTasksContent() {
               setErrorMessage(null);
               setShowAssignModal(true);
             }}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-soft whitespace-nowrap rounded-lg"
+            className="rounded-xl shadow-xs"
           >
             + Assign New Task
           </Button>
