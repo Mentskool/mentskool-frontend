@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import {
   AlertCircle,
+  AlertTriangle,
   ArrowLeft,
   Award,
   Bookmark,
@@ -64,6 +65,13 @@ export default function QuizDetailPage() {
   const [startError, setStartError] = useState("");
   const [submittedResult, setSubmittedResult] = useState<any>(null);
 
+  // Fullscreen state
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Tab switch & focus monitor
+  const [tabSwitchCount, setTabSwitchCount] = useState(0);
+  const [showTabSwitchWarning, setShowTabSwitchWarning] = useState(false);
+
   // Local answer state: questionId -> { selectedOptionIds: string[]; natAnswer: string }
   const [answers, setAnswers] = useState<
     Record<string, { selectedOptionIds: string[]; natAnswer: string }>
@@ -93,6 +101,100 @@ export default function QuizDetailPage() {
       });
     }
   }, [quiz?.questions]);
+
+  // Fullscreen helper functions
+  const enterFullscreen = async () => {
+    try {
+      const docEl = document.documentElement as any;
+      if (docEl.requestFullscreen) {
+        await docEl.requestFullscreen();
+      } else if (docEl.webkitRequestFullscreen) {
+        await docEl.webkitRequestFullscreen();
+      } else if (docEl.msRequestFullscreen) {
+        await docEl.msRequestFullscreen();
+      }
+    } catch (err) {
+      console.warn("Fullscreen request error:", err);
+    }
+  };
+
+  const exitFullscreen = async () => {
+    try {
+      const doc = document as any;
+      if (doc.exitFullscreen && doc.fullscreenElement) {
+        await doc.exitFullscreen();
+      } else if (doc.webkitExitFullscreen && doc.webkitFullscreenElement) {
+        await doc.webkitExitFullscreen();
+      } else if (doc.msExitFullscreen && doc.msFullscreenElement) {
+        await doc.msExitFullscreen();
+      }
+    } catch (err) {
+      console.warn("Exit fullscreen error:", err);
+    }
+  };
+
+  const toggleFullscreen = () => {
+    if (isFullscreen) {
+      exitFullscreen();
+    } else {
+      enterFullscreen();
+    }
+  };
+
+  // Fullscreen state listener
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isFull = Boolean(
+        document.fullscreenElement ||
+          (document as any).webkitFullscreenElement ||
+          (document as any).msFullscreenElement
+      );
+      setIsFullscreen(isFull);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+    document.addEventListener("msfullscreenchange", handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
+      document.removeEventListener("msfullscreenchange", handleFullscreenChange);
+    };
+  }, []);
+
+  // Tab switch detection (proctoring & focus protection)
+  useEffect(() => {
+    if (!isInProgress || isSubmitted) return;
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setTabSwitchCount((prev) => prev + 1);
+        setShowTabSwitchWarning(true);
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [isInProgress, isSubmitted]);
+
+  // Accidental page close/reload prevention during exam
+  useEffect(() => {
+    if (!isInProgress || isSubmitted) return;
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "Your exam is currently in progress. If you leave or reload this page, your progress may be lost.";
+      return e.returnValue;
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isInProgress, isSubmitted]);
 
   // Synchronized countdown timer
   useEffect(() => {
@@ -346,6 +448,8 @@ export default function QuizDetailPage() {
     try {
       await startAttemptMutation.mutateAsync(quiz.id);
       await refetch();
+      // Enter true fullscreen
+      enterFullscreen();
     } catch (err: any) {
       setStartError(
         err.detail || "Unable to start quiz attempt. Please ensure you are enrolled or try again."
@@ -382,6 +486,7 @@ export default function QuizDetailPage() {
       setSubmittedResult(result);
       setIsSubmitModalOpen(false);
       setIsTimeUpModalOpen(false);
+      exitFullscreen();
       await refetch();
     } catch (err: any) {
       setSubmitError(err.detail || "Failed to submit quiz");
@@ -852,7 +957,10 @@ export default function QuizDetailPage() {
                   </li>
                 )}
                 <li>
-                  <strong>CBT Exam Interface:</strong> Questions are presented one by one with a live Question Palette on the right, status color codes, and Save & Next controls.
+                  <strong>Full Screen Exam Mode:</strong> Starting the test automatically activates full screen mode without any navigation sidebars or tabs for focused exam taking.
+                </li>
+                <li>
+                  <strong>Tab-Switch Proctoring:</strong> Navigating away to other tabs or windows is recorded during the assessment. Please stay on this exam screen.
                 </li>
               </ul>
             </div>
@@ -873,7 +981,7 @@ export default function QuizDetailPage() {
                 className="w-full sm:w-auto px-8 rounded-xl shadow-md font-bold text-sm"
               >
                 <Play className="w-4 h-4 mr-2" />
-                Start Quiz Attempt Now
+                Start Quiz Attempt Now (Full Screen)
               </Button>
             </div>
           </Card>
@@ -882,7 +990,25 @@ export default function QuizDetailPage() {
         /* ==================================================================== */
         /* VIEW 3: CBT ONLINE EXAMINATION PORTAL (TCS iON / GATE OVERFLOW STYLE) */
         /* ==================================================================== */
-        <div className="flex-1 flex flex-col h-screen overflow-hidden bg-slate-100">
+        <div className="fixed inset-0 z-50 h-[100dvh] w-screen flex flex-col overflow-hidden bg-slate-100 select-none">
+          {/* Full Screen Reminder Banner if candidate exited full screen */}
+          {!isFullscreen && (
+            <div className="bg-amber-500 text-slate-900 px-4 py-1 text-xs font-bold flex items-center justify-between shrink-0 shadow-xs z-40">
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 text-slate-900 shrink-0" />
+                <span>Full Screen Recommended: Stay in Full Screen mode for real exam conditions.</span>
+              </div>
+              <button
+                type="button"
+                onClick={enterFullscreen}
+                className="px-2.5 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-bold flex items-center gap-1 transition-colors"
+              >
+                <Maximize2 className="w-3 h-3" />
+                <span>Enter Full Screen</span>
+              </button>
+            </div>
+          )}
+
           {/* 1. TOP BRANDING & EXAM HEADER */}
           <header className="bg-white border-b border-slate-300 shadow-xs shrink-0 z-30">
             <div className="px-4 py-2 flex items-center justify-between">
@@ -903,13 +1029,39 @@ export default function QuizDetailPage() {
                 </div>
               </div>
 
-              {/* Center Title */}
-              <div className="hidden md:block text-center max-w-md truncate">
+              {/* Center Title & Tab switch counter badge */}
+              <div className="hidden md:flex items-center gap-3 text-center max-w-md truncate">
                 <h1 className="text-sm font-bold text-slate-900 truncate">{quiz.title}</h1>
+                {tabSwitchCount > 0 && (
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-700 border border-rose-200 shrink-0 flex items-center gap-1">
+                    <AlertTriangle className="w-3 h-3" />
+                    Tab Switches: {tabSwitchCount}
+                  </span>
+                )}
               </div>
 
               {/* Right utility buttons */}
               <div className="flex items-center gap-2">
+                {/* Fullscreen toggle button */}
+                <button
+                  type="button"
+                  onClick={toggleFullscreen}
+                  className="px-2.5 py-1 text-xs font-semibold rounded-md border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-700 flex items-center gap-1.5 transition-colors"
+                  title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+                >
+                  {isFullscreen ? (
+                    <>
+                      <Minimize2 className="w-3.5 h-3.5 text-slate-600" />
+                      <span className="hidden sm:inline">Exit Full Screen</span>
+                    </>
+                  ) : (
+                    <>
+                      <Maximize2 className="w-3.5 h-3.5 text-sky-600" />
+                      <span className="hidden sm:inline">Full Screen</span>
+                    </>
+                  )}
+                </button>
+
                 <button
                   type="button"
                   onClick={() => setIsInstructionsOpen(true)}
@@ -1610,6 +1762,9 @@ export default function QuizDetailPage() {
                 <li>
                   Click <strong>Clear Response</strong> to deselect chosen option(s).
                 </li>
+                <li>
+                  The test is conducted in <strong>Full Screen Mode</strong>. Navigating away to other tabs is recorded.
+                </li>
               </ul>
 
               <div className="font-bold text-slate-900 pt-2">Navigating Questions:</div>
@@ -1633,7 +1788,47 @@ export default function QuizDetailPage() {
       )}
 
       {/* ==================================================================== */}
-      {/* MODAL 4: TIME UP AUTO-SUBMISSION MODAL                               */}
+      {/* MODAL 4: TAB SWITCH / PROCTORING WARNING MODAL                       */}
+      {/* ==================================================================== */}
+      {showTabSwitchWarning && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl border-2 border-rose-500 p-6 space-y-4 text-center">
+            <div className="w-14 h-14 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center mx-auto text-rose-600 animate-bounce">
+              <AlertTriangle className="w-8 h-8" />
+            </div>
+
+            <div className="space-y-1.5">
+              <h3 className="text-lg font-bold font-display text-slate-900">
+                Tab Switch / Window Blur Detected!
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                You navigated away from the active examination window. To maintain academic test integrity, navigating to other tabs or applications is strictly monitored.
+              </p>
+            </div>
+
+            <div className="p-3 bg-rose-50 rounded-xl border border-rose-200 text-xs text-rose-900 font-semibold">
+              Warning {tabSwitchCount} • Please remain on this exam tab in full screen mode until you submit your test.
+            </div>
+
+            <div>
+              <Button
+                variant="primary"
+                size="md"
+                onClick={() => {
+                  setShowTabSwitchWarning(false);
+                  enterFullscreen();
+                }}
+                className="w-full rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold"
+              >
+                Return to Full Screen Exam
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ==================================================================== */}
+      {/* MODAL 5: TIME UP AUTO-SUBMISSION MODAL                               */}
       {/* ==================================================================== */}
       {isTimeUpModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-xs animate-fade-in">
