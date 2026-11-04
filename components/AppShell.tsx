@@ -33,8 +33,16 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({
   // Workspace routes that should display the dashboard sidebar when logged in
   const isMentorsExplore =
     pathname === "/mentors" || pathname.startsWith("/mentors/");
+
+  // Dedicated full-screen exam mode for quiz assessment (no sidebar, no navbar, no outside tabs)
+  const isQuizTakingRoute =
+    pathname.startsWith("/quizzes/") &&
+    !pathname.includes("/edit") &&
+    !pathname.includes("/leaderboard");
+
   const isWorkspaceRoute =
     !isMentorsExplore &&
+    !isQuizTakingRoute &&
     !pathname.startsWith("/admin") &&
     (pathname.startsWith("/dashboard") ||
       pathname.startsWith("/mentor/") ||
@@ -71,6 +79,15 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({
   if (isAuthPage) {
     return (
       <div className="min-h-screen flex flex-col bg-paper">
+        {children}
+      </div>
+    );
+  }
+
+  // Dedicated full-screen layout for CBT quiz examination (no sidebar, no header, no distractions)
+  if (isQuizTakingRoute) {
+    return (
+      <div className="min-h-screen h-[100dvh] w-screen flex flex-col bg-slate-100 overflow-hidden">
         {children}
       </div>
     );
