@@ -161,35 +161,35 @@ export default function StudentTasksPage() {
         </div>
 
         {/* Date Range Badge + View Toggle */}
-        <div className="flex items-center gap-2 self-start md:self-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 shadow-xs">
-            <Calendar className="w-3.5 h-3.5 text-slate-400" />
+        <div className="flex items-center gap-2.5 self-start md:self-center flex-wrap">
+          <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 shadow-2xs">
+            <Calendar className="w-3.5 h-3.5 text-blue-600" />
             <span>{cycleDateRange}</span>
           </div>
-          <div className="inline-flex rounded-lg border border-slate-200 overflow-hidden">
+          <div className="inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200/80 shadow-2xs">
             <button
               onClick={() => setViewMode("list")}
-              className={`flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
                 viewMode === "list"
-                  ? "bg-blue-600 text-white"
-                  : "bg-white text-slate-500 hover:text-slate-700"
+                  ? "bg-white text-blue-700 shadow-xs"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
               aria-label="List view"
             >
               <LayoutList className="w-3.5 h-3.5" />
-              List
+              <span>List</span>
             </button>
             <button
               onClick={() => setViewMode("timeline")}
-              className={`flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
                 viewMode === "timeline"
-                  ? "bg-blue-600 text-white"
-                  : "bg-white text-slate-500 hover:text-slate-700"
+                  ? "bg-white text-blue-700 shadow-xs"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
               aria-label="Timeline view"
             >
               <GanttChart className="w-3.5 h-3.5" />
-              Timeline
+              <span>Timeline</span>
             </button>
           </div>
         </div>
@@ -283,17 +283,37 @@ export default function StudentTasksPage() {
           <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
             {STATUS_FILTERS.map((filter) => {
               const isSelected = selectedStatus === filter.value;
+              const count =
+                filter.value === undefined
+                  ? allTasksData?.items?.length ?? 0
+                  : filter.value === "ASSIGNED"
+                    ? stats.inProgress
+                    : filter.value === "MARKED_COMPLETE"
+                      ? stats.pendingReview
+                      : filter.value === "APPROVED"
+                        ? stats.completed
+                        : stats.rejected;
+
               return (
                 <button
                   key={filter.label}
                   onClick={() => setSelectedStatus(filter.value)}
-                  className={`px-4 py-1.5 text-xs font-semibold rounded-full border transition-all whitespace-nowrap ${
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold rounded-xl border transition-all whitespace-nowrap ${
                     isSelected
                       ? "bg-blue-600 text-white border-blue-600 shadow-xs"
-                      : "bg-white text-slate-600 border-slate-200/90 hover:text-slate-900 hover:bg-slate-50"
+                      : "bg-white text-slate-600 border-slate-200/90 hover:text-slate-900 hover:bg-slate-50 shadow-2xs"
                   }`}
                 >
-                  {filter.label}
+                  <span>{filter.label}</span>
+                  <span
+                    className={`inline-flex items-center justify-center px-1.5 py-0.2 text-[10px] font-black rounded-full ${
+                      isSelected
+                        ? "bg-blue-700/80 text-white"
+                        : "bg-slate-100 text-slate-500"
+                    }`}
+                  >
+                    {count}
+                  </span>
                 </button>
               );
             })}

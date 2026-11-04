@@ -124,39 +124,40 @@ export default function StudentProfilePage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8 pb-12">
+    <div className="max-w-3xl mx-auto space-y-6 pb-12">
       {/* Header Banner */}
-      <div className="rounded-2xl bg-gradient-to-r from-sky-50 via-blue-50/40 to-white border border-sky-100/80 p-6 shadow-soft">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-sky-100/80 border border-sky-200 text-[11px] font-bold text-sky-900 uppercase tracking-wider mb-2">
-          <Sparkles className="w-3.5 h-3.5 text-sky-600" />
-          Personalized Preparation
+      <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <span className="text-[11px] font-bold text-blue-600 uppercase tracking-wider block">
+            Personalized Preparation
+          </span>
+          <h1 className="text-2xl font-bold font-display text-slate-900 mt-0.5">
+            Student Profile & Goals
+          </h1>
+          <p className="text-xs text-slate-500 mt-1 max-w-xl">
+            Keep your target exam, cohort batch, and preparation milestones up to date for your mentor.
+          </p>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-ink tracking-tight">
-          Student Profile & Goals
-        </h1>
-        <p className="text-sm text-ink-muted mt-1.5">
-          Keep your target exam, cohort batch, and preparation milestones up to date for your mentor.
-        </p>
       </div>
 
       {feedback && (
         <div
-          className={`p-4 rounded-card text-sm border flex items-center gap-3 transition-all ${
+          className={`p-4 rounded-2xl text-xs font-semibold border flex items-center gap-3 shadow-xs animate-fade-in ${
             feedback.type === "success"
-              ? "bg-blue-50 text-blue-800 border-blue-200"
-              : "bg-amber/10 text-amber border-amber/30"
+              ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+              : "bg-amber-50 text-amber-800 border-amber-200"
           }`}
         >
           {feedback.type === "success" ? (
-            <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-moss" />
+            <CheckCircle2 className="w-4 h-4 flex-shrink-0 text-emerald-600" />
           ) : (
-            <AlertCircle className="w-5 h-5 flex-shrink-0 text-amber" />
+            <AlertCircle className="w-4 h-4 flex-shrink-0 text-amber-600" />
           )}
-          <span className="font-medium">{feedback.message}</span>
+          <span>{feedback.message}</span>
         </div>
       )}
 
-      <Card className="bg-white border-mist p-6 sm:p-8 shadow-sm">
+      <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-xs">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Avatar Upload Section */}
           <AvatarUpload
@@ -325,7 +326,7 @@ export default function StudentProfilePage() {
             </div>
           </div>
         </form>
-      </Card>
+      </div>
 
       {/* Global Floating Toast for Instant Visibility from any scroll position */}
       {feedback && (
