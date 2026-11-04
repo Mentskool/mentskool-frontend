@@ -27,25 +27,28 @@ export const TaskOverviewDonut: React.FC<TaskOverviewDonutProps> = ({
   const strokeDashoffset = circumference - (completedPct / 100) * circumference;
 
   return (
-    <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs space-y-4">
+    <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="bg-gradient-to-r from-slate-50 to-blue-50/40 px-5 py-3.5 border-b border-slate-100 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <CheckSquare className="w-4 h-4 text-slate-700" />
+          <div className="w-6 h-6 rounded-lg bg-blue-100/80 flex items-center justify-center text-blue-700">
+            <CheckSquare className="w-3.5 h-3.5" />
+          </div>
           <h3 className="text-sm font-bold text-slate-900">Task Overview</h3>
         </div>
         {onViewAll && (
           <button
             onClick={onViewAll}
-            className="text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline"
+            className="text-xs font-bold text-blue-600 hover:text-blue-700 hover:underline"
           >
             View All
           </button>
         )}
       </div>
 
-      {/* Chart + Legend */}
-      <div className="flex items-center justify-between gap-4 pt-1">
+      <div className="p-5 space-y-4">
+        {/* Chart + Legend */}
+        <div className="flex items-center justify-between gap-4 pt-1">
         {/* Circular Donut Gauge */}
         <div className="relative w-28 h-28 flex items-center justify-center flex-shrink-0">
           <svg className="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
@@ -121,5 +124,6 @@ export const TaskOverviewDonut: React.FC<TaskOverviewDonutProps> = ({
         </div>
       </div>
     </div>
+  </div>
   );
 };

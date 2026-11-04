@@ -124,8 +124,23 @@ export const StudentTaskRow: React.FC<StudentTaskRowProps> = ({
     }
   };
 
+  const getStatusBorder = () => {
+    switch (task.status) {
+      case "APPROVED":
+        return "border-l-4 border-l-emerald-500 border-slate-200/90";
+      case "ASSIGNED":
+        return "border-l-4 border-l-blue-500 border-slate-200/90";
+      case "MARKED_COMPLETE":
+        return "border-l-4 border-l-amber-500 border-slate-200/90";
+      case "REJECTED":
+        return "border-l-4 border-l-rose-500 border-slate-200/90";
+      default:
+        return "border-slate-200/90";
+    }
+  };
+
   return (
-    <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs hover:shadow-soft hover:border-slate-300 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className={`bg-white rounded-2xl p-4 sm:p-5 border shadow-xs hover:shadow-md hover:border-slate-300 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${getStatusBorder()}`}>
       {/* Left: Icon + Content */}
       <div className="flex items-start gap-4 flex-1 min-w-0">
         <div

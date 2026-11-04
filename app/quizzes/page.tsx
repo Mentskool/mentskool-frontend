@@ -117,34 +117,34 @@ export default function QuizzesPage() {
         <div className="space-y-6">
           {/* Quick Metrics */}
           {mentorQuizzes && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <Card variant="default" className="p-4 bg-white border-mist shadow-soft">
-                <div className="text-[11px] font-bold text-ink-faint uppercase">Authored</div>
-                <div className="text-xl font-black text-ink font-display mt-0.5">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+              <div className="bg-white rounded-2xl p-4 sm:p-5 border border-blue-200/90 border-t-4 border-t-blue-500 shadow-xs hover:shadow-md transition-all">
+                <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Authored</div>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 font-display mt-0.5">
                   {mentorQuizzes.total} Tests
                 </div>
-              </Card>
+              </div>
 
-              <Card variant="default" className="p-4 bg-white border-mist shadow-soft">
-                <div className="text-[11px] font-bold text-ink-faint uppercase">Published</div>
-                <div className="text-xl font-black text-blue-700 font-display mt-0.5">
+              <div className="bg-white rounded-2xl p-4 sm:p-5 border border-emerald-200/90 border-t-4 border-t-emerald-500 shadow-xs hover:shadow-md transition-all">
+                <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Published</div>
+                <div className="text-xl sm:text-2xl font-black text-emerald-700 font-display mt-0.5">
                   {mentorQuizzes.items.filter((q) => q.status === "PUBLISHED").length} Live
                 </div>
-              </Card>
+              </div>
 
-              <Card variant="default" className="p-4 bg-white border-mist shadow-soft">
-                <div className="text-[11px] font-bold text-ink-faint uppercase">Drafts & Scheduled</div>
-                <div className="text-xl font-black text-amber-700 font-display mt-0.5">
+              <div className="bg-white rounded-2xl p-4 sm:p-5 border border-amber-200/90 border-t-4 border-t-amber-500 shadow-xs hover:shadow-md transition-all">
+                <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Drafts & Scheduled</div>
+                <div className="text-xl sm:text-2xl font-black text-amber-700 font-display mt-0.5">
                   {mentorQuizzes.items.filter((q) => q.status !== "PUBLISHED").length} Tests
                 </div>
-              </Card>
+              </div>
 
-              <Card variant="default" className="p-4 bg-white border-mist shadow-soft">
-                <div className="text-[11px] font-bold text-ink-faint uppercase">Cohort Attempts</div>
-                <div className="text-xl font-black text-sky-800 font-display mt-0.5">
+              <div className="bg-white rounded-2xl p-4 sm:p-5 border border-indigo-200/90 border-t-4 border-t-indigo-500 shadow-xs hover:shadow-md transition-all">
+                <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Cohort Attempts</div>
+                <div className="text-xl sm:text-2xl font-black text-indigo-700 font-display mt-0.5">
                   {mentorQuizzes.items.reduce((sum, q) => sum + (q.attempt_count || 0), 0)} Submissions
                 </div>
-              </Card>
+              </div>
             </div>
           )}
 
@@ -278,49 +278,58 @@ export default function QuizzesPage() {
         <div className="space-y-6">
           {/* Overall Quiz Ranking Card */}
           {studentRanking && (
-            <Card
-              variant="default"
-              className="p-5 bg-gradient-to-r from-sky-50/50 via-white to-sky-50/20 border-sky-100 shadow-soft flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-            >
-              <div className="space-y-1">
-                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-sky-900 uppercase tracking-wider">
-                  <Award className="w-4 h-4 text-sky-600" />
-                  Cohort Exam Performance
+            <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all overflow-hidden">
+              <div className="bg-gradient-to-r from-slate-50 to-blue-50/30 px-5 py-3 border-b border-slate-100 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-lg bg-blue-100/80 flex items-center justify-center text-blue-700">
+                    <Award className="w-3.5 h-3.5" />
+                  </div>
+                  <span className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                    Cohort Exam Performance
+                  </span>
                 </div>
-                <div className="flex items-baseline gap-4 pt-1">
+                <Link href="/dashboard/efficiency">
+                  <span className="text-xs font-bold text-blue-600 hover:underline">
+                    Efficiency Dashboard →
+                  </span>
+                </Link>
+              </div>
+
+              <div className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-baseline gap-6 flex-wrap">
                   <div>
-                    <span className="text-2xl font-black font-display text-ink">
+                    <span className="text-2xl font-black font-display text-slate-900">
                       {studentRanking.average_percentage !== null &&
                       studentRanking.average_percentage !== undefined
                         ? `${studentRanking.average_percentage}%`
                         : "No data yet"}
                     </span>
-                    <span className="text-xs text-ink-muted ml-1.5">Average Score</span>
+                    <span className="text-xs text-slate-500 ml-1.5 font-medium">Average Score</span>
                   </div>
 
                   {studentRanking.rank && (
-                    <div className="border-l border-sky-200 pl-4">
-                      <span className="text-xl font-bold font-display text-sky-800">
+                    <div className="border-l border-slate-200 pl-6">
+                      <span className="text-2xl font-bold font-display text-blue-600">
                         Rank #{studentRanking.rank}
                       </span>
-                      <span className="text-xs text-ink-muted ml-1">
+                      <span className="text-xs text-slate-500 ml-1.5 font-medium">
                         of {studentRanking.cohort_size} cohort peers
                       </span>
                     </div>
                   )}
                 </div>
-              </div>
 
-              <Link href="/dashboard/efficiency">
-                <Button variant="secondary" size="sm" className="rounded-xl border-sky-200 text-sky-800">
-                  Inspect on Efficiency Page →
-                </Button>
-              </Link>
-            </Card>
+                <Link href="/dashboard/efficiency">
+                  <Button variant="secondary" size="sm" className="rounded-xl border-slate-200 text-slate-700 text-xs font-semibold">
+                    Inspect on Efficiency Page →
+                  </Button>
+                </Link>
+              </div>
+            </div>
           )}
 
           {studentLoading ? (
-            <div className="py-16 text-center text-ink-faint animate-pulse">
+            <div className="py-16 text-center text-slate-400 animate-pulse">
               Loading available quizzes...
             </div>
           ) : !studentQuizzes || studentQuizzes.length === 0 ? (
@@ -333,53 +342,74 @@ export default function QuizzesPage() {
             />
           ) : (
             <div className="space-y-4">
-              <h2 className="text-sm font-bold text-ink uppercase tracking-wider">
+              <h2 className="text-xs font-bold text-slate-600 uppercase tracking-wider">
                 Assigned Problem Sets ({studentQuizzes.length})
               </h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {studentQuizzes.map((quiz) => (
-                  <Card
+                  <div
                     key={quiz.id}
-                    variant="default"
-                    className="p-5 bg-white border-mist shadow-soft space-y-4 flex flex-col justify-between hover:border-sky-300 transition-colors"
+                    className={`bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md hover:border-blue-300 transition-all overflow-hidden flex flex-col justify-between ${
+                      quiz.has_attempted
+                        ? "border-l-4 border-l-emerald-500"
+                        : quiz.is_attemptable
+                          ? "border-l-4 border-l-blue-500"
+                          : "border-l-4 border-l-slate-300"
+                    }`}
                   >
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="text-[11px] font-bold text-sky-700 uppercase tracking-wider">
-                          Mentor: {quiz.mentor_name}
-                        </span>
+                    <div>
+                      {/* Card Header Strip with Background */}
+                      <div className="bg-gradient-to-r from-slate-50 to-blue-50/30 px-5 py-3 border-b border-slate-100 flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <div className="w-5 h-5 rounded-md bg-blue-100/80 flex items-center justify-center text-blue-700">
+                            <BookOpen className="w-3 h-3" />
+                          </div>
+                          <span className="text-[11px] font-bold text-slate-800 uppercase tracking-wider">
+                            Mentor: {quiz.mentor_name}
+                          </span>
+                        </div>
+
                         {quiz.has_attempted ? (
-                          <Badge variant="SUBMITTED">Completed</Badge>
+                          <span className="text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                            Completed
+                          </span>
                         ) : quiz.is_deadline_passed ? (
-                          <Badge variant="EXPIRED">Deadline Passed</Badge>
+                          <span className="text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200 px-2.5 py-0.5 rounded-full">
+                            Deadline Passed
+                          </span>
                         ) : (
-                          <Badge variant="ACTIVE">Available</Badge>
+                          <span className="text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-0.5 rounded-full">
+                            Available
+                          </span>
                         )}
                       </div>
 
-                      <h3 className="text-base font-bold font-display text-ink leading-snug">
-                        {quiz.title}
-                      </h3>
+                      {/* Card Body */}
+                      <div className="p-5 space-y-2">
+                        <h3 className="text-base font-bold font-display text-slate-900 leading-snug">
+                          {quiz.title}
+                        </h3>
 
-                      {quiz.description && (
-                        <p className="text-xs text-ink-muted line-clamp-2 leading-relaxed">
-                          {quiz.description}
-                        </p>
-                      )}
+                        {quiz.description && (
+                          <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                            {quiz.description}
+                          </p>
+                        )}
+                      </div>
                     </div>
 
-                    <div className="space-y-3 pt-3 border-t border-mist text-xs text-ink-muted">
-                      <div className="flex items-center justify-between">
-                        <span>{quiz.question_count} Questions • {quiz.total_marks} Marks</span>
-                        <span className="inline-flex items-center gap-1 font-semibold text-sky-700 bg-sky-50 px-2 py-0.5 rounded text-[11px]">
+                    <div className="p-5 pt-0 space-y-3">
+                      <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                        <span className="font-medium">{quiz.question_count} Questions • {quiz.total_marks} Marks</span>
+                        <span className="inline-flex items-center gap-1 font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded text-[11px]">
                           <Clock className="w-3 h-3" />
                           {quiz.duration_minutes ? `${quiz.duration_minutes} min` : "Untimed"}
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-1.5 text-[11px]">
-                        <Clock className="w-3.5 h-3.5 text-sky-600" />
+                      <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
+                        <Calendar className="w-3.5 h-3.5 text-blue-600" />
                         <span>
                           {quiz.has_deadline && quiz.deadline_at
                             ? `Deadline: ${new Date(quiz.deadline_at).toLocaleDateString()}`
@@ -391,18 +421,18 @@ export default function QuizzesPage() {
                       <div className="flex items-center gap-2 pt-1">
                         {quiz.has_attempted ? (
                           <Link href={`/quizzes/${quiz.id}`} className="flex-1">
-                            <Button variant="secondary" size="sm" className="w-full rounded-xl">
+                            <Button variant="secondary" size="sm" className="w-full rounded-xl text-xs font-semibold">
                               View Results & Key
                             </Button>
                           </Link>
                         ) : quiz.is_attemptable ? (
                           <Link href={`/quizzes/${quiz.id}`} className="flex-1">
-                            <Button variant="primary" size="sm" className="w-full rounded-xl shadow-soft">
+                            <Button variant="primary" size="sm" className="w-full rounded-xl shadow-xs text-xs font-semibold">
                               Attempt Quiz →
                             </Button>
                           </Link>
                         ) : (
-                          <Button variant="secondary" size="sm" disabled className="flex-1 rounded-xl opacity-60">
+                          <Button variant="secondary" size="sm" disabled className="flex-1 rounded-xl opacity-60 text-xs">
                             Closed
                           </Button>
                         )}
@@ -414,7 +444,7 @@ export default function QuizzesPage() {
                         </Link>
                       </div>
                     </div>
-                  </Card>
+                  </div>
                 ))}
               </div>
             </div>

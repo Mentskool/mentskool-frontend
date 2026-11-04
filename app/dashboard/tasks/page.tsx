@@ -141,9 +141,9 @@ export default function StudentTasksPage() {
       ) : (
         <>
       {/* 1. Hero Card */}
-      <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-blue-50/90 via-indigo-50/40 to-white rounded-2xl p-6 border border-blue-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0 text-blue-600 shadow-xs">
+          <div className="w-12 h-12 rounded-2xl bg-white border border-blue-200 flex items-center justify-center flex-shrink-0 text-blue-600 shadow-xs">
             <Target className="w-6 h-6 text-blue-600" />
           </div>
 
@@ -162,7 +162,7 @@ export default function StudentTasksPage() {
 
         {/* Date Range Badge + View Toggle */}
         <div className="flex items-center gap-2.5 self-start md:self-center flex-wrap">
-          <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 shadow-2xs">
+          <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 shadow-2xs">
             <Calendar className="w-3.5 h-3.5 text-blue-600" />
             <span>{cycleDateRange}</span>
           </div>
@@ -208,11 +208,11 @@ export default function StudentTasksPage() {
       {/* ── LIST VIEW (existing) ──────────────────────────────────── */}
       {viewMode === "list" && (
         <>
-          {/* 2. Stat Metric Cards (4 Cards) */}
+          {/* 2. Stat Metric Cards (4 Cards with distinct top accent & borders) */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
             {/* Completed */}
-            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0 text-emerald-600">
+            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-emerald-200/90 border-t-4 border-t-emerald-500 shadow-xs hover:shadow-md transition-all flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0 text-emerald-600 shadow-xs">
                 <CheckCircle2 className="w-5 h-5 text-emerald-600" />
               </div>
               <div>
@@ -224,8 +224,8 @@ export default function StudentTasksPage() {
             </div>
 
             {/* In Progress */}
-            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0 text-blue-600">
+            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-blue-200/90 border-t-4 border-t-blue-500 shadow-xs hover:shadow-md transition-all flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0 text-blue-600 shadow-xs">
                 <Clock className="w-5 h-5 text-blue-600" />
               </div>
               <div>
@@ -237,8 +237,8 @@ export default function StudentTasksPage() {
             </div>
 
             {/* Pending Review */}
-            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-full bg-amber-50 border border-amber-100 flex items-center justify-center flex-shrink-0 text-amber-600">
+            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-amber-200/90 border-t-4 border-t-amber-500 shadow-xs hover:shadow-md transition-all flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center flex-shrink-0 text-amber-600 shadow-xs">
                 <Hourglass className="w-5 h-5 text-amber-600" />
               </div>
               <div>
@@ -250,8 +250,8 @@ export default function StudentTasksPage() {
             </div>
 
             {/* Rejected */}
-            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-full bg-rose-50 border border-rose-100 flex items-center justify-center flex-shrink-0 text-rose-600">
+            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-rose-200/90 border-t-4 border-t-rose-500 shadow-xs hover:shadow-md transition-all flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center flex-shrink-0 text-rose-600 shadow-xs">
                 <AlertCircle className="w-5 h-5 text-rose-600" />
               </div>
               <div>
@@ -379,13 +379,15 @@ export default function StudentTasksPage() {
               />
 
               {/* Quick Actions Card */}
-              <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs space-y-3">
-                <div className="flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-slate-700" />
-                  <h3 className="text-sm font-bold text-slate-900">Quick Actions</h3>
+              <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
+                <div className="bg-gradient-to-r from-slate-50 to-blue-50/40 px-5 py-3.5 border-b border-slate-100 flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-lg bg-blue-100/80 flex items-center justify-center text-blue-700">
+                    <Zap className="w-3.5 h-3.5" />
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-900">Quick Navigation</h3>
                 </div>
 
-                <div className="space-y-2 pt-1">
+                <div className="p-4 space-y-2">
                   <Link
                     href="/schedule"
                     className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50/70 border border-slate-200/70 hover:border-blue-200 transition-all text-xs font-semibold text-slate-700 group"
@@ -422,15 +424,17 @@ export default function StudentTasksPage() {
               </div>
 
               {/* Recent Activity Card */}
-              <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs space-y-3">
-                <div className="flex items-center justify-between">
+              <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
+                <div className="bg-gradient-to-r from-slate-50 to-blue-50/40 px-5 py-3.5 border-b border-slate-100 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-slate-700" />
+                    <div className="w-6 h-6 rounded-lg bg-blue-100/80 flex items-center justify-center text-blue-700">
+                      <Clock className="w-3.5 h-3.5" />
+                    </div>
                     <h3 className="text-sm font-bold text-slate-900">Recent Activity</h3>
                   </div>
                 </div>
 
-                <div className="space-y-3 pt-1 text-xs">
+                <div className="p-5 space-y-3 text-xs">
                   {allTasksData?.items && allTasksData.items.length > 0 ? (
                     allTasksData.items.slice(0, 4).map((task) => (
                       <div key={task.id} className="flex items-start gap-2.5">

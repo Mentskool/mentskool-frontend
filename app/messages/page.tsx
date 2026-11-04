@@ -289,7 +289,7 @@ function MessagesContent() {
           }`}
         >
           {/* Header & Title */}
-          <div className="p-3.5 sm:p-4 border-b border-slate-200/80 bg-white">
+          <div className="p-3.5 sm:p-4 border-b border-slate-200/80 bg-gradient-to-r from-slate-50 to-blue-50/30">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <h1 className="text-lg font-bold font-display text-slate-900 tracking-tight">
@@ -546,7 +546,7 @@ function MessagesContent() {
           {activeChat ? (
             <>
               {/* WhatsApp-Style Chat Header */}
-              <div className="px-3.5 sm:px-6 py-3 border-b border-slate-200/80 bg-white flex items-center justify-between flex-shrink-0 z-10 shadow-xs">
+              <div className="px-3.5 sm:px-6 py-3 border-b border-slate-200/80 bg-gradient-to-r from-slate-50 via-blue-50/20 to-white flex items-center justify-between flex-shrink-0 z-10 shadow-xs">
                 <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
                   {/* Mobile Back Button (Returns to list) */}
                   <button

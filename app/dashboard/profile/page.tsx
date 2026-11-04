@@ -126,17 +126,23 @@ export default function StudentProfilePage() {
   return (
     <div className="max-w-3xl mx-auto space-y-6 pb-12">
       {/* Header Banner */}
-      <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <span className="text-[11px] font-bold text-blue-600 uppercase tracking-wider block">
-            Personalized Preparation
-          </span>
-          <h1 className="text-2xl font-bold font-display text-slate-900 mt-0.5">
-            Student Profile & Goals
-          </h1>
-          <p className="text-xs text-slate-500 mt-1 max-w-xl">
-            Keep your target exam, cohort batch, and preparation milestones up to date for your mentor.
-          </p>
+      <div className="bg-gradient-to-r from-blue-50/90 via-indigo-50/40 to-white rounded-2xl p-6 border border-blue-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-start gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-white border border-blue-200 flex items-center justify-center flex-shrink-0 text-blue-600 shadow-xs">
+            <UserIcon className="w-6 h-6 text-blue-600" />
+          </div>
+
+          <div className="space-y-0.5">
+            <span className="text-[11px] font-bold text-blue-600 uppercase tracking-wider block">
+              Personalized Preparation
+            </span>
+            <h1 className="text-2xl font-bold font-display text-slate-900">
+              Student Profile & Goals
+            </h1>
+            <p className="text-xs text-slate-500 max-w-xl">
+              Keep your target exam, cohort batch, and preparation milestones up to date for your mentor.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -157,8 +163,19 @@ export default function StudentProfilePage() {
         </div>
       )}
 
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-xs">
-        <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
+        {/* Section Header with background strip */}
+        <div className="bg-gradient-to-r from-slate-50 to-blue-50/30 px-6 py-4 border-b border-slate-100 flex items-center gap-2.5">
+          <div className="w-6 h-6 rounded-lg bg-blue-100/80 flex items-center justify-center text-blue-700">
+            <Sparkles className="w-3.5 h-3.5" />
+          </div>
+          <h2 className="text-sm font-bold text-slate-900">
+            Personal & Exam Aspirations
+          </h2>
+        </div>
+
+        <div className="p-6 sm:p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
           {/* Avatar Upload Section */}
           <AvatarUpload
             currentAvatarUrl={avatarUrl}
@@ -326,6 +343,7 @@ export default function StudentProfilePage() {
             </div>
           </div>
         </form>
+        </div>
       </div>
 
       {/* Global Floating Toast for Instant Visibility from any scroll position */}
