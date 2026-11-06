@@ -28,6 +28,9 @@ export const TaskCard: React.FC<TaskCardProps> = ({
   const [selectedDecision, setSelectedDecision] = useState<
     "APPROVED" | "REJECTED" | null
   >(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const isDescriptionLong = (task.description?.length || 0) > 160;
 
   const handleReviewSubmit = (decision: "APPROVED" | "REJECTED") => {
     if (onReview) {
@@ -35,11 +38,26 @@ export const TaskCard: React.FC<TaskCardProps> = ({
     }
   };
 
+  const getStatusBorder = () => {
+    switch (task.status) {
+      case "APPROVED":
+        return "border-l-4 border-l-emerald-500";
+      case "ASSIGNED":
+        return "border-l-4 border-l-blue-500";
+      case "MARKED_COMPLETE":
+        return "border-l-4 border-l-amber-500";
+      case "REJECTED":
+        return "border-l-4 border-l-rose-500";
+      default:
+        return "border-l-4 border-l-slate-300";
+    }
+  };
+
   return (
-    <Card className="flex flex-col justify-between gap-4 bg-white hover:border-[#D4D7DE] transition-all">
-      <div className="flex flex-col gap-2">
-        <div className="flex items-start justify-between gap-4">
-          <h3 className="text-base font-semibold font-display text-ink leading-snug">
+    <div className={`flex flex-col justify-between gap-4 bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs hover:shadow-md hover:border-slate-300 transition-all ${getStatusBorder()}`}>
+      <div className="flex flex-col gap-2.5">
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="text-base font-bold font-display text-slate-900 leading-snug break-words">
             {task.title}
           </h3>
           <div className="flex items-center gap-2 shrink-0">
@@ -48,11 +66,27 @@ export const TaskCard: React.FC<TaskCardProps> = ({
           </div>
         </div>
 
-        <p className="text-sm text-ink-muted whitespace-pre-wrap leading-relaxed">
-          {task.description}
-        </p>
+        <div className="space-y-1">
+          <p
+            className={`text-xs sm:text-sm text-slate-600 whitespace-pre-wrap leading-relaxed break-words ${
+              !isExpanded && isDescriptionLong ? "line-clamp-3" : ""
+            }`}
+          >
+            {task.description}
+          </p>
 
-        <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-xs text-ink-faint pt-1">
+          {isDescriptionLong && (
+            <button
+              type="button"
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline pt-0.5 inline-block"
+            >
+              {isExpanded ? "Show less ↑" : "Read full description ↓"}
+            </button>
+          )}
+        </div>
+
+        <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-xs text-slate-400 pt-1 border-t border-slate-100">
           <span>
             Assigned week:{" "}
             <span className="text-ink-muted font-medium">
@@ -169,6 +203,6 @@ export const TaskCard: React.FC<TaskCardProps> = ({
             )}
           </div>
         )}
-    </Card>
+    </div>
   );
 };

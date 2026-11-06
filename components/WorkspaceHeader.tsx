@@ -5,10 +5,11 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { useAuth } from "@/hooks/useAuth";
-import { useStudentTasks, useMentorAssignedTasks } from "@/hooks/useTasks";
+import { useStudentTasks, useMentorAssignedTasks, useMentorRoster } from "@/hooks/useTasks";
 import { useMyMeetings } from "@/hooks/useMeetings";
 import { useAnnouncements } from "@/hooks/useCohort";
 import { useStudentQuizzes } from "@/hooks/useQuizzes";
+import { useMySessionBookings } from "@/hooks/useSessions";
 import {
   Bell,
   ChevronDown,
@@ -22,6 +23,8 @@ import {
   BookOpen,
   Megaphone,
   Check,
+  Users,
+  Video,
 } from "lucide-react";
 
 interface NotificationItem {
@@ -29,7 +32,7 @@ interface NotificationItem {
   title: string;
   message: string;
   timestamp: string;
-  type: "task" | "meeting" | "quiz" | "announcement";
+  type: "task" | "meeting" | "quiz" | "announcement" | "student" | "booking";
   icon: React.ReactNode;
   href: string;
 }
@@ -79,6 +82,8 @@ export const WorkspaceHeader: React.FC = () => {
   const { data: meetings } = useMyMeetings();
   const { data: announcements } = useAnnouncements();
   const { data: studentQuizzes } = useStudentQuizzes();
+  const { data: rosterData } = useMentorRoster(isMentor ? user?.id : undefined);
+  const { data: sessionBookings } = useMySessionBookings();
 
   // Synthesize dynamic notifications feed
   const notifications = useMemo<NotificationItem[]>(() => {
@@ -195,6 +200,48 @@ export const WorkspaceHeader: React.FC = () => {
       });
     }
 
+    // 6. Mentor: New Student Enrolled in Cohort
+    if (isMentor && rosterData?.items) {
+      rosterData.items.forEach((s) => {
+        list.push({
+          id: `student-enrolled-${s.student_id}`,
+          title: "New Student Enrolled",
+          message: `${s.student_name} joined your mentorship cohort${s.student_target_exam ? ` (${s.student_target_exam})` : ""}.`,
+          timestamp: (s as any).subscribed_at || (s as any).created_at || new Date().toISOString(),
+          type: "student",
+          icon: <Users className="w-4 h-4 text-emerald-600" />,
+          href: "/mentor/students",
+        });
+      });
+    }
+
+    // 7. 1:1 Session Requests & Confirmations
+    if (sessionBookings) {
+      sessionBookings.forEach((b) => {
+        if (isMentor && b.status === "PENDING_APPROVAL") {
+          list.push({
+            id: `booking-req-${b.id}`,
+            title: "1:1 Session Request",
+            message: `${b.student_name || "A student"} requested a 1:1 private call.`,
+            timestamp: b.created_at,
+            type: "booking",
+            icon: <Video className="w-4 h-4 text-amber-600" />,
+            href: "/mentor/sessions",
+          });
+        } else if (isStudent && b.status === "CONFIRMED") {
+          list.push({
+            id: `booking-conf-${b.id}`,
+            title: "1:1 Session Confirmed",
+            message: `Mentor ${b.mentor_name || ""} confirmed your call for ${new Date(b.scheduled_at).toLocaleString("en-IN", { dateStyle: "short", timeStyle: "short" })}.`,
+            timestamp: (b as any).updated_at || b.created_at,
+            type: "booking",
+            icon: <CheckCircle2 className="w-4 h-4 text-emerald-600" />,
+            href: "/dashboard/sessions",
+          });
+        }
+      });
+    }
+
     // Sort descending by timestamp
     list.sort((a, b) => {
       const timeA = new Date(a.timestamp).getTime();
@@ -202,8 +249,8 @@ export const WorkspaceHeader: React.FC = () => {
       return timeB - timeA;
     });
 
-    return list.slice(0, 8);
-  }, [isStudent, isMentor, studentTasks, mentorTasks, meetings, studentQuizzes, announcements]);
+    return list.slice(0, 12);
+  }, [isStudent, isMentor, studentTasks, mentorTasks, meetings, studentQuizzes, announcements, rosterData, sessionBookings]);
 
   // Check how many items are unread (newer than lastReadTimestamp)
   const unreadCount = useMemo(() => {

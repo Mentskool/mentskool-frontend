@@ -33,7 +33,7 @@ function MentorTasksContent() {
   const [selectedStatus, setSelectedStatus] = useState<TaskStatus | undefined>(
     undefined
   );
-  const [viewMode, setViewMode] = useState<"list" | "timeline">("list");
+  const [viewMode, setViewMode] = useState<"list" | "timeline">("timeline");
   const [showAssignModal, setShowAssignModal] = useState(false);
   const [reviewingTaskId, setReviewingTaskId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
