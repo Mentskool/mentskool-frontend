@@ -71,7 +71,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({
   // Admins do not participate in student/mentor workspaces: redirect to Admin Console
   useEffect(() => {
     if (mounted && isAuthenticated && user?.role === "ADMIN" && isWorkspaceRoute) {
-      router.replace("/admin/mentors");
+      router.replace("/admin");
     }
   }, [mounted, isAuthenticated, user, isWorkspaceRoute, router]);
 
