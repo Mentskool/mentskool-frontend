@@ -143,8 +143,14 @@ export interface ReviewEligibilityResponse {
 export interface AdminMentorItem extends MentorProfile {
   active_students_count: number;
   total_monthly_revenue: number;
+  cohort_payout_due?: number;
+  one_on_one_bookings_count?: number;
+  one_on_one_completed_count?: number;
+  one_on_one_total_revenue?: number;
+  one_on_one_payout_due?: number;
   platform_commission_pct: number;
-  payout_due: number;
+  total_platform_revenue?: number;
+  payout_due: number; // Final combined payout due to mentor
 }
 
 export interface AdminMentorListResponse {
@@ -155,7 +161,103 @@ export interface AdminMentorListResponse {
   rejected_count: number;
   total_active_students: number;
   total_monthly_revenue: number;
+  total_cohort_payout_due?: number;
+  total_one_on_one_bookings?: number;
+  total_one_on_one_revenue?: number;
+  total_one_on_one_payout_due?: number;
+  total_platform_gross_revenue?: number;
+  total_platform_commission?: number;
   total_payout_due: number;
+}
+
+export interface AdminSessionItem {
+  id: string;
+  mentor_id: string;
+  mentor_name: string;
+  mentor_email: string;
+  mentor_college?: string | null;
+  mentor_upi_id?: string | null;
+  student_id: string;
+  student_name: string;
+  student_email: string;
+  scheduled_at: string;
+  duration_minutes: number;
+  agenda_notes: string;
+  amount_paid: number;
+  mentor_payout: number;
+  platform_fee: number;
+  payment_id?: string | null;
+  meeting_link?: string | null;
+  status: string;
+  rejection_reason?: string | null;
+  created_at: string;
+}
+
+export interface AdminSessionListResponse {
+  items: AdminSessionItem[];
+  total: number;
+  pending_count: number;
+  confirmed_count: number;
+  completed_count: number;
+  cancelled_count: number;
+  total_revenue: number;
+  total_mentor_payout: number;
+}
+
+export interface AdminUserItem {
+  id: string;
+  email: string;
+  full_name: string;
+  role: string;
+  avatar_url?: string | null;
+  target_exam?: string | null;
+  target_year?: number | null;
+  prep_stage?: string | null;
+  created_at: string;
+  active_subscriptions_count: number;
+  sessions_booked_count: number;
+  total_spent: number;
+}
+
+export interface AdminUserListResponse {
+  items: AdminUserItem[];
+  total: number;
+  total_students: number;
+  total_mentors: number;
+  total_admins: number;
+}
+
+export interface AdminRecentActivityItem {
+  id: string;
+  type: string;
+  title: string;
+  description: string;
+  timestamp: string;
+  badge?: string | null;
+  amount?: number | null;
+}
+
+export interface AdminOverviewResponse {
+  gross_platform_revenue: number;
+  cohort_monthly_revenue: number;
+  one_on_one_revenue: number;
+  total_payout_due_mentors: number;
+  cohort_payout_due: number;
+  one_on_one_payout_due: number;
+  platform_net_commission: number;
+  total_mentors: number;
+  approved_mentors: number;
+  pending_mentors: number;
+  rejected_mentors: number;
+  active_mentors_today: number;
+  total_students: number;
+  active_cohort_subscriptions: number;
+  total_one_on_one_bookings: number;
+  completed_one_on_one_bookings: number;
+  confirmed_one_on_one_bookings: number;
+  pending_one_on_one_bookings: number;
+  category_counts: Record<string, number>;
+  recent_activity: AdminRecentActivityItem[];
 }
 
 

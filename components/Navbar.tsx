@@ -24,7 +24,7 @@ export const Navbar: React.FC = () => {
 
   const dashboardHref =
     user?.role === "ADMIN"
-      ? "/admin/mentors"
+      ? "/admin"
       : user?.role === "MENTOR"
       ? "/mentor/students"
       : "/dashboard/tasks";
@@ -67,6 +67,18 @@ export const Navbar: React.FC = () => {
                 New
               </span>
             </Link>
+            {user?.role === "ADMIN" && (
+              <Link
+                href="/admin"
+                className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 ${
+                  pathname.startsWith("/admin")
+                    ? "text-indigo-600 bg-indigo-50 border border-indigo-200"
+                    : "text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50/60"
+                }`}
+              >
+                <span>Admin Console</span>
+              </Link>
+            )}
           </nav>
         </div>
 
