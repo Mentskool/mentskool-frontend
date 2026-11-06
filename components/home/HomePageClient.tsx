@@ -281,9 +281,9 @@ export default function HomePage() {
         <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
           {[
             {
-              value: "98%",
-              label: "Weekly On-Time Rate",
-              desc: "Driven by verified checkpoints",
+              value: "Weekly",
+              label: "1:1 Progress Audits",
+              desc: "Direct discussion on tasks, test scores & roadmap",
               color: "text-blue-600",
               border: "border-blue-200/80",
               bg: "bg-blue-50/50",
@@ -291,26 +291,26 @@ export default function HomePage() {
             {
               value: "30 Max",
               label: "Students Per Cohort",
-              desc: "Personalized 1:1 attention",
+              desc: "Personalized 1:1 attention guaranteed",
               color: "text-indigo-600",
               border: "border-indigo-200/80",
               bg: "bg-indigo-50/50",
             },
             {
-              value: "Atomic",
-              label: "Redis Seat Locking",
-              desc: "Zero overbooking guarantee",
+              value: "Anytime",
+              label: "Switch Mentor Anytime",
+              desc: "Leave cohort or change mentor whenever you want",
               color: "text-purple-600",
               border: "border-purple-200/80",
               bg: "bg-purple-50/50",
             },
             {
-              value: "< 24h",
-              label: "Review Turnaround",
-              desc: "Direct mentor feedback",
-              color: "text-amber-600",
-              border: "border-amber-200/80",
-              bg: "bg-amber-50/50",
+              value: "Daily",
+              label: "Daily Task Accountability",
+              desc: "Mentor verifies your study targets & mistakes every day",
+              color: "text-emerald-600",
+              border: "border-emerald-200/80",
+              bg: "bg-emerald-50/50",
             },
           ].map((stat, i) => (
             <Card
@@ -676,13 +676,11 @@ export default function HomePage() {
                 Connect with an IITian or AIIMS doctor who walked your exact shoes. Limited to 30 students per cohort for true 1:1 attention.
               </p>
             </div>
-            <Link href="/mentors" className="flex-shrink-0">
-              <Button
-                size="lg"
-                className="bg-white text-brand hover:bg-white/90 font-bold px-7 py-3 rounded-xl text-sm shadow-card hover:-translate-y-0.5 transition-all"
-              >
-                Find a Mentor →
-              </Button>
+            <Link
+              href="/mentors"
+              className="flex-shrink-0 inline-flex items-center justify-center bg-white text-slate-900 hover:bg-slate-100 font-extrabold px-7 py-3.5 rounded-xl text-sm shadow-md hover:-translate-y-0.5 transition-all"
+            >
+              <span>Find a Mentor →</span>
             </Link>
           </Card>
         </div>
