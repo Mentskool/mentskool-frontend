@@ -39,7 +39,7 @@ const STATUS_FILTERS: Array<{ label: string; value?: TaskStatus }> = [
 
 export default function StudentTasksPage() {
   const { user, isAuthenticated, isLoading: authLoading } = useAuthStore();
-  const [viewMode, setViewMode] = useState<"list" | "timeline">("list");
+  const [viewMode, setViewMode] = useState<"list" | "timeline">("timeline");
   const [selectedStatus, setSelectedStatus] = useState<TaskStatus | undefined>(
     undefined
   );

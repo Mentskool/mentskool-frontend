@@ -276,9 +276,13 @@ export default function MentorsPageClient({ initialData }: MentorsPageClientProp
                           {CATEGORY_LABELS[mentor.category] || mentor.category}
                         </span>
                         {mentor.exam_rank && (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200/80">
-                            <Trophy className="w-2.5 h-2.5 text-amber-600" />
-                            {mentor.exam_rank}
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-900 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-300">
+                            <Trophy className="w-2.5 h-2.5 text-amber-600 fill-amber-500" />
+                            <span>
+                              {/^\d+$/.test(mentor.exam_rank.trim())
+                                ? `AIR ${mentor.exam_rank.trim()}`
+                                : mentor.exam_rank}
+                            </span>
                           </span>
                         )}
                       </div>

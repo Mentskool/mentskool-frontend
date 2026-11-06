@@ -293,7 +293,7 @@ function TimelineDetailPanelContent({
           <span className="font-bold text-slate-800 block mb-1">
             Task Instructions
           </span>
-          <p className="whitespace-pre-wrap text-slate-600 bg-slate-50/70 p-3 rounded-xl border border-slate-200/60 font-sans">{task.description}</p>
+          <p className="whitespace-pre-wrap text-slate-600 bg-slate-50/70 p-3 rounded-xl border border-slate-200/60 font-sans max-h-48 overflow-y-auto break-words leading-relaxed">{task.description}</p>
         </div>
       )}
 

@@ -388,9 +388,13 @@ export default function MentorDetailClient({
                   {CATEGORY_LABELS[mentor.category] || mentor.category}
                 </span>
                 {mentor.exam_rank && (
-                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200/60">
-                    <Trophy className="w-3 h-3 text-amber-600" />
-                    {mentor.exam_rank}
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-amber-500/15 via-amber-400/25 to-yellow-500/15 border border-amber-300 text-xs font-black text-amber-950 shadow-2xs tracking-tight">
+                    <Trophy className="w-3.5 h-3.5 text-amber-600 fill-amber-500" />
+                    <span>
+                      {/^\d+$/.test(mentor.exam_rank.trim())
+                        ? `AIR ${mentor.exam_rank.trim()}`
+                        : mentor.exam_rank}
+                    </span>
                   </span>
                 )}
                 <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200/80">
@@ -411,10 +415,6 @@ export default function MentorDetailClient({
                     <span>{mentor.college}</span>
                   </div>
                 )}
-                <div className="flex items-center gap-1.5 font-medium text-slate-500">
-                  <Clock className="w-3.5 h-3.5 text-slate-400" />
-                  <span>Avg response within 24h</span>
-                </div>
                 <div className="flex items-center gap-1.5 font-medium text-slate-500">
                   <Users className="w-3.5 h-3.5 text-slate-400" />
                   <span>Max {mentor.seat_limit} students cohort</span>

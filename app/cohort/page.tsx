@@ -153,6 +153,7 @@ export default function CohortPage() {
   const [annTitle, setAnnTitle] = useState("");
   const [annBody, setAnnBody] = useState("");
   const [showAnnForm, setShowAnnForm] = useState(false);
+  const [expandedAnnIds, setExpandedAnnIds] = useState<Record<string, boolean>>({});
 
   const [resTitle, setResTitle] = useState("");
   const [resUrl, setResUrl] = useState("");
@@ -457,14 +458,20 @@ export default function CohortPage() {
                       placeholder="e.g. Schedule for JEE Mechanics Doubt Clearing Session"
                       required
                     />
-                    <Textarea
-                      label="Message / Notice"
-                      value={annBody}
-                      onChange={(e) => setAnnBody(e.target.value)}
-                      placeholder="Type details, timings, instructions, or agenda..."
-                      rows={4}
-                      required
-                    />
+                    <div className="space-y-1">
+                      <Textarea
+                        label="Message / Notice"
+                        value={annBody}
+                        onChange={(e) => setAnnBody(e.target.value)}
+                        placeholder="Type details, timings, instructions, or agenda..."
+                        rows={4}
+                        maxLength={3000}
+                        required
+                      />
+                      <div className="flex justify-end text-[11px] text-slate-400">
+                        {annBody.length} / 3000 characters
+                      </div>
+                    </div>
                     <div className="flex items-center justify-end gap-2 pt-1">
                       <Button
                         type="button"
@@ -570,12 +577,34 @@ export default function CohortPage() {
                   </div>
 
                   <div className="p-5 sm:p-6 space-y-2.5">
-                    <h3 className="font-display font-bold text-lg text-slate-900">
+                    <h3 className="font-display font-bold text-lg text-slate-900 break-words">
                       {ann.title}
                     </h3>
-                    <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                    <p
+                      className={`text-sm text-slate-700 leading-relaxed whitespace-pre-wrap break-words ${
+                        !expandedAnnIds[ann.id] && (ann.body?.length || 0) > 280
+                          ? "line-clamp-4"
+                          : ""
+                      }`}
+                    >
                       {ann.body}
                     </p>
+                    {(ann.body?.length || 0) > 280 && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExpandedAnnIds((prev) => ({
+                            ...prev,
+                            [ann.id]: !prev[ann.id],
+                          }))
+                        }
+                        className="text-xs font-bold text-blue-600 hover:text-blue-800 hover:underline pt-1 inline-flex items-center gap-1"
+                      >
+                        {expandedAnnIds[ann.id]
+                          ? "Show less ↑"
+                          : "Read full announcement ↓"}
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
