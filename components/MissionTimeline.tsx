@@ -32,6 +32,12 @@ interface MissionTimelineProps {
   viewer: "student" | "mentor";
   onComplete?: (taskId: string) => Promise<void>;
   isCompletingId?: string | null;
+  onReview?: (
+    taskId: string,
+    decision: "APPROVED" | "REJECTED",
+    mentorNote?: string
+  ) => Promise<boolean | void> | void;
+  isReviewingId?: string | null;
 }
 
 // ── Main Component ───────────────────────────────────────────────────────
@@ -41,6 +47,8 @@ export function MissionTimeline({
   viewer,
   onComplete,
   isCompletingId,
+  onReview,
+  isReviewingId,
 }: MissionTimelineProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [navOffset, setNavOffset] = useState(0);
@@ -221,6 +229,7 @@ export function MissionTimeline({
                   <TimelineRow
                     key={task.id}
                     task={task}
+                    viewer={viewer}
                     win={win}
                     today={today}
                     isSelected={task.id === selectedId}
@@ -263,6 +272,8 @@ export function MissionTimeline({
             viewer={viewer}
             onComplete={onComplete}
             isCompleting={isCompletingId === selectedTask?.id}
+            onReview={onReview}
+            isReviewing={isReviewingId === selectedTask?.id}
             today={today}
           />
         </div>
@@ -310,6 +321,7 @@ function StatCard({
 
 function TimelineRow({
   task,
+  viewer,
   win,
   today,
   isSelected,
@@ -317,6 +329,7 @@ function TimelineRow({
   labelWidth,
 }: {
   task: TimelineTask;
+  viewer: "student" | "mentor";
   win: TimelineWindow;
   today: string;
   isSelected: boolean;
@@ -430,11 +443,18 @@ function TimelineRow({
         <p className="text-xs font-semibold text-ink truncate leading-tight">
           {task.title}
         </p>
-        <span
-          className={`inline-flex items-center gap-0.5 text-[10px] font-bold mt-1 px-1.5 py-0.5 rounded-full ${status.badgeClass}`}
-        >
-          {status.icon} {status.label}
-        </span>
+        <div className="flex items-center gap-1.5 mt-1 min-w-0">
+          <span
+            className={`inline-flex items-center gap-0.5 text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0 ${status.badgeClass}`}
+          >
+            {status.icon} {status.label}
+          </span>
+          {viewer === "mentor" && task.studentName && (
+            <span className="text-[10px] text-slate-500 font-medium truncate">
+              · {task.studentName}
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Bar area */}
