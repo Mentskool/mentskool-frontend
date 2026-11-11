@@ -5,6 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/authStore";
 import { apiClient } from "@/lib/api-client";
 import { User } from "@/lib/types";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import { Button } from "@/components/ui/Button";
 import { Camera, Upload, Trash2, CheckCircle2, AlertCircle, Loader2, Crop } from "lucide-react";
 import { ImageCropModal } from "@/components/ImageCropModal";
@@ -101,7 +102,10 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
     } catch (err: any) {
       setFeedback({
         type: "error",
-        message: err.detail || "Unable to upload cropped image. Please try again.",
+        message: getUserFriendlyError(
+          err,
+          "Unable to upload cropped image. Please try again."
+        ),
       });
       throw err;
     } finally {
@@ -146,7 +150,7 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
     } catch (err: any) {
       setFeedback({
         type: "error",
-        message: err.detail || "Failed to remove photo.",
+        message: getUserFriendlyError(err, "Failed to remove photo."),
       });
     } finally {
       setIsRemoving(false);

@@ -5,6 +5,7 @@ import { useSubmitSessionReview } from "@/hooks/useSessions";
 import { Button } from "@/components/ui/Button";
 import { Star, X, CheckCircle2, AlertCircle } from "lucide-react";
 import { SessionBooking } from "@/lib/types";
+import { getUserFriendlyError } from "@/lib/error-utils";
 
 interface SessionReviewModalProps {
   booking: SessionBooking | null;
@@ -42,7 +43,7 @@ export function SessionReviewModal({
       onSuccess();
       onClose();
     } catch (err: any) {
-      setErrorMsg(err.detail || "Failed to submit review.");
+      setErrorMsg(getUserFriendlyError(err, "Failed to submit review."));
     }
   };
 

@@ -10,7 +10,9 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { BrandLogo } from "@/components/BrandLogo";
-import { CATEGORY_LABELS, MentorCategory } from "@/lib/types";
+import { CATEGORY_LABELS, MentorCategory, RankType } from "@/lib/types";
+import { formatExamRank, inferRankType, RANK_TYPE_OPTIONS } from "@/lib/mentor-utils";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import api from "@/lib/api";
 import {
   Trophy,
@@ -62,6 +64,7 @@ export default function MentorOnboardingPage() {
   const [college, setCollege] = useState("");
   const [collegeEmail, setCollegeEmail] = useState("");
   const [examRank, setExamRank] = useState("");
+  const [rankType, setRankType] = useState<RankType>("AIR");
   const [phoneNumber, setPhoneNumber] = useState("");
 
   // Step 2: Verification Proofs
@@ -91,6 +94,7 @@ export default function MentorOnboardingPage() {
       setCollege(profile.college || "");
       setCollegeEmail(profile.college_email || "");
       setExamRank(profile.exam_rank || "");
+      setRankType(inferRankType(profile.exam_rank, profile.rank_type));
       setPhoneNumber(profile.phone_number || "");
       setCollegeIdProofUrl(profile.college_id_proof_url || "");
       setScorecardProofUrl(profile.scorecard_proof_url || "");
@@ -158,7 +162,10 @@ export default function MentorOnboardingPage() {
       }
     } catch (err: any) {
       setErrorMessage(
-        err.detail || "Failed to upload document. Please upload a valid image or PDF under 10MB."
+        getUserFriendlyError(
+          err,
+          "Failed to upload document. Please upload a valid image or PDF under 10MB."
+        )
       );
     } finally {
       if (proofType === "college_id") setIsUploadingCollegeId(false);
@@ -175,7 +182,7 @@ export default function MentorOnboardingPage() {
         return false;
       }
       if (!examRank.trim()) {
-        setErrorMessage("Please specify your Exam & Rank/Score (e.g. JEE Adv AIR 325).");
+        setErrorMessage("Please enter your Rank, Percentile, Marks, or Score.");
         return false;
       }
       if (!phoneNumber.trim()) {
@@ -248,6 +255,7 @@ export default function MentorOnboardingPage() {
       college: college.trim(),
       college_email: collegeEmail.trim() || null,
       exam_rank: examRank.trim(),
+      rank_type: rankType,
       phone_number: phoneNumber.trim(),
       bio: bio.trim(),
       intro_youtube_url: youtubeUrl.trim() || null,
@@ -272,7 +280,10 @@ export default function MentorOnboardingPage() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err: any) {
       setErrorMessage(
-        err.detail || "Unable to submit your application. Please check your network and fields."
+        getUserFriendlyError(
+          err,
+          "Unable to submit your application. Please check your fields and try again."
+        )
       );
     } finally {
       setIsSubmitting(false);
@@ -498,13 +509,48 @@ export default function MentorOnboardingPage() {
                   onChange={(e) => setCollege(e.target.value)}
                   required
                 />
-                <Input
-                  label="Exam & AIR / Percentile"
-                  placeholder="e.g. JEE Adv AIR 325, 99.8%ile"
-                  value={examRank}
-                  onChange={(e) => setExamRank(e.target.value)}
-                  required
-                />
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-medium text-ink">
+                    Exam Credential Type &amp; Value <span className="text-rose-500">*</span>
+                  </label>
+                  <div className="flex gap-2">
+                    <select
+                      aria-label="Credential Type"
+                      value={rankType}
+                      onChange={(e) => setRankType(e.target.value as RankType)}
+                      className="w-36 shrink-0 px-3 py-2 text-sm rounded-lg border border-mist bg-white text-ink font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                    >
+                      {RANK_TYPE_OPTIONS.map((opt) => (
+                        <option key={opt.value} value={opt.value}>
+                          {opt.value === "AIR" ? "AIR" : opt.label}
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      type="text"
+                      value={examRank}
+                      onChange={(e) => setExamRank(e.target.value)}
+                      placeholder={
+                        RANK_TYPE_OPTIONS.find((o) => o.value === rankType)?.placeholder ||
+                        "e.g. 99.8"
+                      }
+                      required
+                      className="flex-1 min-w-0 px-3.5 py-2 text-sm rounded-lg border border-mist bg-white text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                    />
+                  </div>
+                  <p className="text-[11px] text-ink-muted">
+                    {examRank.trim() ? (
+                      <>
+                        Shown on public profile as:{" "}
+                        <strong className="text-ink font-semibold">
+                          {formatExamRank(examRank, rankType)}
+                        </strong>
+                      </>
+                    ) : (
+                      RANK_TYPE_OPTIONS.find((o) => o.value === rankType)?.helper
+                    )}
+                  </p>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -608,7 +654,8 @@ export default function MentorOnboardingPage() {
                     )}
                   </div>
                   <p className="text-[11px] text-ink-muted">
-                    Upload official scorecard or rank result verifying your rank of {examRank || "your exam"}.
+                    Upload official scorecard or rank result verifying your credential of{" "}
+                    {formatExamRank(examRank, rankType) || "your exam"}.
                   </p>
 
                   <div className="pt-2">
@@ -849,8 +896,10 @@ export default function MentorOnboardingPage() {
                       <strong className="font-semibold">{college}</strong>
                     </div>
                     <div>
-                      <span className="text-ink-faint block">Rank / Score:</span>
-                      <strong className="font-semibold">{examRank}</strong>
+                      <span className="text-ink-faint block">Credential:</span>
+                      <strong className="font-semibold">
+                        {formatExamRank(examRank, rankType)}
+                      </strong>
                     </div>
                     <div>
                       <span className="text-ink-faint block">Contact WhatsApp:</span>

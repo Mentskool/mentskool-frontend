@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useCreateQuiz } from "@/hooks/useQuizzes";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import { Button } from "./ui/Button";
 import { Input } from "./ui/Input";
 import { Textarea } from "./ui/Textarea";
@@ -73,7 +74,7 @@ export const QuizCreateModal: React.FC<QuizCreateModalProps> = ({
       onCreated(created.id);
       onClose();
     } catch (err: any) {
-      setErrorMsg(err.detail || "Failed to create quiz");
+      setErrorMsg(getUserFriendlyError(err, "Failed to create quiz. Please try again."));
     }
   };
 

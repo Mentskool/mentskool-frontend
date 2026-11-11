@@ -1,6 +1,7 @@
 "use client";
 
 import { apiClient } from "./api-client";
+import { getUserFriendlyError } from "./error-utils";
 
 declare global {
   interface Window {
@@ -98,14 +99,14 @@ export async function initiateRazorpayCheckout(options: CheckoutOptions): Promis
 
   const keyId = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
   if (!keyId) {
-    onError("Razorpay Key ID is not configured. Please set NEXT_PUBLIC_RAZORPAY_KEY_ID in .env.local.");
+    onError("Online payments are temporarily unavailable. Please try again later or contact support.");
     return;
   }
 
   // Ensure Razorpay SDK script is loaded
   const scriptLoaded = await loadRazorpayScript();
   if (!scriptLoaded || !window.Razorpay) {
-    onError("Failed to load Razorpay payment gateway. Please check your internet connection.");
+    onError("Failed to load payment gateway. Please check your internet connection.");
     return;
   }
 
@@ -119,8 +120,7 @@ export async function initiateRazorpayCheckout(options: CheckoutOptions): Promis
       notes,
     });
   } catch (err: any) {
-    const errorDetail = err?.detail || err?.message || "Failed to create order on server.";
-    onError(`Order creation failed: ${errorDetail}`);
+    onError(getUserFriendlyError(err, "Unable to initiate payment right now. Please try again."));
     return;
   }
 
@@ -169,11 +169,12 @@ export async function initiateRazorpayCheckout(options: CheckoutOptions): Promis
 
         onSuccess(verifyResult);
       } catch (verifyErr: any) {
-        const detail =
-          verifyErr?.detail ||
-          verifyErr?.message ||
-          "Payment verification failed on the server.";
-        onError(`Payment verification error: ${detail}`);
+        onError(
+          getUserFriendlyError(
+            verifyErr,
+            "We could not verify your payment. Please contact support if any amount was deducted."
+          )
+        );
       }
     },
   };

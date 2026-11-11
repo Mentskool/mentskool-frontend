@@ -15,7 +15,9 @@ import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { AvatarUpload } from "@/components/AvatarUpload";
 import { ActivityHeatmap } from "@/components/ActivityHeatmap";
-import { CATEGORY_LABELS, MentorCategory } from "@/lib/types";
+import { CATEGORY_LABELS, MentorCategory, RankType } from "@/lib/types";
+import { formatExamRank, inferRankType, RANK_TYPE_OPTIONS } from "@/lib/mentor-utils";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import api from "@/lib/api";
 import {
   ShieldCheck,
@@ -59,6 +61,8 @@ export default function MentorProfilePage() {
   // Editable Profile State
   const [avatarUrl, setAvatarUrl] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [examRank, setExamRank] = useState("");
+  const [rankType, setRankType] = useState<RankType>("AIR");
   const [bio, setBio] = useState("");
   const [youtubeUrl, setYoutubeUrl] = useState("");
 
@@ -99,6 +103,8 @@ export default function MentorProfilePage() {
     if (profile) {
       setAvatarUrl(profile.avatar_url || "");
       setPhoneNumber(profile.phone_number || "");
+      setExamRank(profile.exam_rank || "");
+      setRankType(inferRankType(profile.exam_rank, profile.rank_type));
       setBio(profile.bio || "");
       setYoutubeUrl(profile.intro_youtube_url || "");
       setSeatLimit(profile.seat_limit ? Math.min(profile.seat_limit, 30) : 10);
@@ -204,7 +210,10 @@ export default function MentorProfilePage() {
     } catch (err: any) {
       setFeedback({
         type: "error",
-        message: err.detail || "Failed to upload document. Please upload a valid image or PDF under 10MB.",
+        message: getUserFriendlyError(
+          err,
+          "Failed to upload document. Please upload a valid image or PDF under 10MB."
+        ),
       });
     } finally {
       if (proofType === "college_id") setIsUploadingCollegeId(false);
@@ -230,6 +239,8 @@ export default function MentorProfilePage() {
     const payload = {
       avatar_url: avatarUrl.trim() || null,
       phone_number: phoneNumber.trim() || null,
+      exam_rank: examRank.trim() || null,
+      rank_type: rankType,
       bio: bio.trim(),
       intro_youtube_url: youtubeUrl.trim() || null,
       seat_limit: validatedSeats,
@@ -261,7 +272,10 @@ export default function MentorProfilePage() {
     } catch (err: any) {
       setFeedback({
         type: "error",
-        message: err.detail || "Failed to save profile. Please check all fields.",
+        message: getUserFriendlyError(
+          err,
+          "Failed to save profile. Please check your entered fields and try again."
+        ),
       });
     }
   };
@@ -424,7 +438,9 @@ export default function MentorProfilePage() {
                 {profile.exam_rank && (
                   <>
                     <span>•</span>
-                    <span className="font-semibold text-ink">{profile.exam_rank}</span>
+                    <span className="font-semibold text-ink">
+                      {formatExamRank(profile.exam_rank, profile.rank_type)}
+                    </span>
                   </>
                 )}
               </p>
@@ -553,6 +569,49 @@ export default function MentorProfilePage() {
                 disabled
                 helperText="Exam stream verified during onboarding."
               />
+            </div>
+
+            {/* Public Exam Credential (Type Dropdown + Value) */}
+            <div className="space-y-1.5">
+              <label className="block text-xs font-bold text-ink">
+                Exam Credential Display (AIR / Percentile / Marks / Score)
+              </label>
+              <div className="flex flex-col sm:flex-row gap-2.5">
+                <select
+                  aria-label="Exam Credential Type"
+                  value={rankType}
+                  onChange={(e) => setRankType(e.target.value as RankType)}
+                  className="sm:w-52 shrink-0 px-3 py-2 text-xs rounded-xl border border-mist bg-white text-ink font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                >
+                  {RANK_TYPE_OPTIONS.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.value === "AIR" ? "AIR" : opt.label}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="text"
+                  value={examRank}
+                  onChange={(e) => setExamRank(e.target.value)}
+                  placeholder={
+                    RANK_TYPE_OPTIONS.find((o) => o.value === rankType)?.placeholder ||
+                    "e.g. 99.8"
+                  }
+                  className="flex-1 px-3.5 py-2 text-sm rounded-xl border border-mist bg-white text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                />
+              </div>
+              <p className="text-[11px] text-ink-muted">
+                {examRank.trim() ? (
+                  <>
+                    Public profile preview:{" "}
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-900 font-bold text-[11px]">
+                      {formatExamRank(examRank, rankType)}
+                    </span>
+                  </>
+                ) : (
+                  RANK_TYPE_OPTIONS.find((o) => o.value === rankType)?.helper
+                )}
+              </p>
             </div>
 
             <Textarea
@@ -910,8 +969,10 @@ export default function MentorProfilePage() {
               </span>
             </div>
             <div className="p-3 bg-paper rounded-xl border border-mist">
-              <span className="text-[10px] uppercase font-bold text-ink-faint block">Exam & Rank</span>
-              <span className="font-semibold text-ink truncate block">{profile.exam_rank || "—"}</span>
+              <span className="text-[10px] uppercase font-bold text-ink-faint block">Exam Credential</span>
+              <span className="font-semibold text-ink truncate block">
+                {formatExamRank(profile.exam_rank, profile.rank_type) || "—"}
+              </span>
             </div>
             <div className="p-3 bg-paper rounded-xl border border-mist">
               <span className="text-[10px] uppercase font-bold text-ink-faint block">Attached Proofs</span>

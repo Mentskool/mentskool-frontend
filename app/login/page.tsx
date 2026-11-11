@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/Input";
 import { Card } from "@/components/ui/Card";
 import { BrandLogo } from "@/components/BrandLogo";
 import { ApiError } from "@/lib/types";
+import { getUserFriendlyError } from "@/lib/error-utils";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -81,8 +82,9 @@ function LoginForm() {
           "Too many failed login attempts. Please wait a few minutes before trying again."
         );
       } else {
-        const apiErr = err as ApiError;
-        setErrorMessage(apiErr.detail || "Unable to sign in. Please try again.");
+        setErrorMessage(
+          getUserFriendlyError(err, "Unable to sign in. Please try again.")
+        );
       }
     }
   };
@@ -125,7 +127,9 @@ function LoginForm() {
         router.push("/dashboard/tasks");
       }
     } catch (err: any) {
-      setErrorMessage(err.detail || "Could not complete registration. Please try again.");
+      setErrorMessage(
+        getUserFriendlyError(err, "Could not complete registration. Please try again.")
+      );
     } finally {
       setIsRegisteringRole(false);
     }

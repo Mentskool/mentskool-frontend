@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { apiClient } from "@/lib/api-client";
 import { User } from "@/lib/types";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -116,7 +117,7 @@ export default function StudentProfilePage() {
     } catch (err: any) {
       setFeedback({
         type: "error",
-        message: err.detail || "Failed to update profile. Please try again.",
+        message: getUserFriendlyError(err, "Failed to update profile. Please try again."),
       });
     } finally {
       setIsSaving(false);

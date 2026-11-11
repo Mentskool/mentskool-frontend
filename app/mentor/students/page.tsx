@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/Textarea";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { CardSkeleton } from "@/components/ui/Skeleton";
 import { Subscription } from "@/lib/types";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import { Users, Trophy, FileText, CheckCircle2, Award, Target } from "lucide-react";
 
 interface StudentRowProps {
@@ -70,7 +71,7 @@ const StudentRow: React.FC<StudentRowProps> = ({ subscription, mentorId }) => {
       setIsAssigning(false);
       refetchTasks();
     } catch (err: any) {
-      setFormFeedback(err.detail || "Failed to assign task.");
+      setFormFeedback(getUserFriendlyError(err, "Failed to assign task."));
     }
   };
 

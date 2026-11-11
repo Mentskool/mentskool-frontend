@@ -9,6 +9,8 @@ import { initiateRazorpayCheckout } from "@/lib/razorpay";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Mentor1on1Card, CATEGORY_LABELS } from "@/lib/types";
+import { formatExamRank } from "@/lib/mentor-utils";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import {
   Video,
   Star,
@@ -204,7 +206,7 @@ export default function BookCallDetailClient({
             setIsSuccess(true);
           } catch (bookErr: any) {
             setErrorMsg(
-              bookErr?.detail || bookErr?.message || "Failed to finalize session booking."
+              getUserFriendlyError(bookErr, "Failed to finalize session booking.")
             );
           }
         },
@@ -228,7 +230,7 @@ export default function BookCallDetailClient({
       setIsSuccess(true);
     } catch (err: any) {
       setErrorMsg(
-        err?.detail || err?.message || "Failed to book session. Please try another slot."
+        getUserFriendlyError(err, "Failed to book session. Please try another slot.")
       );
     }
   };
@@ -344,7 +346,7 @@ export default function BookCallDetailClient({
                 {mentor.exam_rank && (
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-500/10 border border-amber-400/30 font-semibold text-amber-300">
                     <Trophy className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                    <span>{mentor.exam_rank}</span>
+                    <span>{formatExamRank(mentor.exam_rank, mentor.rank_type)}</span>
                   </div>
                 )}
                 <div className="inline-flex items-center px-3 py-1 rounded-lg bg-slate-900/80 border border-slate-800 font-semibold text-slate-300">

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { CardSkeleton } from "@/components/ui/Skeleton";
 import { Book1on1Modal } from "@/components/sessions/Book1on1Modal";
 import { Mentor1on1Card } from "@/lib/types";
+import { formatExamRank } from "@/lib/mentor-utils";
 import {
   Video,
   Star,
@@ -41,7 +42,7 @@ export default function BookCallDirectoryPage() {
     return (
       m.name.toLowerCase().includes(q) ||
       (m.college && m.college.toLowerCase().includes(q)) ||
-      (m.exam_rank && m.exam_rank.toLowerCase().includes(q)) ||
+      (m.exam_rank && formatExamRank(m.exam_rank, m.rank_type).toLowerCase().includes(q)) ||
       (m.bio && m.bio.toLowerCase().includes(q))
     );
   });
@@ -218,7 +219,9 @@ export default function BookCallDirectoryPage() {
                         {m.exam_rank && (
                           <div className="mt-1 flex items-center gap-1 text-[11px] text-amber-700 font-semibold bg-amber-50 border border-amber-200/70 px-2 py-0.5 rounded-full w-fit">
                             <Trophy className="w-3 h-3 text-amber-600 shrink-0" />
-                            <span className="truncate">{m.exam_rank}</span>
+                            <span className="truncate">
+                              {formatExamRank(m.exam_rank, m.rank_type)}
+                            </span>
                           </div>
                         )}
                       </div>
@@ -343,6 +346,7 @@ export default function BookCallDirectoryPage() {
             avatar_url: bookingMentor.avatar_url,
             college: bookingMentor.college,
             exam_rank: bookingMentor.exam_rank,
+            rank_type: bookingMentor.rank_type,
             one_on_one_price: bookingMentor.one_on_one_price,
             one_on_one_duration_minutes: bookingMentor.one_on_one_duration_minutes,
           }}

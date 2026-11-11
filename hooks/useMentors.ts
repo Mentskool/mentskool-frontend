@@ -93,6 +93,7 @@ export function useCreateMentorProfile() {
       category: string;
       college?: string | null;
       exam_rank?: string | null;
+      rank_type?: string | null;
       phone_number?: string | null;
       college_id_proof_url?: string | null;
       scorecard_proof_url?: string | null;
@@ -123,6 +124,7 @@ export function useUpdateMentorProfile() {
       category?: string;
       college?: string | null;
       exam_rank?: string | null;
+      rank_type?: string | null;
       phone_number?: string | null;
       college_id_proof_url?: string | null;
       scorecard_proof_url?: string | null;

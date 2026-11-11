@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/Input";
 import { Card } from "@/components/ui/Card";
 import { BrandLogo } from "@/components/BrandLogo";
 import { ApiError } from "@/lib/types";
+import { getUserFriendlyError } from "@/lib/error-utils";
 
 const signupSchema = z.object({
   full_name: z
@@ -99,9 +100,8 @@ export default function SignupPage() {
       } else if (code === "auth/too-many-requests") {
         setErrorMessage("Too many attempts. Please wait a moment before trying again.");
       } else {
-        const apiErr = err as ApiError;
         setErrorMessage(
-          apiErr.detail || err.message || "Unable to create account. Please try again."
+          getUserFriendlyError(err, "Unable to create account. Please try again.")
         );
       }
     }
