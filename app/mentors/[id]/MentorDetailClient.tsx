@@ -16,6 +16,8 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { ApiError, CATEGORY_LABELS, MentorProfile } from "@/lib/types";
+import { formatExamRank } from "@/lib/mentor-utils";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import { ActivityHeatmap } from "@/components/ActivityHeatmap";
 import { Book1on1Modal } from "@/components/sessions/Book1on1Modal";
 import { initiateRazorpayCheckout } from "@/lib/razorpay";
@@ -127,7 +129,7 @@ export default function MentorDetailClient({
       refetchEligibility();
       refetch();
     } catch (err: any) {
-      setReviewError(err?.detail || "Failed to submit review. Please try again.");
+      setReviewError(getUserFriendlyError(err, "Failed to submit review. Please try again."));
     }
   };
 
@@ -142,10 +144,9 @@ export default function MentorDetailClient({
       refetch();
       refetchSubs();
     } catch (err) {
-      const apiErr = err as ApiError;
       setFeedback({
         type: "error",
-        message: apiErr.detail || "Unable to leave cohort. Please try again.",
+        message: getUserFriendlyError(err, "Unable to leave cohort. Please try again."),
       });
     }
   };
@@ -197,7 +198,10 @@ export default function MentorDetailClient({
           } catch (enrollErr: any) {
             setFeedback({
               type: "error",
-              message: enrollErr?.detail || "Payment verified, but cohort enrollment failed. Please contact support.",
+              message: getUserFriendlyError(
+                enrollErr,
+                "Payment verified, but cohort enrollment failed. Please contact support."
+              ),
             });
           }
         },
@@ -267,7 +271,7 @@ export default function MentorDetailClient({
       } else {
         setFeedback({
           type: "error",
-          message: apiErr.detail || "Unable to complete subscription. Please try again.",
+          message: getUserFriendlyError(apiErr, "Unable to complete subscription. Please try again."),
         });
       }
     }
@@ -391,9 +395,7 @@ export default function MentorDetailClient({
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-amber-500/15 via-amber-400/25 to-yellow-500/15 border border-amber-300 text-xs font-black text-amber-950 shadow-2xs tracking-tight">
                     <Trophy className="w-3.5 h-3.5 text-amber-600 fill-amber-500" />
                     <span>
-                      {/^\d+$/.test(mentor.exam_rank.trim())
-                        ? `AIR ${mentor.exam_rank.trim()}`
-                        : mentor.exam_rank}
+                      {formatExamRank(mentor.exam_rank, mentor.rank_type)}
                     </span>
                   </span>
                 )}

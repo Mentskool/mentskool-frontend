@@ -7,6 +7,8 @@ import { useAvailableSlots, useBookSession } from "@/hooks/useSessions";
 import { initiateRazorpayCheckout } from "@/lib/razorpay";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+import { formatExamRank } from "@/lib/mentor-utils";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import {
   Calendar,
   Clock,
@@ -28,6 +30,7 @@ interface Book1on1ModalProps {
     avatar_url?: string | null;
     college?: string | null;
     exam_rank?: string | null;
+    rank_type?: string | null;
     one_on_one_price?: number | string;
     one_on_one_duration_minutes?: number;
   };
@@ -109,7 +112,7 @@ export function Book1on1Modal({ isOpen, onClose, mentor }: Book1on1ModalProps) {
             setIsSuccess(true);
           } catch (bookErr: any) {
             setErrorMsg(
-              bookErr?.detail || bookErr?.message || "Failed to finalize session booking."
+              getUserFriendlyError(bookErr, "Failed to finalize session booking.")
             );
           }
         },
@@ -132,7 +135,7 @@ export function Book1on1Modal({ isOpen, onClose, mentor }: Book1on1ModalProps) {
       setIsSuccess(true);
     } catch (err: any) {
       setErrorMsg(
-        err.detail || err.message || "Failed to book session. Please try again."
+        getUserFriendlyError(err, "Failed to book session. Please try again.")
       );
     }
   };
@@ -162,7 +165,9 @@ export function Book1on1Modal({ isOpen, onClose, mentor }: Book1on1ModalProps) {
                 Book 1-on-1 with {mentor.full_name}
               </h3>
               <p className="text-xs text-slate-500">
-                {mentor.college || mentor.exam_rank || "Verified IIT/NEET Mentor"}
+                {mentor.college ||
+                  formatExamRank(mentor.exam_rank, mentor.rank_type) ||
+                  "Verified IIT/NEET Mentor"}
               </p>
             </div>
           </div>

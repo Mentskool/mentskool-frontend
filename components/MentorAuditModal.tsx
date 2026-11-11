@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import api from "@/lib/api";
 import { MentorStatsResponse } from "@/lib/types";
+import { formatExamRank } from "@/lib/mentor-utils";
 import { ActivityHeatmap } from "@/components/ActivityHeatmap";
 import { Button } from "@/components/ui/Button";
 import {
@@ -150,7 +151,7 @@ export const MentorAuditModal: React.FC<MentorAuditModalProps> = ({
                     )}
                     {stats.exam_rank && (
                       <span className="flex items-center gap-1 text-amber-600 font-semibold">
-                        <Award className="w-3 h-3" /> {stats.exam_rank}
+                        <Award className="w-3 h-3" /> {formatExamRank(stats.exam_rank, stats.rank_type)}
                       </span>
                     )}
                   </div>

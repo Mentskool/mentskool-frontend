@@ -20,6 +20,7 @@ import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { CardSkeleton } from "@/components/ui/Skeleton";
 import { Meeting, SessionBooking } from "@/lib/types";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import { SessionReviewModal } from "@/components/sessions/SessionReviewModal";
 import {
   Calendar,
@@ -132,7 +133,7 @@ function ScheduleContent() {
       setRequestTitle("");
       refetch();
     } catch (err: any) {
-      setRequestError(err.detail || "Failed to submit meeting request.");
+      setRequestError(getUserFriendlyError(err, "Failed to submit meeting request."));
     }
   };
 
@@ -156,7 +157,7 @@ function ScheduleContent() {
       setMentorScheduleLink("");
       refetch();
     } catch (err: any) {
-      setMentorScheduleError(err.detail || "Failed to schedule session.");
+      setMentorScheduleError(getUserFriendlyError(err, "Failed to schedule session."));
     }
   };
 
@@ -179,7 +180,7 @@ function ScheduleContent() {
       setMeetingLink("");
       refetch();
     } catch (err: any) {
-      setConfirmError(err.detail || "Failed to confirm meeting.");
+      setConfirmError(getUserFriendlyError(err, "Failed to confirm meeting."));
     }
   };
 
@@ -210,7 +211,7 @@ function ScheduleContent() {
       setEditingMeeting(null);
       refetch();
     } catch (err: any) {
-      setEditError(err.detail || "Failed to update meeting details.");
+      setEditError(getUserFriendlyError(err, "Failed to update meeting details."));
     }
   };
 
@@ -223,7 +224,7 @@ function ScheduleContent() {
       setDeletingMeeting(null);
       refetch();
     } catch (err: any) {
-      setDeleteError(err.detail || "Failed to delete meeting.");
+      setDeleteError(getUserFriendlyError(err, "Failed to delete meeting."));
     }
   };
 

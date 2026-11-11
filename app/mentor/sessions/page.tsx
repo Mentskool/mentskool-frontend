@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SessionBooking } from "@/lib/types";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import {
   Video,
   Clock,
@@ -155,7 +156,7 @@ export default function MentorSessionsPage() {
       setMeetLinkInput("");
       refetch();
     } catch (err: any) {
-      setApproveError(err.detail || "Failed to approve booking.");
+      setApproveError(getUserFriendlyError(err, "Failed to approve booking."));
     }
   };
 
@@ -173,7 +174,7 @@ export default function MentorSessionsPage() {
       setRejectionReason("");
       refetch();
     } catch (err: any) {
-      setRejectError(err.detail || "Failed to reject booking.");
+      setRejectError(getUserFriendlyError(err, "Failed to reject booking."));
     }
   };
 

@@ -33,6 +33,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { AdminMentorItem, MentorCategory, CATEGORY_LABELS } from "@/lib/types";
+import { formatExamRank } from "@/lib/mentor-utils";
 import { MentorAuditModal } from "@/components/MentorAuditModal";
 
 export default function AdminMentorsPage() {
@@ -401,7 +402,9 @@ export default function AdminMentorsPage() {
                           )}
                           <div className="flex items-center gap-1.5 text-amber-700 font-semibold">
                             <Award className="w-4 h-4 text-amber-500 shrink-0" />
-                            <span>{m.exam_rank || "Rank not set"}</span>
+                            <span>
+                              {formatExamRank(m.exam_rank, m.rank_type) || "Rank not set"}
+                            </span>
                           </div>
                         </div>
                       </td>

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import {
   useMentorQuizzes,
   usePublishQuiz,
@@ -58,7 +59,7 @@ export default function QuizzesPage() {
       await publishMutation.mutateAsync(quizId);
       refetchMentorQuizzes();
     } catch (err: any) {
-      alert(err.detail || "Failed to publish quiz");
+      alert(getUserFriendlyError(err, "Failed to publish quiz. Please try again."));
     }
   };
 

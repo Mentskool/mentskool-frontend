@@ -2,6 +2,11 @@ import { auth } from "./firebase";
 import { signOut } from "firebase/auth";
 import { useAuthStore } from "@/store/authStore";
 import { ApiError } from "./types";
+import {
+  formatValidationIssues,
+  sanitizeErrorDetail,
+  statusFallbackMessage,
+} from "./error-utils";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
@@ -43,7 +48,8 @@ export async function apiClient<T>(
     });
   } catch {
     const error: ApiError = {
-      detail: "Unable to connect to Mentskool backend service. Ensure server is running.",
+      detail:
+        "Unable to connect right now. Please check your internet connection and try again.",
       status: 0,
     };
     throw error;
@@ -128,21 +134,30 @@ async function parseErrorResponse(response: Response): Promise<ApiError> {
 
   try {
     const errorData = await response.json();
-    let detail = "An unexpected error occurred.";
+    let detail = statusFallbackMessage(status, retryAfter);
     let code = headerCode || errorData.code || undefined;
 
     if (typeof errorData.detail === "string") {
-      detail = errorData.detail;
-      if (detail === "PROFILE_NOT_CREATED" || detail === "EMAIL_NOT_VERIFIED") {
-        code = detail;
+      if (
+        errorData.detail === "PROFILE_NOT_CREATED" ||
+        errorData.detail === "EMAIL_NOT_VERIFIED"
+      ) {
+        code = errorData.detail;
       }
+      detail = sanitizeErrorDetail(errorData.detail, status);
+    } else if (Array.isArray(errorData.detail)) {
+      detail = formatValidationIssues(errorData.detail);
     } else if (errorData.detail && typeof errorData.detail === "object") {
       if (errorData.detail.code) code = errorData.detail.code;
-      detail = errorData.detail.message || errorData.detail.detail || JSON.stringify(errorData.detail);
-    } else if (Array.isArray(errorData.detail)) {
-      detail = errorData.detail.map((d: any) => d.msg || JSON.stringify(d)).join(", ");
+      const objMsg = errorData.detail.message || errorData.detail.detail;
+      detail =
+        typeof objMsg === "string"
+          ? sanitizeErrorDetail(objMsg, status)
+          : statusFallbackMessage(status, retryAfter);
+    } else if (typeof errorData.message === "string") {
+      detail = sanitizeErrorDetail(errorData.message, status);
     } else if (status === 429) {
-      detail = `Rate limit exceeded. Please wait ${retryAfter || 60} seconds before retrying.`;
+      detail = statusFallbackMessage(429, retryAfter);
     }
 
     return {
@@ -153,10 +168,7 @@ async function parseErrorResponse(response: Response): Promise<ApiError> {
     };
   } catch {
     return {
-      detail:
-        status === 429
-          ? "Rate limit reached. Please try again in 1 minute."
-          : `Request failed with HTTP ${status}`,
+      detail: statusFallbackMessage(status, retryAfter),
       status,
       retryAfter,
       code: headerCode || undefined,

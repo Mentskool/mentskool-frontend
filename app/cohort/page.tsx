@@ -17,6 +17,7 @@ import {
   useRenewSubscription,
 } from "@/hooks/useSubscriptions";
 import { initiateRazorpayCheckout } from "@/lib/razorpay";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
@@ -66,7 +67,7 @@ export default function CohortPage() {
     } catch (err: any) {
       setLeaveFeedback({
         type: "error",
-        message: err?.detail || "Failed to leave cohort. Please try again.",
+        message: getUserFriendlyError(err, "Failed to leave cohort. Please try again."),
       });
     }
   };
@@ -115,7 +116,10 @@ export default function CohortPage() {
         } catch (err: any) {
           setRenewFeedback({
             type: "error",
-            message: err?.detail || "Failed to finalize renewal record. Please contact support.",
+            message: getUserFriendlyError(
+              err,
+              "Failed to finalize renewal record. Please contact support."
+            ),
           });
         } finally {
           setIsRenewing(false);

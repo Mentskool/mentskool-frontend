@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import {
   ZoomIn,
   ZoomOut,
@@ -259,7 +260,10 @@ export const ImageCropModal: React.FC<ImageCropModalProps> = ({
     } catch (err: any) {
       console.error("Failed to crop image:", err);
       setErrorMessage(
-        err?.detail || err?.message || "Failed to process and save the image. Please try again."
+        getUserFriendlyError(
+          err,
+          "Failed to process and save the image. Please try again."
+        )
       );
       setIsApplying(false);
     }

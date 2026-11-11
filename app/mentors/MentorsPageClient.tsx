@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/Button";
 import { CardSkeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { CATEGORY_LABELS, MentorCategory, MentorListResponse } from "@/lib/types";
+import { formatExamRank } from "@/lib/mentor-utils";
 import { ActivityHeatmap } from "@/components/ActivityHeatmap";
 import {
   Search,
@@ -65,7 +66,7 @@ export default function MentorsPageClient({ initialData }: MentorsPageClientProp
           m.full_name.toLowerCase().includes(q) ||
           m.bio.toLowerCase().includes(q) ||
           (m.college && m.college.toLowerCase().includes(q)) ||
-          (m.exam_rank && m.exam_rank.toLowerCase().includes(q)) ||
+          (m.exam_rank && formatExamRank(m.exam_rank, m.rank_type).toLowerCase().includes(q)) ||
           (CATEGORY_LABELS[m.category] && CATEGORY_LABELS[m.category].toLowerCase().includes(q)) ||
           Boolean(m.email && m.email.toLowerCase().includes(q))
       );
@@ -279,9 +280,7 @@ export default function MentorsPageClient({ initialData }: MentorsPageClientProp
                           <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-900 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-300">
                             <Trophy className="w-2.5 h-2.5 text-amber-600 fill-amber-500" />
                             <span>
-                              {/^\d+$/.test(mentor.exam_rank.trim())
-                                ? `AIR ${mentor.exam_rank.trim()}`
-                                : mentor.exam_rank}
+                              {formatExamRank(mentor.exam_rank, mentor.rank_type)}
                             </span>
                           </span>
                         )}

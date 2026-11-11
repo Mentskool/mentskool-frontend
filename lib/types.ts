@@ -29,6 +29,8 @@ export interface TokenResponse {
 
 export type MentorCategory = "JEE_PREP" | "NEET_PREP" | "GATE_PSU";
 
+export type RankType = "AIR" | "PERCENTILE" | "MARKS" | "SCORE";
+
 export const CATEGORY_LABELS: Record<MentorCategory, string> = {
   JEE_PREP: "JEE Prep",
   NEET_PREP: "NEET Prep",
@@ -51,6 +53,7 @@ export interface MentorProfile {
   avatar_url?: string | null;
   college?: string | null;
   exam_rank?: string | null;
+  rank_type?: RankType | string | null;
   phone_number?: string | null;
   bio: string;
   category: MentorCategory;
@@ -96,6 +99,7 @@ export interface MentorStatsResponse {
   email: string;
   college?: string | null;
   exam_rank?: string | null;
+  rank_type?: RankType | string | null;
   category: MentorCategory;
   is_active: boolean;
   is_available: boolean;
@@ -615,6 +619,7 @@ export interface Mentor1on1Card {
   avatar_url?: string | null;
   college?: string | null;
   exam_rank?: string | null;
+  rank_type?: RankType | string | null;
   category: string;
   bio: string;
   intro_youtube_url?: string | null;

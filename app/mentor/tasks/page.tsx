@@ -21,6 +21,7 @@ import { CardSkeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { LayoutList, GanttChart } from "lucide-react";
 import { ApiError } from "@/lib/types";
+import { getUserFriendlyError } from "@/lib/error-utils";
 
 function MentorTasksContent() {
   const searchParams = useSearchParams();
@@ -105,9 +106,11 @@ function MentorTasksContent() {
       setFormDescription("");
       setShowAssignModal(false);
     } catch (err) {
-      const apiErr = err as ApiError;
       setErrorMessage(
-        apiErr.detail || "Unable to assign task. Ensure the student has an active subscription."
+        getUserFriendlyError(
+          err,
+          "Unable to assign task. Ensure the student has an active subscription."
+        )
       );
     }
   };
