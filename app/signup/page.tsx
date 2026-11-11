@@ -67,6 +67,16 @@ export default function SignupPage() {
   const selectedRole = watch("role");
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const roleParam = params.get("role")?.toUpperCase();
+      if (roleParam === "MENTOR" || roleParam === "STUDENT") {
+        setValue("role", roleParam);
+      }
+    }
+  }, [setValue]);
+
+  useEffect(() => {
     if (cooldownSeconds <= 0) return;
     const timer = setInterval(() => {
       setCooldownSeconds((prev) => Math.max(0, prev - 1));

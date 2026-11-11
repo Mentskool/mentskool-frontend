@@ -7,6 +7,9 @@ import { ComparisonTable, ComparisonRow } from "@/components/seo/ComparisonTable
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { compareExtensions } from "@/lib/seo/extensions/comparePages";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "Hello Mentor Alternative & Review (2027/2028) — Complete NEET Academic Prep vs Counselling",
@@ -167,6 +170,9 @@ export default function HelloMentorAlternativePage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...compareExtensions["hello-mentor-alternative"]} />
+          <SeoMentorFunnel examFocus="NEET" />
 
           <section className="mt-16">
             <SeoFaqAccordion

@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC2Extensions } from "@/lib/seo/extensions/batchC2";
 
 export const metadata: Metadata = {
   title: "Self-Study vs Coaching for JEE & NEET: Can You Crack It Without Coaching?",
@@ -249,6 +251,8 @@ export default function SelfStudyVsCoachingJeeNeetPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC2Extensions["self-study-vs-coaching-jee-neet"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

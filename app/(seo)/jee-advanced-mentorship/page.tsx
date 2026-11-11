@@ -21,6 +21,9 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchB3Extensions } from "@/lib/seo/extensions/batchB3";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "JEE Advanced Mentorship Program — 1:1 Guidance from Top IIT Rankers",
@@ -293,6 +296,9 @@ export default function JeeAdvancedMentorshipPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchB3Extensions["jee-advanced-mentorship"]} />
+          <SeoMentorFunnel examFocus="JEE" />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

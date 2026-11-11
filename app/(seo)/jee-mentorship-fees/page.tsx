@@ -19,6 +19,9 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC1Extensions } from "@/lib/seo/extensions/batchC1";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "JEE Mentorship Fees & Pricing Guide (2027/2028) — Honest Cost Comparison",
@@ -306,6 +309,9 @@ export default function JeeMentorshipFeesPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC1Extensions["jee-mentorship-fees"]} />
+          <SeoMentorFunnel examFocus="JEE" />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

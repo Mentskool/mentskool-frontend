@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC2Extensions } from "@/lib/seo/extensions/batchC2";
 
 export const metadata: Metadata = {
   title: "JEE Main Last 5 Years Trends: Marks vs 99 Percentile & Shift Normalization Analysis",
@@ -302,6 +304,8 @@ export default function JeeMainLast5YearsTrendsPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC2Extensions["jee-main-last-5-years-trends"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

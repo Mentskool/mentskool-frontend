@@ -21,6 +21,9 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { subjectAndFreeExtensions } from "@/lib/seo/extensions/subjectsAndFree";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "NEET Chemistry Mentor — Score 165+ in Chemistry with AIIMS Doctors",
@@ -182,6 +185,9 @@ export default function NeetChemistryMentorPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...subjectAndFreeExtensions["neet-chemistry-mentor"]} />
+          <SeoMentorFunnel examFocus="NEET" />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

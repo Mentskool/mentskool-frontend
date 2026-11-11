@@ -20,6 +20,9 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { subjectAndFreeExtensions } from "@/lib/seo/extensions/subjectsAndFree";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "JEE Physics Mentor — 1:1 Problem Solving Intuition with IITians",
@@ -181,6 +184,9 @@ export default function JeePhysicsMentorPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...subjectAndFreeExtensions["jee-physics-mentor"]} />
+          <SeoMentorFunnel examFocus="JEE" />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

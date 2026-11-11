@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC2Extensions } from "@/lib/seo/extensions/batchC2";
 
 export const metadata: Metadata = {
   title: "JEE Main Shift Difficulty Analysis: Score Normalization & Shift Variance Decoded",
@@ -256,6 +258,8 @@ export default function JeeMainShiftDifficultyAnalysisPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC2Extensions["jee-main-shift-difficulty-analysis"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

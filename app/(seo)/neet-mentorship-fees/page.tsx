@@ -21,6 +21,9 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchB2Extensions } from "@/lib/seo/extensions/batchB2";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "NEET Mentorship Fees & Pricing Guide (2027/2028) — Affordable AIIMS Guidance",
@@ -284,6 +287,9 @@ export default function NeetMentorshipFeesPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchB2Extensions["neet-mentorship-fees"]} />
+          <SeoMentorFunnel examFocus="NEET" />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

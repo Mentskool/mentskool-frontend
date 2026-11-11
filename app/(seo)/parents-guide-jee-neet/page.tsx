@@ -21,6 +21,9 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchB2Extensions } from "@/lib/seo/extensions/batchB2";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "Parent's Guide to JEE & NEET Preparation & Mentorship — Support Without Pressure",
@@ -192,6 +195,9 @@ export default function ParentsGuidePage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchB2Extensions["parents-guide-jee-neet"]} />
+          <SeoMentorFunnel examFocus="BOTH" />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

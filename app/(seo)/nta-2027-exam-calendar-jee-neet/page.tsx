@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchB3Extensions } from "@/lib/seo/extensions/batchB3";
 
 export const metadata: Metadata = {
   title: "NTA Exam Calendar 2027: JEE Main, NEET UG & CUET Official Dates & Annual Schedule",
@@ -252,6 +254,8 @@ export default function Nta2027ExamCalendarPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchB3Extensions["nta-2027-exam-calendar-jee-neet"]} />
 
           {/* Mentorship Funnel Callout */}
           <SeoMentorFunnel

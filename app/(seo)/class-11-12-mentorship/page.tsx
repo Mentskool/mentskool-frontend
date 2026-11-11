@@ -21,6 +21,9 @@ import { ProgramFeatures } from "@/components/seo/ProgramFeatures";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchB2Extensions } from "@/lib/seo/extensions/batchB2";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "Class 11 & 12 Foundation Mentorship — Balance Board Exams & JEE/NEET",
@@ -199,6 +202,9 @@ export default function Class1112MentorshipPage() {
             </div>
             <ProgramFeatures />
           </section>
+
+          <SeoDeepDiveExtension {...batchB2Extensions["class-11-12-mentorship"]} />
+          <SeoMentorFunnel examFocus="BOTH" />
 
           {/* FAQs */}
           <section className="mt-16">

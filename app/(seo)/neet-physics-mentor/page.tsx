@@ -21,6 +21,9 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { subjectAndFreeExtensions } from "@/lib/seo/extensions/subjectsAndFree";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "NEET Physics Mentor — Overcome Numerical Fear & Score 150+ with Doctors",
@@ -182,6 +185,9 @@ export default function NeetPhysicsMentorPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...subjectAndFreeExtensions["neet-physics-mentor"]} />
+          <SeoMentorFunnel examFocus="NEET" />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

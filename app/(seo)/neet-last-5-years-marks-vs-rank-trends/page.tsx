@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC2Extensions } from "@/lib/seo/extensions/batchC2";
 
 export const metadata: Metadata = {
   title: "NEET Last 5 Years Marks vs Rank Trends: Rank Inflation & Safe GMC Cutoffs",
@@ -310,6 +312,8 @@ export default function NeetLast5YearsMarksVsRankTrendsPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC2Extensions["neet-last-5-years-marks-vs-rank-trends"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

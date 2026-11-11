@@ -8,6 +8,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { compareExtensions } from "@/lib/seo/extensions/comparePages";
 
 export const metadata: Metadata = {
   title: "JEE Society Alternative & Review (2027/2028) — 1:1 + Small Cohort Mentorship",
@@ -228,6 +230,8 @@ export default function JeeSocietyAlternativePage() {
           </section>
 
           <SeoMentorFunnel examFocus="JEE" />
+
+          <SeoDeepDiveExtension {...compareExtensions["jeesociety-alternative"]} />
 
           <section className="mt-16">
             <SeoFaqAccordion

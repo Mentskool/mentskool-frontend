@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC1Extensions } from "@/lib/seo/extensions/batchC1";
 
 export const metadata: Metadata = {
   title: "How to Score 99+ Percentile in JEE Main: The 185+ Marks Subject-Wise Framework",
@@ -258,6 +260,8 @@ export default function HowToScore99PercentileInJeeMainPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC1Extensions["how-to-score-99-percentile-in-jee-main"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

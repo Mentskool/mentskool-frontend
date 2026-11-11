@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchDExtensions } from "@/lib/seo/extensions/batchD";
 
 export const metadata: Metadata = {
   title: "Can I Get an NIT With 85 to 90 Percentile? Category & Home State Quota Cutoff Analysis",
@@ -282,6 +284,8 @@ export default function CanIGetNitWith85To90PercentilePage() {
               </p>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchDExtensions["can-i-get-nit-with-85-to-90-percentile"]} />
 
           {/* Mentorship Funnel Callout */}
           <SeoMentorFunnel

@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC2Extensions } from "@/lib/seo/extensions/batchC2";
 
 export const metadata: Metadata = {
   title: "JEE Main Low Marks vs Percentile Table: 40 to 120 Marks Shift-by-Shift Analysis",
@@ -315,6 +317,8 @@ export default function JeeMainLowMarksVsPercentileTablePage() {
               </ul>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC2Extensions["jee-main-low-marks-vs-percentile-table"]} />
 
           {/* Mentorship Funnel Callout */}
           <SeoMentorFunnel

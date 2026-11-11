@@ -8,6 +8,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { compareExtensions } from "@/lib/seo/extensions/comparePages";
 
 export const metadata: Metadata = {
   title: "PW Disha Alternative & Honest Review (2027/2028) — 1:1 Attention vs Mass Batches",
@@ -227,6 +229,8 @@ export default function PwDishaAlternativePage() {
           </section>
 
           <SeoMentorFunnel examFocus="BOTH" />
+
+          <SeoDeepDiveExtension {...compareExtensions["pw-disha-alternative"]} />
 
           <section className="mt-16">
             <SeoFaqAccordion
