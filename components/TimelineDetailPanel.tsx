@@ -2,14 +2,20 @@
 
 import React, { useState, useRef, useCallback } from "react";
 import {
+  AlertCircle,
   Calendar,
+  Check,
   ChevronRight,
   Clock,
   Flag,
+  MessageSquarePlus,
   Pin,
   Star,
   User,
+  X,
 } from "lucide-react";
+import { Button } from "./ui/Button";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import type {
   TimelineTask,
   TimelineWindow,
@@ -31,6 +37,12 @@ interface TimelineDetailPanelProps {
   viewer: "student" | "mentor";
   onComplete?: (taskId: string) => Promise<void>;
   isCompleting?: boolean;
+  onReview?: (
+    taskId: string,
+    decision: "APPROVED" | "REJECTED",
+    mentorNote?: string
+  ) => Promise<boolean | void> | void;
+  isReviewing?: boolean;
   today: string;
 }
 
@@ -41,6 +53,8 @@ export function TimelineDetailPanel({
   viewer,
   onComplete,
   isCompleting = false,
+  onReview,
+  isReviewing = false,
   today,
 }: TimelineDetailPanelProps) {
   if (!task) {
@@ -67,10 +81,13 @@ export function TimelineDetailPanel({
 
   return (
     <TimelineDetailPanelContent
+      key={task.id}
       task={task}
       viewer={viewer}
       onComplete={onComplete}
       isCompleting={isCompleting}
+      onReview={onReview}
+      isReviewing={isReviewing}
       today={today}
     />
   );
@@ -81,6 +98,12 @@ interface TimelineDetailPanelContentProps {
   viewer: "student" | "mentor";
   onComplete?: (taskId: string) => Promise<void>;
   isCompleting?: boolean;
+  onReview?: (
+    taskId: string,
+    decision: "APPROVED" | "REJECTED",
+    mentorNote?: string
+  ) => Promise<boolean | void> | void;
+  isReviewing?: boolean;
   today: string;
 }
 
@@ -89,9 +112,36 @@ function TimelineDetailPanelContent({
   viewer,
   onComplete,
   isCompleting = false,
+  onReview,
+  isReviewing = false,
   today,
 }: TimelineDetailPanelContentProps) {
   const [justCompleted, setJustCompleted] = useState<string | null>(null);
+  const [showNoteInput, setShowNoteInput] = useState(false);
+  const [mentorNote, setMentorNote] = useState("");
+  const [reviewError, setReviewError] = useState<string | null>(null);
+  const [reviewOutcome, setReviewOutcome] = useState<"APPROVED" | "REJECTED" | null>(
+    null
+  );
+
+  const handleReviewSubmit = useCallback(
+    async (decision: "APPROVED" | "REJECTED") => {
+      if (!onReview || isReviewing) return;
+      setReviewError(null);
+      try {
+        const res = await onReview(task.id, decision, mentorNote.trim() || undefined);
+        if (res === false) return;
+        setReviewOutcome(decision);
+        setMentorNote("");
+        setShowNoteInput(false);
+      } catch (err) {
+        setReviewError(
+          getUserFriendlyError(err, "Unable to submit review. Please try again.")
+        );
+      }
+    },
+    [onReview, isReviewing, task.id, mentorNote]
+  );
 
   // ── Hold-to-complete handler ─────────────────────────────────────────
   const handleComplete = useCallback(async () => {
@@ -151,6 +201,11 @@ function TimelineDetailPanelContent({
     !isSubmitted &&
     task.dbStatus === "ASSIGNED";
 
+  const canReview =
+    viewer === "mentor" &&
+    task.dbStatus === "MARKED_COMPLETE" &&
+    Boolean(onReview);
+
   return (
     <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
       {/* ── Status header with colored background strip ─────────────────── */}
@@ -186,7 +241,7 @@ function TimelineDetailPanelContent({
           <p className="text-xs text-slate-500 mt-0.5">
             {formatShortDate(task.startDate)} → {formatShortDate(task.deadline)}
             {" · "}
-            {task.mentorName}
+            {viewer === "mentor" ? task.studentName || "Student" : task.mentorName}
           </p>
           <p
             className={`text-xs font-bold mt-1 ${
@@ -367,6 +422,98 @@ function TimelineDetailPanelContent({
               Submit now = {task.daysLeft} day{task.daysLeft > 1 ? "s" : ""} early
             </p>
           )}
+        </div>
+      )}
+
+      {/* ── Mentor review outcome banner ──────────────────────────────── */}
+      {reviewOutcome && (
+        <div
+          className={`rounded-xl p-3 text-center text-xs font-bold border animate-fade-in ${
+            reviewOutcome === "APPROVED"
+              ? "bg-emerald-50 border-emerald-200 text-emerald-800"
+              : "bg-rose-50 border-rose-200 text-rose-800"
+          }`}
+        >
+          {reviewOutcome === "APPROVED"
+            ? "✓ Task approved and student efficiency updated!"
+            : "↩ Task sent back with feedback."}
+        </div>
+      )}
+
+      {/* ── Mentor review actions (mentor only, submitted tasks) ──────── */}
+      {canReview && (
+        <div className="pt-3 border-t border-slate-100 space-y-3">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-bold text-slate-800">
+              Mentor Review Action
+            </span>
+            {!showNoteInput && (
+              <button
+                type="button"
+                onClick={() => setShowNoteInput(true)}
+                className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+              >
+                <MessageSquarePlus className="w-3.5 h-3.5" />
+                <span>Add feedback note</span>
+              </button>
+            )}
+          </div>
+
+          {showNoteInput && (
+            <div className="space-y-1.5">
+              <textarea
+                rows={2}
+                placeholder="Optional feedback note for the student (e.g. Great accuracy, revise chapter 4 next)..."
+                value={mentorNote}
+                onChange={(e) => setMentorNote(e.target.value)}
+                className="w-full text-xs px-3 py-2 rounded-xl border border-slate-200 bg-slate-50/70 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 resize-none"
+              />
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowNoteInput(false);
+                    setMentorNote("");
+                  }}
+                  className="text-[11px] text-slate-400 hover:text-slate-600"
+                >
+                  Remove note
+                </button>
+              </div>
+            </div>
+          )}
+
+          {reviewError && (
+            <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-center gap-2">
+              <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+              <span>{reviewError}</span>
+            </div>
+          )}
+
+          <div className="grid grid-cols-2 gap-2.5">
+            <Button
+              type="button"
+              size="sm"
+              variant="subtle"
+              isLoading={isReviewing}
+              onClick={() => handleReviewSubmit("REJECTED")}
+              className="w-full justify-center gap-1.5 border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 font-bold"
+            >
+              <X className="w-3.5 h-3.5" />
+              <span>Reject</span>
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant="moss"
+              isLoading={isReviewing}
+              onClick={() => handleReviewSubmit("APPROVED")}
+              className="w-full justify-center gap-1.5 font-bold"
+            >
+              <Check className="w-3.5 h-3.5" />
+              <span>Approve</span>
+            </Button>
+          </div>
         </div>
       )}
       </div>
