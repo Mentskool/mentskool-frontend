@@ -38,6 +38,7 @@ function MentorTasksContent() {
   const [showAssignModal, setShowAssignModal] = useState(false);
   const [reviewingTaskId, setReviewingTaskId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [reviewErrorMessage, setReviewErrorMessage] = useState<string | null>(null);
 
   // Form State for Creating a Task
   const [formStudentId, setFormStudentId] = useState<string>(
@@ -119,16 +120,21 @@ function MentorTasksContent() {
     taskId: string,
     decision: "APPROVED" | "REJECTED",
     mentorNote?: string
-  ) => {
+  ): Promise<boolean> => {
     setReviewingTaskId(taskId);
+    setReviewErrorMessage(null);
     try {
       await reviewTaskMutation.mutateAsync({
         taskId,
         decision,
         mentor_note: mentorNote,
       });
-    } catch {
-      alert("Unable to submit review. Please try again.");
+      return true;
+    } catch (err) {
+      setReviewErrorMessage(
+        getUserFriendlyError(err, "Unable to submit review. Please try again.")
+      );
+      return false;
     } finally {
       setReviewingTaskId(null);
     }
@@ -308,11 +314,27 @@ function MentorTasksContent() {
         </Card>
       )}
 
+      {/* Review Error Alert */}
+      {reviewErrorMessage && (
+        <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800 font-medium flex items-center justify-between">
+          <span>{reviewErrorMessage}</span>
+          <button
+            type="button"
+            onClick={() => setReviewErrorMessage(null)}
+            className="text-rose-500 hover:text-rose-800 px-1"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       {/* ── TIMELINE VIEW ─────────────────────────────────────────── */}
       {viewMode === "timeline" && (
         <MissionTimeline
           tasks={tasksData?.items ?? []}
           viewer="mentor"
+          onReview={handleReview}
+          isReviewingId={reviewingTaskId}
         />
       )}
 

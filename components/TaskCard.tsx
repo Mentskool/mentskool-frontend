@@ -11,7 +11,7 @@ export interface TaskCardProps {
     taskId: string,
     decision: "APPROVED" | "REJECTED",
     mentorNote?: string
-  ) => Promise<void> | void;
+  ) => Promise<boolean | void> | void;
   isStudentView?: boolean;
   isActionLoading?: boolean;
 }
