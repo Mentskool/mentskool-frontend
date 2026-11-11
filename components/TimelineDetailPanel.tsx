@@ -391,10 +391,14 @@ function TimelineDetailPanelContent({
       {isOverdue && (
         <div className="rounded-xl bg-amber-50 border border-amber-200 p-3.5">
           <p className="text-xs font-bold text-amber-900">
-            This slipped a little. That's normal.
+            {viewer === "mentor"
+              ? "Past deadline — awaiting student submission"
+              : "This slipped a little. That's normal."}
           </p>
           <p className="text-xs text-amber-700 mt-0.5 leading-relaxed">
-            Pick a new finish line with your mentor, then submit your progress.
+            {viewer === "mentor"
+              ? `${task.studentName || "The student"} hasn't submitted this task yet. Follow up via Messages or Schedule if they need help getting back on track.`
+              : "Pick a new finish line with your mentor, then submit your progress."}
           </p>
         </div>
       )}
