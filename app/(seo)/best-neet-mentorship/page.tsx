@@ -23,6 +23,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchDExtensions } from "@/lib/seo/extensions/batchD";
 
 export const metadata: Metadata = {
   title: "Best Mentorship Program for NEET-UG (2027/2028) — The Definitive Medical Guide",
@@ -291,6 +293,8 @@ export default function BestNeetMentorshipPage() {
             </div>
             <ProgramFeatures />
           </section>
+
+          <SeoDeepDiveExtension {...batchDExtensions["best-neet-mentorship"]} />
 
           {/* Live Mentor Funnel Bridge */}
           <SeoMentorFunnel

@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchDExtensions } from "@/lib/seo/extensions/batchD";
 
 export const metadata: Metadata = {
   title: "JEE Negative Marking Rules: Math of Guessing & How to Save 25+ Marks",
@@ -302,6 +304,8 @@ export default function JeeNegativeMarkingRulesPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchDExtensions["jee-negative-marking-rules"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

@@ -22,6 +22,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC3Extensions } from "@/lib/seo/extensions/batchC3";
 
 export const metadata: Metadata = {
   title: "NEET Mock Test Analysis with AIIMS Doctor Mentor — 500 to 650+ Score Guide",
@@ -314,6 +316,8 @@ export default function NeetMockTestAnalysisPage() {
               </table>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC3Extensions["neet-mock-test-analysis"]} />
 
           {/* Live Mentor Funnel Bridge */}
           <SeoMentorFunnel

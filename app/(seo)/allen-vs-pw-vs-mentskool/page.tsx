@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC3Extensions } from "@/lib/seo/extensions/batchC3";
 
 export const metadata: Metadata = {
   title: "Allen vs Physics Wallah vs Mentskool: The Preparation Ecosystem Compared",
@@ -269,6 +271,8 @@ export default function AllenVsPwVsMentskoolPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC3Extensions["allen-vs-pw-vs-mentskool"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

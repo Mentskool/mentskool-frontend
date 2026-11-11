@@ -16,6 +16,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { subjectAndFreeExtensions } from "@/lib/seo/extensions/subjectsAndFree";
 
 export const metadata: Metadata = {
   title: "Free 1-on-1 Mentorship Session & Strategy Audit — JEE & NEET",
@@ -158,6 +160,8 @@ export default function FreeMentorshipSessionPage() {
             title="Book Your Free Diagnostic Call With an IIT or AIIMS Ranker"
             subtitle="Choose your target track (JEE or NEET). Get your study plan audited, backlogs diagnosed, and targets set for 2027 & 2028."
           />
+
+          <SeoDeepDiveExtension {...subjectAndFreeExtensions["free-mentorship-session"]} />
 
           <section className="mt-16">
             <SeoFaqAccordion

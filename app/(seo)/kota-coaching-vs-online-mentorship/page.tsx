@@ -21,6 +21,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC3Extensions } from "@/lib/seo/extensions/batchC3";
 
 export const metadata: Metadata = {
   title: "Kota Coaching vs Online Personal Mentorship: The Honest Cost & Reality Analysis",
@@ -273,6 +275,8 @@ export default function KotaCoachingVsOnlineMentorshipPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC3Extensions["kota-coaching-vs-online-mentorship"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

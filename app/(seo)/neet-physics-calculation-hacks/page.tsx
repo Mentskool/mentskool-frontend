@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC2Extensions } from "@/lib/seo/extensions/batchC2";
 
 export const metadata: Metadata = {
   title: "NEET Physics Calculation Speed Tricks: Save 25 Minutes with Constant Hacks",
@@ -272,6 +274,8 @@ export default function NeetPhysicsCalculationHacksPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC2Extensions["neet-physics-calculation-hacks"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

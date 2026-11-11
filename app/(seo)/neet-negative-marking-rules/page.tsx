@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchDExtensions } from "@/lib/seo/extensions/batchD";
 
 export const metadata: Metadata = {
   title: "NEET Negative Marking Rules: Saving 30+ Marks & Eliminating OMR Errors",
@@ -288,6 +290,8 @@ export default function NeetNegativeMarkingRulesPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchDExtensions["neet-negative-marking-rules"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC2Extensions } from "@/lib/seo/extensions/batchC2";
 
 export const metadata: Metadata = {
   title: "NEET Qualifying Marks vs Government MBBS Cutoff: The 500-Mark Reality Check",
@@ -256,6 +258,8 @@ export default function NeetQualifyingMarksVsAdmissionCutoffPage() {
               </p>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC2Extensions["neet-qualifying-marks-vs-admission-cutoff"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

@@ -19,6 +19,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchB3Extensions } from "@/lib/seo/extensions/batchB3";
 import { JeeMarksPercentileCalculatorWidget } from "@/components/seo/tools/JeeMarksPercentileCalculatorWidget";
 
 export const metadata: Metadata = {
@@ -244,6 +246,8 @@ export default function JeeMainMarksVsPercentileCalculatorPage() {
               </p>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchB3Extensions["tools/jee-main-marks-vs-percentile-calculator"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

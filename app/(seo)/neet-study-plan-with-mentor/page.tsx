@@ -22,6 +22,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC1Extensions } from "@/lib/seo/extensions/batchC1";
 
 export const metadata: Metadata = {
   title: "NEET Study Plan with AIIMS Doctor Mentor (2027/2028) — Living Medical Schedule",
@@ -255,6 +257,8 @@ export default function NeetStudyPlanWithMentorPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC1Extensions["neet-study-plan-with-mentor"]} />
 
           {/* Live Mentor Funnel Bridge */}
           <SeoMentorFunnel

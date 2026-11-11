@@ -21,6 +21,9 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchB2Extensions } from "@/lib/seo/extensions/batchB2";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "NEET 2027 CBT Preparation Guide — Transition from OMR to Computer-Based Test",
@@ -243,6 +246,9 @@ export default function Neet2027CbtPreparationPage() {
               </table>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchB2Extensions["neet-2027-cbt-preparation"]} />
+          <SeoMentorFunnel examFocus="NEET" />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

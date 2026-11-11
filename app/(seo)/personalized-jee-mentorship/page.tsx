@@ -21,6 +21,9 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchB1Extensions } from "@/lib/seo/extensions/batchB1";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "Personalized JEE Mentorship — Custom 1:1 Study Pacing with IITians",
@@ -198,6 +201,9 @@ export default function PersonalizedJeeMentorshipPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchB1Extensions["personalized-jee-mentorship"]} />
+          <SeoMentorFunnel examFocus="JEE" />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

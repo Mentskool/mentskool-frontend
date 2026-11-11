@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC2Extensions } from "@/lib/seo/extensions/batchC2";
 
 export const metadata: Metadata = {
   title: "NEET Chapter-Wise Weightage: 5-Year Trends in Biology, Chemistry & Physics",
@@ -338,6 +340,8 @@ export default function NeetChapterWiseWeightageTrendsPage() {
               </table>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC2Extensions["neet-chapter-wise-weightage-trends"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

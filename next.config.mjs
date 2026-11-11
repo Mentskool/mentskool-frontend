@@ -32,6 +32,24 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: "/llms.txt",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, follow",
+          },
+        ],
+      },
+      {
+        source: "/llms-full.txt",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, follow",
+          },
+        ],
+      },
     ];
   },
 };

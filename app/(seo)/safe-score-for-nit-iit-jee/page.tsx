@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC1Extensions } from "@/lib/seo/extensions/batchC1";
 
 export const metadata: Metadata = {
   title: "Safe Score for Top NITs & IITs: Chapter Target Framework & Branch Cutoffs",
@@ -327,6 +329,8 @@ export default function SafeScoreForNitIitJeePage() {
               Total Score: 75 + 79 + 47 = 201 Marks $\to$ Solid 99.2+ Percentile (Top 10 NIT CSE Secured)
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC1Extensions["safe-score-for-nit-iit-jee"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

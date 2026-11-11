@@ -21,6 +21,9 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchB1Extensions } from "@/lib/seo/extensions/batchB1";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "NEET Revision Plan with AIIMS Doctor Mentor — 60-Day 3-Tier Blueprint",
@@ -205,6 +208,9 @@ export default function NeetRevisionPlanPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchB1Extensions["neet-revision-plan"]} />
+          <SeoMentorFunnel examFocus="NEET" />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

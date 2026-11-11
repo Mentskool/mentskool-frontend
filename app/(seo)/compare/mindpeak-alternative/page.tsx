@@ -7,6 +7,9 @@ import { ComparisonTable, ComparisonRow } from "@/components/seo/ComparisonTable
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { compareExtensions } from "@/lib/seo/extensions/comparePages";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "MindPeak Alternative & Review (2027/2028) — 1:1 Mentorship by IIT & AIIMS Rankers",
@@ -126,6 +129,9 @@ export default function MindPeakAlternativePage() {
             competitorName="MindPeak"
             rows={comparisonRows}
           />
+
+          <SeoDeepDiveExtension {...compareExtensions["mindpeak-alternative"]} />
+          <SeoMentorFunnel examFocus="BOTH" />
 
           <section className="mt-16">
             <SeoFaqAccordion

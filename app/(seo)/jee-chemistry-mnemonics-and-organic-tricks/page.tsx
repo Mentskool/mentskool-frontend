@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchB1Extensions } from "@/lib/seo/extensions/batchB1";
 
 export const metadata: Metadata = {
   title: "JEE Chemistry Mnemonics & Organic Reaction Tricks: Score 80+ in 40 Minutes",
@@ -244,6 +246,8 @@ export default function JeeChemistryMnemonicsAndOrganicTricksPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchB1Extensions["jee-chemistry-mnemonics-and-organic-tricks"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

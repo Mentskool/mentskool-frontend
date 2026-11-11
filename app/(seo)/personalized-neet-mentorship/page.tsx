@@ -21,6 +21,9 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchB1Extensions } from "@/lib/seo/extensions/batchB1";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "Personalized NEET Mentorship — 1:1 Guidance with AIIMS Doctors",
@@ -198,6 +201,9 @@ export default function PersonalizedNeetMentorshipPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchB1Extensions["personalized-neet-mentorship"]} />
+          <SeoMentorFunnel examFocus="NEET" />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

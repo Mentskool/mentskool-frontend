@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchDExtensions } from "@/lib/seo/extensions/batchD";
 
 export const metadata: Metadata = {
   title: "NEET Exam Pattern & Marking Scheme: 200 Questions, 720 Marks & Section B Protocol",
@@ -312,6 +314,8 @@ export default function NeetExamPatternAndMarkingSchemePage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchDExtensions["neet-exam-pattern-and-marking-scheme"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

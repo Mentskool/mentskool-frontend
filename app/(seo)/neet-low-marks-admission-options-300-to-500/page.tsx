@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC3Extensions } from "@/lib/seo/extensions/batchC3";
 
 export const metadata: Metadata = {
   title: "NEET 300 to 500 Marks: Government MBBS, Semi-Govt, BDS, BAMS & Private Admission Options",
@@ -274,6 +276,8 @@ export default function NeetLowMarksAdmissionOptions300To500Page() {
               </p>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC3Extensions["neet-low-marks-admission-options-300-to-500"]} />
 
           {/* Mentorship Funnel Callout */}
           <SeoMentorFunnel

@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC3Extensions } from "@/lib/seo/extensions/batchC3";
 
 export const metadata: Metadata = {
   title: "NEET Biology 360/360 Guide: NCERT Mnemonics, Diagrams & Morphology Hacks",
@@ -307,6 +309,8 @@ export default function NeetBiologyNcertMnemonicsAndDiagramsPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC3Extensions["neet-biology-ncert-mnemonics-and-diagrams"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

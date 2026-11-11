@@ -21,6 +21,9 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchB1Extensions } from "@/lib/seo/extensions/batchB1";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "JEE Revision Plan with Personal Mentor — 45-Day Spaced Repetition Blueprint",
@@ -205,6 +208,9 @@ export default function JeeRevisionPlanPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchB1Extensions["jee-revision-plan"]} />
+          <SeoMentorFunnel examFocus="JEE" />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

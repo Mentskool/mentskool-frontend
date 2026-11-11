@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchDExtensions } from "@/lib/seo/extensions/batchD";
 
 export const metadata: Metadata = {
   title: "Low Percentile in JEE Main (Under 85): What Next? Complete Decision Roadmap & College Options",
@@ -289,6 +291,8 @@ export default function LowPercentileInJeeMainWhatNextPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchDExtensions["low-percentile-in-jee-main-what-next"]} />
 
           {/* Mentorship Funnel Callout */}
           <SeoMentorFunnel

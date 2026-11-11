@@ -21,6 +21,9 @@ import { ProgramFeatures } from "@/components/seo/ProgramFeatures";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchB2Extensions } from "@/lib/seo/extensions/batchB2";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "1:1 NEET Mentorship by AIIMS & Top GMC Rankers — NEET-UG 680+ Strategy",
@@ -205,6 +208,9 @@ export default function NeetMentorshipPage() {
             </div>
             <ProgramFeatures />
           </section>
+
+          <SeoDeepDiveExtension {...batchB2Extensions["neet-mentorship"]} />
+          <SeoMentorFunnel examFocus="NEET" />
 
           {/* FAQs */}
           <section className="mt-16">

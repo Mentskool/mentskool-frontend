@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchDExtensions } from "@/lib/seo/extensions/batchD";
 
 export const metadata: Metadata = {
   title: "How to Eliminate Silly Mistakes & Calculation Errors in JEE & NEET (Error-Book Protocol)",
@@ -291,6 +293,8 @@ export default function SillyMistakesReductionJeeNeetPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchDExtensions["silly-mistakes-reduction-jee-neet"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

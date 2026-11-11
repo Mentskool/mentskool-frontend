@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC3Extensions } from "@/lib/seo/extensions/batchC3";
 
 export const metadata: Metadata = {
   title: "Dummy School vs Regular School for JEE & NEET: CBSE 75% Attendance Rules & Strategy",
@@ -271,6 +273,8 @@ export default function DummySchoolVsRegularSchoolJeeNeetPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC3Extensions["dummy-school-vs-regular-school-jee-neet"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

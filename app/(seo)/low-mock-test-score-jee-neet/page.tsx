@@ -21,6 +21,9 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchB2Extensions } from "@/lib/seo/extensions/batchB2";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "Low Mock Test Score in JEE or NEET? The 72-Hour Recovery Protocol",
@@ -205,6 +208,9 @@ export default function LowMockTestScorePage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchB2Extensions["low-mock-test-score-jee-neet"]} />
+          <SeoMentorFunnel examFocus="BOTH" />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

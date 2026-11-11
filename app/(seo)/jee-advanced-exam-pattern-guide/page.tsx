@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchDExtensions } from "@/lib/seo/extensions/batchD";
 
 export const metadata: Metadata = {
   title: "JEE Advanced Exam Pattern Guide: Partial Marking, Multi-Correct & Paper Secrets",
@@ -297,6 +299,8 @@ export default function JeeAdvancedExamPatternGuidePage() {
               </ul>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchDExtensions["jee-advanced-exam-pattern-guide"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

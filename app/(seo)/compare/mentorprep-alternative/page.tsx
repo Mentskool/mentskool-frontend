@@ -8,6 +8,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { compareExtensions } from "@/lib/seo/extensions/comparePages";
 
 export const metadata: Metadata = {
   title: "Mentor Prep Alternative & Review (2027/2028) — Why Students Switch to Mentskool",
@@ -237,6 +239,8 @@ export default function MentorPrepAlternativePage() {
           </section>
 
           <SeoMentorFunnel examFocus="BOTH" />
+
+          <SeoDeepDiveExtension {...compareExtensions["mentorprep-alternative"]} />
 
           <section className="mt-16">
             <SeoFaqAccordion

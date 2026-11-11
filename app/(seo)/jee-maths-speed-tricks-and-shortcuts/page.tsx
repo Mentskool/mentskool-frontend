@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC3Extensions } from "@/lib/seo/extensions/batchC3";
 
 export const metadata: Metadata = {
   title: "JEE Maths Speed Tricks & Shortcuts: Option Elimination, Graphing & Series Hacks",
@@ -264,6 +266,8 @@ export default function JeeMathsSpeedTricksAndShortcutsPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC3Extensions["jee-maths-speed-tricks-and-shortcuts"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

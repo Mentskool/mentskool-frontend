@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC3Extensions } from "@/lib/seo/extensions/batchC3";
 
 export const metadata: Metadata = {
   title: "JEE Mock Test Analysis with Personal IITian Mentor — Stop Negative Marks",
@@ -310,6 +312,8 @@ export default function JeeMockTestAnalysisPage() {
               </table>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC3Extensions["jee-mock-test-analysis"]} />
 
           {/* Live Mentor Funnel Bridge */}
           <SeoMentorFunnel

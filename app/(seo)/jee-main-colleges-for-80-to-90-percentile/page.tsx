@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchDExtensions } from "@/lib/seo/extensions/batchD";
 
 export const metadata: Metadata = {
   title: "Best Engineering Colleges for 80 to 90 Percentile in JEE Main: GFTIs, State Govt & Top Private",
@@ -308,6 +310,8 @@ export default function CollegesFor80To90PercentilePage() {
               </ul>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchDExtensions["jee-main-colleges-for-80-to-90-percentile"]} />
 
           {/* Mentorship Funnel Callout */}
           <SeoMentorFunnel

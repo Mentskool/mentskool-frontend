@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC1Extensions } from "@/lib/seo/extensions/batchC1";
 
 export const metadata: Metadata = {
   title: "Safe Score for AIIMS & Top Government Medical Colleges: Category-Wise Cutoffs",
@@ -306,6 +308,8 @@ export default function SafeScoreForAiimsGovernmentMbbsPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC1Extensions["safe-score-for-aiims-government-mbbs"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

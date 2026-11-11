@@ -20,6 +20,9 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { subjectAndFreeExtensions } from "@/lib/seo/extensions/subjectsAndFree";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "NEET Biology Mentor — Score 360/360 with AIIMS Doctors",
@@ -181,6 +184,9 @@ export default function NeetBiologyMentorPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...subjectAndFreeExtensions["neet-biology-mentor"]} />
+          <SeoMentorFunnel examFocus="NEET" />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

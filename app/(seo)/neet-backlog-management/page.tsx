@@ -21,6 +21,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC3Extensions } from "@/lib/seo/extensions/batchC3";
 
 export const metadata: Metadata = {
   title: "NEET Backlog Management & Recovery Guide — AIIMS Doctor Framework",
@@ -326,6 +328,8 @@ export default function NeetBacklogManagementPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC3Extensions["neet-backlog-management"]} />
 
           {/* Live Mentor Funnel Bridge */}
           <SeoMentorFunnel

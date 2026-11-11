@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC1Extensions } from "@/lib/seo/extensions/batchC1";
 
 export const metadata: Metadata = {
   title: "JEE Main Chapter-Wise Weightage: 5-Year Trends & High-Yield Topics (Physics, Chem, Maths)",
@@ -345,6 +347,8 @@ export default function JeeMainChapterWiseWeightageTrendsPage() {
               </table>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC1Extensions["jee-main-chapter-wise-weightage-trends"]} />
 
           {/* Dedicated High-Converting Mentorship Funnel */}
           <SeoMentorFunnel

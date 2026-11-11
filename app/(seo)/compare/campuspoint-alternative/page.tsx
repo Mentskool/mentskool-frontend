@@ -7,6 +7,9 @@ import { ComparisonTable, ComparisonRow } from "@/components/seo/ComparisonTable
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { compareExtensions } from "@/lib/seo/extensions/comparePages";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "CampusPoint Alternative & Review (2027/2028) — 1:1 JEE & NEET Mentorship",
@@ -121,6 +124,9 @@ export default function CampusPointAlternativePage() {
             competitorName="CampusPoint"
             rows={comparisonRows}
           />
+
+          <SeoDeepDiveExtension {...compareExtensions["campuspoint-alternative"]} />
+          <SeoMentorFunnel examFocus="BOTH" />
 
           <section className="mt-16">
             <SeoFaqAccordion

@@ -20,6 +20,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchDExtensions } from "@/lib/seo/extensions/batchD";
 
 export const metadata: Metadata = {
   title: "Top Engineering Colleges for 70 to 80 Percentile in JEE Main: Complete Cutoff & Admission Guide",
@@ -316,6 +318,8 @@ export default function CollegesFor70To80PercentilePage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchDExtensions["jee-main-colleges-for-70-to-80-percentile"]} />
 
           {/* Mentorship Funnel Callout */}
           <SeoMentorFunnel

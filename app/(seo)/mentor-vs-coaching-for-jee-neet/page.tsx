@@ -20,6 +20,9 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { SeoDeepDiveExtension } from "@/components/seo/SeoDeepDiveExtension";
+import { batchC1Extensions } from "@/lib/seo/extensions/batchC1";
+import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 
 export const metadata: Metadata = {
   title: "Mentor vs Coaching for JEE & NEET — Do You Really Need a Mentor?",
@@ -287,6 +290,9 @@ export default function MentorVsCoachingPage() {
               </div>
             </div>
           </section>
+
+          <SeoDeepDiveExtension {...batchC1Extensions["mentor-vs-coaching-for-jee-neet"]} />
+          <SeoMentorFunnel examFocus="BOTH" />
 
           {/* FAQ Accordion */}
           <section className="mt-16">

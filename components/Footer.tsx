@@ -79,10 +79,18 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/mentor/onboarding"
+                  href="/become-a-jee-mentor-earn-money"
+                  className="hover:text-sky-400 transition-colors inline-flex items-center gap-1 text-emerald-300 font-medium"
+                >
+                  <span>Become a Mentor (Earn ₹15k–45k/mo)</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/become-a-neet-mentor-earn-money"
                   className="hover:text-sky-400 transition-colors inline-flex items-center gap-1 text-sky-300 font-medium"
                 >
-                  <span>Become a Mentor</span>
+                  <span>MBBS / AIIMS Mentor Track</span>
                 </Link>
               </li>
               <li>
@@ -129,11 +137,11 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/mentor/onboarding"
+                  href="/mentskool-mentor-eligibility-and-verification"
                   className="hover:text-sky-400 transition-colors inline-flex items-center gap-1"
                 >
                   <GraduationCap className="w-3.5 h-3.5 text-indigo-400" />
-                  <span>Mentor Guidelines</span>
+                  <span>Mentor Eligibility &amp; Payouts</span>
                 </Link>
               </li>
             </ul>
