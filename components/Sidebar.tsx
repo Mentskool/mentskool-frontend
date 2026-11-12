@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { useAuth } from "@/hooks/useAuth";
+import { useConversations } from "@/hooks/useChat";
 import {
   CheckSquare,
   BarChart3,
@@ -63,6 +64,9 @@ export const Sidebar: React.FC = () => {
   const { user } = useAuthStore();
   const { logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { data: conversations } = useConversations(!!user && user.role !== "ADMIN");
+  const totalUnreadMessages =
+    conversations?.reduce((sum, c) => sum + (c.unread_count ?? 0), 0) ?? 0;
 
   const handleLogout = async () => {
     await logout();
@@ -100,7 +104,12 @@ export const Sidebar: React.FC = () => {
                 isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-700"
               }`}
             />
-            <span>{item.label}</span>
+            <span className="flex-1">{item.label}</span>
+            {item.href === "/messages" && totalUnreadMessages > 0 && (
+              <span className="ml-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-[10px] font-bold bg-rose-500 text-white shadow-xs">
+                {totalUnreadMessages > 99 ? "99+" : totalUnreadMessages}
+              </span>
+            )}
           </Link>
         );
       })}

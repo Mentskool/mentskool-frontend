@@ -10,13 +10,15 @@ import {
 } from "@/lib/types";
 import { useAuthStore } from "@/store/authStore";
 
-export const use1on1Mentors = (category?: string) => {
+export const use1on1Mentors = (category?: string, initialData?: Mentor1on1Card[]) => {
   return useQuery<Mentor1on1Card[]>({
     queryKey: ["sessions", "mentors", category],
     queryFn: async () => {
       const url = category ? `/sessions/mentors?category=${category}` : "/sessions/mentors";
       return apiClient.get<Mentor1on1Card[]>(url);
     },
+    staleTime: 30000,
+    initialData: !category ? initialData : undefined,
   });
 };
 
@@ -116,6 +118,44 @@ export const useCompleteSession = () => {
   return useMutation({
     mutationFn: async (bookingId: string) => {
       return apiClient.post<SessionBooking>(`/sessions/bookings/${bookingId}/complete`, {});
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["sessions"] });
+    },
+  });
+};
+
+export const useRemindSession = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (bookingId: string) => {
+      return apiClient.post<SessionBooking>(`/sessions/bookings/${bookingId}/remind`, {});
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["sessions"] });
+    },
+  });
+};
+
+export const useRescheduleSession = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      bookingId,
+      scheduled_at,
+      reason,
+      meeting_link,
+    }: {
+      bookingId: string;
+      scheduled_at: string;
+      reason?: string;
+      meeting_link?: string;
+    }) => {
+      return apiClient.post<SessionBooking>(`/sessions/bookings/${bookingId}/reschedule`, {
+        scheduled_at,
+        reason,
+        meeting_link,
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["sessions"] });

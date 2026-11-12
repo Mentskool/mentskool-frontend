@@ -9,9 +9,12 @@ import {
   useApproveSession,
   useRejectSession,
   useCompleteSession,
+  useRemindSession,
   useMentorSessionSettings,
   useUpdateMentorSessionSettings,
 } from "@/hooks/useSessions";
+import { Reschedule1on1Modal } from "@/components/sessions/Reschedule1on1Modal";
+import { getReminderButtonState } from "@/lib/session-utils";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -35,6 +38,8 @@ import {
   Copy,
   Check,
   Share2,
+  Bell,
+  CalendarClock,
 } from "lucide-react";
 
 export default function MentorSessionsPage() {
@@ -66,6 +71,10 @@ export default function MentorSessionsPage() {
   const approveMutation = useApproveSession();
   const rejectMutation = useRejectSession();
   const completeMutation = useCompleteSession();
+  const remindMutation = useRemindSession();
+  const [reschedulingBooking, setReschedulingBooking] = useState<SessionBooking | null>(null);
+  const [remindedBookingId, setRemindedBookingId] = useState<string | null>(null);
+  const [remindError, setRemindError] = useState<string>("");
 
   // Settings
   const { data: settingsData, refetch: refetchSettings } = useMentorSessionSettings();
@@ -493,18 +502,53 @@ export default function MentorSessionsPage() {
                       )}
                     </div>
 
-                    <div className="flex items-center gap-2 pt-1">
+                    <div className="flex flex-wrap items-center gap-2 pt-1">
                       {b.meeting_link && (
                         <a
                           href={b.meeting_link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 py-2 px-3 text-xs font-semibold text-center rounded-lg bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-1.5 shadow-sm"
+                          className="flex-1 min-w-[140px] py-2 px-3 text-xs font-semibold text-center rounded-lg bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-1.5 shadow-sm"
                         >
                           <Video className="w-3.5 h-3.5" />
                           Join Google Meet
                         </a>
                       )}
+                      {(() => {
+                        const rem = getReminderButtonState(b, "mentor");
+                        if (!rem.visible) return null;
+                        return (
+                          <Button
+                            size="sm"
+                            variant="secondary"
+                            disabled={rem.disabled || remindMutation.isPending}
+                            title={rem.helperText || "Send email reminder to student"}
+                            onClick={async () => {
+                              setRemindError("");
+                              try {
+                                await remindMutation.mutateAsync(b.id);
+                                setRemindedBookingId(b.id);
+                                refetch();
+                              } catch (err) {
+                                setRemindError(getUserFriendlyError(err));
+                              }
+                            }}
+                            className="text-xs flex items-center gap-1"
+                          >
+                            <Bell className="w-3.5 h-3.5" />
+                            {remindedBookingId === b.id && !rem.disabled ? "Sent!" : rem.label}
+                          </Button>
+                        );
+                      })()}
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        onClick={() => setReschedulingBooking(b)}
+                        className="text-xs flex items-center gap-1"
+                      >
+                        <CalendarClock className="w-3.5 h-3.5" />
+                        Reschedule
+                      </Button>
                       <Button
                         size="sm"
                         variant="secondary"
@@ -517,6 +561,9 @@ export default function MentorSessionsPage() {
                         Mark Done
                       </Button>
                     </div>
+                    {remindError && (
+                      <p className="text-[11px] text-rose-600">{remindError}</p>
+                    )}
                   </Card>
                 ))}
               </div>
@@ -965,6 +1012,15 @@ export default function MentorSessionsPage() {
             </form>
           </div>
         </div>
+      )}
+
+      {reschedulingBooking && (
+        <Reschedule1on1Modal
+          booking={reschedulingBooking}
+          role="mentor"
+          onClose={() => setReschedulingBooking(null)}
+          onSuccess={() => refetch()}
+        />
       )}
     </div>
   );
