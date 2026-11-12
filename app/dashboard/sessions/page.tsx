@@ -3,11 +3,14 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
-import { useMySessionBookings } from "@/hooks/useSessions";
+import { useMySessionBookings, useRemindSession } from "@/hooks/useSessions";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { CardSkeleton } from "@/components/ui/Skeleton";
 import { SessionReviewModal } from "@/components/sessions/SessionReviewModal";
+import { Reschedule1on1Modal } from "@/components/sessions/Reschedule1on1Modal";
+import { getReminderButtonState } from "@/lib/session-utils";
+import { getUserFriendlyError } from "@/lib/error-utils";
 import { SessionBooking } from "@/lib/types";
 import {
   Video,
@@ -22,14 +25,19 @@ import {
   ShieldCheck,
   User,
   GraduationCap,
+  Bell,
+  CalendarClock,
 } from "lucide-react";
 
 export default function StudentSessionsPage() {
   const { user, isAuthenticated, isLoading: authLoading } = useAuthStore();
   const [activeTab, setActiveTab] = useState<"all" | "confirmed" | "pending" | "completed">("all");
   const [reviewingBooking, setReviewingBooking] = useState<SessionBooking | null>(null);
+  const [reschedulingBooking, setReschedulingBooking] = useState<SessionBooking | null>(null);
+  const [remindError, setRemindError] = useState<string>("");
 
   const { data: bookings, isLoading, refetch } = useMySessionBookings();
+  const remindMutation = useRemindSession();
 
   const confirmedSessions = bookings?.filter((b) => b.status === "CONFIRMED") || [];
   const pendingSessions = bookings?.filter((b) => b.status === "PENDING_APPROVAL") || [];
@@ -303,6 +311,50 @@ export default function StudentSessionsPage() {
                     </a>
                   )}
 
+                  {(b.status === "CONFIRMED" || b.status === "PENDING_APPROVAL") && (
+                    <div className="flex items-center gap-2">
+                      {(() => {
+                        const rem = getReminderButtonState(b, "student");
+                        if (!rem.visible) return null;
+                        return (
+                          <Button
+                            size="sm"
+                            variant="secondary"
+                            disabled={rem.disabled || remindMutation.isPending}
+                            title={rem.helperText || "Send email reminder to mentor"}
+                            onClick={async () => {
+                              setRemindError("");
+                              try {
+                                await remindMutation.mutateAsync(b.id);
+                                refetch();
+                              } catch (err) {
+                                setRemindError(getUserFriendlyError(err));
+                              }
+                            }}
+                            className="flex-1 text-xs flex items-center justify-center gap-1.5 rounded-xl"
+                          >
+                            <Bell className="w-3.5 h-3.5" />
+                            <span>{rem.label}</span>
+                          </Button>
+                        );
+                      })()}
+
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        onClick={() => setReschedulingBooking(b)}
+                        className="flex-1 text-xs flex items-center justify-center gap-1.5 rounded-xl"
+                      >
+                        <CalendarClock className="w-3.5 h-3.5" />
+                        <span>Reschedule</span>
+                      </Button>
+                    </div>
+                  )}
+
+                  {remindError && (
+                    <p className="text-[11px] text-rose-600">{remindError}</p>
+                  )}
+
                   {b.status === "COMPLETED" && !b.review && (
                     <Button
                       size="sm"
@@ -370,6 +422,16 @@ export default function StudentSessionsPage() {
         <SessionReviewModal
           booking={reviewingBooking}
           onClose={() => setReviewingBooking(null)}
+          onSuccess={() => refetch()}
+        />
+      )}
+
+      {/* Reschedule Modal */}
+      {reschedulingBooking && (
+        <Reschedule1on1Modal
+          booking={reschedulingBooking}
+          role="student"
+          onClose={() => setReschedulingBooking(null)}
           onSuccess={() => refetch()}
         />
       )}

@@ -32,10 +32,11 @@ export const useSendCohortMessage = (mentorId?: string) => {
   });
 };
 
-export const useConversations = () => {
+export const useConversations = (enabled: boolean = true) => {
   return useQuery<ConversationSummary[]>({
     queryKey: ["chat", "conversations"],
     queryFn: async () => apiClient.get<ConversationSummary[]>("/chat/conversations"),
+    enabled,
     refetchInterval: 10000,
   });
 };
@@ -139,7 +140,18 @@ export const useDirectWebSocket = (targetUserId?: string) => {
 
         ws.onmessage = (event) => {
           try {
-            const msg: DirectMessage = JSON.parse(event.data);
+            const payload = JSON.parse(event.data);
+            if (payload?.type === "messages_read") {
+              queryClient.setQueryData<DirectMessage[]>(["chat", "dm", targetUserId], (prev = []) =>
+                prev.map((m) =>
+                  m.recipient_id === payload.reader_id && !m.read_at
+                    ? { ...m, read_at: payload.read_at }
+                    : m
+                )
+              );
+              return;
+            }
+            const msg: DirectMessage = payload;
             queryClient.setQueryData<DirectMessage[]>(["chat", "dm", targetUserId], (prev = []) => {
               if (prev.some((m) => m.id === msg.id)) return prev;
               return [...prev, msg];
@@ -166,4 +178,28 @@ export const useDirectWebSocket = (targetUserId?: string) => {
   }, [targetUserId, queryClient]);
 
   return wsRef;
+};
+
+export const useMarkDirectMessagesRead = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (targetUserId: string) => {
+      return apiClient.post<{ updated_count: number; read_at: string }>(
+        `/chat/dm/${targetUserId}/read`,
+        {}
+      );
+    },
+    onSuccess: (data, targetUserId) => {
+      if (data.updated_count > 0) {
+        queryClient.setQueryData<DirectMessage[]>(["chat", "dm", targetUserId], (prev = []) =>
+          prev.map((m) =>
+            m.sender_id === targetUserId && !m.read_at ? { ...m, read_at: data.read_at } : m
+          )
+        );
+        queryClient.setQueryData<ConversationSummary[]>(["chat", "conversations"], (prev = []) =>
+          prev.map((c) => (c.user_id === targetUserId ? { ...c, unread_count: 0 } : c))
+        );
+      }
+    },
+  });
 };
