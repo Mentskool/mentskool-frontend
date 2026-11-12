@@ -393,6 +393,7 @@ export interface DirectMessage {
   recipient_name?: string | null;
   recipient_avatar_url?: string | null;
   content: string;
+  read_at?: string | null;
   created_at: string;
 }
 
@@ -403,6 +404,7 @@ export interface ConversationSummary {
   avatar_url?: string | null;
   last_message?: string | null;
   last_message_at?: string | null;
+  unread_count?: number;
 }
 
 export interface ApiError {
@@ -608,6 +610,12 @@ export interface SessionBooking {
   meeting_link?: string | null;
   status: SessionBookingStatus;
   rejection_reason?: string | null;
+  last_student_reminded_at?: string | null;
+  student_reminder_count?: number;
+  last_mentor_reminded_at?: string | null;
+  mentor_reminder_count?: number;
+  reschedule_count?: number;
+  reschedule_reason?: string | null;
   created_at: string;
   review?: SessionReview | null;
 }

@@ -12,6 +12,7 @@ import {
   useConversations,
   useCohortWebSocket,
   useDirectWebSocket,
+  useMarkDirectMessagesRead,
 } from "@/hooks/useChat";
 import { useSubscriptions } from "@/hooks/useSubscriptions";
 import { Button } from "@/components/ui/Button";
@@ -21,6 +22,7 @@ import {
   MessageSquare,
   Send,
   ArrowLeft,
+  Check,
   CheckCheck,
   ShieldCheck,
   Sparkles,
@@ -92,11 +94,23 @@ function MessagesContent() {
   const activeContactId = activeChat?.type === "dm" ? activeChat.contactId : undefined;
   const { data: directMsgs, isLoading: directLoading } = useDirectMessages(activeContactId);
   const sendDirectMutation = useSendDirectMessage(activeContactId || "");
+  const markReadMutation = useMarkDirectMessagesRead();
   const [directInput, setDirectInput] = useState("");
 
   // Live real-time WebSockets
   useCohortWebSocket(cohortMentorId);
   useDirectWebSocket(activeContactId);
+
+  // Mark unread DMs as read when viewing a 1:1 thread
+  useEffect(() => {
+    if (!activeContactId || !directMsgs || !user?.id) return;
+    const hasUnread = directMsgs.some(
+      (m) => m.sender_id === activeContactId && m.recipient_id === user.id && !m.read_at
+    );
+    if (hasUnread && !markReadMutation.isPending) {
+      markReadMutation.mutate(activeContactId);
+    }
+  }, [activeContactId, directMsgs, user?.id]);
 
   // Auto-scroll ref
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -522,9 +536,22 @@ function MessagesContent() {
                             <span className="text-[10px] text-slate-400">1:1 Direct</span>
                           </div>
 
-                          <p className="text-xs text-slate-500 truncate mt-1">
-                            {c.last_message ? c.last_message : "Start private discussion..."}
-                          </p>
+                          <div className="flex items-center justify-between gap-2 mt-1">
+                            <p
+                              className={`text-xs truncate ${
+                                (c.unread_count ?? 0) > 0
+                                  ? "text-slate-900 font-semibold"
+                                  : "text-slate-500"
+                              }`}
+                            >
+                              {c.last_message ? c.last_message : "Start private discussion..."}
+                            </p>
+                            {(c.unread_count ?? 0) > 0 && (
+                              <span className="shrink-0 inline-flex items-center justify-center min-w-[18px] h-[18px] px-1.5 rounded-full text-[10px] font-bold bg-blue-600 text-white">
+                                {(c.unread_count ?? 0) > 99 ? "99+" : c.unread_count}
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </button>
                     );
@@ -765,10 +792,19 @@ function MessagesContent() {
                               {msg.content}
                             </div>
 
-                            {/* Timestamp */}
+                            {/* Timestamp & Read Receipt */}
                             <div className="flex items-center gap-1 mt-1 px-1 text-[10px] text-slate-400">
                               <span>{formatMessageTime(msg.created_at)}</span>
-                              {isSelf && <CheckCheck className="w-3.5 h-3.5 text-blue-500" />}
+                              {isSelf && (
+                                msg.read_at ? (
+                                  <span className="inline-flex items-center gap-0.5 text-blue-500 font-medium" title={`Seen at ${formatMessageTime(msg.read_at)}`}>
+                                    <CheckCheck className="w-3.5 h-3.5" />
+                                    <span>Seen</span>
+                                  </span>
+                                ) : (
+                                  <Check className="w-3.5 h-3.5 text-slate-400" aria-label="Sent" />
+                                )
+                              )}
                             </div>
                           </div>
                         );
