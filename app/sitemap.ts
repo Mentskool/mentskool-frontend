@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { MentorListResponse } from "@/lib/types";
+import { Mentor1on1Card, MentorListResponse } from "@/lib/types";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://mentskool.com";
 const API_BASE_URL =
@@ -17,6 +17,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${SITE_URL}/mentors`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/book-call`,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.95,
@@ -730,6 +736,126 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
+      url: `${SITE_URL}/book-1-on-1-jee-mentorship-session`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/book-1-on-1-neet-mentorship-session`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/book-call-with-iitian-for-jee`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/book-call-with-aiims-doctor-for-neet`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/jee-one-on-one-counseling-call`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/neet-one-on-one-counseling-call`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/urgent-jee-doubt-and-strategy-session`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/urgent-neet-doubt-and-strategy-session`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/book-jee-mock-test-analysis-call`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/book-neet-mock-test-analysis-call`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/book-jee-backlog-recovery-session`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/book-neet-backlog-recovery-session`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/online-1-on-1-consultation-jee-aspirants`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/online-1-on-1-consultation-neet-aspirants`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/parents-consultation-call-jee-neet`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/jee-advanced-1-on-1-strategy-call`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/neet-physics-1-on-1-doubt-call`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/jee-maths-1-on-1-strategy-session`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/drop-year-strategy-call-jee-neet`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
+      url: `${SITE_URL}/class-11-to-12-transition-call-jee-neet`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
       url: `${SITE_URL}/contact`,
       lastModified: new Date(),
       changeFrequency: "monthly",
@@ -762,15 +888,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   let mentorRoutes: MetadataRoute.Sitemap = [];
+  let bookCallRoutes: MetadataRoute.Sitemap = [];
   try {
-    const res = await fetch(`${API_BASE_URL}/mentors?limit=100`, {
-      next: { revalidate: 3600 },
-    });
-    if (res.ok) {
-      const data: MentorListResponse = await res.json();
+    const [mentorsRes, bookCallRes] = await Promise.all([
+      fetch(`${API_BASE_URL}/mentors?limit=100`, {
+        next: { revalidate: 3600 },
+      }).catch(() => null),
+      fetch(`${API_BASE_URL}/sessions/mentors`, {
+        next: { revalidate: 3600 },
+      }).catch(() => null),
+    ]);
+
+    if (mentorsRes?.ok) {
+      const data: MentorListResponse = await mentorsRes.json();
       mentorRoutes = (data.items || []).map((mentor) => ({
         url: `${SITE_URL}/mentors/${mentor.slug || mentor.user_id}`,
         lastModified: mentor.last_active_at ? new Date(mentor.last_active_at) : new Date(),
+        changeFrequency: "weekly" as const,
+        priority: 0.8,
+      }));
+    }
+
+    if (bookCallRes?.ok) {
+      const bookCallMentors: Mentor1on1Card[] = await bookCallRes.json();
+      bookCallRoutes = (bookCallMentors || []).map((mentor) => ({
+        url: `${SITE_URL}/book-call/${mentor.slug || mentor.mentor_id}`,
+        lastModified: new Date(),
         changeFrequency: "weekly" as const,
         priority: 0.8,
       }));
@@ -779,5 +922,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error("Failed to generate dynamic mentor sitemap:", err);
   }
 
-  return [...staticRoutes, ...mentorRoutes];
+  return [...staticRoutes, ...mentorRoutes, ...bookCallRoutes];
 }
