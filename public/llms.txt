@@ -96,6 +96,55 @@ Mentskool (https://mentskool.com) connects JEE and NEET aspirants with verified 
 - [Mentskool Mentor Payouts & Benefits](https://mentskool.com/mentskool-mentor-program-benefits-and-payouts): Pricing control, strict 30-seat caps, and direct UPI withdrawals.
 - [Mentor Eligibility & Verification](https://mentskool.com/mentskool-mentor-eligibility-and-verification): Required JEE/NEET scorecards and college ID verification details.
 
+## High-Intent JEE & NEET Strategy & Recruitment Hubs
+### JEE Strategy & Subject Triage
+- [JEE Crash Course vs 1:1 Mentorship](https://mentskool.com/jee-crash-course-vs-1-on-1-mentorship): Why passive 8-hour lectures fail droppers and how personalized mock audits create 40-70 mark score leaps.
+- [IIT Bombay Toppers Routine](https://mentskool.com/iit-bombay-toppers-study-routine): The exact daily schedule, sleep hygiene, and problem-solving cycles of top 50 rankers at IIT Bombay Computer Science.
+- [IIT Delhi CS Strategy Guide](https://mentskool.com/iit-delhi-cs-rankers-strategy-guide): JEE Advanced multi-concept problem attack and subject allocation from IIT Delhi CSE rankers.
+- [Jan to April Score Surge](https://mentskool.com/jee-main-january-to-april-score-surge): 60-day roadmap from 90 to 99+ percentile balancing Class 12 board exams.
+- [Last 30 Days Formula Blueprint](https://mentskool.com/jee-last-30-days-formula-revision-blueprint): 100% retention protocol via active recall transcription for JEE Main.
+- [How Rankers Solve Irodov & HCV](https://mentskool.com/how-iit-rankers-solve-irodov-and-hc-verma): High-yield physics problem triage and reference frame shortcuts.
+- [Organic Chemistry Mechanisms](https://mentskool.com/organic-chemistry-mechanisms-for-jee-advanced): Mechanistic attack guide and stereochemical control for JEE Advanced.
+- [Inorganic NCERT Retention Guide](https://mentskool.com/jee-inorganic-chemistry-ncert-retention-guide): 15-minute spaced active recall and qualitative salt analysis.
+- [Calculus Shortcuts for JEE Main](https://mentskool.com/calculus-shortcut-methods-for-jee-main): 45-second Taylor series expansions, King's property, and curve tracing.
+- [Coordinate Geometry Problem Triage](https://mentskool.com/coordinate-geometry-problem-triage-jee): Diagram-first parametric forms and standard normal invariants.
+- [Dropper Self-Study Timetable](https://mentskool.com/jee-self-study-timetable-for-droppers): 10-hour deep work protocol for repeaters studying without offline coaching.
+- [Allen vs FIITJEE vs Resonance Mocks](https://mentskool.com/allen-fiitjee-resonance-test-series-comparison): Difficulty calibration and 3-hour post-mortem framework.
+- [Top 3 NIT Safe Percentiles](https://mentskool.com/nit-trichy-surathkal-warangal-safe-percentile): Trichy, Surathkal, and Warangal home state vs other state cutoffs.
+- [IIIT Hyderabad UGEE & JEE Main](https://mentskool.com/iiit-hyderabad-ugee-and-jee-main-strategy): SUPR + REAP dual preparation and research interview guide.
+- [BITSAT vs JEE Advanced](https://mentskool.com/bitsat-vs-jee-advanced-dual-preparation): Speed sprint vs depth duality, bonus question strategy, and English/LR.
+
+### JEE Mentor Recruitment & Student Earning
+- [Hostel-Based JEE Mentoring Jobs](https://mentskool.com/hostel-based-jee-mentoring-jobs-for-iitians): How IIT Bombay and Delhi students earn ₹20k–₹50k/mo from their hostel rooms.
+- [NIT Topper Online Earning](https://mentskool.com/nit-topper-earn-money-online-mentorship): Monetize 99+ percentile in JEE Main with flexible weekend slots.
+- [B.Tech Tutoring vs Mentoring](https://mentskool.com/btech-1st-year-online-tutoring-vs-mentoring): Why strategic advising pays 4x more than tutoring with zero lesson prep.
+- [JEE Mentorship Hourly Rates in India](https://mentskool.com/jee-mentorship-hourly-rates-and-payouts-india): Transparent breakdown of hourly rates, monthly retainers, and bank payouts.
+- [Start JEE Mentoring in College](https://mentskool.com/how-to-start-jee-mentoring-in-engineering-college): Zero-to-launch playbook for engineering undergraduates.
+
+### NEET Strategy & Medical Blueprints
+- [NEET Crash Course vs 1:1 Mentorship](https://mentskool.com/neet-crash-course-vs-1-on-1-mentorship): Why passive lectures fail and how AIIMS doctor diagnostic audits produce 68-mark leaps.
+- [AIIMS Delhi Toppers Daily Timetable](https://mentskool.com/aiims-delhi-toppers-daily-study-timetable): The 2 PM - 5:20 PM circadian alignment, NCERT closed-book recall, and sleep routine.
+- [MAMC & VMMC Cutoff & Strategy](https://mentskool.com/mamc-vmmc-delhi-neet-cutoff-and-score-guide): Category cutoffs, Delhi 85% state quota, and 50% internal PG reservation.
+- [Score 360 in NEET Biology](https://mentskool.com/how-to-score-360-in-neet-biology-ncert): NCERT line-by-line extraction, 'BECAUSE' Assertion-Reason rule, and 35-min speed sweep.
+- [Genetics & Biotechnology Mastery](https://mentskool.com/neet-genetics-and-biotechnology-mastery-guide): 4-step pedigree elimination, replication fork polarities, and pBR322 vectors.
+- [Human Physiology Mnemonics](https://mentskool.com/human-physiology-neet-mnemonics-and-diagrams): CADET dissociation curve, counter-current multiplier, and ECG cardiac cycle.
+- [Plant Physiology Retention Guide](https://mentskool.com/plant-physiology-neet-ncert-retention-guide): 18 ATP / 12 NADPH balance sheet, C4 Kranz anatomy, and phytohormone bioassays.
+- [NEET Organic Named Reactions](https://mentskool.com/neet-organic-chemistry-named-reactions-summary): All 45 NCERT named reactions, functional group reagents, and practical lab tests.
+- [Inorganic Exceptions Cheat Sheet](https://mentskool.com/neet-inorganic-chemistry-exceptions-cheat-sheet): Anomalous periodic trends, coordination donor-atom rules, and oxoacid structures.
+- [Physical Chemistry Speed Hacks](https://mentskool.com/neet-physical-chemistry-speed-calculation-hacks): Fractional constants (R=1/12), 4-log mental estimation, and 0.06 Nernst shortcut.
+- [Modern Physics & Semiconductors](https://mentskool.com/neet-physics-modern-physics-and-semiconductors): 12,400 photon wavelength hack, Bohr ratios, and De Morgan's logic gates.
+- [Allen vs Aakash vs PW NEET Mocks](https://mentskool.com/allen-vs-aakash-vs-pw-test-series-for-neet): Physical OMR bubbling discipline, predictive accuracy, and 3-hour post-mortems.
+- [NEET Repeaters Self-Study Guide](https://mentskool.com/neet-repeaters-self-study-vs-coaching-guide): 10-hour deep study schedule for medical droppers studying at home.
+- [Semi-Govt & Private MBBS Reality](https://mentskool.com/semi-government-and-private-medical-college-cutoff-reality): GMERS/trust college fees, hidden hostel costs, and rural service bonds.
+- [BDS/BAMS vs MBBS Drop Decision](https://mentskool.com/bds-bams-bhms-vs-mbbs-repeat-decision-guide): Honest 10-year career analysis, clinic setup capital, and drop year potential.
+
+### NEET Mentor Recruitment & Medical Doctor Earning
+- [Earn Money as an MBBS Student](https://mentskool.com/earn-money-as-an-mbbs-student-in-india): How medical students earn ₹20k–₹50k/mo from hostel rooms around ward postings.
+- [AIIMS Student Mentorship Income](https://mentskool.com/aiims-student-part-time-income-online-mentoring): Monetize elite rank authority with flexible weekend video sessions.
+- [MBBS Internship Safe Side Income](https://mentskool.com/mbbs-internship-safe-side-income-mentoring): Double your stipend ethically without violating hospital duty obligations.
+- [NEET Mentor Rates & Seat Pricing](https://mentskool.com/neet-mentor-earnings-payouts-and-seat-pricing): Transparent breakdown of hourly rates, monthly retainers, and bank payouts.
+- [Become a Verified NEET Mentor](https://mentskool.com/how-to-become-a-verified-neet-mentor-on-mentskool): Step-by-step onboarding, scorecard verification, and client management.
+
 ## Contact & Corporate
 - **Organization**: Mentskool Technologies
 - **Email**: support@mentskool.com
