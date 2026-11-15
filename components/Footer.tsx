@@ -71,26 +71,10 @@ export function Footer() {
                   href="/book-call"
                   className="hover:text-sky-400 transition-colors inline-flex items-center gap-1"
                 >
-                  <span>Book 1:1 Call Directory</span>
+                  <span>Book 1:1 Call</span>
                   <span className="text-[10px] bg-sky-950 text-sky-400 border border-sky-800 px-1.5 py-0.2 rounded font-bold">
                     New
                   </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/book-1-on-1-jee-mentorship-session"
-                  className="hover:text-sky-400 transition-colors"
-                >
-                  1:1 JEE Video Strategy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/book-1-on-1-neet-mentorship-session"
-                  className="hover:text-sky-400 transition-colors"
-                >
-                  1:1 NEET Video Strategy
                 </Link>
               </li>
               <li>
@@ -203,132 +187,6 @@ export function Footer() {
               </li>
             </ul>
 
-          </div>
-        </div>
-      </div>
-
-      {/* Popular Strategy & Earning Hubs */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 border-t border-slate-800/40 pt-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-xs text-slate-400">
-          <div>
-            <h5 className="font-semibold text-white mb-2.5">JEE Ranker Strategy</h5>
-            <ul className="space-y-1.5">
-              <li>
-                <Link href="/iit-bombay-toppers-study-routine" className="hover:text-sky-400 transition-colors">
-                  IIT Bombay Toppers Routine
-                </Link>
-              </li>
-              <li>
-                <Link href="/iit-delhi-cs-rankers-strategy-guide" className="hover:text-sky-400 transition-colors">
-                  IIT Delhi CS Strategy Guide
-                </Link>
-              </li>
-              <li>
-                <Link href="/jee-main-january-to-april-score-surge" className="hover:text-sky-400 transition-colors">
-                  Jan to April Score Surge
-                </Link>
-              </li>
-              <li>
-                <Link href="/jee-last-30-days-formula-revision-blueprint" className="hover:text-sky-400 transition-colors">
-                  Last 30 Days Formula Blueprint
-                </Link>
-              </li>
-              <li>
-                <Link href="/how-iit-rankers-solve-irodov-and-hc-verma" className="hover:text-sky-400 transition-colors">
-                  How Rankers Solve Irodov &amp; HCV
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h5 className="font-semibold text-white mb-2.5">NEET Medical Roadmaps</h5>
-            <ul className="space-y-1.5">
-              <li>
-                <Link href="/aiims-delhi-toppers-daily-study-timetable" className="hover:text-sky-400 transition-colors">
-                  AIIMS Delhi Daily Timetable
-                </Link>
-              </li>
-              <li>
-                <Link href="/how-to-score-360-in-neet-biology-ncert" className="hover:text-sky-400 transition-colors">
-                  Score 360 in NEET Biology
-                </Link>
-              </li>
-              <li>
-                <Link href="/mamc-vmmc-delhi-neet-cutoff-and-score-guide" className="hover:text-sky-400 transition-colors">
-                  MAMC &amp; VMMC Cutoff Guide
-                </Link>
-              </li>
-              <li>
-                <Link href="/neet-repeaters-self-study-vs-coaching-guide" className="hover:text-sky-400 transition-colors">
-                  NEET Repeaters Self-Study
-                </Link>
-              </li>
-              <li>
-                <Link href="/neet-genetics-and-biotechnology-mastery-guide" className="hover:text-sky-400 transition-colors">
-                  Genetics &amp; Biotech Mastery
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h5 className="font-semibold text-white mb-2.5">Mentor Opportunities</h5>
-            <ul className="space-y-1.5">
-              <li>
-                <Link href="/hostel-based-jee-mentoring-jobs-for-iitians" className="hover:text-emerald-400 text-emerald-300 font-medium transition-colors">
-                  IITian Hostel Mentoring (₹20k–50k/mo)
-                </Link>
-              </li>
-              <li>
-                <Link href="/earn-money-as-an-mbbs-student-in-india" className="hover:text-sky-400 text-sky-300 font-medium transition-colors">
-                  Earn as an MBBS Student (₹20k–50k/mo)
-                </Link>
-              </li>
-              <li>
-                <Link href="/nit-topper-earn-money-online-mentorship" className="hover:text-emerald-400 transition-colors">
-                  NIT Topper Online Earning
-                </Link>
-              </li>
-              <li>
-                <Link href="/aiims-student-part-time-income-online-mentoring" className="hover:text-sky-400 transition-colors">
-                  AIIMS Student Mentorship Income
-                </Link>
-              </li>
-              <li>
-                <Link href="/jee-mentorship-hourly-rates-and-payouts-india" className="hover:text-sky-400 transition-colors">
-                  Mentor Hourly Rates in India
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h5 className="font-semibold text-white mb-2.5">Admissions &amp; Comparisons</h5>
-            <ul className="space-y-1.5">
-              <li>
-                <Link href="/nit-trichy-surathkal-warangal-safe-percentile" className="hover:text-sky-400 transition-colors">
-                  Top 3 NIT Safe Percentile
-                </Link>
-              </li>
-              <li>
-                <Link href="/iiit-hyderabad-ugee-and-jee-main-strategy" className="hover:text-sky-400 transition-colors">
-                  IIIT Hyderabad UGEE Guide
-                </Link>
-              </li>
-              <li>
-                <Link href="/bitsat-vs-jee-advanced-dual-preparation" className="hover:text-sky-400 transition-colors">
-                  BITSAT vs JEE Advanced
-                </Link>
-              </li>
-              <li>
-                <Link href="/semi-government-and-private-medical-college-cutoff-reality" className="hover:text-sky-400 transition-colors">
-                  Semi-Govt &amp; Private MBBS Reality
-                </Link>
-              </li>
-              <li>
-                <Link href="/bds-bams-bhms-vs-mbbs-repeat-decision-guide" className="hover:text-sky-400 transition-colors">
-                  BDS/BAMS vs MBBS Drop Decision
-                </Link>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
