@@ -40,6 +40,9 @@ export interface MentorGuidePageConfig {
   h1Prefix: string;
   h1Highlight: string;
   heroDescription: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  keywords?: string[];
   summaryHeading: string;
   summaryIntro: string;
   summaryPoints: { title: string; detail: string }[];
