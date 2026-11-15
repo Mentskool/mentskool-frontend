@@ -19,6 +19,16 @@ const nextConfig = {
         destination: "/shipping-policy",
         permanent: true,
       },
+      {
+        source: "/become-a-jee-mentor-earn-mone",
+        destination: "/become-a-jee-mentor-earn-money",
+        permanent: true,
+      },
+      {
+        source: "/become-a-neet-mentor-earn-mone",
+        destination: "/become-a-neet-mentor-earn-money",
+        permanent: true,
+      },
     ];
   },
   async headers() {

@@ -71,10 +71,26 @@ export function Footer() {
                   href="/book-call"
                   className="hover:text-sky-400 transition-colors inline-flex items-center gap-1"
                 >
-                  <span>Book 1:1 Call</span>
+                  <span>Book 1:1 Call Directory</span>
                   <span className="text-[10px] bg-sky-950 text-sky-400 border border-sky-800 px-1.5 py-0.2 rounded font-bold">
                     New
                   </span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/book-1-on-1-jee-mentorship-session"
+                  className="hover:text-sky-400 transition-colors"
+                >
+                  1:1 JEE Video Strategy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/book-1-on-1-neet-mentorship-session"
+                  className="hover:text-sky-400 transition-colors"
+                >
+                  1:1 NEET Video Strategy
                 </Link>
               </li>
               <li>
