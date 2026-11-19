@@ -72,15 +72,9 @@ export default function BookCallDirectoryClient({
         }
       }
 
-      // 2. Price filter
+      // 2. Price filter (Free vs All)
       const priceNum = Number(m.one_on_one_price || 0);
       if (priceFilter === "FREE" && priceNum > 0) {
-        return false;
-      }
-      if (priceFilter === "299" && priceNum > 299) {
-        return false;
-      }
-      if (priceFilter === "499" && priceNum > 499) {
         return false;
       }
 
@@ -248,8 +242,6 @@ export default function BookCallDirectoryClient({
                 value: "FREE",
                 isSpecial: true,
               },
-              { label: "Under ₹299", value: "299" },
-              { label: "Under ₹499", value: "499" },
             ].map((p) => {
               const isSelected = priceFilter === p.value;
               return (
@@ -326,21 +318,24 @@ export default function BookCallDirectoryClient({
                   className="bg-white border border-slate-200/90 hover:border-blue-500/60 transition-all duration-200 hover:shadow-xl p-5 sm:p-6 flex flex-col justify-between rounded-2xl group relative"
                 >
                   <div className="space-y-4">
-                    {/* Top Status & Slug Row */}
-                    <div className="flex items-center justify-between text-[11px]">
+                    {/* Top Status & Slug Row with overflow protection */}
+                    <div className="flex items-center justify-between gap-2 text-[11px] min-w-0">
                       {priceNum === 0 ? (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-bold bg-emerald-600 text-white shadow-xs">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-bold bg-emerald-600 text-white shadow-xs shrink-0">
                           <Sparkles className="w-3 h-3 text-emerald-200" />
                           Free Session
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                           1:1 Available
                         </span>
                       )}
                       {m.slug && (
-                        <span className="font-mono text-slate-400 text-[10px]">
+                        <span
+                          className="font-mono text-slate-400 text-[10px] truncate max-w-[130px] sm:max-w-[150px] text-right inline-block shrink"
+                          title={`@${m.slug}`}
+                        >
                           @{m.slug}
                         </span>
                       )}

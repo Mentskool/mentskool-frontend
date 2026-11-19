@@ -317,7 +317,10 @@ export default function BookCallDetailClient({
                   Official Mentskool Profile
                 </span>
                 {mentor.slug && (
-                  <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-slate-900 text-slate-300 border border-slate-800">
+                  <span
+                    className="text-xs font-mono px-2.5 py-1 rounded-full bg-slate-900 text-slate-300 border border-slate-800 truncate max-w-[200px] sm:max-w-xs md:max-w-md inline-block"
+                    title={`@${mentor.slug}`}
+                  >
                     @{mentor.slug}
                   </span>
                 )}
