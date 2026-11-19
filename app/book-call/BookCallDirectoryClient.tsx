@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { use1on1Mentors } from "@/hooks/useSessions";
 import { Card } from "@/components/ui/Card";
@@ -20,6 +20,8 @@ import {
   Search,
   ChevronRight,
   Trophy,
+  SlidersHorizontal,
+  RotateCcw,
 } from "lucide-react";
 
 const CATEGORIES = [
@@ -38,6 +40,9 @@ export default function BookCallDirectoryClient({
 }: BookCallDirectoryClientProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [priceFilter, setPriceFilter] = useState<string>("ALL");
+  const [sortBy, setSortBy] = useState<string>("featured");
+
   const { data: mentors, isLoading } = use1on1Mentors(
     selectedCategory || undefined,
     initialMentors
@@ -45,16 +50,77 @@ export default function BookCallDirectoryClient({
 
   const [bookingMentor, setBookingMentor] = useState<Mentor1on1Card | null>(null);
 
-  const filteredMentors = mentors?.filter((m) => {
-    if (!searchQuery.trim()) return true;
-    const q = searchQuery.toLowerCase();
-    return (
-      m.name.toLowerCase().includes(q) ||
-      (m.college && m.college.toLowerCase().includes(q)) ||
-      (m.exam_rank && formatExamRank(m.exam_rank, m.rank_type).toLowerCase().includes(q)) ||
-      (m.bio && m.bio.toLowerCase().includes(q))
-    );
-  });
+  const freeCallsCount = useMemo(() => {
+    if (!mentors) return 0;
+    return mentors.filter((m) => Number(m.one_on_one_price || 0) === 0).length;
+  }, [mentors]);
+
+  const filteredAndSortedMentors = useMemo(() => {
+    if (!mentors) return [];
+
+    let list = mentors.filter((m) => {
+      // 1. Search Query filter
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        const matchesName = m.name?.toLowerCase().includes(q);
+        const matchesCollege = m.college?.toLowerCase().includes(q);
+        const matchesRank =
+          m.exam_rank && formatExamRank(m.exam_rank, m.rank_type).toLowerCase().includes(q);
+        const matchesBio = m.bio?.toLowerCase().includes(q);
+        if (!matchesName && !matchesCollege && !matchesRank && !matchesBio) {
+          return false;
+        }
+      }
+
+      // 2. Price filter
+      const priceNum = Number(m.one_on_one_price || 0);
+      if (priceFilter === "FREE" && priceNum > 0) {
+        return false;
+      }
+      if (priceFilter === "299" && priceNum > 299) {
+        return false;
+      }
+      if (priceFilter === "499" && priceNum > 499) {
+        return false;
+      }
+
+      return true;
+    });
+
+    // 3. Sorting
+    list = [...list].sort((a, b) => {
+      const priceA = Number(a.one_on_one_price || 0);
+      const priceB = Number(b.one_on_one_price || 0);
+
+      if (sortBy === "price_asc") {
+        return priceA - priceB;
+      }
+      if (sortBy === "rating_desc") {
+        const ratingA = Number(a.rating) || 5.0;
+        const ratingB = Number(b.rating) || 5.0;
+        return ratingB - ratingA;
+      }
+      if (sortBy === "sessions_desc") {
+        const sessA = a.total_sessions_delivered || 0;
+        const sessB = b.total_sessions_delivered || 0;
+        return sessB - sessA;
+      }
+      return 0; // "featured" maintains API order
+    });
+
+    return list;
+  }, [mentors, searchQuery, priceFilter, sortBy]);
+
+  const hasActiveFilters = Boolean(
+    selectedCategory || searchQuery.trim() || priceFilter !== "ALL" || sortBy !== "featured"
+  );
+
+  const resetAllFilters = () => {
+    setSelectedCategory("");
+    setSearchQuery("");
+    setPriceFilter("ALL");
+    setSortBy("featured");
+  };
 
   return (
     <div className="max-w-7xl mx-auto py-6 sm:py-8 px-4 sm:px-6 lg:px-8 space-y-8">
@@ -123,35 +189,120 @@ export default function BookCallDirectoryClient({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
-          {CATEGORIES.map((cat) => {
-            const isSelected = selectedCategory === cat.value;
-            return (
+      <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-4">
+        {/* Top Row: Category Tabs + Search Input */}
+        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+          {/* Category Tabs */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
+            {CATEGORIES.map((cat) => {
+              const isSelected = selectedCategory === cat.value;
+              return (
+                <button
+                  key={cat.label}
+                  onClick={() => setSelectedCategory(cat.value)}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
+                    isSelected
+                      ? "bg-slate-900 text-white shadow-xs"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200/80 hover:text-slate-900"
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Search Input */}
+          <div className="relative w-full md:w-80">
+            <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Search by mentor, college, rank..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-9 pr-8 py-2 text-xs rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium placeholder:text-slate-400"
+            />
+            {searchQuery && (
               <button
-                key={cat.label}
-                onClick={() => setSelectedCategory(cat.value)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all shrink-0 ${
-                  isSelected
-                    ? "bg-blue-600 text-white shadow-xs"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200/80"
-                }`}
+                onClick={() => setSearchQuery("")}
+                className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 text-xs font-bold px-1"
+                title="Clear search"
               >
-                {cat.label}
+                ✕
               </button>
-            );
-          })}
+            )}
+          </div>
         </div>
 
-        <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Search by mentor, college, rank..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium placeholder:text-slate-400"
-          />
+        {/* Bottom Row: Price Filter Chips + Sort Dropdown */}
+        <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
+          {/* Price Filters */}
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1 mr-1">
+              Fee Filter:
+            </span>
+            {[
+              { label: "All Fees", value: "ALL" },
+              {
+                label: `✨ Free 1:1 Calls${freeCallsCount > 0 ? ` (${freeCallsCount})` : ""}`,
+                value: "FREE",
+                isSpecial: true,
+              },
+              { label: "Under ₹299", value: "299" },
+              { label: "Under ₹499", value: "499" },
+            ].map((p) => {
+              const isSelected = priceFilter === p.value;
+              return (
+                <button
+                  key={p.value}
+                  onClick={() => setPriceFilter(p.value)}
+                  className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer flex items-center gap-1 text-xs ${
+                    isSelected
+                      ? p.isSpecial
+                        ? "bg-emerald-600 text-white shadow-xs font-bold"
+                        : "bg-blue-600 text-white shadow-xs font-bold"
+                      : p.isSpecial
+                      ? "bg-emerald-50 text-emerald-700 border border-emerald-200/90 hover:bg-emerald-100 font-bold"
+                      : "bg-slate-50 text-slate-600 border border-slate-200/70 hover:bg-slate-100"
+                  }`}
+                >
+                  <span>{p.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Sort Dropdown & Quick Result Count */}
+          <div className="flex items-center gap-3 ml-auto">
+            <span className="text-slate-500 text-[11px] font-medium hidden sm:inline">
+              Showing <strong className="text-slate-900">{filteredAndSortedMentors.length}</strong>{" "}
+              {filteredAndSortedMentors.length === 1 ? "mentor" : "mentors"}
+            </span>
+
+            <div className="flex items-center gap-1.5">
+              <span className="text-slate-400 text-[11px] font-semibold">Sort:</span>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
+              >
+                <option value="featured">Featured Mentors</option>
+                <option value="price_asc">Price: Free & Low to High</option>
+                <option value="rating_desc">Highest Rated (★ 5.0)</option>
+                <option value="sessions_desc">Most Calls Delivered</option>
+              </select>
+            </div>
+
+            {hasActiveFilters && (
+              <button
+                onClick={resetAllFilters}
+                className="text-[11px] font-bold text-blue-600 hover:text-blue-800 underline transition-colors inline-flex items-center gap-1 cursor-pointer"
+              >
+                <RotateCcw className="w-3 h-3" />
+                <span>Reset</span>
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -163,9 +314,9 @@ export default function BookCallDirectoryClient({
               <CardSkeleton key={i} />
             ))}
           </div>
-        ) : filteredMentors && filteredMentors.length > 0 ? (
+        ) : filteredAndSortedMentors && filteredAndSortedMentors.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredMentors.map((m) => {
+            {filteredAndSortedMentors.map((m) => {
               const priceNum = Number(m.one_on_one_price || 0);
               const targetUrl = `/book-call/${m.slug || m.mentor_id}`;
 
@@ -177,10 +328,17 @@ export default function BookCallDirectoryClient({
                   <div className="space-y-4">
                     {/* Top Status & Slug Row */}
                     <div className="flex items-center justify-between text-[11px]">
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                        1:1 Available
-                      </span>
+                      {priceNum === 0 ? (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-bold bg-emerald-600 text-white shadow-xs">
+                          <Sparkles className="w-3 h-3 text-emerald-200" />
+                          Free Session
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                          1:1 Available
+                        </span>
+                      )}
                       {m.slug && (
                         <span className="font-mono text-slate-400 text-[10px]">
                           @{m.slug}
@@ -277,8 +435,9 @@ export default function BookCallDirectoryClient({
                             ₹{priceNum.toLocaleString("en-IN")}
                           </span>
                         ) : (
-                          <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold">
-                            Free Call
+                          <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-black tracking-tight flex items-center gap-1">
+                            <Sparkles className="w-3 h-3 text-emerald-600" />
+                            Free Call (₹0)
                           </span>
                         )}
                       </div>
@@ -288,10 +447,14 @@ export default function BookCallDirectoryClient({
                     <div className="grid grid-cols-2 gap-2">
                       <Link
                         href={`${targetUrl}#booking-section`}
-                        className="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 active:scale-95"
+                        className={`w-full py-2.5 px-3 rounded-xl text-white text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 active:scale-95 ${
+                          priceNum === 0
+                            ? "bg-emerald-600 hover:bg-emerald-700 shadow-emerald-600/20"
+                            : "bg-blue-600 hover:bg-blue-700"
+                        }`}
                       >
                         <Video className="w-3.5 h-3.5" />
-                        <span>Book 1:1 Call</span>
+                        <span>{priceNum === 0 ? "Book Free Call" : "Book 1:1 Call"}</span>
                       </Link>
 
                       <Link
@@ -324,19 +487,17 @@ export default function BookCallDirectoryClient({
             </div>
             <h3 className="font-bold text-slate-900 text-sm">No Mentors Found</h3>
             <p className="text-xs text-slate-500">
-              No mentors match your selected filters. Try choosing a different specialization or clearing the search query.
+              No mentors match your selected filters. Try choosing a different specialization, fee range, or clearing the search query.
             </p>
             <div className="pt-2">
               <Button
                 variant="secondary"
                 size="sm"
-                onClick={() => {
-                  setSelectedCategory("");
-                  setSearchQuery("");
-                }}
-                className="text-xs font-semibold"
+                onClick={resetAllFilters}
+                className="text-xs font-semibold inline-flex items-center gap-1.5 cursor-pointer"
               >
-                Clear All Filters
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>Reset All Filters</span>
               </Button>
             </div>
           </div>

@@ -40,7 +40,7 @@ const config: MentorGuidePageConfig = {
     "Passionate about helping students crack JEE or NEET, but unwilling to sign rigid 6-day-a-week Kota/metro coaching contracts or abandon your engineering/medical career? Build an autonomous 1:1 mentorship practice right on Mentskool.",
   summaryHeading: "Executive Overview: Teaching Freedom Without Institutional Bureaucracy",
   summaryIntro:
-    "Traditional coaching jobs force talented IITians, NITians, and doctors into exhausting 8-hour standing lecture shifts, rigid non-compete clauses, and zero personal branding. Mentskool gives independent mentors all the tech, trust badges, and demand funnel needed to run a boutique cohort freely.",
+    "Traditional coaching jobs force talented IITians, NITians, and doctors into exhausting 8-hour standing lecture shifts, rigid non-compete clauses, and zero personal branding. Mentskool gives independent mentors all the tech, verified trust badges, and student matching tools needed to run a boutique cohort freely.",
   summaryPoints: [
     {
       title: "Keep Your Primary Career Track",

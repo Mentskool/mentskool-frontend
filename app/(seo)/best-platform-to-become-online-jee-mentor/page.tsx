@@ -84,12 +84,12 @@ const config: MentorGuidePageConfig = {
       subheading: "Why verified marketplace infrastructure beats both rigid edtech jobs and DIY Instagram marketing.",
       paragraphs: [
         "Some rankers try going completely solo by launching an Instagram reels page and collecting UPI payments manually via Google Forms. While feasible if you enjoy filming 3 reels a week, 95% of college students burn out trying to beat social media algorithms—plus parents hesitate sending ₹1,500 to an unverified DM link.",
-        "Joining Mentskool hands you instant institutional trust (verified college ID + JEE scorecard badges), built-in Razorpay checkout, automated Google Meet session workflows, and continuous organic SEO traffic from thousands of JEE 2027 & 2028 learners actively searching for 1:1 mentors—without filming a single viral reel.",
+        "Joining Mentskool hands you instant institutional trust (verified college ID + JEE scorecard badges), built-in Razorpay checkout, automated Google Meet session workflows, and steady inbound student requests from thousands of JEE 2027 & 2028 learners actively searching for 1:1 mentors—without filming a single viral reel.",
       ],
       bullets: [
         {
-          title: "Organic Aspirant Demand Engine",
-          detail: "Students land directly from Google searches like 'JEE mock test analysis', 'JEE backlog management', and 'JEE mentorship 2027' straight into our mentor funnel.",
+          title: "Active Aspirant Demand Network",
+          detail: "Students actively explore verified mentors on Mentskool when seeking personalized roadmap guidance, backlog clearance, and mock test strategy.",
         },
         {
           title: "Built-In Habit Tracking",
@@ -112,7 +112,7 @@ const config: MentorGuidePageConfig = {
     {
       col1: "Mentskool (Verified Cohort Marketplace)",
       col2: "Mentor sets fee • Atomic 30-seat cap",
-      col3: "Task & Efficiency dashboard, verified rank badge, free SEO discovery, direct UPI",
+      col3: "Task & Efficiency dashboard, verified rank badge, direct student discovery, direct UPI",
       highlight: true,
     },
     {
@@ -174,7 +174,7 @@ const config: MentorGuidePageConfig = {
     {
       question: "How do students find my profile on Mentskool?",
       answer:
-        "Students discover mentors on /mentors via exam filters, institute search, and 100+ dedicated JEE SEO guides & rank calculators across Mentskool.",
+        "Students discover mentors on /mentors and /book-call via exam filters, college search, free tools, and verified ranker recommendations.",
     },
     {
       question: "Can I verify using my NIT or IIIT credentials?",
