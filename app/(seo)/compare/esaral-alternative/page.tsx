@@ -130,7 +130,7 @@ export default function ESaralAlternativePage() {
               <span>Independent Feature Comparison (2027/2028)</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-5 leading-tight">
-              Looking for an <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-sky-300 to-emerald-400">eSaral Mentorship Alternative?</span>
+              Looking for an <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400">eSaral Mentorship Alternative?</span>
             </h1>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
               Why pay for bundled video courses and multi-tiered counselors when you can have <strong>direct 1-on-1 mentorship with a top IITian or AIIMS ranker</strong> who audits your daily preparation?

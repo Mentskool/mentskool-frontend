@@ -136,7 +136,7 @@ export default function MentorsEduservAlternativePage() {
               <span>Independent Feature & Experience Comparison (2027/2028)</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-5 leading-tight">
-              Looking for a <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-sky-300 to-emerald-400">Mentors Eduserv Alternative?</span>
+              Looking for a <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400">Mentors Eduserv Alternative?</span>
             </h1>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
               Why get lost in a 100-student classroom when you can have a dedicated <strong>IITian or AIIMS ranker</strong> reviewing your daily prep, mistake book, and test errors 1-on-1?

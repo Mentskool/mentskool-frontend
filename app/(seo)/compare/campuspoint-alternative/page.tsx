@@ -205,7 +205,7 @@ export default function CampusPointAlternativePage() {
               <span>Independent Feature Comparison (2027/2028)</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-5 leading-tight">
-              Looking for a <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-sky-300 to-emerald-400">CampusPoint Alternative?</span>
+              Looking for a <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400">CampusPoint Alternative?</span>
             </h1>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
               Step up to <strong>94% verified task efficiency, dual-mode strategy sessions</strong>, and verified rankers from IIT Bombay and AIIMS New Delhi. Discover why top JEE and NEET aspirants choose Mentskool for capped 30-student cohorts and clinical mock test audits.
