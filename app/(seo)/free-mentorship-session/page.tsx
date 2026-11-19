@@ -106,7 +106,7 @@ export default function FreeMentorshipSessionPage() {
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
-                href="/signup"
+                href="/book-call"
                 className="px-8 py-3.5 rounded-xl text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-elevated hover:-translate-y-0.5 transition-all group"
               >
                 <span>Claim Your Free Session</span>
@@ -176,7 +176,7 @@ export default function FreeMentorshipSessionPage() {
               title="Stop Struggling in Silence — Get Clear Direction Today"
               description="A 30-minute conversation with someone who mastered your exam can save you months of wasted effort."
               primaryButtonText="Claim Free Consultation"
-              primaryButtonHref="/signup"
+              primaryButtonHref="/book-call"
             />
           </section>
         </div>

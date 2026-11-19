@@ -5,6 +5,7 @@ import {
   Lock,
   Mail,
   GraduationCap,
+  BookOpen,
 } from "lucide-react";
 
 export function Footer() {
@@ -99,6 +100,15 @@ export function Footer() {
                   className="hover:text-sky-400 transition-colors"
                 >
                   How It Works &amp; Pricing
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/resources"
+                  className="hover:text-sky-400 transition-colors inline-flex items-center gap-1"
+                >
+                  <BookOpen className="w-3.5 h-3.5 text-slate-500" />
+                  <span>Guides &amp; Resources</span>
                 </Link>
               </li>
             </ul>
@@ -198,7 +208,7 @@ export function Footer() {
             <p>
               &copy; {currentYear} Mentskool Technologies. All rights reserved.
             </p>
-            <p className="text-[11px] text-slate-600 mt-0.5">
+            <p className="text-[11px] text-slate-600 mt-0.5" data-nosnippet="true">
               Mentskool is an independent educational mentorship platform. JEE and NEET are registered marks of their respective testing authorities.
             </p>
           </div>
