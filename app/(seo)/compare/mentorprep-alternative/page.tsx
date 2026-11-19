@@ -157,7 +157,7 @@ export default function MentorPrepAlternativePage() {
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-5 leading-tight">
               The Top-Rated{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-sky-300 to-emerald-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400">
                 Mentor Prep Alternative
               </span>{" "}
               for Serious JEE &amp; NEET Aspirants

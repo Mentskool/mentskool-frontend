@@ -1,7 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Scale, Zap, ShieldCheck } from "lucide-react";
+import { ArrowRight, Scale, Zap, ShieldCheck, Sparkles, CheckCircle2, Video } from "lucide-react";
 import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { ComparisonTable, ComparisonRow } from "@/components/seo/ComparisonTable";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
@@ -107,8 +107,57 @@ const faqs: FaqItem[] = [
 ];
 
 export default function MentorKhojAlternativePage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "EducationalOrganization",
+        name: "Mentskool",
+        url: "https://mentskool.com",
+        logo: "https://mentskool.com/logo.png",
+      },
+      {
+        "@type": "Article",
+        headline: "MentorKhoj Alternative & In-Depth Comparison for JEE & NEET Aspirants",
+        description:
+          "Why serious JEE and NEET aspirants prefer continuous 1:1 accountability by verified IIT and AIIMS rankers over one-off hourly calls.",
+        url: "https://mentskool.com/compare/mentorkhoj-alternative",
+        datePublished: "2026-09-01T00:00:00+05:30",
+        dateModified: "2026-11-19T00:00:00+05:30",
+        author: {
+          "@type": "Organization",
+          name: "Mentskool Academic Operations Team",
+          url: "https://mentskool.com",
+        },
+        publisher: {
+          "@type": "EducationalOrganization",
+          name: "Mentskool",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://mentskool.com/logo.png",
+          },
+        },
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: f.answer,
+          },
+        })),
+      },
+    ],
+  };
+
   return (
-    <div className="relative min-h-screen bg-slate-950 text-white selection:bg-brand-500/30 selection:text-brand-300">
+    <div className="relative min-h-screen bg-slate-950 text-white selection:bg-sky-500/30 selection:text-sky-200">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <HeroGridBackground />
 
       <main className="relative z-10 pt-28 pb-20">
@@ -116,7 +165,7 @@ export default function MentorKhojAlternativePage() {
           <SeoBreadcrumbs
             items={[
               { label: "Home", href: "/" },
-              { label: "Comparisons", href: "/#comparisons" },
+              { label: "Comparisons", href: "/resources" },
               {
                 label: "MentorKhoj Alternative",
                 href: "/compare/mentorkhoj-alternative",
@@ -124,17 +173,55 @@ export default function MentorKhojAlternativePage() {
             ]}
           />
 
-          <div className="text-center max-w-3xl mx-auto mt-6 mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-300 text-xs font-semibold mb-4">
+          <div className="text-center max-w-4xl mx-auto mt-6 mb-12">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-sky-500/30 bg-sky-500/10 text-sky-300 text-xs font-semibold mb-4">
               <Scale className="w-3.5 h-3.5" />
               <span>Independent Feature Comparison (2027/2028)</span>
             </div>
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-5 leading-tight">
-              Looking for a <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-sky-300 to-emerald-400">MentorKhoj Alternative?</span>
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-5 leading-tight">
+              Looking for a{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400">
+                MentorKhoj Alternative?
+              </span>
             </h1>
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
+            <p className="text-base sm:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto">
               Why settle for disconnected hourly calls when you can have a dedicated <strong>IITian or AIIMS ranker</strong> monitoring your daily study discipline, backlog clearance, and mock test scores?
             </p>
+
+            {/* High-Converting Hero Funnel CTAs */}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+              <Link
+                href="/book-call"
+                className="px-8 py-3.5 rounded-xl text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-sky-500 via-teal-500 to-emerald-500 hover:from-sky-400 hover:to-emerald-400 text-white shadow-elevated hover:-translate-y-0.5 transition-all group"
+              >
+                <Video className="w-4 h-4" />
+                <span>Book 1:1 Video Session (From ₹199)</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+              <Link
+                href="/free-mentorship-session"
+                className="px-6 py-3.5 rounded-xl text-sm font-semibold bg-slate-900 border border-slate-800 text-slate-200 hover:text-white hover:border-slate-700 transition-all flex items-center gap-2"
+              >
+                <Sparkles className="w-4 h-4 text-amber-400" />
+                <span>Claim Free Strategy Demo</span>
+              </Link>
+            </div>
+
+            {/* Trust Highlights */}
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-[11px] text-slate-300">
+              <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-800">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>100% Verified IIT &amp; AIIMS Rankers</span>
+              </span>
+              <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-800">
+                <Zap className="w-3.5 h-3.5 text-sky-400" />
+                <span>Daily Task Accountability (Not 1-Off Calls)</span>
+              </span>
+              <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-800">
+                <CheckCircle2 className="w-3.5 h-3.5 text-teal-400" />
+                <span>Max 30 Students / Cohort</span>
+              </span>
+            </div>
           </div>
 
           <div className="my-8 p-6 rounded-2xl border border-sky-500/20 bg-sky-950/20">
@@ -195,8 +282,10 @@ export default function MentorKhojAlternativePage() {
             <SeoCtaBanner
               title="Build Your Rank with a Dedicated IIT or AIIMS Mentor"
               description="Get continuous 1-on-1 guidance, daily study tracking, and mock test post-mortems with complete monthly flexibility."
-              primaryButtonText="Find Your Mentor"
-              primaryButtonHref="/mentors"
+              primaryButtonText="Book 1:1 Video Call (From ₹199)"
+              primaryButtonHref="/book-call"
+              secondaryButtonText="Claim Free Strategy Consultation"
+              secondaryButtonHref="/free-mentorship-session"
             />
           </section>
         </div>
