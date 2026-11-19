@@ -70,8 +70,8 @@ const config: MentorGuidePageConfig = {
       ],
       bullets: [
         {
-          title: "Free Discovery Session Funnel",
-          detail: "Mentskool invests heavily in SEO traffic and free consultation funnels to bring qualified 2027 & 2028 aspirants directly to verified mentors.",
+          title: "Inbound Aspirant Discovery",
+          detail: "Mentskool connects you directly with serious 2027 & 2028 aspirants seeking verified 1-on-1 guidance, with zero need for self-promotion or cold outreach.",
         },
         {
           title: "Complete Fee Autonomy",

@@ -94,7 +94,7 @@ const config: MentorGuidePageConfig = {
         },
         {
           title: "Zero Marketing Spend Required",
-          detail: "Mentskool's 100+ SEO pages and free strategy funnels continuously attract active JEE 2027 & 2028 learners seeking verified mentors.",
+          detail: "Mentskool connects you directly with active JEE 2027 & 2028 learners seeking verified 1-on-1 mentor guidance, eliminating the need to run ads or post reels.",
         },
       ],
     },
