@@ -9,7 +9,7 @@ import { initiateRazorpayCheckout } from "@/lib/razorpay";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Mentor1on1Card, CATEGORY_LABELS } from "@/lib/types";
-import { formatExamRank } from "@/lib/mentor-utils";
+import { formatExamRank, getMentorTrackLabel } from "@/lib/mentor-utils";
 import { getUserFriendlyError } from "@/lib/error-utils";
 import {
   Video,
@@ -235,10 +235,8 @@ export default function BookCallDetailClient({
     }
   };
 
-  const categoryLabel =
-    mentor?.category && (CATEGORY_LABELS as any)[mentor.category]
-      ? (CATEGORY_LABELS as any)[mentor.category]
-      : "IIT / JEE";
+  const { headline: trackHeadline, isNeet: isNeetMentor, categoryLabel } =
+    useMemo(() => getMentorTrackLabel(mentor), [mentor]);
 
   if (!mentor && isMentorLoading) {
     return (
@@ -331,7 +329,7 @@ export default function BookCallDetailClient({
                   {mentor.name}
                 </h1>
                 <p className="text-sm sm:text-base text-slate-300 font-medium">
-                  IIT Mentor on Mentskool • Book 1-on-1 with {mentor.name}
+                  {trackHeadline} • Book 1-on-1 with {mentor.name}
                 </p>
               </div>
 
@@ -522,7 +520,7 @@ export default function BookCallDetailClient({
             <div>
               <p className="text-xs text-slate-500 font-medium">Verified Identity</p>
               <h4 className="text-base font-extrabold text-slate-900">
-                {mentor.college || "IITian Mentor"}
+                {mentor.college || (isNeetMentor ? "Top Medical Ranker" : "Verified Ranker")}
               </h4>
             </div>
           </Card>
@@ -700,19 +698,32 @@ export default function BookCallDetailClient({
                     rows={3}
                     value={agenda}
                     onChange={(e) => setAgenda(e.target.value)}
-                    placeholder="E.g. Preparing for JEE Advanced 2027, clearing physics backlogs, mock test score improvement, test series recommendations..."
+                    placeholder={
+                      isNeetMentor
+                        ? "E.g. Preparing for NEET 2027, clearing biology/physics backlogs, scoring 650+ in mocks, NCERT revision strategy..."
+                        : "E.g. Preparing for JEE Advanced 2027, clearing physics backlogs, mock test score improvement, test series recommendations..."
+                    }
                     className="w-full p-3 text-xs rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 font-medium placeholder:text-slate-400"
                   />
                   {/* Topic shortcut chips */}
                   <div className="flex items-center gap-1.5 flex-wrap pt-1">
                     <span className="text-[10px] text-slate-400 font-semibold uppercase">Suggestions:</span>
-                    {[
-                      "Exam Strategy & Timetable",
-                      "Backlog Recovery Plan",
-                      "Mock Test Score Analysis",
-                      "Physics/Maths Doubts",
-                      "Book & Test Series Selection",
-                    ].map((topic) => (
+                    {(isNeetMentor
+                      ? [
+                          "NEET 650+ Timetable",
+                          "Backlog Clearance Plan",
+                          "Mock Test Score Analysis",
+                          "Physics & Biology Doubts",
+                          "NCERT Revision Strategy",
+                        ]
+                      : [
+                          "Exam Strategy & Timetable",
+                          "Backlog Recovery Plan",
+                          "Mock Test Score Analysis",
+                          "Physics/Maths Doubts",
+                          "Book & Test Series Selection",
+                        ]
+                    ).map((topic) => (
                       <button
                         key={topic}
                         type="button"
