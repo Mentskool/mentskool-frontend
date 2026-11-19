@@ -1,4 +1,4 @@
-import { RankType } from "./types";
+import { RankType, CATEGORY_LABELS } from "./types";
 
 export const RANK_TYPE_OPTIONS: {
   value: RankType;
@@ -75,4 +75,95 @@ export function formatExamRank(
 
   // Legacy fallback when rank_type was not stored
   return /^\d+$/.test(val) ? `AIR ${val}` : val;
+}
+
+export interface MentorTrackInfo {
+  headline: string;
+  isNeet: boolean;
+  isJee: boolean;
+  categoryLabel: string;
+}
+
+/**
+ * Returns dynamic track headline and category badges for a mentor
+ * so NEET/MBBS/GMC mentors do not get falsely labeled as IIT mentors.
+ */
+export function getMentorTrackLabel(mentor?: {
+  category?: string | null;
+  college?: string | null;
+  exam_rank?: string | null;
+} | null): MentorTrackInfo {
+  if (!mentor) {
+    return {
+      headline: "Academic Mentor on Mentskool",
+      isNeet: false,
+      isJee: false,
+      categoryLabel: "Academic Prep",
+    };
+  }
+
+  const cat = (mentor.category || "").toUpperCase();
+  const college = (mentor.college || "").toUpperCase();
+  const rank = (mentor.exam_rank || "").toUpperCase();
+
+  const isNeet =
+    cat.includes("NEET") ||
+    college.includes("GMC") ||
+    college.includes("AIIMS") ||
+    college.includes("MEDICAL") ||
+    college.includes("MBBS") ||
+    college.includes("MAMC") ||
+    college.includes("VMMC") ||
+    college.includes("KGMU") ||
+    college.includes("JIPMER") ||
+    college.includes("IMS") ||
+    rank.includes("NEET");
+
+  const isJee =
+    cat.includes("JEE") ||
+    college.includes("IIT") ||
+    college.includes("NIT") ||
+    college.includes("BITS") ||
+    college.includes("IIIT") ||
+    college.includes("DTU") ||
+    college.includes("NSUT") ||
+    rank.includes("JEE");
+
+  let headline = "Top Ranker Mentor on Mentskool";
+  if (isNeet) {
+    if (college.includes("AIIMS")) {
+      headline = "AIIMS / NEET Mentor on Mentskool";
+    } else if (
+      college.includes("GMC") ||
+      college.includes("MBBS") ||
+      college.includes("MEDICAL") ||
+      college.includes("MAMC") ||
+      college.includes("VMMC")
+    ) {
+      headline = "NEET / Medical Mentor on Mentskool";
+    } else {
+      headline = "NEET Mentor on Mentskool";
+    }
+  } else if (isJee) {
+    if (college.includes("IIT") && !college.includes("IIIT")) {
+      headline = "IIT Mentor on Mentskool";
+    } else if (college.includes("NIT") || college.includes("IIIT") || college.includes("BITS")) {
+      headline = "NIT / JEE Mentor on Mentskool";
+    } else {
+      headline = "IIT / JEE Mentor on Mentskool";
+    }
+  } else if (cat.includes("GATE")) {
+    headline = "GATE / PSU Mentor on Mentskool";
+  }
+
+  const categoryLabel =
+    mentor.category && (CATEGORY_LABELS as any)[mentor.category]
+      ? (CATEGORY_LABELS as any)[mentor.category]
+      : isNeet
+      ? "NEET Prep"
+      : isJee
+      ? "JEE Prep"
+      : "Academic Prep";
+
+  return { headline, isNeet, isJee, categoryLabel };
 }

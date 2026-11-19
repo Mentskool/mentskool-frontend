@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import BookCallDetailClient from "./BookCallDetailClient";
 import { Mentor1on1Card, CATEGORY_LABELS, MentorCategory } from "@/lib/types";
+import { getMentorTrackLabel } from "@/lib/mentor-utils";
 
 interface PageProps {
   params: {
@@ -40,12 +41,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const trackInfo = getMentorTrackLabel(mentor);
   const collegePart = mentor.college ? `${mentor.college} | ` : "";
-  const categoryLabel =
-    mentor.category && (CATEGORY_LABELS as any)[mentor.category]
-      ? (CATEGORY_LABELS as any)[mentor.category]
-      : "IIT / JEE";
-  const title = `Book 1-on-1 with ${mentor.name} (${collegePart}${categoryLabel}) | Mentskool`;
+  const title = `Book 1-on-1 with ${mentor.name} (${collegePart}${trackInfo.categoryLabel}) | Mentskool`;
   const cleanBio = (mentor.bio || "").replace(/\s+/g, " ").trim();
   const description =
     cleanBio.length > 155 ? `${cleanBio.slice(0, 152)}...` : cleanBio;
@@ -55,11 +53,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     mentor.name,
     mentor.college,
     mentor.exam_rank,
-    categoryLabel,
+    trackInfo.categoryLabel,
     "1-on-1 mentorship session",
     "private mentorship call",
-    "IIT JEE mentor call",
-    "NEET strategy call",
+    trackInfo.isNeet ? "NEET strategy call" : "IIT JEE mentor call",
+    trackInfo.isNeet ? "AIIMS MBBS mentor" : "IITian mentor",
     "Mentskool",
   ].filter(Boolean) as string[];
 
@@ -98,6 +96,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function BookCallMentorPage({ params }: PageProps) {
   const mentor = await fetchMentor1on1(params.id);
+  const trackInfo = getMentorTrackLabel(mentor);
 
   const jsonLd = mentor
     ? {
@@ -106,7 +105,7 @@ export default async function BookCallMentorPage({ params }: PageProps) {
         name: mentor.name,
         description: mentor.bio,
         image: mentor.avatar_url || undefined,
-        jobTitle: "Academic Mentor",
+        jobTitle: trackInfo.headline,
         alumniOf: mentor.college
           ? {
               "@type": "CollegeOrUniversity",
