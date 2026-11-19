@@ -81,9 +81,24 @@ export function MentorProgramGuideTemplate({
         headline: config.articleHeadline,
         description: config.articleDescription,
         url: `https://mentskool.com/${config.slug}`,
+        datePublished: "2026-09-01T00:00:00+05:30",
+        dateModified: "2026-11-15T00:00:00+05:30",
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": `https://mentskool.com/${config.slug}`,
+        },
         author: {
           "@type": "Organization",
           name: "Mentskool Mentor Success Team",
+          url: "https://mentskool.com",
+        },
+        publisher: {
+          "@type": "EducationalOrganization",
+          name: "Mentskool Technologies",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://mentskool.com/logo.png",
+          },
         },
       },
       {
