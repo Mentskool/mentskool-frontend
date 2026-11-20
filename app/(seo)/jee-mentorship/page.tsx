@@ -198,17 +198,10 @@ export default function JeeMentorshipPage() {
           </section>
 
           {/* Program Features Component */}
-          <section className="my-16">
-            <div className="text-center max-w-2xl mx-auto mb-10">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                The 4 Pillars of the Mentskool Mentorship Engine
-              </h2>
-              <p className="text-slate-400 text-sm mt-2">
-                Lectures explain the concept. Mentorship guarantees the execution.
-              </p>
-            </div>
-            <ProgramFeatures />
-          </section>
+          <ProgramFeatures
+            heading="Why Mentskool Outranks Traditional Mentorship"
+            subheading="Lectures explain the concept. Mentorship guarantees the execution. Master high-yield problem solving with dedicated 1:1 guidance from recent IIT rankers."
+          />
 
           <SeoDeepDiveExtension {...batchB2Extensions["jee-mentorship"]} />
           <SeoMentorFunnel examFocus="JEE" />

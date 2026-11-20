@@ -144,8 +144,12 @@ export function QuickAnswerBox({
 /**
  * Interactive Table of Contents for Long-Form SEO Pages (Generates Google Sitelinks)
  */
-export function TableOfContents() {
-  const items = [
+export function TableOfContents({
+  customItems,
+}: {
+  customItems?: { label: string; href: string }[];
+} = {}) {
+  const defaultItems = [
     { label: "Executive Overview & Problem", href: "#overview" },
     { label: "60-Second Key Takeaways", href: "#quick-answer" },
     { label: "Detailed Execution Blueprint", href: "#blueprint-sections" },
@@ -156,6 +160,8 @@ export function TableOfContents() {
     { label: "Frequently Asked Questions", href: "#faqs" },
     { label: "Next Steps & Diagnostic Tools", href: "#resources-and-tools" },
   ];
+
+  const items = customItems || defaultItems;
 
   return (
     <nav

@@ -22,6 +22,8 @@ import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { HeroGridBackground } from "@/components/HeroGridBackground";
+import { TableOfContents } from "@/components/seo/AutoLinkContent";
+import { EmbeddedQuickEstimator } from "@/components/seo/EmbeddedQuickEstimator";
 
 export const metadata: Metadata = {
   title: "Best Mentorship Program for JEE (Mains & Advanced 2027/2028) — The Definitive Selection Guide",
@@ -160,25 +162,45 @@ export default function BestJeeMentorshipPage() {
               How top rankers crack IIT: Discover the critical difference between generic batch coaching and <strong>dedicated 1-on-1 ranker mentorship</strong> with daily task audits and 94% verified efficiency.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5">
+              <Link
+                href="/free-mentorship-session"
+                className="px-6 py-3.5 rounded-xl text-sm font-bold flex items-center gap-2 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-600 text-white shadow-elevated hover:-translate-y-0.5 transition-all group"
+              >
+                <Sparkles className="w-4 h-4 text-amber-300" />
+                <span>Claim Free Diagnostic Session (₹0)</span>
+              </Link>
               <Link
                 href="/mentors"
-                className="px-8 py-3.5 rounded-xl text-base font-bold flex items-center gap-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white shadow-elevated hover:-translate-y-0.5 transition-all group"
+                className="px-6 py-3.5 rounded-xl text-sm font-bold flex items-center gap-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white shadow-elevated hover:-translate-y-0.5 transition-all group"
               >
                 <span>Find Your 1:1 IITian Mentor</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
-                href="/free-mentorship-session"
-                className="px-6 py-3.5 rounded-xl text-sm font-semibold bg-slate-900 border border-slate-800 text-slate-200 hover:text-white hover:border-slate-700 transition-all"
+                href="/book-call"
+                className="px-5 py-3.5 rounded-xl text-sm font-semibold bg-slate-900 border border-slate-800 text-slate-200 hover:text-white hover:border-slate-700 transition-all"
               >
-                Claim Free 1:1 Strategy Call
+                Book 1:1 Priority Call
               </Link>
             </div>
           </div>
 
+          {/* Sitelink Table of Contents */}
+          <TableOfContents
+            customItems={[
+              { label: "Executive Summary & Core Benchmark", href: "#overview" },
+              { label: "6 Selection Criteria", href: "#selection-criteria" },
+              { label: "Platform Comparison Matrix", href: "#comparison-matrix" },
+              { label: "Interactive Percentile Estimator", href: "#interactive-estimator" },
+              { label: "Why Mentskool Outranks Others", href: "#mentskool-advantage" },
+              { label: "Verified IITian Mentors", href: "#verified-mentors" },
+              { label: "Frequently Asked Questions", href: "#faqs" },
+            ]}
+          />
+
           {/* Direct Answer Box for AI Overviews & Search Snippets */}
-          <section className="my-10 p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-brand-500/40 shadow-elevated">
+          <section id="overview" className="my-10 p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-brand-500/40 shadow-elevated">
             <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-brand-400 mb-3">
               <Sparkles className="w-4 h-4 text-brand-400" />
               <span>Executive Summary: What Defines The Best Mentorship Program for JEE?</span>
@@ -207,7 +229,7 @@ export default function BestJeeMentorshipPage() {
           </section>
 
           {/* Section 1: The 6 Criteria for Choosing a JEE Mentorship Program */}
-          <article className="my-16 prose prose-invert max-w-none">
+          <article id="selection-criteria" className="my-16 prose prose-invert max-w-none">
             <div className="bg-slate-900/50 border border-slate-800 rounded-3xl p-6 sm:p-10 space-y-8">
               <div>
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
@@ -284,7 +306,7 @@ export default function BestJeeMentorshipPage() {
           </article>
 
           {/* Section 2: Platform Comparison Matrix */}
-          <section className="my-16">
+          <section id="comparison-matrix" className="my-16">
             <div className="text-center max-w-3xl mx-auto mb-10">
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
                 Comparing JEE Mentorship Platforms in India
@@ -307,35 +329,55 @@ export default function BestJeeMentorshipPage() {
                 </thead>
                 <tbody className="divide-y divide-slate-800/60">
                   <tr className="hover:bg-slate-800/30 bg-brand-500/10 border-l-4 border-brand-500">
-                    <td className="py-4 px-4 sm:px-6 font-extrabold text-white">Mentskool</td>
+                    <td className="py-4 px-4 sm:px-6 font-extrabold text-white">
+                      <Link href="/free-mentorship-session" className="text-brand-300 hover:underline">
+                        Mentskool
+                      </Link>
+                    </td>
                     <td className="py-4 px-4 sm:px-6 text-emerald-300 font-bold">Dedicated 1:1 IITian + Micro Cohorts</td>
                     <td className="py-4 px-4 sm:px-6 text-emerald-300 font-bold">Daily Web Dashboard (94% Score)</td>
                     <td className="py-4 px-4 sm:px-6 text-emerald-300 font-bold">Weekly 1:1 Question-by-Question</td>
                     <td className="py-4 px-4 sm:px-6 text-emerald-300 font-bold">Month-to-Month (Cancel Anytime)</td>
                   </tr>
                   <tr className="hover:bg-slate-800/30">
-                    <td className="py-4 px-4 sm:px-6 font-bold text-white">MentorKhoj</td>
+                    <td className="py-4 px-4 sm:px-6 font-bold text-white">
+                      <Link href="/compare/mentorkhoj-alternative" className="hover:text-blue-300 hover:underline">
+                        MentorKhoj
+                      </Link>
+                    </td>
                     <td className="py-4 px-4 sm:px-6">Hourly Marketplace (All Exams)</td>
                     <td className="py-4 px-4 sm:px-6 text-rose-400">Zero continuous tracking</td>
                     <td className="py-4 px-4 sm:px-6 text-rose-400">Paid per hour</td>
                     <td className="py-4 px-4 sm:px-6">Pay-per-session</td>
                   </tr>
                   <tr className="hover:bg-slate-800/30">
-                    <td className="py-4 px-4 sm:px-6 font-bold text-white">Mentor Prep</td>
+                    <td className="py-4 px-4 sm:px-6 font-bold text-white">
+                      <Link href="/compare/mentorprep-alternative" className="hover:text-blue-300 hover:underline">
+                        Mentor Prep
+                      </Link>
+                    </td>
                     <td className="py-4 px-4 sm:px-6">Daily Wakeup Call Schedule</td>
                     <td className="py-4 px-4 sm:px-6">Phone calls &amp; WhatsApp</td>
                     <td className="py-4 px-4 sm:px-6 text-amber-400">Basic score check</td>
                     <td className="py-4 px-4 sm:px-6">Bundled multi-month</td>
                   </tr>
                   <tr className="hover:bg-slate-800/30">
-                    <td className="py-4 px-4 sm:px-6 font-bold text-white">PW Disha</td>
+                    <td className="py-4 px-4 sm:px-6 font-bold text-white">
+                      <Link href="/allen-vs-pw-vs-mentskool" className="hover:text-blue-300 hover:underline">
+                        PW Disha
+                      </Link>
+                    </td>
                     <td className="py-4 px-4 sm:px-6">Pay-per-minute Call App</td>
                     <td className="py-4 px-4 sm:px-6 text-rose-400">Zero assigned continuity</td>
                     <td className="py-4 px-4 sm:px-6 text-rose-400">Random advisor per call</td>
                     <td className="py-4 px-4 sm:px-6">Wallet recharge per minute</td>
                   </tr>
                   <tr className="hover:bg-slate-800/30">
-                    <td className="py-4 px-4 sm:px-6 font-bold text-white">eSaral</td>
+                    <td className="py-4 px-4 sm:px-6 font-bold text-white">
+                      <Link href="/compare/esaral-alternative" className="hover:text-blue-300 hover:underline">
+                        eSaral
+                      </Link>
+                    </td>
                     <td className="py-4 px-4 sm:px-6">Bundled Video Course</td>
                     <td className="py-4 px-4 sm:px-6">Multi-tiered counselor structure</td>
                     <td className="py-4 px-4 sm:px-6">Automated app analytics</td>
@@ -346,28 +388,39 @@ export default function BestJeeMentorshipPage() {
             </div>
           </section>
 
-          {/* Program Features Component */}
-          <section className="my-16">
-            <div className="text-center max-w-2xl mx-auto mb-10">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                The 4 Pillars of the Mentskool Mentorship Engine
+          {/* Interactive JEE Percentile Estimator Widget */}
+          <section id="interactive-estimator" className="my-16">
+            <div className="text-center max-w-2xl mx-auto mb-8">
+              <span className="text-xs font-bold text-brand-300 uppercase tracking-widest bg-brand-500/10 border border-brand-500/30 px-3.5 py-1 rounded-full inline-block">
+                Interactive Dwell Calibration
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-3">
+                Estimate Your JEE Main Percentile &amp; College Admission Bracket
               </h2>
               <p className="text-slate-400 text-sm mt-2">
-                Lectures explain the concept. Mentorship guarantees the execution.
+                Drag the marks slider to check where your current preparation lands, then connect with an IITian mentor to systematically eliminate mock exam errors.
               </p>
             </div>
-            <ProgramFeatures />
+            <EmbeddedQuickEstimator examFocus="JEE" />
           </section>
 
-          {/* Live Mentor Funnel Bridge */}
-          <SeoMentorFunnel
-            examFocus="JEE"
-            title="Connect With Verified IIT Bombay & Delhi Rankers"
-            subtitle="Learn directly from mentors who recently scored top percentiles in JEE Advanced. 1:1 strategy calls and daily task auditing for 2027 & 2028."
+          {/* Program Features Component */}
+          <ProgramFeatures
+            heading="Why Mentskool Outranks Traditional Mentorship"
+            subheading="Lectures explain the concept. Mentorship guarantees the execution. Built from the ground up for students who need serious discipline, weekly error audits, and proven results."
           />
 
+          {/* Live Mentor Funnel Bridge */}
+          <section id="verified-mentors">
+            <SeoMentorFunnel
+              examFocus="JEE"
+              title="Connect With Verified IIT Bombay & Delhi Rankers"
+              subtitle="Learn directly from mentors who recently scored top percentiles in JEE Advanced. 1:1 strategy calls and daily task auditing for 2027 & 2028."
+            />
+          </section>
+
           {/* FAQs */}
-          <section className="mt-16">
+          <section id="faqs" className="mt-16">
             <SeoFaqAccordion
               faqs={jeeGuideFaqs}
               title="Frequently Asked Questions: Choosing The Best JEE Mentorship"
