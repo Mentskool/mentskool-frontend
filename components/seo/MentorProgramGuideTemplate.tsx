@@ -363,6 +363,20 @@ export function MentorProgramGuideTemplate({
                   <ArrowRight className="w-3.5 h-3.5 shrink-0 text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all" />
                 </Link>
               ))}
+              <Link
+                href="/mentors"
+                className="p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-xs sm:text-sm font-bold text-emerald-300 hover:text-white hover:border-emerald-400 transition-all flex items-center justify-between gap-2 group"
+              >
+                <span>Browse Active Mentors Directory</span>
+                <ArrowRight className="w-3.5 h-3.5 shrink-0 text-emerald-400 group-hover:translate-x-0.5 transition-all" />
+              </Link>
+              <Link
+                href="/book-call"
+                className="p-3.5 rounded-xl bg-blue-950/40 border border-blue-500/40 text-xs sm:text-sm font-bold text-blue-300 hover:text-white hover:border-blue-400 transition-all flex items-center justify-between gap-2 group"
+              >
+                <span>Book a 1:1 Senior Strategy Session</span>
+                <ArrowRight className="w-3.5 h-3.5 shrink-0 text-blue-400 group-hover:translate-x-0.5 transition-all" />
+              </Link>
             </div>
             <div className="mt-5 pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
               <span className="flex items-center gap-1.5">

@@ -3,10 +3,15 @@ import Link from "next/link";
 import {
   ArrowRight,
   BookOpen,
+  Calculator,
   CheckCircle2,
   Compass,
   Layers,
+  ShieldCheck,
+  Sparkles,
   Target,
+  UserCheck,
+  Video,
 } from "lucide-react";
 
 export interface DeepDiveArticleBlock {
@@ -164,25 +169,165 @@ export function SeoDeepDiveExtension({
         </div>
       </section>
 
-      {/* Related Guides Internal Links */}
-      <section className="p-6 sm:p-8 rounded-3xl bg-slate-900/50 border border-slate-800/80">
-        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-sky-400 mb-4">
-          <Compass className="w-4 h-4" />
-          <span>Recommended Next Guides on Mentskool</span>
+      {/* Direct Funnel & Mentorship Gateway */}
+      <section className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900/95 to-slate-950 border border-blue-500/30 shadow-elevated">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-slate-800/80">
+          <div>
+            <span className="text-[11px] font-black uppercase tracking-widest text-blue-400 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              Direct 1:1 Mentorship Gateway
+            </span>
+            <h3 className="text-lg sm:text-xl font-extrabold text-white mt-1">
+              Ready to Talk 1-on-1 with a Senior IITian or AIIMS Doctor?
+            </h3>
+          </div>
+          <div className="text-xs text-slate-400 flex items-center gap-1.5 shrink-0">
+            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+            <span>100% Verified Credentials • Zero Lock-Ins</span>
+          </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {relatedLinks.map((lnk, lIdx) => (
-            <Link
-              key={lIdx}
-              href={lnk.href}
-              className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-sky-500/40 text-xs sm:text-sm font-medium text-slate-200 hover:text-sky-300 transition-all flex items-center justify-between gap-2 group"
-            >
-              <span>{lnk.label}</span>
-              <ArrowRight className="w-3.5 h-3.5 shrink-0 text-slate-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
-            </Link>
-          ))}
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+          <Link
+            href="/free-mentorship-session"
+            className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 hover:border-emerald-400 hover:bg-emerald-900/40 transition-all flex flex-col justify-between group shadow-sm"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-amber-300" />
+                  100% Free
+                </span>
+                <span className="text-[11px] font-semibold text-slate-400 line-through">₹499</span>
+              </div>
+              <h4 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
+                Claim Free Diagnostic Call (₹0)
+              </h4>
+              <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                30-minute private video diagnostic to audit your mistake patterns, test papers, and routine.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-emerald-800/40 flex items-center justify-between text-xs font-bold text-emerald-300">
+              <span>Reserve ₹0 Slot</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          <Link
+            href="/book-call"
+            className="p-4 rounded-2xl bg-blue-950/40 border border-blue-500/40 hover:border-blue-400 hover:bg-blue-900/40 transition-all flex flex-col justify-between group shadow-sm"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">
+                  Personal Consultation
+                </span>
+                <span className="text-[11px] font-semibold text-blue-300">From ₹499</span>
+              </div>
+              <h4 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors">
+                Book 1:1 Video Strategy Session
+              </h4>
+              <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                Pick your date, time, and mentor for intensive doubt solving, backlog surgery, and a 30-day plan.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-blue-800/40 flex items-center justify-between text-xs font-bold text-blue-300">
+              <span>Choose Time Slot</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          <Link
+            href="/mentors"
+            className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 hover:border-sky-500/40 hover:bg-slate-900/80 transition-all flex flex-col justify-between group shadow-sm"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-bold text-sky-400 uppercase tracking-wider">
+                  Full Directory
+                </span>
+                <span className="text-[11px] font-semibold text-slate-400">50+ Rankers</span>
+              </div>
+              <h4 className="text-sm font-bold text-white group-hover:text-sky-300 transition-colors">
+                Browse All Verified Mentors
+              </h4>
+              <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                Filter by AIR rank, target college (IIT Bombay, Delhi, AIIMS New Delhi), specialty, and fees.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-bold text-sky-300">
+              <span>View All Profiles</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
         </div>
       </section>
+
+      {/* Recommended Next Guides Internal Links */}
+      {relatedLinks && relatedLinks.length > 0 && (
+        <section className="p-6 sm:p-8 rounded-3xl bg-slate-900/50 border border-slate-800/80">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-sky-400">
+              <Compass className="w-4 h-4" />
+              <span>Recommended Next Guides on Mentskool</span>
+            </div>
+            <span className="text-[11px] text-slate-400">Curated preparation pathways</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {relatedLinks.map((lnk, lIdx) => (
+              <Link
+                key={lIdx}
+                href={lnk.href}
+                className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-sky-500/40 text-xs sm:text-sm font-medium text-slate-200 hover:text-sky-300 transition-all flex items-center justify-between gap-2 group"
+              >
+                <span className="line-clamp-1">{lnk.label}</span>
+                <ArrowRight className="w-3.5 h-3.5 shrink-0 text-slate-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all ml-2" />
+              </Link>
+            ))}
+          </div>
+
+          {/* Diagnostic Calculators & Self-Audit Tools */}
+          <div className="mt-6 pt-5 border-t border-slate-800">
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                <Calculator className="w-3.5 h-3.5 text-emerald-400" />
+                Free Interactive Score &amp; Rank Tools
+              </h4>
+              <span className="text-[11px] text-slate-400">Instant calculations</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+              <Link
+                href="/tools/jee-main-marks-vs-percentile-calculator"
+                className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/70 hover:border-emerald-500/30 text-[11px] font-medium text-slate-300 hover:text-emerald-300 transition-colors flex items-center justify-between group"
+              >
+                <span>JEE Marks vs Percentile</span>
+                <ArrowRight className="w-3 h-3 text-slate-400 group-hover:text-emerald-400 transition-colors shrink-0 ml-1.5" />
+              </Link>
+              <Link
+                href="/tools/neet-marks-vs-rank-calculator"
+                className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/70 hover:border-emerald-500/30 text-[11px] font-medium text-slate-300 hover:text-emerald-300 transition-colors flex items-center justify-between group"
+              >
+                <span>NEET Marks vs Rank</span>
+                <ArrowRight className="w-3 h-3 text-slate-400 group-hover:text-emerald-400 transition-colors shrink-0 ml-1.5" />
+              </Link>
+              <Link
+                href="/tools/jee-neet-backlog-clearance-calculator"
+                className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/70 hover:border-emerald-500/30 text-[11px] font-medium text-slate-300 hover:text-emerald-300 transition-colors flex items-center justify-between group"
+              >
+                <span>Backlog Clearance Plan</span>
+                <ArrowRight className="w-3 h-3 text-slate-400 group-hover:text-emerald-400 transition-colors shrink-0 ml-1.5" />
+              </Link>
+              <Link
+                href="/tools/jee-neet-daily-study-hour-calculator"
+                className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/70 hover:border-emerald-500/30 text-[11px] font-medium text-slate-300 hover:text-emerald-300 transition-colors flex items-center justify-between group"
+              >
+                <span>Daily Study Planner</span>
+                <ArrowRight className="w-3 h-3 text-slate-400 group-hover:text-emerald-400 transition-colors shrink-0 ml-1.5" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
