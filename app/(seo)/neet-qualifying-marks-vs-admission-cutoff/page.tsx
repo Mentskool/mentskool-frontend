@@ -26,7 +26,7 @@ import { batchC2Extensions } from "@/lib/seo/extensions/batchC2";
 export const metadata: Metadata = {
   title: "NEET Qualifying Marks vs Government MBBS Cutoff: The 500-Mark Reality Check",
   description:
-    "Demystify the critical difference between NEET qualifying percentile (140-164 marks) and actual Government Medical College (GMC) MBBS admission cutoffs (650+ marks). Explore state-wise cutoffs, private college fee realities, and score planning.",
+    "Understand the critical difference between NEET qualifying percentile (140-164 marks) and actual Government Medical College (GMC) MBBS admission cutoffs (650+ marks). Explore state-wise cutoffs, private college fee realities, and score planning.",
   keywords: [
     "neet qualifying marks vs admission cutoff",
     "minimum marks for gmc in neet",
@@ -224,7 +224,7 @@ export default function NeetQualifyingMarksVsAdmissionCutoffPage() {
           <section className="mb-16 space-y-6">
             <h2 className="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
               <Award className="w-7 h-7 text-emerald-400" />
-              State Quota (85%) Safe Score Landscape for General Category
+              State Quota (85%) Safe Score Environment for General Category
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
               <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/50 space-y-3">

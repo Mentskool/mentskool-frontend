@@ -185,7 +185,7 @@ export const batchC3Extensions: Record<string, SeoDeepDiveExtensionProps> = {
   "neet-mock-test-analysis": {
     articleBlocks: [
       {
-        heading: "Why Taking 40 Full NEET Mocks Without Forensic Analysis Traps Scores at 520",
+        heading: "Why Taking 40 Full NEET Mocks Without Detailed Analysis Traps Scores at 520",
         subheading: "Turn Sunday test papers into diagnostic roadmaps inside 90 structured minutes.",
         paragraphs: [
           "Thousands of hardworking NEET aspirants complete 35+ coaching full-syllabus tests—yet their final May score stubbornly hovers near their November average! Why does heavy testing alone fail to move the needle? Because students glance only at their total score (/720), feel either brief relief or crushing despair, stuff the question booklet under a pile of notebooks, and rush immediately onto next week's syllabus without diagnosing WHY 38 answers went wrong or stayed blank.",
@@ -838,7 +838,7 @@ export const batchC3Extensions: Record<string, SeoDeepDiveExtensionProps> = {
         heading: "How 60 Minutes of Structured JEE Mock Post-Mortem Adds +35 Marks Without Extra Syllabus",
         subheading: "Turn random CBT scorecards into precise Two-Round pacing & negative-mark calibration.",
         paragraphs: [
-          "Taking two JEE Main or Advanced mock tests a week changes almost nothing if you merely glance at your total score out of 300, check your percentile rank, and walk away. Real 99.5+ percentile climb happens inside the 60-minute forensic post-mortem right after clicking Submit—when you reconstruct every wrong attempt, every 6-minute wasted algebra rabbit hole, and every easy skipped question left untouched in Section B.",
+          "Taking two JEE Main or Advanced mock tests a week changes almost nothing if you merely glance at your total score out of 300, check your percentile rank, and walk away. Real 99.5+ percentile climb happens inside the 60-minute thorough post-test review right after clicking Submit—when you reconstruct every wrong attempt, every 6-minute wasted algebra rabbit hole, and every easy skipped question left untouched in Section B.",
           "Verified IIT mentors on Mentskool organize mock analysis strictly into three metrics: **Attempt Selection Efficiency** (did you harvest all sub-2-minute Chemistry & Vector/Modern Physics freebies first?), **Preventable Negative Loss** (counting -1 penalties from sign flips, reading omissions, and blind 3-option guessing), and **Topic Leak Mapping** (isolating specific sub-concepts that broke across consecutive mocks).",
           "Inspecting your rough sheets weekly with an IIT Bombay or Delhi senior immediately catches invisible pacing bugs—unlocking 25 to 45 extra marks cleanly inside a month.",
         ],

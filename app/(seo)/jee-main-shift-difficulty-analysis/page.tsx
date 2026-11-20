@@ -98,7 +98,7 @@ export default function JeeMainShiftDifficultyAnalysisPage() {
         "@type": "Article",
         headline: "JEE Main Shift Difficulty Analysis: Score Normalization & Shift Variance Decoded",
         description:
-          "Forensic analysis of JEE Main shift difficulty variance, NTA normalization mathematics, and test-taking adaptations for varying paper difficulties.",
+          "Detailed analysis of JEE Main shift difficulty variance, NTA normalization mathematics, and test-taking adaptations for varying paper difficulties.",
         url: "https://mentskool.com/jee-main-shift-difficulty-analysis",
         author: {
           "@type": "Organization",
@@ -153,7 +153,7 @@ export default function JeeMainShiftDifficultyAnalysisPage() {
               </span>
             </h1>
             <p className="mt-6 text-base sm:text-lg text-slate-400 leading-relaxed max-w-3xl mx-auto">
-              How can two candidates who both scored 180 marks receive completely different percentiles (96.5% vs 99.2%)? Demystify the mathematics behind NTA normalization, understand shift difficulty variations, and build a resilient test strategy.
+              How can two candidates who both scored 180 marks receive completely different percentiles (96.5% vs 99.2%)? Explain Clearly the mathematics behind NTA normalization, understand shift difficulty variations, and build a resilient test strategy.
             </p>
           </header>
 

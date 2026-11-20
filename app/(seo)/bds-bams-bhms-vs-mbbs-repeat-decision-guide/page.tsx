@@ -93,7 +93,7 @@ const config: BookCallPageConfig = {
   "timelinePhases": [
     {
       "timeframe": "Stage 1",
-      "phaseTitle": "Forensic Score Gap Diagnosis",
+      "phaseTitle": "Score Gap Diagnosis",
       "description": "Analyze your recent NEET scorecard question-by-question: Did you score 500 because of conceptual inability, or because of poor time management, panic, and negative marks?",
       "deliverables": [
         "Root-cause diagnosis (Ability vs Execution)",
@@ -207,7 +207,7 @@ const config: BookCallPageConfig = {
       ]
     },
     {
-      "heading": "BAMS and BHMS: The Public Sector vs Private Practice Landscape",
+      "heading": "BAMS and BHMS: The Public Sector vs Private Practice Opportunities",
       "subheading": "Understanding government AYUSH initiatives and career sustainability",
       "paragraphs": [
         "Bachelor of Ayurvedic Medicine and Surgery (BAMS) has seen substantial revitalization under Ministry of AYUSH initiatives. State governments regularly recruit Ayurvedic Medical Officers (AMO) at government primary health centers (PHCs) with starting Gazetted officer salaries of ₹65,000 to ₹85,000 per month, matching MBBS medical officers.",
@@ -258,7 +258,7 @@ const config: BookCallPageConfig = {
     },
     {
       "question": "Can BAMS doctors practice allopathic medicine in India?",
-      "answer": "The legal right to practice allopathic medicine by BAMS doctors varies by state. In states like Maharashtra and Uttar Pradesh, certain government notifications permit cross-practice in rural areas with bridge training. However, the Supreme Court has reiterated that modern medicine should be practiced by allopathic graduates, making the regulatory landscape uncertain."
+      "answer": "The legal right to practice allopathic medicine by BAMS doctors varies by state. In states like Maharashtra and Uttar Pradesh, certain government notifications permit cross-practice in rural areas with bridge training. However, the Supreme Court has reiterated that modern medicine should be practiced by allopathic graduates, making the regulatory environment uncertain."
     },
     {
       "question": "How much can I realistically increase my score in a drop year?",

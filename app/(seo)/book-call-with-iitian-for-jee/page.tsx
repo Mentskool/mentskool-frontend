@@ -167,7 +167,7 @@ const config: BookCallPageConfig = {
       "subheading": "How Top 500 Rankers Approach Unseen Questions",
       "paragraphs": [
         "In JEE Main, questions test direct formula recall and algebraic manipulation. In JEE Advanced, however, virtually every question weaves two or three distinct chapters together\u2014such as combining Rotational Dynamics with Electromagnetic Induction, or Thermodynamics with Chemical Kinetics. Students who memorize formulas inevitably freeze when facing these problems.",
-        "During your 1:1 call with an IITian, you will learn the mental architecture toppers use to unravel unseen questions. You will discover how to identify the governing conservation law first (energy, momentum, charge), strip away distracting narrative text, and formulate clean mathematical boundary conditions."
+        "During your 1:1 call with an IITian, you will learn the mental architecture toppers use to solve unseen questions. You will discover how to identify the governing conservation law first (energy, momentum, charge), strip away distracting narrative text, and formulate clean mathematical boundary conditions."
       ],
       "keyTakeaways": [
         {

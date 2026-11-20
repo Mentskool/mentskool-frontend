@@ -145,7 +145,7 @@ const config: BookCallPageConfig = {
       "mentskool1on1": "Ruthlessly protects you from irrelevant material; focuses 100% on NCERT."
     },
     {
-      "aspect": "Physics Demystification",
+      "aspect": "Simplifying Physics",
       "genericCoaching": "Teaches physics with advanced calculus that intimidates medical students.",
       "mentskool1on1": "Simplifies physics into high-yield formula patterns and direct numerical shortcuts."
     },

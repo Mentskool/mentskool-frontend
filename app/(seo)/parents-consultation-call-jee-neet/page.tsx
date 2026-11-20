@@ -163,7 +163,7 @@ const config: BookCallPageConfig = {
   "sections": [
     {
       "heading": "Understanding What Mock Test Scores Actually Mean",
-      "subheading": "Demystifying Raw Marks, Percentiles, and Shift Normalization",
+      "subheading": "Understanding Raw Marks, Percentiles, and Shift Normalization",
       "paragraphs": [
         "Many parents see their child score 130 out of 300 in a JEE Main mock test and assume the child is failing because school exams require 90%+. In JEE Main, however, a score of 130 in a tough shift can easily translate to 96+ percentile, securing an NIT seat. Similarly, in NEET UG, a score of 560 might be near-miss territory in Rajasthan or Delhi, but comfortably secure a government medical seat in other states.",
         "Your mentor walks you through the mathematics of competitive scoring. You will learn how to evaluate your child's performance relative to the difficulty of the test paper, understand state quota cutoffs, and celebrate meaningful progress rather than judging raw percentages."

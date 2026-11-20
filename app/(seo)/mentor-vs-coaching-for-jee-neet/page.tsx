@@ -226,7 +226,7 @@ export default function MentorVsCoachingPage() {
                   <tr className="hover:bg-slate-800/30">
                     <td className="py-4 px-4 sm:px-6 font-bold text-white">Mock Test Error Analysis</td>
                     <td className="py-4 px-4 sm:px-6">Automated percentile &amp; answer key only</td>
-                    <td className="py-4 px-4 sm:px-6 text-emerald-300 font-bold">Forensic rough-sheet inspection &amp; negative mark audit</td>
+                    <td className="py-4 px-4 sm:px-6 text-emerald-300 font-bold">Detailed rough-sheet inspection &amp; negative mark audit</td>
                   </tr>
                   <tr className="hover:bg-slate-800/30">
                     <td className="py-4 px-4 sm:px-6 font-bold text-white">Backlog Elimination Strategy</td>

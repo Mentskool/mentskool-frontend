@@ -40,9 +40,9 @@ export const metadata: Metadata = {
     canonical: "https://mentskool.com/neet-chapter-wise-weightage-trends",
   },
   openGraph: {
-    title: "NEET Chapter-Wise Weightage Trends (5-Year Forensic Analysis)",
+    title: "NEET Chapter-Wise Weightage Trends (5-Year Detailed Analysis)",
     description:
-      "Forensic breakdown of question frequency in NEET UG. Learn how Genetics, Human Physiology, Modern Physics, and Organic Chemistry form the core of a 680+ score.",
+      "Detailed breakdown of question frequency in NEET UG. Learn how Genetics, Human Physiology, Modern Physics, and Organic Chemistry form the core of a 680+ score.",
     url: "https://mentskool.com/neet-chapter-wise-weightage-trends",
     siteName: "Mentskool",
     images: [

@@ -176,7 +176,7 @@ export default function JeePhysicsMentorPage() {
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-sky-400 mt-0.5 shrink-0" />
-                <span><strong>Rough Sheet Forensic Audits:</strong> Checking scratch papers to eliminate arithmetic calculation slips and sign errors in thermodynamics.</span>
+                <span><strong>Rough Sheet Detailed Reviews:</strong> Checking scratch papers to eliminate arithmetic calculation slips and sign errors in thermodynamics.</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-sky-400 mt-0.5 shrink-0" />

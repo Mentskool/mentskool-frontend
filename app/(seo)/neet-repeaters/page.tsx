@@ -67,7 +67,7 @@ const repeaterFaqs: FaqItem[] = [
   {
     question: "How does having an AIIMS doctor mentor help during a drop year?",
     answer:
-      "A drop year is psychologically brutal: friends have moved to college, social isolation sets in, and parents' expectations create intense anxiety. An AIIMS mentor who personally navigated and conquered this pressure provides continuous emotional reassurance, weekly timetable accountability, and forensic audits of your mock test mistakes.",
+      "A drop year is psychologically brutal: friends have moved to college, social isolation sets in, and parents' expectations create intense anxiety. An AIIMS mentor who personally navigated and conquered this pressure provides continuous emotional reassurance, weekly timetable accountability, and detailed reviews of your mock test mistakes.",
   },
   {
     question: "How many questions should a NEET repeater solve every day?",
@@ -194,7 +194,7 @@ export default function NeetRepeatersPage() {
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-                <span><strong>Forensic Mock Test Post-Mortems:</strong> Inspect rough work and OMR sheets to systematically eliminate 40+ careless negative marks.</span>
+                <span><strong>Detailed Mock Test Post-Mortems:</strong> Inspect rough work and OMR sheets to systematically eliminate 40+ careless negative marks.</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
@@ -266,7 +266,7 @@ export default function NeetRepeatersPage() {
                   <li><strong>06:00 - 06:30:</strong> Wake up, light yoga/fresh air, Botany flashcard review.</li>
                   <li><strong>06:30 - 09:30:</strong> <strong>Slot 1 (Physics Deep Work):</strong> 40 numericals with timer; rough sheet tracking.</li>
                   <li><strong>09:30 - 10:30:</strong> Healthy breakfast, sunlight exposure.</li>
-                  <li><strong>10:30 - 01:30:</strong> <strong>Slot 2 (Biology NCERT Forensic Pass):</strong> 2 chapters in-depth + 100 line-by-line MCQs.</li>
+                  <li><strong>10:30 - 01:30:</strong> <strong>Slot 2 (Biology NCERT Detailed Pass):</strong> 2 chapters in-depth + 100 line-by-line MCQs.</li>
                 </ul>
               </div>
 

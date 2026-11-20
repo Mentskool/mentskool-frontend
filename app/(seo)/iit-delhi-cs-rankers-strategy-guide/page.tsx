@@ -113,7 +113,7 @@ const config: BookCallPageConfig = {
     },
     {
       "timeframe": "Stage 3",
-      "phaseTitle": "JEE Advanced Archive Forensic Sweep",
+      "phaseTitle": "JEE Advanced Archive Detailed Sweep",
       "description": "Solving the last 20 years of JEE Advanced / IIT-JEE papers in strict timed conditions, analyzing the evolution of question phrasing and examiner psychology.",
       "deliverables": [
         "Categorized 20-year PYQ mastery matrix",

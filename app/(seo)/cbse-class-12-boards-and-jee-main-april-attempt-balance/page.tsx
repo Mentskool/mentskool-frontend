@@ -6,14 +6,14 @@ import {
 } from "@/components/seo/BookCallPageTemplate";
 
 export const metadata: Metadata = {
-  title: "CBSE Class 12 Boards and JEE Main April Attempt Balance: The Symbiotic 75% & 99%ile Schedule | Mentskool",
+  title: "CBSE Class 12 Boards and JEE Main April Attempt Balance: The Balanced 75% & 99%ile Schedule | Mentskool",
   description: "February and March board exams can either derail your JEE Main preparation or become your greatest asset. Master the unified study model that secures 90%+ ",
   keywords: ["cbse class 12 boards and jee main april attempt balance", "boards & jee april balance", "jee main exam strategy", "jee 2027 preparation guide", "jee 1 on 1 mentorship call", "jee topper study routine"],
   alternates: {
     canonical: "https://mentskool.com/cbse-class-12-boards-and-jee-main-april-attempt-balance",
   },
   openGraph: {
-    title: "CBSE Class 12 Boards and JEE Main April Attempt Balance: The Symbiotic 75% & 99%ile Schedule | Mentskool",
+    title: "CBSE Class 12 Boards and JEE Main April Attempt Balance: The Balanced 75% & 99%ile Schedule | Mentskool",
     description: "February and March board exams can either derail your JEE Main preparation or become your greatest asset. Master the unified study model that secures 90%+ ",
     url: "https://mentskool.com/cbse-class-12-boards-and-jee-main-april-attempt-balance",
     siteName: "Mentskool",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
         url: "https://mentskool.com/logo.png",
         width: 1200,
         height: 630,
-        alt: "The Symbiotic 75% & 99%ile Schedule",
+        alt: "The Balanced 75% & 99%ile Schedule",
       },
     ],
   },
@@ -32,7 +32,7 @@ const config: BookCallPageConfig = {
   "slug": "cbse-class-12-boards-and-jee-main-april-attempt-balance",
   "breadcrumbLabel": "Boards & JEE April Balance",
   "examFocus": "JEE",
-  "metaTitle": "CBSE Class 12 Boards and JEE Main April Attempt Balance: The Symbiotic 75% & 99%ile Schedule | Mentskool",
+  "metaTitle": "CBSE Class 12 Boards and JEE Main April Attempt Balance: The Balanced 75% & 99%ile Schedule | Mentskool",
   "metaDescription": "February and March board exams can either derail your JEE Main preparation or become your greatest asset. Master the unified study model that secures 90%+ ",
   "keywords": [
     "cbse class 12 boards and jee main april attempt balance",
@@ -44,7 +44,7 @@ const config: BookCallPageConfig = {
   ],
   "badgeText": "Dual Prep • Board & JEE Strategy",
   "h1Prefix": "CBSE Class 12 Boards and JEE Main April Attempt Balance:",
-  "h1Highlight": "The Symbiotic 75% & 99%ile Schedule",
+  "h1Highlight": "The Balanced 75% & 99%ile Schedule",
   "heroDescription": "February and March board exams can either derail your JEE Main preparation or become your greatest asset. Master the unified study model that secures 90%+ in CBSE while sharpening your JEE April accuracy.",
   "serviceTitle": "1:1 Boards & JEE April Balance Strategy & Diagnostic Call",
   "serviceDescription": "Audit your preparation and create a customized 30-day comeback plan with an IITian Senior Mentor.",
@@ -208,7 +208,7 @@ const config: BookCallPageConfig = {
       ],
       "keyTakeaways": [
         {
-          "title": "Ultradian 90-Min Sprints",
+          "title": "Focused 90-Min Study Blocks",
           "detail": "Work with natural cognitive alertness cycles followed by 15-minute zero-screen mental rest."
         },
         {
@@ -225,7 +225,7 @@ const config: BookCallPageConfig = {
       "heading": "The Error Vault Protocol: Converting Mock Blunders into Guaranteed Marks",
       "subheading": "The exact methodology used by AIR < 500 toppers to eliminate repeat mistakes",
       "paragraphs": [
-        "Most aspirants treat mock test papers as vanity scorecards: they look at the total marks, feel either transient relief or crushing depression, and file the paper away into a drawer. High achievers, by contrast, view every test paper as an MRI scan of their intellectual blindspots. For every question missed in boards & jee april balance, a top ranker extracts three pieces of forensic data: (1) The Question Context and Trigger, (2) The Cognitive Misstep, and (3) The Behavioral Guardrail.",
+        "Most aspirants treat mock test papers as vanity scorecards: they look at the total marks, feel either transient relief or crushing depression, and file the paper away into a drawer. High achievers, by contrast, view every test paper as an MRI scan of their intellectual blindspots. For every question missed in boards & jee april balance, a top ranker extracts three pieces of diagnostic data: (1) The Question Context and Trigger, (2) The Cognitive Misstep, and (3) The Behavioral Guardrail.",
         "For example, rather than writing 'Forgot formula in CBSE Class 12 Date Sheet,' an elite student logs: 'Cognitive trap: did not verify whether acceleration was constant before applying equations of motion. Guardrail: Always circle non-constant force expressions in red pen and integrate explicitly.' By reviewing this Error Vault twice weekly, you program your subconscious instincts to avoid traps instinctively during the high-stress environment of the actual examination."
       ],
       "keyTakeaways": [

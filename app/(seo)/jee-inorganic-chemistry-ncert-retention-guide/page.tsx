@@ -47,7 +47,7 @@ const config: BookCallPageConfig = {
   "h1Highlight": "The NCERT Retention Protocol",
   "heroDescription": "Inorganic Chemistry is the highest ROI section in JEE Main and Advanced—delivering 30-40 marks in under 12 minutes on exam day. Discover the active recall matrices, color mnemonics, and salt analysis frameworks used by top rankers to achieve 100% accuracy.",
   "serviceTitle": "1:1 Inorganic Chemistry Retention & Salt Analysis Session",
-  "serviceDescription": "Book a 1-on-1 private strategy call with an IITian Chemistry topper to audit your NCERT Inorganic annotations, build customized spaced repetition cycles, and demystify Qualitative Salt Analysis.",
+  "serviceDescription": "Book a 1-on-1 private strategy call with an IITian Chemistry topper to audit your NCERT Inorganic annotations, build customized spaced repetition cycles, and explain clearly Qualitative Salt Analysis.",
   "quickStats": [
     {
       "label": "Exam Time Needed",

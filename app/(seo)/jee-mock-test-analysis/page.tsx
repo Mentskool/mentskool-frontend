@@ -196,7 +196,7 @@ export default function JeeMockTestAnalysisPage() {
               <span>Executive Summary: How Mentskool Conducts JEE Mock Post-Mortems</span>
             </div>
             <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-medium mb-5">
-              The <strong>Mentskool Mock Test Post-Mortem System</strong> replaces passive scorecard checking with a forensic 3-stage breakdown:
+              The <strong>Mentskool Mock Test Post-Mortem System</strong> replaces passive scorecard checking with a detailed 3-stage breakdown:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-300">
               <div className="flex items-start gap-2.5">
@@ -205,7 +205,7 @@ export default function JeeMockTestAnalysisPage() {
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-brand-400 mt-0.5 shrink-0" />
-                <span><strong>Rough Sheet Forensic Inspection:</strong> Your mentor checks scratch paper layout to eliminate calculation errors and illegible handwriting that cause misread answers.</span>
+                <span><strong>Rough Sheet Detailed Inspection:</strong> Your mentor checks scratch paper layout to eliminate calculation errors and illegible handwriting that cause misread answers.</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-brand-400 mt-0.5 shrink-0" />

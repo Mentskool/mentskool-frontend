@@ -247,7 +247,7 @@ export default function JeeMentorship2027Page() {
                   <div className="text-2xl font-black text-rose-400 mb-1">~205+ Marks</div>
                   <div className="text-sm font-semibold text-white">Score needed for 99% in Session 2</div>
                   <p className="text-xs text-slate-400 mt-2">
-                    By April, millions of hours of revision and dropper prep elevate the cutoff dramatically. You need 25+ more marks for the exact same rank.
+                    By April, millions of hours of revision and dropper prep raise the cutoff dramatically. You need 25+ more marks for the exact same rank.
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800/80">

@@ -295,7 +295,7 @@ export const batchB2Extensions: Record<string, SeoDeepDiveExtensionProps> = {
             detail: "Keep your existing Allen/FIITJEE/PW classes—your mentor tells you exactly what to prioritize vs skip safely.",
           },
           {
-            label: "Forensic Mock-Test Triage",
+            label: "Detailed Mock-Test Triage",
             detail: "Master Two-Round paper navigation, 35-minute Chemistry speed, and negative-mark cutoff discipline.",
           },
           {
@@ -561,7 +561,7 @@ export const batchB2Extensions: Record<string, SeoDeepDiveExtensionProps> = {
         ],
         keyTakeaways: [
           {
-            label: "Previous-Attempt Forensic Diagnosis",
+            label: "Previous-Attempt Detailed Diagnosis",
             detail: "Start with YOUR exact past JEE score split rather than re-learning Motion in 1D from zero like a Class 11 beginner.",
           },
           {
@@ -789,7 +789,7 @@ export const batchB2Extensions: Record<string, SeoDeepDiveExtensionProps> = {
         highlight: true,
       },
       {
-        col1: "3. Forensic Test Reviews",
+        col1: "3. Detailed Test Reviews",
         col2: "Round-1 vs Round-2 time audit & error classification",
         col3: "Turns careless -1 slips into +25 to +45 net gains",
       },

@@ -47,7 +47,7 @@ const config: BookCallPageConfig = {
   "h1Highlight": "The 3-Round Paper Attempting Strategy",
   "heroDescription": "If your mock test scores in Class 11 coaching tests have plateaued between 80 and 120 marks despite studying hard, the issue is NOT your syllabus knowledge. It is your paper-attempting strategy. You are getting trapped by speed bumps and losing 30+ marks to silly mistakes. Master the 3-Round Attempting Strategy used by top percentilers.",
   "serviceTitle": "1:1 Mock Paper Attempting Audit & Score Surge Session",
-  "serviceDescription": "Submit your last 2 mock test papers for a live forensic audit with an IITian mentor to identify time-wasting questions and calibrate a 3-round execution protocol.",
+  "serviceDescription": "Submit your last 2 mock test papers for a live detailed review with an IITian mentor to identify time-wasting questions and calibrate a 3-round execution protocol.",
   "quickStats": [
     {
       "label": "Immediate Score Gain",
@@ -208,7 +208,7 @@ const config: BookCallPageConfig = {
       ],
       "keyTakeaways": [
         {
-          "title": "Ultradian 90-Min Sprints",
+          "title": "Focused 90-Min Study Blocks",
           "detail": "Work with natural cognitive alertness cycles followed by 15-minute zero-screen mental rest."
         },
         {
@@ -225,7 +225,7 @@ const config: BookCallPageConfig = {
       "heading": "The Error Vault Protocol: Converting Mock Blunders into Guaranteed Marks",
       "subheading": "The exact methodology used by AIR < 500 toppers to eliminate repeat mistakes",
       "paragraphs": [
-        "Most aspirants treat mock test papers as vanity scorecards: they look at the total marks, feel either transient relief or crushing depression, and file the paper away into a drawer. High achievers, by contrast, view every test paper as an MRI scan of their intellectual blindspots. For every question missed in test anxiety & score stagnation, a top ranker extracts three pieces of forensic data: (1) The Question Context and Trigger, (2) The Cognitive Misstep, and (3) The Behavioral Guardrail.",
+        "Most aspirants treat mock test papers as vanity scorecards: they look at the total marks, feel either transient relief or crushing depression, and file the paper away into a drawer. High achievers, by contrast, view every test paper as an MRI scan of their intellectual blindspots. For every question missed in test anxiety & score stagnation, a top ranker extracts three pieces of diagnostic data: (1) The Question Context and Trigger, (2) The Cognitive Misstep, and (3) The Behavioral Guardrail.",
         "For example, rather than writing 'Forgot formula in Last 2 mock test question papers,' an elite student logs: 'Cognitive trap: did not verify whether acceleration was constant before applying equations of motion. Guardrail: Always circle non-constant force expressions in red pen and integrate explicitly.' By reviewing this Error Vault twice weekly, you program your subconscious instincts to avoid traps instinctively during the high-stress environment of the actual examination."
       ],
       "keyTakeaways": [

@@ -60,7 +60,7 @@ const faqs: FaqItem[] = [
   {
     question: "Why is 680+ considered the ideal target score for NEET UG?",
     answer:
-      "In the current competitive landscape, achieving 680+ marks places an aspirant in the top 1,500 to 2,500 All India Rank (AIR), securing admission to established AIIMS campuses (Bhopal, Jodhpur, Bhubaneswar, Rishikesh) or premier state colleges (like MAMC, VMMC, Seth GS Mumbai) through both All India Quota and State Quota.",
+      "In current competition, achieving 680+ marks places an aspirant in the top 1,500 to 2,500 All India Rank (AIR), securing admission to established AIIMS campuses (Bhopal, Jodhpur, Bhubaneswar, Rishikesh) or premier state colleges (like MAMC, VMMC, Seth GS Mumbai) through both All India Quota and State Quota.",
   },
   {
     question: "What is the subject-wise marks distribution required to reach 680+?",

@@ -276,7 +276,7 @@ export default function JeeNegativeMarkingRulesPage() {
               <div className="p-5 rounded-xl border border-slate-800 bg-slate-900/60">
                 <h3 className="text-base font-bold text-white flex items-center gap-2">
                   <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                  Step 1: The Post-Mock 24-Hour Forensic Audit
+                  Step 1: The Post-Mock 24-Hour Detailed Review
                 </h3>
                 <p className="text-slate-300 text-sm mt-2 leading-relaxed">
                   Within 24 hours of completing any full-length CBT mock, paste every wrong question into your Error Book. Tag each question with its exact error root: <strong>[Calculation]</strong>, <strong>[Formula Amnesia]</strong>, <strong>[Misread Question]</strong>, or <strong>[Reckless Guess]</strong>.

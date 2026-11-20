@@ -121,7 +121,7 @@ export default function NeetMockTestAnalysisPage() {
           },
           {
             "@type": "HowToStep",
-            name: "Update Biology Forensic Notebook",
+            name: "Update Biology Mistake Notebook",
             text: "Write down exact NCERT lines and confusing assertion-reason pairs.",
           },
         ],
@@ -198,7 +198,7 @@ export default function NeetMockTestAnalysisPage() {
               <span>Executive Summary: How AIIMS Mentors Break NEET Score Plateaus</span>
             </div>
             <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-medium mb-5">
-              The <strong>Mentskool NEET Mock Test Analysis Engine</strong> transforms stagnant test scores through four forensic review protocols:
+              The <strong>Mentskool NEET Mock Test Analysis Engine</strong> transforms stagnant test scores through four detailed review protocols:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-300">
               <div className="flex items-start gap-2.5">
@@ -252,7 +252,7 @@ export default function NeetMockTestAnalysisPage() {
                 <div className="text-xs font-bold text-sky-400 uppercase">Phase 3 (65–70 Mins)</div>
                 <h3 className="text-lg font-bold text-white">Physics Mastery (45 Qs)</h3>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Calm, unhurried numerical solving. 35 direct formula questions first, followed by remaining 8 moderate multi-step questions.
+                  Calm, patient numerical solving. 35 direct formula questions first, followed by remaining 8 moderate multi-step questions.
                 </p>
               </div>
 

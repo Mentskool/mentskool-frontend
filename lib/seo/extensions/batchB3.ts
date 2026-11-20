@@ -341,7 +341,7 @@ export const batchB3Extensions: Record<string, SeoDeepDiveExtensionProps> = {
       {
         col1: "550 – 634 Marks",
         col2: "Borderline State GMC / Competitive Push Zone",
-        col3: "Immediate forensic mock post-mortem to harvest +45 missing marks fast",
+        col3: "Immediate detailed mock post-mortem to harvest +45 missing marks fast",
       },
       {
         col1: "350 – 549 Marks",

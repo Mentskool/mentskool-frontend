@@ -165,7 +165,7 @@ export default function AllenVsPwVsMentskoolPage() {
               </div>
               <div>
                 <h2 className="text-lg font-bold text-brand-300 mb-2">
-                  The Paradigm Shift: From Content Abundance to Execution Accountability
+                  The Big Shift: From Too Many Lectures to Personal Execution
                 </h2>
                 <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
                   <strong className="text-white">Allen</strong> built the classic offline coaching empire. <strong className="text-cyan-300">Physics Wallah (PW)</strong> democratized video lectures for millions at accessible prices. But neither model solves the human execution challenge: <em className="text-white">Who notices when you procrastinate? Who audits your mock exam rough work? Who tells you which chapters to skip when you fall 3 weeks behind?</em> That is the individual accountability layer <strong className="text-brand-300">Mentskool</strong> provides.
@@ -219,7 +219,7 @@ export default function AllenVsPwVsMentskoolPage() {
                     <td className="p-4 font-semibold text-white">Mock Test Error Auditing</td>
                     <td className="p-4 text-slate-400">Automated marks sheet with rank percentiles</td>
                     <td className="p-4 text-slate-400">App-based analytics &amp; written answer keys</td>
-                    <td className="p-4 text-emerald-400 font-bold">Forensic 1-on-1 review of rough sheets &amp; Error Book</td>
+                    <td className="p-4 text-emerald-400 font-bold">Detailed 1-on-1 review of rough sheets &amp; Error Book</td>
                   </tr>
                 </tbody>
               </table>

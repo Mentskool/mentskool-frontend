@@ -35,7 +35,7 @@ const config: BookCallPageConfig = {
   "metaTitle": "Parents' Guide to NEET Scorecard & Seat Allotment | Mentskool",
   "metaDescription": "Step-by-step explanation for parents on reading NEET-UG scorecards, assessing realistic college prospects, avoiding private college counseling scams, and supporting their child.",
   "keywords": ["parents guide neet scorecard", "neet all india rank vs state rank", "realistic cutoff for government mbbs parents", "neet counseling fraud prevention", "supporting child with low neet score"],
-  "badgeText": "Parents Guide • NEET Counseling Demystified",
+  "badgeText": "Parents Guide • NEET Counseling Explained",
   "h1Prefix": "Parents' Guide to NEET Scorecard & Allotment:",
   "h1Highlight": "AIQ vs State Quota, Category Merit & Cutoff Realities",
   "heroDescription": "Step-by-step explanation for parents on reading NEET-UG scorecards, assessing realistic college prospects, avoiding private college counseling scams, and supporting their child.",

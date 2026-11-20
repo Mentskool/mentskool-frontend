@@ -6,14 +6,14 @@ import {
 } from "@/components/seo/BookCallPageTemplate";
 
 export const metadata: Metadata = {
-  title: "Score Stuck at 450 in NEET Mocks? How to Cross 600: The Forensic Diagnosis & Score Surge Strategy | Mentskool",
+  title: "Score Stuck at 450 in NEET Mocks? How to Cross 600: The Detailed Diagnosis & Score Surge Strategy | Mentskool",
   description: "Stuck in the 450-500 score plateau despite studying 10 hours a day? Identify the invisible leakages in your preparation: 60 marks in silly mistakes, 50 mar",
   keywords: ["score stuck at 450 in neet mocks how to cross 600", "stuck at 450 in neet mocks", "neet main exam strategy", "neet 2027 preparation guide", "neet 1 on 1 mentorship call", "neet topper study routine"],
   alternates: {
     canonical: "https://mentskool.com/score-stuck-at-450-in-neet-mocks-how-to-cross-600",
   },
   openGraph: {
-    title: "Score Stuck at 450 in NEET Mocks? How to Cross 600: The Forensic Diagnosis & Score Surge Strategy | Mentskool",
+    title: "Score Stuck at 450 in NEET Mocks? How to Cross 600: The Detailed Diagnosis & Score Surge Strategy | Mentskool",
     description: "Stuck in the 450-500 score plateau despite studying 10 hours a day? Identify the invisible leakages in your preparation: 60 marks in silly mistakes, 50 mar",
     url: "https://mentskool.com/score-stuck-at-450-in-neet-mocks-how-to-cross-600",
     siteName: "Mentskool",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
         url: "https://mentskool.com/logo.png",
         width: 1200,
         height: 630,
-        alt: "The Forensic Diagnosis & Score Surge Strategy",
+        alt: "The Detailed Diagnosis & Score Surge Strategy",
       },
     ],
   },
@@ -32,7 +32,7 @@ const config: BookCallPageConfig = {
   "slug": "score-stuck-at-450-in-neet-mocks-how-to-cross-600",
   "breadcrumbLabel": "Stuck at 450 in NEET Mocks",
   "examFocus": "NEET",
-  "metaTitle": "Score Stuck at 450 in NEET Mocks? How to Cross 600: The Forensic Diagnosis & Score Surge Strategy | Mentskool",
+  "metaTitle": "Score Stuck at 450 in NEET Mocks? How to Cross 600: The Detailed Diagnosis & Score Surge Strategy | Mentskool",
   "metaDescription": "Stuck in the 450-500 score plateau despite studying 10 hours a day? Identify the invisible leakages in your preparation: 60 marks in silly mistakes, 50 mar",
   "keywords": [
     "score stuck at 450 in neet mocks how to cross 600",
@@ -44,7 +44,7 @@ const config: BookCallPageConfig = {
   ],
   "badgeText": "Score Plateau • 450 to 600+ Leap",
   "h1Prefix": "Score Stuck at 450 in NEET Mocks? How to Cross 600:",
-  "h1Highlight": "The Forensic Diagnosis & Score Surge Strategy",
+  "h1Highlight": "The Detailed Diagnosis & Score Surge Strategy",
   "heroDescription": "Stuck in the 450-500 score plateau despite studying 10 hours a day? Identify the invisible leakages in your preparation: 60 marks in silly mistakes, 50 marks in negative guessing, and weak Organic Chemistry.",
   "serviceTitle": "1:1 Stuck at 450 in NEET Mocks Strategy & Diagnostic Call",
   "serviceDescription": "Audit your preparation and create a customized 30-day comeback plan with an AIIMS Doctor Mentor.",
@@ -104,7 +104,7 @@ const config: BookCallPageConfig = {
     {
       "timeframe": "Phase 2 • Days 8 to 21",
       "phaseTitle": "Prerequisite Reconstruction & Problem Drills",
-      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build solid confidence in Forensic analysis of the 450-mark score.",
+      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build solid confidence in Detailed analysis of the 450-mark score.",
       "deliverables": [
         "Mastery of core concepts in Last 3 mock test question papers with answer keys and Itemized error classification ledger",
         "Creation of a physical Error Vault / Mistake Copy",
@@ -208,7 +208,7 @@ const config: BookCallPageConfig = {
       ],
       "keyTakeaways": [
         {
-          "title": "Ultradian 90-Min Sprints",
+          "title": "Focused 90-Min Study Blocks",
           "detail": "Work with natural cognitive alertness cycles followed by 15-minute zero-screen mental rest."
         },
         {
@@ -225,7 +225,7 @@ const config: BookCallPageConfig = {
       "heading": "The Error Vault Protocol: Converting Mock Blunders into Guaranteed Marks",
       "subheading": "The exact methodology used by AIR < 500 toppers to eliminate repeat mistakes",
       "paragraphs": [
-        "Most aspirants treat mock test papers as vanity scorecards: they look at the total marks, feel either transient relief or crushing depression, and file the paper away into a drawer. High achievers, by contrast, view every test paper as an MRI scan of their intellectual blindspots. For every question missed in stuck at 450 in neet mocks, a top ranker extracts three pieces of forensic data: (1) The Question Context and Trigger, (2) The Cognitive Misstep, and (3) The Behavioral Guardrail.",
+        "Most aspirants treat mock test papers as vanity scorecards: they look at the total marks, feel either transient relief or crushing depression, and file the paper away into a drawer. High achievers, by contrast, view every test paper as an MRI scan of their intellectual blindspots. For every question missed in stuck at 450 in neet mocks, a top ranker extracts three pieces of diagnostic data: (1) The Question Context and Trigger, (2) The Cognitive Misstep, and (3) The Behavioral Guardrail.",
         "For example, rather than writing 'Forgot formula in Last 3 mock test question papers with answer keys,' an elite student logs: 'Cognitive trap: did not verify whether acceleration was constant before applying equations of motion. Guardrail: Always circle non-constant force expressions in red pen and integrate explicitly.' By reviewing this Error Vault twice weekly, you program your subconscious instincts to avoid traps instinctively during the high-stress environment of the actual examination."
       ],
       "keyTakeaways": [

@@ -104,7 +104,7 @@ const config: BookCallPageConfig = {
     {
       "timeframe": "Phase 2 • Days 8 to 21",
       "phaseTitle": "Prerequisite Reconstruction & Problem Drills",
-      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build solid confidence in Forensic analysis of the January scorecard, identifying the 40 marks lost to calculation slips, transitioning to timed PYQ practice, and balancing Class 12 Boards.",
+      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build solid confidence in Detailed analysis of the January scorecard, identifying the 40 marks lost to calculation slips, transitioning to timed PYQ practice, and balancing Class 12 Boards.",
       "deliverables": [
         "Mastery of core concepts in January Shift Response Sheet & Scorecard and NCERT Line-by-Line Chem Revision",
         "Creation of a physical Error Vault / Mistake Copy",
@@ -208,7 +208,7 @@ const config: BookCallPageConfig = {
       ],
       "keyTakeaways": [
         {
-          "title": "Ultradian 90-Min Sprints",
+          "title": "Focused 90-Min Study Blocks",
           "detail": "Work with natural cognitive alertness cycles followed by 15-minute zero-screen mental rest."
         },
         {
@@ -225,7 +225,7 @@ const config: BookCallPageConfig = {
       "heading": "The Error Vault Protocol: Converting Mock Blunders into Guaranteed Marks",
       "subheading": "The exact methodology used by AIR < 500 toppers to eliminate repeat mistakes",
       "paragraphs": [
-        "Most aspirants treat mock test papers as vanity scorecards: they look at the total marks, feel either transient relief or crushing depression, and file the paper away into a drawer. High achievers, by contrast, view every test paper as an MRI scan of their intellectual blindspots. For every question missed in scored 70-80 percentile in jan, a top ranker extracts three pieces of forensic data: (1) The Question Context and Trigger, (2) The Cognitive Misstep, and (3) The Behavioral Guardrail.",
+        "Most aspirants treat mock test papers as vanity scorecards: they look at the total marks, feel either transient relief or crushing depression, and file the paper away into a drawer. High achievers, by contrast, view every test paper as an MRI scan of their intellectual blindspots. For every question missed in scored 70-80 percentile in jan, a top ranker extracts three pieces of diagnostic data: (1) The Question Context and Trigger, (2) The Cognitive Misstep, and (3) The Behavioral Guardrail.",
         "For example, rather than writing 'Forgot formula in January Shift Response Sheet & Scorecard,' an elite student logs: 'Cognitive trap: did not verify whether acceleration was constant before applying equations of motion. Guardrail: Always circle non-constant force expressions in red pen and integrate explicitly.' By reviewing this Error Vault twice weekly, you program your subconscious instincts to avoid traps instinctively during the high-stress environment of the actual examination."
       ],
       "keyTakeaways": [

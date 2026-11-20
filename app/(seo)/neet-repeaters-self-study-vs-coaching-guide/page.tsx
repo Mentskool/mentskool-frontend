@@ -124,7 +124,7 @@ const config: BookCallPageConfig = {
     {
       "timeframe": "6:30 PM - 10:00 PM",
       "phaseTitle": "Block 3: Biology Mastery & Error Autopsy",
-      "description": "NCERT line-by-line reading, solving 100 timed Biology questions, and conducting a forensic post-mortem of afternoon mistakes.",
+      "description": "NCERT line-by-line reading, solving 100 timed Biology questions, and conducting a thorough post-test review of afternoon mistakes.",
       "deliverables": [
         "Complete NCERT notes chapter summary",
         "Solving 100 timed Biology MCQs",

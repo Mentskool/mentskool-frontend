@@ -74,7 +74,7 @@ const config: BookCallPageConfig = {
   "overviewIntro": "In Session 1, hundreds of thousands of aspirants sit for the exam with incomplete 12th-grade syllabi, uncalibrated timing, and exam-day shock. By Session 2, however, you possess a priceless asset: your exact official January question paper and response sheet. By treating Session 1 as a live diagnostic run, you can reverse-engineer your errors and unlock a massive percentile surge.",
   "overviewPoints": [
     {
-      "title": "Forensic Response Sheet Audit",
+      "title": "Detailed Response Sheet Audit",
       "detail": "Analyzing your exact January NTA response sheet to categorize every lost mark into conceptual blindness, silly mistakes, or time running out."
     },
     {
@@ -233,7 +233,7 @@ const config: BookCallPageConfig = {
     {
       "step": "01",
       "title": "Upload January NTA Response Sheet",
-      "description": "Provide your official question paper and response sheet for our forensic mark-leakage audit."
+      "description": "Provide your official question paper and response sheet for our detailed mark-leakage audit."
     },
     {
       "step": "02",

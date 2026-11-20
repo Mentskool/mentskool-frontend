@@ -297,7 +297,7 @@ export default function NeetNegativeMarkingRulesPage() {
           <SeoMentorFunnel
             examFocus="NEET"
             title="Audit Your Negative Marks With Top Medical Mentors"
-            subtitle="Send your mock test OMR sheets to an AIIMS mentor for forensic error analysis. Learn how to diagnose calculation mistakes, eliminate panic-guessing, and secure 660+ consistently."
+            subtitle="Send your mock test OMR sheets to an AIIMS mentor for detailed error analysis. Learn how to diagnose calculation mistakes, eliminate panic-guessing, and secure 660+ consistently."
           />
 
           {/* Section 4: FAQ Accordion */}

@@ -147,7 +147,7 @@ export default function NeetMentorshipPage() {
               1:1 NEET Mentorship: <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-sky-400">Target 680+ with AIIMS Rankers</span>
             </h1>
             <p className="text-base sm:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto">
-              Target a top Government Medical College seat with private 1-on-1 guidance from recent rankers at <strong>AIIMS New Delhi, JIPMER, and top GMCs</strong>. Weekly custom roadmaps, NCERT active recall tests, and forensic mock error audits.
+              Target a top Government Medical College seat with private 1-on-1 guidance from recent rankers at <strong>AIIMS New Delhi, JIPMER, and top GMCs</strong>. Weekly custom roadmaps, NCERT active recall tests, and detailed mock error audits.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">

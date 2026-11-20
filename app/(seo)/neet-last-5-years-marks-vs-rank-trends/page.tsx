@@ -65,7 +65,7 @@ const faqs: FaqItem[] = [
   {
     question: "What is a safe score for a Government Medical College (MBBS) under All India Quota?",
     answer:
-      "In the stabilized post-2024 landscape, an unreserved (General/UR) candidate requires a minimum safe score of 655+ marks (AIR within ~22,000 to 24,000) for a guaranteed Government Medical College seat through the 15% All India Quota (AIQ). For OBC and EWS candidates, the safe threshold sits around 650–652 marks.",
+      "In the stabilized post-2024 environment, an unreserved (General/UR) candidate requires a minimum safe score of 655+ marks (AIR within ~22,000 to 24,000) for a guaranteed Government Medical College seat through the 15% All India Quota (AIQ). For OBC and EWS candidates, the safe threshold sits around 650–652 marks.",
   },
   {
     question: "How has the cutoff for qualifying NEET changed over the last 5 years?",
@@ -153,7 +153,7 @@ export default function NeetLast5YearsMarksVsRankTrendsPage() {
               </span>
             </h1>
             <p className="mt-6 text-base sm:text-lg text-slate-400 leading-relaxed max-w-3xl mx-auto">
-              The competition landscape of NEET UG has undergone seismic changes over the past five years. Reviewing the evolution of marks versus ranks from 2021 to 2026 highlights why targeting last year&apos;s cutoff is risky, and how top aspirants build a buffer for guaranteed government MBBS seats.
+              The competition environment of NEET UG has undergone seismic changes over the past five years. Reviewing the evolution of marks versus ranks from 2021 to 2026 highlights why targeting last year&apos;s cutoff is risky, and how top aspirants build a buffer for guaranteed government MBBS seats.
             </p>
           </header>
 

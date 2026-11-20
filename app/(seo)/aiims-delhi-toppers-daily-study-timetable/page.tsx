@@ -74,7 +74,7 @@ const config: BookCallPageConfig = {
   "overviewIntro": "Popular folklore claims that cracking AIIMS New Delhi requires surviving on 4 hours of sleep and studying until daybreak. In reality, medical science proves that cognitive memory consolidation and analytical speed in Physics require at least 7 hours of REM sleep. What distinguishes top-50 rankers is system design, zero distraction, and relentless active retrieval.",
   "overviewPoints": [
     {
-      "title": "Ultradian 90-Minute Focus Sprints",
+      "title": "Focused 90-Minute Study Blocks",
       "detail": "Studying in uninterrupted 90-minute blocks aligned with natural circadian alertness peaks, followed by 15 minutes of zero-screen cognitive rest."
     },
     {
@@ -124,7 +124,7 @@ const config: BookCallPageConfig = {
     {
       "timeframe": "7:00 PM - 10:30 PM",
       "phaseTitle": "Phase 4: Error Autopsy & Next-Day Blueprint",
-      "description": "Meticulous post-mortem of afternoon mistakes, resolving lingering doubts, and planning the precise question sets for the following morning.",
+      "description": "Thorough review of afternoon mistakes, resolving lingering doubts, and planning the precise question sets for the following morning.",
       "deliverables": [
         "Root-cause diagnosis of every negative mark",
         "Consolidation of new tricks into short notes",
@@ -243,7 +243,7 @@ const config: BookCallPageConfig = {
     {
       "step": "03",
       "title": "60-Min 1-on-1 Strategy Optimization",
-      "description": "Restructure your daily study blocks, establish ultradian focus cycles, and eliminate time-wasting coaching obligations."
+      "description": "Restructure your daily study blocks, establish focused 90-minute study cycles, and eliminate time-wasting coaching obligations."
     },
     {
       "step": "04",

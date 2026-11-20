@@ -71,7 +71,7 @@ const config: BookCallPageConfig = {
     }
   ],
   "overviewHeading": "Why Standard Coaching Methods Break Down in Is Class 11 Really Hard?",
-  "overviewIntro": "In traditional coaching classrooms across India, students struggling with is class 11 really hard? are treated with a one-size-fits-all approach: more video lectures, generic homework assignments, and public test score shaming. However, empirical analysis of top rankers reveals that demystifying the fear surrounding class 11 science and equipping students with the psychological resilience needed to embrace difficulty requires surgical diagnostic intervention, individual habit rewiring, and step-by-step problem solving. The table below illustrates why personalized 1-on-1 mentorship consistently outperforms mass batch broadcasting.",
+  "overviewIntro": "In traditional coaching classrooms across India, students struggling with is class 11 really hard? are treated with a one-size-fits-all approach: more video lectures, generic homework assignments, and public test score shaming. However, empirical analysis of top rankers reveals that simplifying the fear surrounding class 11 science and equipping students with the psychological resilience needed to embrace difficulty requires surgical diagnostic intervention, individual habit rewiring, and step-by-step problem solving. The table below illustrates why personalized 1-on-1 mentorship consistently outperforms mass batch broadcasting.",
   "overviewPoints": [
     {
       "title": "Individual Cognitive Diagnostic vs Uniform Lectures",
@@ -104,7 +104,7 @@ const config: BookCallPageConfig = {
     {
       "timeframe": "Phase 2 • Days 8 to 21",
       "phaseTitle": "Prerequisite Reconstruction & Problem Drills",
-      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build solid confidence in Demystifying the fear surrounding Class 11 science and equipping students with the psychological resilience needed to embrace difficulty.",
+      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build solid confidence in Simplifying the fear surrounding Class 11 science and equipping students with the psychological resilience needed to embrace difficulty.",
       "deliverables": [
         "Mastery of core concepts in Open mindset and Willingness to make mistakes",
         "Creation of a physical Error Vault / Mistake Copy",
@@ -204,11 +204,11 @@ const config: BookCallPageConfig = {
       "subheading": "How top rankers architect their daily study blocks to achieve effortless mastery",
       "paragraphs": [
         "Achieving a decisive turnaround in is class 11 really hard? requires shifting from emotional motivation to systematic operational engineering. Top 0.1% rankers at IITs and AIIMS do not rely on burst-and-crash motivation cycles. Instead, they design their days around three non-negotiable structural anchors: (1) Protected morning analytical problem slots, (2) Active recall blinder sessions for factual retention, and (3) Ruthless error archiving.",
-        "By breaking the daunting mountain of demystifying the fear surrounding class 11 science and equipping students with the psychological resilience needed to embrace difficulty into discrete 90-minute focused 90-minute study sessions, cognitive fatigue is permanently mitigated. During each sprint, your phone is physically isolated in another room, all notifications are severed, and the objective is clear: solve 20 to 25 challenging problems without checking solutions. If you stumble on a concept in Willingness to make mistakes, you note the precise trigger in your Error Vault rather than abandoning the problem set in frustration."
+        "By breaking the daunting mountain of simplifying the fear surrounding class 11 science and equipping students with the psychological resilience needed to embrace difficulty into discrete 90-minute focused 90-minute study sessions, cognitive fatigue is permanently mitigated. During each sprint, your phone is physically isolated in another room, all notifications are severed, and the objective is clear: solve 20 to 25 challenging problems without checking solutions. If you stumble on a concept in Willingness to make mistakes, you note the precise trigger in your Error Vault rather than abandoning the problem set in frustration."
       ],
       "keyTakeaways": [
         {
-          "title": "Ultradian 90-Min Sprints",
+          "title": "Focused 90-Min Study Blocks",
           "detail": "Work with natural cognitive alertness cycles followed by 15-minute zero-screen mental rest."
         },
         {
@@ -225,7 +225,7 @@ const config: BookCallPageConfig = {
       "heading": "The Error Vault Protocol: Converting Mock Blunders into Guaranteed Marks",
       "subheading": "The exact methodology used by AIR < 500 toppers to eliminate repeat mistakes",
       "paragraphs": [
-        "Most aspirants treat mock test papers as vanity scorecards: they look at the total marks, feel either transient relief or crushing depression, and file the paper away into a drawer. High achievers, by contrast, view every test paper as an MRI scan of their intellectual blindspots. For every question missed in is class 11 really hard?, a top ranker extracts three pieces of forensic data: (1) The Question Context and Trigger, (2) The Cognitive Misstep, and (3) The Behavioral Guardrail.",
+        "Most aspirants treat mock test papers as vanity scorecards: they look at the total marks, feel either transient relief or crushing depression, and file the paper away into a drawer. High achievers, by contrast, view every test paper as an MRI scan of their intellectual blindspots. For every question missed in is class 11 really hard?, a top ranker extracts three pieces of diagnostic data: (1) The Question Context and Trigger, (2) The Cognitive Misstep, and (3) The Behavioral Guardrail.",
         "For example, rather than writing 'Forgot formula in Open mindset,' an elite student logs: 'Cognitive trap: did not verify whether acceleration was constant before applying equations of motion. Guardrail: Always circle non-constant force expressions in red pen and integrate explicitly.' By reviewing this Error Vault twice weekly, you program your subconscious instincts to avoid traps instinctively during the high-stress environment of the actual examination."
       ],
       "keyTakeaways": [

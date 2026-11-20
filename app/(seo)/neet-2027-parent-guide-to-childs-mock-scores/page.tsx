@@ -7,14 +7,14 @@ import {
 
 export const metadata: Metadata = {
   title: "Parents' Guide to NEET Mock Scores: How to Support Your Child | Mentskool",
-  description: "A practical guide for parents on handling low NEET mock test scores. Learn how to support your child, reduce exam anxiety, and foster a winning mindset.",
+  description: "A practical guide for parents on handling low NEET mock test scores. Learn how to support your child, reduce exam anxiety, and build a winning mindset.",
   keywords: ["parents guide neet mock test scores", "child scoring low in neet coaching", "how to support child during neet prep", "neet score drops parent advice", "medical entrance exam stress parents", "parent consultation for neet aspirants"],
   alternates: {
     canonical: "https://mentskool.com/neet-2027-parent-guide-to-childs-mock-scores",
   },
   openGraph: {
     title: "Parents' Guide to NEET Mock Scores: How to Support Your Child | Mentskool",
-    description: "A practical guide for parents on handling low NEET mock test scores. Learn how to support your child, reduce exam anxiety, and foster a winning mindset.",
+    description: "A practical guide for parents on handling low NEET mock test scores. Learn how to support your child, reduce exam anxiety, and build a winning mindset.",
     url: "https://mentskool.com/neet-2027-parent-guide-to-childs-mock-scores",
     siteName: "Mentskool",
     images: [
@@ -33,7 +33,7 @@ const config: BookCallPageConfig = {
   "breadcrumbLabel": "Parent Guide to NEET Mock Scores",
   "examFocus": "NEET",
   "metaTitle": "Parents' Guide to NEET Mock Scores: How to Support Your Child | Mentskool",
-  "metaDescription": "A practical guide for parents on handling low NEET mock test scores. Learn how to support your child, reduce exam anxiety, and foster a winning mindset.",
+  "metaDescription": "A practical guide for parents on handling low NEET mock test scores. Learn how to support your child, reduce exam anxiety, and build a winning mindset.",
   "keywords": [
     "parents guide neet mock test scores",
     "child scoring low in neet coaching",
@@ -208,7 +208,7 @@ const config: BookCallPageConfig = {
       ],
       "keyTakeaways": [
         {
-          "title": "Ultradian 90-Min Sprints",
+          "title": "Focused 90-Min Study Blocks",
           "detail": "Work with natural cognitive alertness cycles followed by 15-minute zero-screen mental rest."
         },
         {
@@ -225,7 +225,7 @@ const config: BookCallPageConfig = {
       "heading": "The Error Vault Protocol: Converting Mock Blunders into Guaranteed Marks",
       "subheading": "The exact methodology used by AIR < 500 toppers to eliminate repeat mistakes",
       "paragraphs": [
-        "Most aspirants treat mock test papers as vanity scorecards: they look at the total marks, feel either transient relief or crushing depression, and file the paper away into a drawer. High achievers, by contrast, view every test paper as an MRI scan of their intellectual blindspots. For every question missed in parent guide to neet mock scores, a top ranker extracts three pieces of forensic data: (1) The Question Context and Trigger, (2) The Cognitive Misstep, and (3) The Behavioral Guardrail.",
+        "Most aspirants treat mock test papers as vanity scorecards: they look at the total marks, feel either transient relief or crushing depression, and file the paper away into a drawer. High achievers, by contrast, view every test paper as an MRI scan of their intellectual blindspots. For every question missed in parent guide to neet mock scores, a top ranker extracts three pieces of diagnostic data: (1) The Question Context and Trigger, (2) The Cognitive Misstep, and (3) The Behavioral Guardrail.",
         "For example, rather than writing 'Forgot formula in Recent mock score reports,' an elite student logs: 'Cognitive trap: did not verify whether acceleration was constant before applying equations of motion. Guardrail: Always circle non-constant force expressions in red pen and integrate explicitly.' By reviewing this Error Vault twice weekly, you program your subconscious instincts to avoid traps instinctively during the high-stress environment of the actual examination."
       ],
       "keyTakeaways": [
