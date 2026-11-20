@@ -37,8 +37,11 @@ export default function HomePage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left Column: Heading, Subtitle, Badges, CTAs */}
           <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
-            {/* Top Status Pill */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg border border-sky-300/80 bg-white/90 backdrop-blur-md text-xs font-semibold uppercase tracking-wider text-sky-950 mb-6 shadow-soft transition-all hover:shadow-card hover:border-sky-400">
+            {/* Top Status Pill - Direct 1:1 Call CTA */}
+            <Link
+              href="/book-call"
+              className="group inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg border border-sky-300/80 bg-white/95 backdrop-blur-md text-xs font-semibold uppercase tracking-wider text-sky-950 mb-6 shadow-soft transition-all hover:shadow-card hover:border-blue-400 hover:bg-blue-50/80 active:scale-[0.98]"
+            >
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-500 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500"></span>
@@ -47,7 +50,10 @@ export default function HomePage() {
                 1:1 Mentorship for JEE &amp; NEET Aspirants
                 <Sparkles className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
               </span>
-            </div>
+              <span className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-700 ml-1 pl-2 border-l border-sky-200 group-hover:text-blue-800 group-hover:translate-x-0.5 transition-all">
+                Book Call &rarr;
+              </span>
+            </Link>
 
             {/* Main Hero Headline */}
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black font-display text-ink tracking-tight leading-[1.05] mb-6 select-none">
