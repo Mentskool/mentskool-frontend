@@ -24,6 +24,12 @@ import { SeoBreadcrumbs } from "@/components/seo/SeoBreadcrumbs";
 import { SeoFaqAccordion, FaqItem } from "@/components/seo/SeoFaqAccordion";
 import { SeoMentorFunnel } from "@/components/seo/SeoMentorFunnel";
 import { SeoCtaBanner } from "@/components/seo/SeoCtaBanner";
+import {
+  QuickAnswerBox,
+  TableOfContents,
+  renderAutoLinkedParagraph,
+} from "@/components/seo/AutoLinkContent";
+import { EmbeddedQuickEstimator } from "@/components/seo/EmbeddedQuickEstimator";
 
 export interface SessionTimelinePhase {
   timeframe: string;
@@ -199,14 +205,24 @@ export function BookCallPageTemplate({ config }: { config: BookCallPageConfig })
             ))}
           </section>
 
+          {/* Quick Answer Box (Google Featured Snippet Position 0 Target) */}
+          <QuickAnswerBox
+            title={config.h1Highlight}
+            summary={config.heroDescription}
+            keyBullets={config.overviewPoints.slice(0, 3).map((pt) => `${pt.title}: ${pt.detail}`)}
+          />
+
+          {/* Table of Contents for Google Sitelinks */}
+          <TableOfContents />
+
           {/* Executive Overview & Diagnostic Purpose */}
-          <section className="my-12 p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-blue-500/30 shadow-elevated">
+          <section id="overview" className="my-12 p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-blue-500/30 shadow-elevated">
             <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-blue-400 mb-3">
               <Sparkles className="w-4 h-4 text-blue-400" />
               <span>{config.overviewHeading}</span>
             </div>
             <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-medium mb-6">
-              {config.overviewIntro}
+              {renderAutoLinkedParagraph(config.overviewIntro, config.slug)}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-300">
               {config.overviewPoints.map((pt, i) => (
@@ -264,7 +280,7 @@ export function BookCallPageTemplate({ config }: { config: BookCallPageConfig })
           </section>
 
           {/* Session Architecture: What Happens in 45 Minutes */}
-          <section className="my-14">
+          <section id="call-protocol" className="my-14">
             <div className="text-center max-w-3xl mx-auto mb-10">
               <span className="text-xs font-bold text-sky-400 uppercase tracking-widest">
                 Structured Call Blueprint
@@ -312,7 +328,7 @@ export function BookCallPageTemplate({ config }: { config: BookCallPageConfig })
           </section>
 
           {/* Comparison Matrix: Coaching Doubt Desk vs Mentskool 1:1 Video Call */}
-          <section className="my-14">
+          <section id="comparison" className="my-14">
             <div className="text-center max-w-3xl mx-auto mb-8">
               <span className="text-xs font-bold text-teal-400 uppercase tracking-widest">
                 Proven Efficacy
@@ -359,48 +375,56 @@ export function BookCallPageTemplate({ config }: { config: BookCallPageConfig })
           </section>
 
           {/* Deep Dive Editorial Chapters (Ensuring >1200+ words per page) */}
-          <section className="my-14 space-y-10">
+          <section id="blueprint-sections" className="my-14 space-y-10">
             {config.sections.map((sec, i) => (
-              <article
-                key={i}
-                className="p-6 sm:p-10 rounded-3xl bg-slate-900/40 border border-slate-800/80 space-y-4"
-              >
-                <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                  {sec.heading}
-                </h2>
-                {sec.subheading && (
-                  <p className="text-xs sm:text-sm font-semibold text-sky-400">
-                    {sec.subheading}
-                  </p>
-                )}
-                <div className="space-y-3.5 text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  {sec.paragraphs.map((p, pIdx) => (
-                    <p key={pIdx}>{p}</p>
-                  ))}
-                </div>
+              <React.Fragment key={i}>
+                <article
+                  className="p-6 sm:p-10 rounded-3xl bg-slate-900/40 border border-slate-800/80 space-y-4"
+                >
+                  <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                    {sec.heading}
+                  </h2>
+                  {sec.subheading && (
+                    <p className="text-xs sm:text-sm font-semibold text-sky-400">
+                      {sec.subheading}
+                    </p>
+                  )}
+                  <div className="space-y-3.5 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    {sec.paragraphs.map((p, pIdx) => (
+                      <p key={pIdx}>{renderAutoLinkedParagraph(p, config.slug)}</p>
+                    ))}
+                  </div>
 
-                {sec.keyTakeaways && sec.keyTakeaways.length > 0 && (
-                  <div className="mt-5 p-4 sm:p-5 rounded-2xl bg-slate-950/70 border border-slate-800/90 space-y-2.5">
-                    <div className="text-xs font-bold text-teal-300 uppercase tracking-wider">
-                      Strategic Takeaways:
+                  {sec.keyTakeaways && sec.keyTakeaways.length > 0 && (
+                    <div className="mt-5 p-4 sm:p-5 rounded-2xl bg-slate-950/70 border border-slate-800/90 space-y-2.5">
+                      <div className="text-xs font-bold text-teal-300 uppercase tracking-wider">
+                        Strategic Takeaways:
+                      </div>
+                      <ul className="space-y-2">
+                        {sec.keyTakeaways.map((takeaway, tIdx) => (
+                          <li
+                            key={tIdx}
+                            className="flex items-start gap-2 text-xs sm:text-sm text-slate-300"
+                          >
+                            <Target className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
+                            <span>
+                              <strong className="text-white">{takeaway.title}:</strong>{" "}
+                              {takeaway.detail}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <ul className="space-y-2">
-                      {sec.keyTakeaways.map((takeaway, tIdx) => (
-                        <li
-                          key={tIdx}
-                          className="flex items-start gap-2 text-xs sm:text-sm text-slate-300"
-                        >
-                          <Target className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
-                          <span>
-                            <strong className="text-white">{takeaway.title}:</strong>{" "}
-                            {takeaway.detail}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+                  )}
+                </article>
+
+                {/* Embed live interactive score estimator mid-article */}
+                {i === 1 && (
+                  <div id="interactive-estimator">
+                    <EmbeddedQuickEstimator examFocus={config.examFocus} />
                   </div>
                 )}
-              </article>
+              </React.Fragment>
             ))}
           </section>
 
