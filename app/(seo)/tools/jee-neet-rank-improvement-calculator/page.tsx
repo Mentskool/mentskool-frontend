@@ -70,7 +70,7 @@ const faqs: FaqItem[] = [
   {
     question: "What is the single most effective intervention to break a score plateau?",
     answer:
-      "The '24-Hour Forensic Mock Audit'. Within 24 hours of every full-length mock, categorize every wrong question into: 1) Concept Blindspot, 2) Calculation / Arithmetic Slip, or 3) Misread Prompt. Reviewing these specific categories before the next mock breaks habitual error patterns.",
+      "The '24-Hour Mock Test Error Review'. Within 24 hours of every full-length mock, categorize every wrong question into: 1) Concept Blindspot, 2) Calculation / Arithmetic Slip, or 3) Misread Prompt. Reviewing these specific categories before the next mock breaks habitual error patterns.",
   },
   {
     question: "How many full-length mock tests should I take before the final exam?",

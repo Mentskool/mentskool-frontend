@@ -93,7 +93,7 @@ const config: BookCallPageConfig = {
   "timelinePhases": [
     {
       "timeframe": "Day 1 - 3",
-      "phaseTitle": "Forensic Paper Audit & Diagnostic Baseline",
+      "phaseTitle": "Detailed Paper Audit & Diagnostic Baseline",
       "description": "Your AIIMS mentor analyzes your last 3 full-syllabus mock papers question-by-question to categorize errors into conceptual gaps, calculation slips, or time misallocations.",
       "deliverables": [
         "Itemized 3-tier error log categorization",
@@ -143,7 +143,7 @@ const config: BookCallPageConfig = {
     {
       "aspect": "Curriculum Customization",
       "genericCoaching": "Rigid schedule; identical lectures for all students",
-      "mentskool1on1": "100% bespoke based on your mock exam error audit"
+      "mentskool1on1": "100% personalized based on your mock test error audit"
     },
     {
       "aspect": "Physics Fear Remediation",
@@ -189,7 +189,7 @@ const config: BookCallPageConfig = {
       "subheading": "Turning lost marks into predictable government medical college seats",
       "paragraphs": [
         "In any standard 720-mark NEET test paper, a student scoring 520 marks typically attempts 145-155 questions. Among their incorrect attempts, an average of 9 questions are lost to 'silly errors' (misreading 'incorrect' for 'correct', bubbling slips, or sign errors), and another 8 questions are attempted on hunch-based intuition resulting in negative penalties.",
-        "A Mentskool 1-on-1 mentor conducts a forensic autopsy on these 17 questions. By identifying whether the error was induced by cognitive fatigue in the 150th minute, poor rough-sheet organization in Physics, or an unaddressed NCERT exception, the mentor equips the student with tactical guardrails. Eliminating just 12 avoidable errors recovers 60 marks—often elevating an aspirant from a private college cutoff to a premier state government medical college."
+        "A Mentskool 1-on-1 mentor conducts a detailed autopsy on these 17 questions. By identifying whether the error was induced by cognitive fatigue in the 150th minute, poor rough-sheet organization in Physics, or an unaddressed NCERT exception, the mentor equips the student with tactical guardrails. Eliminating just 12 avoidable errors recovers 60 marks—often elevating an aspirant from a private college cutoff to a premier state government medical college."
       ],
       "keyTakeaways": [
         {

@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "NEET Weak Topic Tracking: Surgical Remediation with AIIMS Doctors",
     description:
-      "Transform difficult medical chapters into high-scoring assets using forensic error mapping with verified AIIMS rankers.",
+      "Transform difficult medical chapters into high-scoring assets using targeted error mapping with verified AIIMS rankers.",
     url: "https://mentskool.com/neet-weak-topic-tracking",
     siteName: "Mentskool",
     images: [

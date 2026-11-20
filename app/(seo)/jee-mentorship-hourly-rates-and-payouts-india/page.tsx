@@ -48,7 +48,7 @@ const config: MentorGuidePageConfig = {
   "heroDescription": "How much can an IITian or NITian realistically charge for 1-on-1 JEE mentorship? Discover the transparent breakdown of hourly market rates, tiered rank pricing, student retention economics, and automated payout mechanics on Mentskool.",
   "articleHeadline": "The Complete Financial Guide to JEE Mentorship Hourly Rates in India",
   "articleDescription": "An industry report on hourly pricing tiers, monthly revenue potential, and payout processing for engineering student mentors.",
-  "summaryHeading": "Demystifying Mentor Earnings in the Indian EdTech Ecosystem",
+  "summaryHeading": "Understanding Mentor Earnings in the Indian EdTech Ecosystem",
   "summaryIntro": "Private 1-on-1 exam guidance has emerged as one of the highest-paying, most flexible freelance opportunities for premier college students in India. Here is the data-driven breakdown of what aspirants pay and what verified mentors take home.",
   "summaryPoints": [
     {

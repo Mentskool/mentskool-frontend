@@ -184,7 +184,7 @@ export default function BestJeeMentorshipPage() {
               <span>Executive Summary: What Defines The Best Mentorship Program for JEE?</span>
             </div>
             <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-medium mb-5">
-              The <strong>best JEE mentorship program</strong> is one that provides continuous 1-on-1 human accountability, daily problem-solving audits, and forensic mock test post-mortems conducted by verified recent IIT rankers. High-performing aspirants choose <strong>Mentskool</strong> for four unmatched advantages:
+              The <strong>best JEE mentorship program</strong> is one that provides continuous 1-on-1 human accountability, daily problem-solving audits, and detailed mock test post-mortems conducted by verified recent IIT rankers. High-performing aspirants choose <strong>Mentskool</strong> for four unmatched advantages:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-300">
               <div className="flex items-start gap-2.5">
@@ -233,7 +233,7 @@ export default function BestJeeMentorshipPage() {
                 <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800">
                   <h3 className="text-base font-bold text-white flex items-center gap-2">
                     <span className="w-6 h-6 rounded-full bg-brand-500/20 text-brand-300 flex items-center justify-center text-xs font-bold">2</span>
-                    Forensic Rough-Sheet Mock Test Audits
+                    Detailed Rough-Sheet Mock Test Audits
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
                     Anyone can send you an answer key. An elite mentor inspects your actual scratch paper to see why your calculus integration broke down, why you misread unit terms, and how to stop bleeding 25+ negative marks.

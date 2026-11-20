@@ -381,7 +381,7 @@ export default function NeetMentorship2027Page() {
                 <div className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                   Pass 1: Line Audit
                 </div>
-                <h3 className="text-lg font-bold text-white">Deep Forensic Read</h3>
+                <h3 className="text-lg font-bold text-white">Deep Deep Read</h3>
                 <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
                   Read every page actively. Pay intense attention to summary sections, diagram labels, scientist biographies at unit beginnings, and footnotes where NTA frequently conceals twist questions.
                 </p>
@@ -443,7 +443,7 @@ export default function NeetMentorship2027Page() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="font-mono text-emerald-400 font-bold w-24 shrink-0">10:30 - 01:30</span>
-                    <span><strong>Slot 2 (Biology NCERT Forensic Pass):</strong> 2 chapters in-depth + 100 line-by-line MCQs.</span>
+                    <span><strong>Slot 2 (Biology NCERT Detailed Pass):</strong> 2 chapters in-depth + 100 line-by-line MCQs.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="font-mono text-emerald-400 font-bold w-24 shrink-0">01:30 - 03:00</span>

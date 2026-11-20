@@ -266,7 +266,7 @@ export default function JeeAdvancedMentorshipPage() {
                 How We Train Multi-Concept Intuition
               </h2>
               <p className="text-slate-300 text-sm mt-2">
-                The 3-stage training method used by IIT Bombay rankers to demystify complex JEE Advanced questions:
+                The 3-stage training method used by IIT Bombay rankers to solve complex JEE Advanced questions:
               </p>
             </div>
 

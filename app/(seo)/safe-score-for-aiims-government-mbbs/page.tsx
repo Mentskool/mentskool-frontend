@@ -60,7 +60,7 @@ const faqs: FaqItem[] = [
   {
     question: "What is the safe score required for AIIMS New Delhi for a General category student?",
     answer:
-      "For General/UR category candidates, securing an MBBS seat at AIIMS New Delhi requires an All India Rank within the top 50. In the current testing landscape, this necessitates a near-flawless score of 710 to 715+ marks out of 720 (allowing at most 1 or 2 minor errors on the entire paper).",
+      "For General/UR category candidates, securing an MBBS seat at AIIMS New Delhi requires an All India Rank within the top 50. In the current testing environment, this necessitates a near-flawless score of 710 to 715+ marks out of 720 (allowing at most 1 or 2 minor errors on the entire paper).",
   },
   {
     question: "What score is required for top peripheral AIIMS (such as AIIMS Bhopal, Jodhpur, or Bhubaneswar)?",

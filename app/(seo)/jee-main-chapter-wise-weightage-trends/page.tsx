@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     canonical: "https://mentskool.com/jee-main-chapter-wise-weightage-trends",
   },
   openGraph: {
-    title: "JEE Main Chapter-Wise Weightage Trends (5-Year Forensic Analysis)",
+    title: "JEE Main Chapter-Wise Weightage Trends (5-Year Detailed Analysis)",
     description:
       "Data-backed breakdown of the highest-yield chapters in JEE Main. Learn which 14 chapters contribute over 50% of the entire question paper.",
     url: "https://mentskool.com/jee-main-chapter-wise-weightage-trends",
@@ -98,7 +98,7 @@ export default function JeeMainChapterWiseWeightageTrendsPage() {
         "@type": "Article",
         headline: "JEE Main Chapter-Wise Weightage Trends: 5-Year Empirical Analysis",
         description:
-          "Forensic statistical analysis of chapter frequency and question distribution in JEE Main across 60+ shifts from 2021 to 2026.",
+          "Detailed statistical analysis of chapter frequency and question distribution in JEE Main across 60+ shifts from 2021 to 2026.",
         url: "https://mentskool.com/jee-main-chapter-wise-weightage-trends",
         author: {
           "@type": "Organization",

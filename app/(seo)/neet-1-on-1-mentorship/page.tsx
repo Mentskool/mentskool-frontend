@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "1-on-1 NEET Mentorship: Private AIIMS Guidance & Daily Accountability",
     description:
-      "Replace mass coaching silence with dedicated 1-on-1 Google Meet calls, NCERT line audits, and forensic mock error post-mortems with AIIMS doctors.",
+      "Replace mass coaching silence with dedicated 1-on-1 Google Meet calls, NCERT line audits, and detailed mock error post-mortems with AIIMS doctors.",
     url: "https://mentskool.com/neet-1-on-1-mentorship",
     siteName: "Mentskool",
     images: [
@@ -215,7 +215,7 @@ export default function Neet1on1MentorshipPage() {
                 <div className="text-teal-400 font-bold text-xs uppercase">Minutes 16–35</div>
                 <h3 className="text-base font-bold text-white">NCERT Active Recall &amp; Mock Error Audit</h3>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Closed-book quiz on tricky NCERT lines, followed by forensic inspection of mock test rough sheets to eliminate negative marks.
+                  Closed-book quiz on tricky NCERT lines, followed by detailed inspection of mock test rough sheets to eliminate negative marks.
                 </p>
               </div>
 

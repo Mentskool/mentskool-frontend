@@ -70,7 +70,7 @@ const faqs: FaqItem[] = [
   {
     question: "What is the 4-Column Error-Book methodology?",
     answer:
-      "The 4-Column Error Book is a structured forensic ledger where every wrong mock question is entered across four fields: 1) Test Date & Question Snapshot, 2) Root Error Classification (Calculation, Misread, Formula Slip, Concept Gap), 3) The Psychological Trigger (rushing, fatigue, stubbornness), and 4) The Exact Prevention Rule (e.g., 'Always underline the word EXCEPT in pencil').",
+      "The 4-Column Error Book is a structured mistake notebook ledger where every wrong mock question is entered across four fields: 1) Test Date & Question Snapshot, 2) Root Error Classification (Calculation, Misread, Formula Slip, Concept Gap), 3) The Psychological Trigger (rushing, fatigue, stubbornness), and 4) The Exact Prevention Rule (e.g., 'Always underline the word EXCEPT in pencil').",
   },
   {
     question: "How can I prevent sign errors (negative and positive mix-ups) in Physics and Mathematics?",
@@ -98,7 +98,7 @@ export default function SillyMistakesReductionJeeNeetPage() {
         "@type": "Article",
         headline: "How to Eliminate Silly Mistakes & Calculation Errors in JEE & NEET: The Error-Book Protocol",
         description:
-          "Authoritative guide on diagnosing, tracking, and eliminating calculation and misreading errors in JEE and NEET mock tests using forensic mistake analysis.",
+          "Authoritative guide on diagnosing, tracking, and eliminating calculation and misreading errors in JEE and NEET mock tests using detailed mistake analysis.",
         url: "https://mentskool.com/silly-mistakes-reduction-jee-neet",
         author: {
           "@type": "Organization",

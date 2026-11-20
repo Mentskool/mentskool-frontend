@@ -148,7 +148,7 @@ export default function JeeMentorshipPage() {
               1:1 IIT JEE Mentorship: <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-sky-300 to-indigo-400">Master Execution with Top IITians</span>
             </h1>
             <p className="text-base sm:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto">
-              Master JEE Main &amp; Advanced with private 1-on-1 guidance from recent rankers at <strong>IIT Bombay, Delhi, and Madras</strong>. Weekly custom roadmaps, forensic mock error audits, and verified 94% efficiency scoring.
+              Master JEE Main &amp; Advanced with private 1-on-1 guidance from recent rankers at <strong>IIT Bombay, Delhi, and Madras</strong>. Weekly custom roadmaps, detailed mock error audits, and verified 94% efficiency scoring.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
@@ -188,7 +188,7 @@ export default function JeeMentorshipPage() {
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-                <span><strong>Forensic Mock Test Post-Mortems:</strong> Dissecting every test rough sheet to systematically eliminate negative marks.</span>
+                <span><strong>Detailed Mock Test Post-Mortems:</strong> Dissecting every test rough sheet to systematically eliminate negative marks.</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />

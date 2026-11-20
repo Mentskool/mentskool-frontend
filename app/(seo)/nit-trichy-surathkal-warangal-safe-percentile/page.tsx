@@ -248,7 +248,7 @@ const config: BookCallPageConfig = {
     {
       "step": "04",
       "title": "Receive Targeted Revision Plan",
-      "description": "Implement a high-yield study schedule designed to elevate your current score into the 99.5+ percentile zone."
+      "description": "Implement a high-yield study schedule designed to raise your current score into the 99.5+ percentile zone."
     }
   ],
   "faqs": [

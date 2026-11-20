@@ -188,7 +188,7 @@ const config: BookCallPageConfig = {
       "subheading": "The High-Yield Formula Triage System for Mechanics and Thermodynamics",
       "paragraphs": [
         "Class 11 Physics backlogs (Vectors, Work-Power-Energy, Rotation, Waves) are the biggest psychological burden for Class 12 medical aspirants. Many students become so paralyzed by mechanics backlogs that they contemplate giving up on government medical colleges entirely.",
-        "Your doctor mentor demystifies Class 11 Physics. You do not need to solve HC Verma or advanced JEE problems to score in NEET. By mastering 15 core formula templates for Mechanics and 10 for Thermodynamics, you can confidently secure 75% of the Class 11 physics marks with direct 1-step substitutions."
+        "Your doctor mentor simplifies Class 11 Physics. You do not need to solve HC Verma or advanced JEE problems to score in NEET. By mastering 15 core formula templates for Mechanics and 10 for Thermodynamics, you can confidently secure 75% of the Class 11 physics marks with direct 1-step substitutions."
       ],
       "keyTakeaways": [
         {

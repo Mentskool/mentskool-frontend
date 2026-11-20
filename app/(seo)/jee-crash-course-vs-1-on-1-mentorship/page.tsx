@@ -93,7 +93,7 @@ const config: BookCallPageConfig = {
   "timelinePhases": [
     {
       "timeframe": "Day 1 - 3",
-      "phaseTitle": "Forensic Paper Audit & Diagnostic Baseline",
+      "phaseTitle": "Detailed Paper Audit & Diagnostic Baseline",
       "description": "Your mentor analyzes your last 3 full-syllabus mock papers question-by-question to categorize errors into conceptual gaps, calculation slips, or time misallocations.",
       "deliverables": [
         "Itemized 3-tier error log categorization",
@@ -143,7 +143,7 @@ const config: BookCallPageConfig = {
     {
       "aspect": "Curriculum Customization",
       "genericCoaching": "Rigid schedule; identical lectures for all students",
-      "mentskool1on1": "100% bespoke based on your mock exam error audit"
+      "mentskool1on1": "100% personalized based on your mock test error audit"
     },
     {
       "aspect": "Mock Test Post-Mortem",
@@ -189,7 +189,7 @@ const config: BookCallPageConfig = {
       "subheading": "Turning lost marks into predictable rank escalations",
       "paragraphs": [
         "In any standard 300-mark JEE Main test paper, a student scoring 120 marks typically attempts 45-50 questions. Among their incorrect attempts, an average of 7 questions are lost to 'silly errors' (sign errors, misreading 'incorrect' for 'correct', or calculation slips), and another 5 questions are attempted on hunch-based intuition resulting in negative penalties.",
-        "A Mentskool 1-on-1 mentor conducts a forensic autopsy on these 12 questions. By identifying whether the error was induced by cognitive fatigue in the 140th minute, poor rough-sheet organization, or an unaddressed conceptual twist, the mentor equips the student with tactical guardrails. Eliminating just 8 avoidable errors recovers 40 marks—often elevating an aspirant from the 91st to the 98th percentile."
+        "A Mentskool 1-on-1 mentor conducts a detailed autopsy on these 12 questions. By identifying whether the error was induced by cognitive fatigue in the 140th minute, poor rough-sheet organization, or an unaddressed conceptual twist, the mentor equips the student with tactical guardrails. Eliminating just 8 avoidable errors recovers 40 marks—often elevating an aspirant from the 91st to the 98th percentile."
       ],
       "keyTakeaways": [
         {

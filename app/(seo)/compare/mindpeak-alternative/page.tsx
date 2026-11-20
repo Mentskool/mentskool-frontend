@@ -257,7 +257,7 @@ export default function MindpeakAlternativePage() {
                 When a student is already enrolled in a coaching institute like Allen, Aakash, or PhysicsWallah, their schedule is already saturated with 25+ hours of weekly lectures. Enrolling in another tutoring platform that simply re-teaches the same textbook derivations creates severe cognitive overload, leaving zero time for independent question solving.
               </p>
               <p className="text-slate-300 leading-relaxed">
-                Mentskool does not duplicate your coaching lectures; we fix your exam execution. Your Mentskool mentor is an IITian or AIIMS doctor who conducts a forensic autopsy on your mock test papers, identifies why you lose 30+ marks to negative penalties, and teaches you high-speed calculation shortcuts. This delivers measurable rank improvements in half the time.
+                Mentskool does not duplicate your coaching lectures; we fix your exam execution. Your Mentskool mentor is an IITian or AIIMS doctor who conducts a detailed autopsy on your mock test papers, identifies why you lose 30+ marks to negative penalties, and teaches you high-speed calculation shortcuts. This delivers measurable rank improvements in half the time.
               </p>
             </div>
           </section>

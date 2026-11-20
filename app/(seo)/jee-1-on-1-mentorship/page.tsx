@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "1-on-1 JEE Mentorship: Private IITian Strategy & Daily Tracking",
     description:
-      "Replace mass coaching silence with dedicated 1-on-1 Google Meet calls, daily problem quotas, and forensic mock error post-mortems.",
+      "Replace mass coaching silence with dedicated 1-on-1 Google Meet calls, daily problem quotas, and detailed mock error post-mortems.",
     url: "https://mentskool.com/jee-1-on-1-mentorship",
     siteName: "Mentskool",
     images: [
@@ -214,7 +214,7 @@ export default function Jee1on1MentorshipPage() {
                 <div className="text-sky-400 font-bold text-xs uppercase">Minutes 16–35</div>
                 <h3 className="text-base font-bold text-white">Mock Test Rough Sheet Post-Mortem</h3>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Forensic inspection of your test scratch papers. Identifying calculation slips, time bottlenecks, and eliminating negative marks.
+                  Detailed inspection of your test scratch papers. Identifying calculation slips, time bottlenecks, and eliminating negative marks.
                 </p>
               </div>
 

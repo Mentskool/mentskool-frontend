@@ -61,12 +61,12 @@ const recoveryFaqs: FaqItem[] = [
   {
     question: "What is the very first thing I should do after scoring poorly on a mock test?",
     answer:
-      "Step away from books for at least 3 hours. Do NOT immediately open YouTube to search 'How to score 99 percentile in 30 days' or impulsively take another test the very next morning. Panic-studying only reinforces anxiety. Eat a healthy meal, get a full night's sleep, and begin the forensic post-mortem with a calm, objective mindset the following morning.",
+      "Step away from books for at least 3 hours. Do NOT immediately open YouTube to search 'How to score 99 percentile in 30 days' or impulsively take another test the very next morning. Panic-studying only reinforces anxiety. Eat a healthy meal, get a full night's sleep, and begin the thorough post-test review with a calm, objective mindset the following morning.",
   },
   {
     question: "What is the 72-Hour Post-Disaster Protocol?",
     answer:
-      "Hour 0–12 (Decompression): Physical rest and emotional reset. Hour 13–36 (Forensic Diagnosis): Segregating every missed question into Conceptual Gap, Arithmetic Slip, or Time Panic on rough sheets. Hour 37–72 (Surgical Patch): Solving 30 targeted problems specifically focused on the identified conceptual leaks.",
+      "Hour 0–12 (Decompression): Physical rest and emotional reset. Hour 13–36 (Detailed Diagnosis): Segregating every missed question into Conceptual Gap, Arithmetic Slip, or Time Panic on rough sheets. Hour 37–72 (Surgical Patch): Solving 30 targeted problems specifically focused on the identified conceptual leaks.",
   },
   {
     question: "How does my Mentskool mentor help when I am feeling completely hopeless after a bad score?",
@@ -105,7 +105,7 @@ export default function LowMockTestScorePage() {
           },
           {
             "@type": "HowToStep",
-            name: "Phase 2: Forensic Error Audit (13-36 Hours)",
+            name: "Phase 2: Detailed Error Audit (13-36 Hours)",
             text: "Classify lost marks into Conceptual, Execution Slip, and Strategic Time Panic.",
           },
           {
@@ -196,7 +196,7 @@ export default function LowMockTestScorePage() {
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-rose-400 mt-0.5 shrink-0" />
-                <span><strong>Phase 2: Forensic Rough Sheet Breakdown (13–36h):</strong> Tag every lost mark as Conceptual Gap, Execution Slip, or Time Trap.</span>
+                <span><strong>Phase 2: Detailed Rough Sheet Breakdown (13–36h):</strong> Tag every lost mark as Conceptual Gap, Execution Slip, or Time Trap.</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-rose-400 mt-0.5 shrink-0" />

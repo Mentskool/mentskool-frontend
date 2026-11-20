@@ -45,7 +45,7 @@ const config: BookCallPageConfig = {
   "badgeText": "Admissions & Counseling • Fee & Cutoff Reality",
   "h1Prefix": "Semi-Govt & Private Medical Colleges:",
   "h1Highlight": "The Cutoff & Fee Reality Check",
-  "heroDescription": "What happens if your NEET score lands between 480 and 590—just below the brutal Government Medical College cutoff? Discover the complete landscape of semi-government trust medical colleges, state quota seats in private institutions, hidden fees, and service bonds across India.",
+  "heroDescription": "What happens if your NEET score lands between 480 and 590—just below the brutal Government Medical College cutoff? Discover the complete environment of semi-government trust medical colleges, state quota seats in private institutions, hidden fees, and service bonds across India.",
   "serviceTitle": "1:1 Medical College Counseling & Cutoff Strategy Session",
   "serviceDescription": "Book a private video consultation with a medical counselor or doctor to evaluate your state quota eligibility, analyze private college ROI, and map your optimal choice-filling strategy.",
   "quickStats": [
@@ -71,7 +71,7 @@ const config: BookCallPageConfig = {
     }
   ],
   "overviewHeading": "Navigating the High-Stakes Gray Zone: 480 to 590 Marks",
-  "overviewIntro": "Every year, over 250,000 NEET aspirants score in the agonizing 'gray zone' between 480 and 590 marks. While they miss the 100% subsidized Government Medical College (GMC) cutoff (which frequently crosses 610-630 marks), they possess scores that qualify for subsidized government-quota seats in semi-government and private medical colleges. Navigating this landscape requires absolute financial and regulatory clarity.",
+  "overviewIntro": "Every year, over 250,000 NEET aspirants score in the agonizing 'gray zone' between 480 and 590 marks. While they miss the 100% subsidized Government Medical College (GMC) cutoff (which frequently crosses 610-630 marks), they possess scores that qualify for subsidized government-quota seats in semi-government and private medical colleges. Navigating this environment requires absolute financial and regulatory clarity.",
   "overviewPoints": [
     {
       "title": "Semi-Government (Trust/Society) Institutions",

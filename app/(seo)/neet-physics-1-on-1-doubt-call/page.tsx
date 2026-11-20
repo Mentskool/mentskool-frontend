@@ -44,7 +44,7 @@ const config: BookCallPageConfig = {
   "badgeText": "1-on-1 Subject Surgery",
   "h1Prefix": "Book a 1:1 NEET Physics Numerical & Strategy Call with an",
   "h1Highlight": "AIIMS Doctor",
-  "heroDescription": "Demystify NEET Physics with someone who scored 165+ in the exam. Screen-share tough numericals, master formula linkage, and learn option elimination hacks that unlock 140-160+ marks without advanced calculus.",
+  "heroDescription": "Master NEET Physics with someone who scored 165+ in the exam. Screen-share tough numericals, master formula linkage, and learn option elimination hacks that unlock 140-160+ marks without advanced calculus.",
   "serviceTitle": "1:1 NEET Physics Numerical Strategy & Mastery Consultation",
   "serviceDescription": "45-minute live screen-share strategy consultation with AIIMS/GMC medical students focusing on physics numerical problem solving, formula retention, and option elimination.",
   "quickStats": [

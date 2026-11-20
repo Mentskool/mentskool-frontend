@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "NEET Biology Mentor: Score 360/360 with AIIMS Doctors",
     description:
-      "Move beyond passive reading. Master forensic NCERT recall and 42-minute section speed with verified AIIMS rankers.",
+      "Move beyond passive reading. Master thorough NCERT recall and 42-minute section speed with verified AIIMS rankers.",
     url: "https://mentskool.com/neet-biology-mentor",
     siteName: "Mentskool",
     images: [

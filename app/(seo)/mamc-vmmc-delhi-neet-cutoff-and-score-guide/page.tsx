@@ -208,7 +208,7 @@ const config: BookCallPageConfig = {
     },
     {
       "heading": "Delhi Domicile Quota (85%) vs All India Quota (15%)",
-      "subheading": "How schooling in Delhi changes the cutoff landscape",
+      "subheading": "How schooling in Delhi changes the cutoff environment",
       "paragraphs": [
         "Under Medical Counseling Committee (MCC) guidelines, 15% of seats in MAMC and VMMC are open to all students across India (All India Quota), while 85% of seats are reserved for students who completed their Class 11 and Class 12 schooling from a recognized institution located within the National Capital Territory of Delhi (Delhi State Quota).",
         "For General category candidates, MAMC under AIQ typically closes within AIR 85 to 110 (705+ marks). Under Delhi State Quota, however, MAMC closes around AIR 600 to 750 (690-695 marks). Similarly, VMMC closes around AIR 150 under AIQ, but extends to AIR 1,200-1,500 under Delhi State Quota. Understanding your quota entitlement allows you to calibrate your exact target rank."

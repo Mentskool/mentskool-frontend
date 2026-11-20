@@ -82,7 +82,7 @@ const config: MentorGuidePageConfig = {
           "detail": "Understand their target percentile, dream college, and current major source of anxiety."
         },
         {
-          "title": "Minutes 10 - 30: Forensic Paper Autopsy",
+          "title": "Minutes 10 - 30: Detailed Paper Review",
           "detail": "Screen-share their latest test paper to diagnose calculation slips, pacing, and selection traps."
         },
         {
@@ -95,7 +95,7 @@ const config: MentorGuidePageConfig = {
       "heading": "Parent Psychology: Turning Anxiety into Long-Term Partnerships",
       "subheading": "How to communicate with parents to secure multi-month retainers",
       "paragraphs": [
-        "In the Indian educational landscape, parents are the financial decision-makers. They are deeply emotionally invested in their child's future, often feeling helpless when seeing their child struggle with coaching marks. Understanding parent psychology is the key to running a successful mentoring practice.",
+        "In Indian education, parents are the financial decision-makers. They are deeply emotionally invested in their child's future, often feeling helpless when seeing their child struggle with coaching marks. Understanding parent psychology is the key to running a successful mentoring practice.",
         "At the end of your initial diagnostic call, invite the parent to join for a 5-minute debrief. Speak calmly, objectively, and empathetically: 'Aman has strong potential in Physics, but he is currently losing 24 marks because he attempts Chemistry too slowly and panics in Mathematics. Here is the 3-step system we are implementing to fix this over the next 30 days.' When parents hear clear, diagnostic clarity from an IITian, their anxiety dissolves and they immediately request a monthly ongoing mentorship retainer."
       ],
       "bullets": [

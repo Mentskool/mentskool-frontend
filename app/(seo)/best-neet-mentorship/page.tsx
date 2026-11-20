@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Best Mentorship for NEET-UG: The Complete Selection Guide",
     description:
-      "Why medical aspirants choose AIIMS doctor 1-on-1 guidance over mass coaching. 94% verified task efficiency, NCERT forensic audits, and strict 30-student cohort caps.",
+      "Why medical aspirants choose AIIMS doctor 1-on-1 guidance over mass coaching. 94% verified task efficiency, NCERT detailed reviews, and strict 30-student cohort caps.",
     url: "https://mentskool.com/best-neet-mentorship",
     siteName: "Mentskool",
     images: [
@@ -191,7 +191,7 @@ export default function BestNeetMentorshipPage() {
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-                <span><strong>Forensic NCERT Active Recall Audits:</strong> Line-by-line verification of Biology and Inorganic Chemistry to guarantee 350+ in Biology.</span>
+                <span><strong>Detailed NCERT Active Recall Audits:</strong> Line-by-line verification of Biology and Inorganic Chemistry to guarantee 350+ in Biology.</span>
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />

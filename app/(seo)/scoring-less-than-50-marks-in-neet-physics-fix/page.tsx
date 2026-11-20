@@ -161,7 +161,7 @@ const config: BookCallPageConfig = {
       "heading": "Understanding the Anatomy of Physics Less Than 50 Marks Fix",
       "subheading": "Deconstructing Common Misconceptions and Exam Realities",
       "paragraphs": [
-        "In the high-stakes landscape of NEET-UG, many students spend months working relentlessly without realizing that their core methodology is fundamentally flawed. When tackling physics less than 50 marks fix, traditional advice often emphasizes brute-force memorization and passive video watching. However, top percentile rankers view this topic through an analytical lens: breaking down complex concepts into verifiable rules and systematic problem-solving heuristics.",
+        "In the high-stakes environment of NEET-UG, many students spend months working relentlessly without realizing that their core methodology is fundamentally flawed. When tackling physics less than 50 marks fix, traditional advice often emphasizes brute-force memorization and passive video watching. However, top percentile rankers view this topic through an analytical lens: breaking down complex concepts into verifiable rules and systematic problem-solving heuristics.",
         "The central bottleneck is that getting bogged down in rotational motion and center of mass for 3 weeks, scoring 0 marks from them on exam day. When students encounter friction in Direct formula sheet without complex derivations, their natural instinct is either to avoid the chapter entirely or to copy solutions passively. In a competitive examination where single-mark differences alter college allotments by thousands of ranks, this passive approach is fatal. What is required instead is hands-on problem practice: testing assumptions, sketching flowcharts, and applying concepts under strict time limits.",
         "Personalized 1-on-1 mentorship replaces guesswork with scientific structure. By auditing your specific problem attempts in real time, a dedicated AIIMS Doctor Mentor identifies whether your errors stem from foundational knowledge deficits, misreading of question constraints, or algebraic execution errors. This precision intervention saves dozens of hours of futile study and directly accelerates score improvement."
       ],
@@ -201,7 +201,7 @@ const config: BookCallPageConfig = {
       "paragraphs": [
         "Test temperament is often the invisible differentiator between students who score at their potential and those who underperform by 40 to 60 marks. When facing NEET-UG, many test-takers experience sudden adrenaline surges, panic and tunnel vision, and racing thoughts—particularly when confronted with an unfamiliar question in physics less than 50 marks fix.",
         "To maintain peak cognitive state throughout the multi-hour test, adopt the 3-Round Clockwork Strategy. In Round 1, sweep through the paper solving only the direct, single-step questions you can crack with 100% certainty in under 45 seconds. In Round 2, tackle questions requiring standard 2-step calculations. Reserve Round 3 for lengthier numerical challenges. This structure ensures that easy marks are banked early, establishing calm confidence.",
-        "If you notice cognitive fatigue or panic setting in, execute the physiological sigh: two rapid nasal inhales followed by a prolonged, unhurried mouth exhale. This immediately reduces sympathetic nervous system arousal, restores prefrontal cortex activity, and clears mental fog within 15 seconds."
+        "If you notice cognitive fatigue or panic setting in, execute the physiological sigh: two rapid nasal inhales followed by a prolonged, patient mouth exhale. This immediately reduces sympathetic nervous system arousal, restores prefrontal cortex activity, and clears mental fog within 15 seconds."
       ],
       "keyTakeaways": [
         {
@@ -224,7 +224,7 @@ const config: BookCallPageConfig = {
       ],
       "keyTakeaways": [
         {
-          "title": "Ultradian Focus Sprints",
+          "title": "Focused 90-Min Study Blocks",
           "detail": "Work in 90-minute distraction-free blocks with physical phone isolation to achieve deep cognitive engagement."
         },
         {

@@ -6,15 +6,15 @@ import {
 } from "@/components/seo/BookCallPageTemplate";
 
 export const metadata: Metadata = {
-  title: "NEET Score Stuck at 400-500? How to Reach 650+ (Forensic Audit) | Mentskool",
-  description: "Break through the 400-500 NEET score plateau. Discover the forensic mock test analysis method used by AIIMS doctors to eliminate negative marking and surge past 650.",
+  title: "NEET Score Stuck at 400-500? How to Reach 650+ (Detailed Review) | Mentskool",
+  description: "Break through the 400-500 NEET score plateau. Discover the detailed mock test analysis method used by AIIMS doctors to eliminate negative marking and surge past 650.",
   keywords: ["neet score stuck at 400 to 500", "how to increase neet mock test score", "reach 650 in neet from 450", "neet score improvement strategy", "reduce negative marks in neet", "neet mock test post mortem analysis"],
   alternates: {
     canonical: "https://mentskool.com/neet-score-stuck-at-400-to-500-how-to-reach-650",
   },
   openGraph: {
-    title: "NEET Score Stuck at 400-500? How to Reach 650+ (Forensic Audit) | Mentskool",
-    description: "Break through the 400-500 NEET score plateau. Discover the forensic mock test analysis method used by AIIMS doctors to eliminate negative marking and surge past 650.",
+    title: "NEET Score Stuck at 400-500? How to Reach 650+ (Detailed Review) | Mentskool",
+    description: "Break through the 400-500 NEET score plateau. Discover the detailed mock test analysis method used by AIIMS doctors to eliminate negative marking and surge past 650.",
     url: "https://mentskool.com/neet-score-stuck-at-400-to-500-how-to-reach-650",
     siteName: "Mentskool",
     images: [
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
         url: "https://mentskool.com/logo.png",
         width: 1200,
         height: 630,
-        alt: "The Forensic Audit to Surge to 650+",
+        alt: "The Detailed Review to Surge to 650+",
       },
     ],
   },
@@ -32,8 +32,8 @@ const config: BookCallPageConfig = {
   "slug": "neet-score-stuck-at-400-to-500-how-to-reach-650",
   "breadcrumbLabel": "Breaking 400-500 NEET Plateau",
   "examFocus": "NEET",
-  "metaTitle": "NEET Score Stuck at 400-500? How to Reach 650+ (Forensic Audit) | Mentskool",
-  "metaDescription": "Break through the 400-500 NEET score plateau. Discover the forensic mock test analysis method used by AIIMS doctors to eliminate negative marking and surge past 650.",
+  "metaTitle": "NEET Score Stuck at 400-500? How to Reach 650+ (Detailed Review) | Mentskool",
+  "metaDescription": "Break through the 400-500 NEET score plateau. Discover the detailed mock test analysis method used by AIIMS doctors to eliminate negative marking and surge past 650.",
   "keywords": [
     "neet score stuck at 400 to 500",
     "how to increase neet mock test score",
@@ -44,9 +44,9 @@ const config: BookCallPageConfig = {
   ],
   "badgeText": "Score Plateau Breaker • NEET 2027",
   "h1Prefix": "NEET Score Stuck at 400–500 Marks?",
-  "h1Highlight": "The Forensic Audit to Surge to 650+",
-  "heroDescription": "Scoring 400–500 in Class 11 NEET mocks is a frustrating purgatory. It means you understand the theory, but you are hemorrhaging 80+ marks through negative marking, misreading NCERT statements, and slow question selection. Learn how to conduct a forensic post-mortem to unlock the 650+ mark barrier.",
-  "serviceTitle": "1:1 NEET Mock Test Forensic Audit & Score Surgery",
+  "h1Highlight": "The Detailed Review to Surge to 650+",
+  "heroDescription": "Scoring 400–500 in Class 11 NEET mocks is a frustrating purgatory. It means you understand the theory, but you are hemorrhaging 80+ marks through negative marking, misreading NCERT statements, and slow question selection. Learn how to conduct a thorough post-test review to unlock the 650+ mark barrier.",
+  "serviceTitle": "1:1 NEET Mock Test Detailed Review & Score Surgery",
   "serviceDescription": "Submit your last 2 NEET mock test scorecards and OMR sheets for a live diagnostic with an AIIMS mentor to eliminate -1 leaks and optimize your 3-hour time allocation.",
   "quickStats": [
     {
@@ -208,7 +208,7 @@ const config: BookCallPageConfig = {
       ],
       "keyTakeaways": [
         {
-          "title": "Ultradian 90-Min Sprints",
+          "title": "Focused 90-Min Study Blocks",
           "detail": "Work with natural cognitive alertness cycles followed by 15-minute zero-screen mental rest."
         },
         {
@@ -225,7 +225,7 @@ const config: BookCallPageConfig = {
       "heading": "The Error Vault Protocol: Converting Mock Blunders into Guaranteed Marks",
       "subheading": "The exact methodology used by AIR < 500 toppers to eliminate repeat mistakes",
       "paragraphs": [
-        "Most aspirants treat mock test papers as vanity scorecards: they look at the total marks, feel either transient relief or crushing depression, and file the paper away into a drawer. High achievers, by contrast, view every test paper as an MRI scan of their intellectual blindspots. For every question missed in breaking 400-500 neet plateau, a top ranker extracts three pieces of forensic data: (1) The Question Context and Trigger, (2) The Cognitive Misstep, and (3) The Behavioral Guardrail.",
+        "Most aspirants treat mock test papers as vanity scorecards: they look at the total marks, feel either transient relief or crushing depression, and file the paper away into a drawer. High achievers, by contrast, view every test paper as an MRI scan of their intellectual blindspots. For every question missed in breaking 400-500 neet plateau, a top ranker extracts three pieces of diagnostic data: (1) The Question Context and Trigger, (2) The Cognitive Misstep, and (3) The Behavioral Guardrail.",
         "For example, rather than writing 'Forgot formula in Last 2 mock test papers with OMR,' an elite student logs: 'Cognitive trap: did not verify whether acceleration was constant before applying equations of motion. Guardrail: Always circle non-constant force expressions in red pen and integrate explicitly.' By reviewing this Error Vault twice weekly, you program your subconscious instincts to avoid traps instinctively during the high-stress environment of the actual examination."
       ],
       "keyTakeaways": [

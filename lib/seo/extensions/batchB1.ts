@@ -184,7 +184,7 @@ export const batchB1Extensions: Record<string, SeoDeepDiveExtensionProps> = {
         subheading: "Turn subjective fear ('I hate Physics Optics') into precise surgical error classification.",
         paragraphs: [
           "Almost every student preparing for NEET falls into comfort-zone studying: spending Saturday afternoon solving yet another 60 easy Human Reproduction questions they already score 95% on, while quietly avoiding Rotational Physics, Ionic Equilibrium pH approximations, or Genetics pedigree math.",
-          "Without systematic weak-topic tracking, blind spots compound silently until full-syllabus mocks punish you with 80 missing marks. On Mentskool, your verified MBBS mentor replaces emotional avoidance with forensic Weak-Topic Telemetry. Instead of vaguely labeling a huge subject weak, you break every single chapter down into Red (concept broken), Amber (slow/calculation-prone), and Green (85%+ accurate) micro-clusters.",
+          "Without systematic weak-topic tracking, blind spots compound silently until full-syllabus mocks punish you with 80 missing marks. On Mentskool, your verified MBBS mentor replaces emotional avoidance with detailed Weak-Topic Telemetry. Instead of vaguely labeling a huge subject weak, you break every single chapter down into Red (concept broken), Amber (slow/calculation-prone), and Green (85%+ accurate) micro-clusters.",
           "By converting just 2 Red micro-topics to Green every single week inside your mentor-assigned dashboard sprint, an aspirant adds +40 to +80 reliable marks in two months without extending total daily study hours.",
         ],
         keyTakeaways: [
@@ -589,7 +589,7 @@ export const batchB1Extensions: Record<string, SeoDeepDiveExtensionProps> = {
       {
         col1: "Score 430 – 575 (Stuck Plateau)",
         col2: "40+ negative marks & slow section finishing",
-        col3: "Forensic error-book triage + timed OMR/CBT speed blocks",
+        col3: "Detailed error-book triage + timed OMR/CBT speed blocks",
         highlight: true,
       },
       {
@@ -682,7 +682,7 @@ export const batchB1Extensions: Record<string, SeoDeepDiveExtensionProps> = {
       {
         col1: "110 – 165 Marks (93–98.4%ile)",
         col2: "Losing 30+ marks to Maths panic & silly negatives",
-        col3: "Two-round question triage + forensic mock error audits",
+        col3: "Two-round question triage + detailed mock error audits",
         highlight: true,
       },
       {

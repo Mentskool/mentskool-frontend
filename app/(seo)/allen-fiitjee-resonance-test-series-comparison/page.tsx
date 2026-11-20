@@ -87,7 +87,7 @@ const config: BookCallPageConfig = {
     },
     {
       "title": "The Post-Mortem Missing Link",
-      "detail": "No test series will improve your rank if you do not conduct a 3-hour forensic audit on every incorrect and unattempted question."
+      "detail": "No test series will improve your rank if you do not conduct a 3-hour detailed review on every incorrect and unattempted question."
     }
   ],
   "timelinePhases": [
@@ -123,7 +123,7 @@ const config: BookCallPageConfig = {
     },
     {
       "timeframe": "Stage 4: Post-Mortem",
-      "phaseTitle": "1:1 Mentor-Led Forensic Audit",
+      "phaseTitle": "1:1 Mentor-Led Detailed Review",
       "description": "Review your test papers with a dedicated IITian mentor to eliminate recurring psychological traps and calibrate time expenditure.",
       "deliverables": [
         "Line-by-line mark leakage categorization",

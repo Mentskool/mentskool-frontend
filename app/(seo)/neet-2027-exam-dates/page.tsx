@@ -215,7 +215,7 @@ export default function Neet2027ExamDatesPage() {
                 NEET UG 2027 Complete Activity Timeline
               </h2>
               <p className="text-slate-400 text-sm sm:text-base mt-2">
-                Keep track of every administrative deadline. Medical admissions require meticulous verification of qualifying codes, domicile records, and category documentation.
+                Keep track of every administrative deadline. Medical admissions require careful verification of qualifying codes, domicile records, and category documentation.
               </p>
             </div>
 

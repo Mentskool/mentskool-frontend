@@ -47,7 +47,7 @@ const config: BookCallPageConfig = {
   "h1Highlight": "The 100% NCERT Retention Protocol",
   "heroDescription": "Plant Physiology accounts for 8 to 12 high-scoring questions (32 to 48 marks) in NEET Biology, but students constantly mix up C3 vs C4 enzymes, ATP balance sheets, and phytohormone bioassays. Discover the biochemical pathway flowcharts and spaced recall protocols used by top rankers.",
   "serviceTitle": "1:1 Plant Physiology Strategy & Biochemical Flow Session",
-  "serviceDescription": "Book a private video consultation with a top medical ranker to demystify photosynthetic light reactions, C4 Kranz anatomy, Krebs cycle ATP balances, and hormone action tables.",
+  "serviceDescription": "Book a private video consultation with a top medical ranker to explain clearly photosynthetic light reactions, C4 Kranz anatomy, Krebs cycle ATP balances, and hormone action tables.",
   "quickStats": [
     {
       "label": "Cluster Weightage",

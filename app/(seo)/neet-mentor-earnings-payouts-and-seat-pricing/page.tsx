@@ -48,7 +48,7 @@ const config: MentorGuidePageConfig = {
   "heroDescription": "How much can an AIIMS doctor or government medical college student realistically charge for 1-on-1 NEET mentorship? Discover the transparent breakdown of hourly market rates, tiered score pricing, student retention economics, and automated payout mechanics on Mentskool.",
   "articleHeadline": "The Complete Financial Guide to NEET Mentorship Hourly Rates & Payouts in India",
   "articleDescription": "An industry report on hourly pricing tiers, monthly revenue potential, and payout processing for medical student mentors.",
-  "summaryHeading": "Demystifying Mentor Earnings in the Medical EdTech Ecosystem",
+  "summaryHeading": "Understanding Mentor Earnings in the Medical EdTech Ecosystem",
   "summaryIntro": "Private 1-on-1 exam guidance has emerged as one of the highest-paying, most flexible freelance opportunities for medical students in India. Here is the data-driven breakdown of what aspirants pay and what verified mentors take home.",
   "summaryPoints": [
     {
