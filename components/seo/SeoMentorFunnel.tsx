@@ -34,7 +34,8 @@ export function SeoMentorFunnel({
       score: "302 / 360",
       rating: "4.98",
       sessions: "180+ sessions",
-      sessionFee: "₹299",
+      sessionFee: "₹799",
+      isFreeSession: false,
       tags: ["Advanced Problem Triage", "Calculus Speed", "Rotational Dynamics"],
       seatsLeft: 3,
       category: "JEE_PREP",
@@ -49,9 +50,11 @@ export function SeoMentorFunnel({
       score: "99.85 %ile",
       rating: "4.95",
       sessions: "145+ sessions",
-      sessionFee: "₹199",
+      sessionFee: "₹0 Free",
+      isFreeSession: true,
+      originalFee: "₹499",
       tags: ["Physics Visualization", "Daily Time-Blocking", "Backlog Recovery"],
-      seatsLeft: 5,
+      seatsLeft: 2,
       category: "JEE_PREP",
       bio: "Recovered from a partially wasted Class 11 to secure top-tier IIT Delhi Electrical. Guides 2027/2028 aspirants on realistic study routines and overcoming test anxiety.",
     },
@@ -64,7 +67,8 @@ export function SeoMentorFunnel({
       score: "284 / 360",
       rating: "4.96",
       sessions: "110+ sessions",
-      sessionFee: "₹199",
+      sessionFee: "₹499",
+      isFreeSession: false,
       tags: ["Organic Mechanisms", "Inorganic Retention", "Maths Speed Drills"],
       seatsLeft: 4,
       category: "JEE_PREP",
@@ -79,7 +83,9 @@ export function SeoMentorFunnel({
       score: "320 / 360",
       rating: "4.99",
       sessions: "210+ sessions",
-      sessionFee: "₹499",
+      sessionFee: "₹0 Free",
+      isFreeSession: true,
+      originalFee: "₹899",
       tags: ["Olympiad Math (IOQM)", "Complex Numbers", "Top 100 Mindset"],
       seatsLeft: 2,
       category: "JEE_PREP",
@@ -96,9 +102,10 @@ export function SeoMentorFunnel({
       score: "705 / 720",
       rating: "4.99",
       sessions: "240+ sessions",
-      sessionFee: "₹299",
+      sessionFee: "₹899",
+      isFreeSession: false,
       tags: ["360/360 Biology NCERT", "Physics Numerical Drills", "Mock Post-Mortem"],
-      seatsLeft: 4,
+      seatsLeft: 3,
       category: "NEET_PREP",
       bio: "Scored 360/360 in Biology and 170 in Physics. Specializes in line-by-line NCERT active recall and curing physics numerical phobia for medical aspirants.",
     },
@@ -111,9 +118,11 @@ export function SeoMentorFunnel({
       score: "695 / 720",
       rating: "4.96",
       sessions: "160+ sessions",
-      sessionFee: "₹199",
+      sessionFee: "₹0 Free",
+      isFreeSession: true,
+      originalFee: "₹499",
       tags: ["Plant Physiology", "Physical Chemistry Hacks", "OMR Strategy"],
-      seatsLeft: 5,
+      seatsLeft: 3,
       category: "NEET_PREP",
       bio: "Maulana Azad Medical College MBBS scholar. Trains NEET 2027 and 2028 students on rapid mental chemistry calculations and retaining botanical taxonomy.",
     },
@@ -126,9 +135,10 @@ export function SeoMentorFunnel({
       score: "690 / 720",
       rating: "4.94",
       sessions: "130+ sessions",
-      sessionFee: "₹199",
+      sessionFee: "₹499",
+      isFreeSession: false,
       tags: ["Zero-Panic Triage", "Assertion-Reason Logic", "Error Vault Setup"],
-      seatsLeft: 6,
+      seatsLeft: 5,
       category: "NEET_PREP",
       bio: "Overcame severe mock test anxiety in Class 11 to surge from 460 to 690 in NEET. Teaches surgical test temperament and negative marking elimination.",
     },
@@ -141,9 +151,11 @@ export function SeoMentorFunnel({
       score: "692 / 720",
       rating: "4.97",
       sessions: "150+ sessions",
-      sessionFee: "₹299",
+      sessionFee: "₹0 Free",
+      isFreeSession: true,
+      originalFee: "₹699",
       tags: ["Human Physiology", "Class 11 Backlog Sprint", "Organic Flowcharts"],
-      seatsLeft: 3,
+      seatsLeft: 2,
       category: "NEET_PREP",
       bio: "Cracked NEET in his first attempt with self-study from home. Passionate about helping students escape toxic coaching hostels and build elite home routines.",
     },
@@ -255,9 +267,15 @@ export function SeoMentorFunnel({
                 <span>•</span>
                 <span className="text-slate-400 text-[11px]">{m.sessions}</span>
                 <span>•</span>
-                <span className="px-1.5 py-0.5 rounded bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[10px] font-bold">
-                  Free 1st Call
-                </span>
+                {m.isFreeSession ? (
+                  <span className="px-1.5 py-0.5 rounded bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[10px] font-bold">
+                    Free 1st Session
+                  </span>
+                ) : (
+                  <span className="px-1.5 py-0.5 rounded bg-blue-500/15 border border-blue-500/30 text-blue-300 text-[10px] font-bold">
+                    Verified Ranker
+                  </span>
+                )}
               </div>
 
               {/* Short Bio */}
@@ -281,33 +299,51 @@ export function SeoMentorFunnel({
             {/* Bottom Fee, Seats & Booking CTA */}
             <div className="mt-5 pt-3.5 border-t border-slate-800/80 space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-white flex items-center gap-1.5">
-                  <span className="line-through text-slate-500">{m.sessionFee}</span>
-                  <span className="text-emerald-400 font-black">₹0 Free</span>
-                  <span className="text-slate-400 font-normal text-[11px]">/ 30 min</span>
-                </span>
+                {m.isFreeSession ? (
+                  <span className="font-semibold text-white flex items-center gap-1.5">
+                    <span className="line-through text-slate-500">{m.originalFee}</span>
+                    <span className="text-emerald-400 font-black">₹0 Free</span>
+                    <span className="text-slate-400 font-normal text-[11px]">/ 30 min</span>
+                  </span>
+                ) : (
+                  <span className="font-semibold text-white">
+                    {m.sessionFee} <span className="text-slate-400 font-normal text-[11px]">/ 45 min</span>
+                  </span>
+                )}
                 <span className="text-[11px] font-semibold text-emerald-400 flex items-center gap-1">
                   <Lock className="w-3 h-3" />
                   <span>{m.seatsLeft} slots left</span>
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 pt-1">
-                <Link
-                  href="/free-mentorship-session"
-                  className="py-2 px-2.5 rounded-xl text-[11px] font-black bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center gap-1 transition-colors shadow-xs active:scale-95"
-                >
-                  <Sparkles className="w-3 h-3 text-amber-300" />
-                  <span>Free Trial (₹0)</span>
-                </Link>
-                <Link
-                  href="/book-call"
-                  className="py-2 px-2.5 rounded-xl text-[11px] font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 flex items-center justify-center gap-1 transition-colors shadow-xs active:scale-95"
-                >
-                  <Video className="w-3 h-3" />
-                  <span>Book 45 Min</span>
-                </Link>
-              </div>
+              {m.isFreeSession ? (
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  <Link
+                    href="/free-mentorship-session"
+                    className="py-2 px-2.5 rounded-xl text-[11px] font-black bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center gap-1 transition-colors shadow-xs active:scale-95"
+                  >
+                    <Sparkles className="w-3 h-3 text-amber-300" />
+                    <span>Claim Free Slot</span>
+                  </Link>
+                  <Link
+                    href="/book-call"
+                    className="py-2 px-2.5 rounded-xl text-[11px] font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 flex items-center justify-center gap-1 transition-colors shadow-xs active:scale-95"
+                  >
+                    <Video className="w-3 h-3" />
+                    <span>View Profile</span>
+                  </Link>
+                </div>
+              ) : (
+                <div className="pt-1">
+                  <Link
+                    href="/book-call"
+                    className="w-full py-2 px-3 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center gap-1.5 transition-colors shadow-xs active:scale-95"
+                  >
+                    <Video className="w-3.5 h-3.5" />
+                    <span>Book 1:1 Video Session</span>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         ))}

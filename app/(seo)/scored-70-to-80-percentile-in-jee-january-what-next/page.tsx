@@ -65,7 +65,7 @@ const config: BookCallPageConfig = {
       "hint": "Verified IIT & AIIMS"
     },
     {
-      "label": "First Trial Session",
+      "label": "First Diagnostic Session",
       "value": "₹0 Free",
       "hint": "Diagnostic audit"
     }

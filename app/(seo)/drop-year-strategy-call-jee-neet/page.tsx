@@ -294,7 +294,7 @@ const config: BookCallPageConfig = {
       "href": "/book-neet-mock-test-analysis-call"
     },
     {
-      "label": "Free Mentorship Trial",
+      "label": "Free Mentorship Strategy Session",
       "href": "/free-mentorship-session"
     }
   ]
