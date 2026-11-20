@@ -372,7 +372,7 @@ export default function NeetMentorship2027Page() {
                 The 3-Pass NCERT Active Recall System
               </h2>
               <p className="text-slate-400 text-sm mt-2">
-                Developed by AIIMS New Delhi toppers to eliminate &quot;illusion of competence&quot; caused by passive highlighting.
+                Developed by AIIMS New Delhi toppers to eliminate &quot;false sense of confidence&quot; caused by passive highlighting.
               </p>
             </div>
 

@@ -47,7 +47,7 @@ const config: BookCallPageConfig = {
   "h1Highlight": "IITian for JEE Strategy",
   "heroDescription": "Have an honest, private conversation with someone who actually cracked JEE Advanced with an All India Rank. Cut through coaching marketing hype, inspect real hostel study techniques, and get candid advice on your preparation.",
   "serviceTitle": "1:1 Strategy Consultation with Verified IITian",
-  "serviceDescription": "45-minute live screen-share call with top 1000 JEE Advanced IITian rankers focusing on problem deconstruction, study resource audit, and exam psychology.",
+  "serviceDescription": "45-minute live screen-share call with top 1000 JEE Advanced IITian rankers focusing on problem solving breakdown, study resource audit, and exam psychology.",
   "quickStats": [
     {
       "label": "Mentors",
@@ -148,7 +148,7 @@ const config: BookCallPageConfig = {
     {
       "aspect": "Depth of Discussion",
       "genericCoaching": "Superficial tips like 'study hard' and 'revise more.'",
-      "mentskool1on1": "Granular problem deconstruction, specific book recommendations, and daily routines."
+      "mentskool1on1": "Granular problem solving breakdown, specific book recommendations, and daily routines."
     },
     {
       "aspect": "Relatability",

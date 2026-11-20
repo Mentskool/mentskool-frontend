@@ -159,7 +159,7 @@ export default function JeeAdvancedMentorshipPage() {
               JEE Advanced Mentorship: <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-sky-300 to-indigo-400">Master Multi-Concept Depth with IITians</span>
             </h1>
             <p className="text-base sm:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto">
-              Scoring 99% in JEE Main is about speed; conquering JEE Advanced is about conceptual mastery. Partner 1-on-1 with an <strong>IIT Bombay or Delhi top ranker</strong> to master multi-concept problem deconstruction, partial marking tactics, and 6-hour exam stamina.
+              Scoring 99% in JEE Main is about speed; conquering JEE Advanced is about conceptual mastery. Partner 1-on-1 with an <strong>IIT Bombay or Delhi top ranker</strong> to master multi-concept problem solving breakdown, partial marking tactics, and 6-hour exam stamina.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">

@@ -84,7 +84,7 @@ const neetGuideFaqs: FaqItem[] = [
   {
     question: "How does my AIIMS mentor check my NCERT preparation?",
     answer:
-      "During weekly 1:1 Google Meet calls, mentors ask active-recall questions from NCERT summary boxes, diagram labels, and footnotes. This eliminates the 'illusion of competence' caused by passive highlighting and guarantees 350+ marks in Biology.",
+      "During weekly 1:1 Google Meet calls, mentors ask active-recall questions from NCERT summary boxes, diagram labels, and footnotes. This eliminates the 'false sense of confidence' caused by passive highlighting and guarantees 350+ marks in Biology.",
   },
 ];
 

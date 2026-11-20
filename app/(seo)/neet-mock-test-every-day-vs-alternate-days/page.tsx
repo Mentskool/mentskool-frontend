@@ -45,7 +45,7 @@ const config: BookCallPageConfig = {
   "badgeText": "Mock Cadence • Testing Frequency",
   "h1Prefix": "NEET Mock Test Every Day vs Alternate Days:",
   "h1Highlight": "The Optimum 3-Test Weekly Protocol",
-  "heroDescription": "Taking a full 200-minute mock test every single day causes cognitive exhaustion and reinforces errors. Discover the alternate-day testing model that pairs testing with 4-hour forensic gap analysis.",
+  "heroDescription": "Taking a full 200-minute mock test every single day causes cognitive exhaustion and reinforces errors. Discover the alternate-day testing model that pairs testing with 4-hour detailed error analysis.",
   "serviceTitle": "1:1 Daily vs Alternate NEET Mocks Strategy & Diagnostic Call",
   "serviceDescription": "Audit your preparation and create a customized 30-day comeback plan with an AIIMS Doctor Mentor.",
   "quickStats": [
@@ -71,7 +71,7 @@ const config: BookCallPageConfig = {
     }
   ],
   "overviewHeading": "Why Traditional Methods Fail in Daily vs Alternate NEET Mocks",
-  "overviewIntro": "In conventional coaching classrooms across India, students dealing with daily vs alternate neet mocks are subjected to passive lectures, mass test rankings, and public anxiety. Empirical examination of top rankers reveals that the law of diminishing returns in unanalyzed mock tests, 1:1 ratio between testing time and error surgery, and active recovery intervals requires personalized diagnostic analysis, rapid error correction, and unhurried problem deconstruction. The table below illustrates why 1-on-1 mentorship consistently yields superior outcomes.",
+  "overviewIntro": "In conventional coaching classrooms across India, students dealing with daily vs alternate neet mocks are subjected to passive lectures, mass test rankings, and public anxiety. Empirical examination of top rankers reveals that the law of diminishing returns in unanalyzed mock tests, 1:1 ratio between testing time and error surgery, and active recovery intervals requires personalized diagnostic analysis, rapid error correction, and step-by-step problem solving. The table below illustrates why 1-on-1 mentorship consistently yields superior outcomes.",
   "overviewPoints": [
     {
       "title": "Individual Cognitive Diagnostic vs Mass Lectures",
@@ -93,7 +93,7 @@ const config: BookCallPageConfig = {
   "timelinePhases": [
     {
       "timeframe": "Phase 1 • Days 1 to 7",
-      "phaseTitle": "Forensic Diagnostic & Baseline Calibration",
+      "phaseTitle": "Initial Mock & Syllabus Review",
       "description": "Your mentor evaluates your recent test papers, study notes, and daily routine to uncover hidden vulnerabilities in Full Syllabus Mock Test Papers (NTA NEET format) and Error Vault Ledger.",
       "deliverables": [
         "Itemized diagnostic audit of Daily vs Alternate NEET Mocks",
@@ -104,7 +104,7 @@ const config: BookCallPageConfig = {
     {
       "timeframe": "Phase 2 • Days 8 to 21",
       "phaseTitle": "Core Reconstruction & Speed Drills",
-      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build unflinching confidence in The law of diminishing returns in unanalyzed mock tests, 1.",
+      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build solid confidence in The law of diminishing returns in unanalyzed mock tests, 1.",
       "deliverables": [
         "Mastery of core concepts in Full Syllabus Mock Test Papers (NTA NEET format) and Error Vault Ledger",
         "Creation of a physical Error Vault / Mistake Notebook",
@@ -162,13 +162,13 @@ const config: BookCallPageConfig = {
       "subheading": "Deconstructing Common Misconceptions and Exam Realities",
       "paragraphs": [
         "In the high-stakes landscape of NEET-UG, many students spend months working relentlessly without realizing that their core methodology is fundamentally flawed. When tackling daily vs alternate neet mocks, traditional advice often emphasizes brute-force memorization and passive video watching. However, top percentile rankers view this topic through an analytical lens: breaking down complex concepts into verifiable rules and systematic problem-solving heuristics.",
-        "The central bottleneck is that taking back-to-back tests without reviewing question errors, repeating the same 30 mistakes across every test paper. When students encounter friction in Full Syllabus Mock Test Papers (NTA NEET format), their natural instinct is either to avoid the chapter entirely or to copy solutions passively. In a competitive examination where single-mark differences alter college allotments by thousands of ranks, this passive approach is fatal. What is required instead is active reconstruction: testing assumptions, sketching flowcharts, and applying concepts under strict time limits.",
+        "The central bottleneck is that taking back-to-back tests without reviewing question errors, repeating the same 30 mistakes across every test paper. When students encounter friction in Full Syllabus Mock Test Papers (NTA NEET format), their natural instinct is either to avoid the chapter entirely or to copy solutions passively. In a competitive examination where single-mark differences alter college allotments by thousands of ranks, this passive approach is fatal. What is required instead is hands-on problem practice: testing assumptions, sketching flowcharts, and applying concepts under strict time limits.",
         "Personalized 1-on-1 mentorship replaces guesswork with scientific structure. By auditing your specific problem attempts in real time, a dedicated AIIMS Doctor Mentor identifies whether your errors stem from foundational knowledge deficits, misreading of question constraints, or algebraic execution errors. This precision intervention saves dozens of hours of futile study and directly accelerates score improvement."
       ],
       "keyTakeaways": [
         {
           "title": "Active Reconstruction Over Passive Consumption",
-          "detail": "Watching lectures creates an illusion of competence; only unassisted timed problem solving creates true neural pathways."
+          "detail": "Watching lectures creates an false sense of confidence; only unassisted timed problem solving creates true neural pathways."
         },
         {
           "title": "Root Cause Diagnosis",
@@ -199,7 +199,7 @@ const config: BookCallPageConfig = {
       "heading": "Exam-Day Psychology and Pacing Optimization",
       "subheading": "Preventing Cognitive Fatigue and Pressure-Induced Blankouts",
       "paragraphs": [
-        "Test temperament is often the invisible differentiator between students who score at their potential and those who underperform by 40 to 60 marks. When facing NEET-UG, many test-takers experience sudden adrenaline surges, cognitive tunneling, and racing thoughts—particularly when confronted with an unfamiliar question in daily vs alternate neet mocks.",
+        "Test temperament is often the invisible differentiator between students who score at their potential and those who underperform by 40 to 60 marks. When facing NEET-UG, many test-takers experience sudden adrenaline surges, panic and tunnel vision, and racing thoughts—particularly when confronted with an unfamiliar question in daily vs alternate neet mocks.",
         "To maintain peak cognitive state throughout the multi-hour test, adopt the 3-Round Clockwork Strategy. In Round 1, sweep through the paper solving only the direct, single-step questions you can crack with 100% certainty in under 45 seconds. In Round 2, tackle questions requiring standard 2-step calculations. Reserve Round 3 for lengthier numerical challenges. This structure ensures that easy marks are banked early, establishing calm confidence.",
         "If you notice cognitive fatigue or panic setting in, execute the physiological sigh: two rapid nasal inhales followed by a prolonged, unhurried mouth exhale. This immediately reduces sympathetic nervous system arousal, restores prefrontal cortex activity, and clears mental fog within 15 seconds."
       ],
@@ -218,7 +218,7 @@ const config: BookCallPageConfig = {
       "heading": "Long-Term Retention and Weekly Habit Architecture",
       "subheading": "Maintaining High Energy and Consistent Output Across the Preparation Journey",
       "paragraphs": [
-        "Competitive exam preparation is a marathon where consistency consistently defeats sporadic 14-hour study sprints. To sustain elite focus without burning out while managing daily vs alternate neet mocks, organize your study day into 90-minute ultradian focus blocks separated by 15-minute active recovery breaks.",
+        "Competitive exam preparation is a marathon where consistency consistently defeats sporadic 14-hour study sprints. To sustain elite focus without burning out while managing daily vs alternate neet mocks, organize your study day into 90-minute focused study blocks separated by 15-minute active recovery breaks.",
         "During focus blocks, your smartphone must be physically placed in another room with all notifications silenced. Deep problem solving in Error Vault Ledger demands undivided working memory. When you divide attention between social media notifications and physics calculations, cognitive switching penalties degrade problem-solving speed by over 30%.",
         "Your weekly schedule must also incorporate mandatory active recall sessions. Instead of re-reading chapters, utilize flashcards or blank-sheet retrieval drills. Schedule a weekly 1-on-1 video session with your AIIMS Doctor Mentor to review completed DPPs, audit mock score trajectories, and recalibrate goals for the upcoming week."
       ],
