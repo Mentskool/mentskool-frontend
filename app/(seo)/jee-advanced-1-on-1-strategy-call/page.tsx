@@ -7,14 +7,14 @@ import {
 
 export const metadata: Metadata = {
   title: "Book 1:1 JEE Advanced Problem Deconstruction Call | Mentskool",
-  description: "Transition from JEE Main 99 percentile to Top 2000 in JEE Advanced. Book a 1-on-1 problem deconstruction call with top IIT Bombay and Delhi rankers.",
+  description: "Transition from JEE Main 99 percentile to Top 2000 in JEE Advanced. Book a 1-on-1 problem solving breakdown call with top IIT Bombay and Delhi rankers.",
   keywords: ["jee advanced 1 on 1 strategy call", "jee advanced problem solving session iitian", "jee advanced paper 1 paper 2 triage", "how to prepare for jee advanced", "iit jee advanced mentorship call"],
   alternates: {
     canonical: "https://mentskool.com/jee-advanced-1-on-1-strategy-call",
   },
   openGraph: {
     title: "Book 1:1 JEE Advanced Problem Deconstruction Call | Mentskool",
-    description: "Transition from JEE Main 99 percentile to Top 2000 in JEE Advanced. Book a 1-on-1 problem deconstruction call with top IIT Bombay and Delhi rankers.",
+    description: "Transition from JEE Main 99 percentile to Top 2000 in JEE Advanced. Book a 1-on-1 problem solving breakdown call with top IIT Bombay and Delhi rankers.",
     url: "https://mentskool.com/jee-advanced-1-on-1-strategy-call",
     siteName: "Mentskool",
     images: [
@@ -33,7 +33,7 @@ const config: BookCallPageConfig = {
   "breadcrumbLabel": "JEE Advanced Strategy Call",
   "examFocus": "JEE",
   "metaTitle": "Book 1:1 JEE Advanced Problem Deconstruction Call | Mentskool",
-  "metaDescription": "Transition from JEE Main 99 percentile to Top 2000 in JEE Advanced. Book a 1-on-1 problem deconstruction call with top IIT Bombay and Delhi rankers.",
+  "metaDescription": "Transition from JEE Main 99 percentile to Top 2000 in JEE Advanced. Book a 1-on-1 problem solving breakdown call with top IIT Bombay and Delhi rankers.",
   "keywords": [
     "jee advanced 1 on 1 strategy call",
     "jee advanced problem solving session iitian",
@@ -132,7 +132,7 @@ const config: BookCallPageConfig = {
     }
   ],
   "comparisonTitle": "Coaching Advanced Batch Lecture vs. Mentskool 1:1 Live Deconstruction",
-  "comparisonSubtitle": "Why individual 1:1 problem deconstruction uncovers problem-solving architecture classroom lectures hide.",
+  "comparisonSubtitle": "Why individual 1:1 problem solving breakdown uncovers problem-solving architecture classroom lectures hide.",
   "comparisonRows": [
     {
       "aspect": "Problem Solving",

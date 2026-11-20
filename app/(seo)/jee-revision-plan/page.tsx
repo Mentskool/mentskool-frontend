@@ -61,7 +61,7 @@ const revisionFaqs: FaqItem[] = [
   {
     question: "Why does traditional revision by re-reading notes fail so badly in JEE?",
     answer:
-      "Because passively re-reading notes or flipping through 200 pages creates an 'illusion of competence'—your eyes recognize the words, so your brain tricks you into believing you have mastered the concept. In the exam hall, when you have to retrieve formulas from scratch under pressure, recall fails completely. Effective JEE revision must be *active*: testing yourself closed-book, writing formulas on blank paper, and solving 20 timed mixed-chapter PYQs.",
+      "Because passively re-reading notes or flipping through 200 pages creates an 'false sense of confidence'—your eyes recognize the words, so your brain tricks you into believing you have mastered the concept. In the exam hall, when you have to retrieve formulas from scratch under pressure, recall fails completely. Effective JEE revision must be *active*: testing yourself closed-book, writing formulas on blank paper, and solving 20 timed mixed-chapter PYQs.",
   },
   {
     question: "What is the 45-Day Spaced Repetition Revision Cycle used by Mentskool?",

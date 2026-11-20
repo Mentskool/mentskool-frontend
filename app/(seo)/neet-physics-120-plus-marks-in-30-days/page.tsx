@@ -71,7 +71,7 @@ const config: BookCallPageConfig = {
     }
   ],
   "overviewHeading": "Why Standard Coaching Methods Break Down in 120+ in NEET Physics in 30 Days",
-  "overviewIntro": "In traditional coaching classrooms across India, students struggling with 120+ in neet physics in 30 days are treated with a one-size-fits-all approach: more video lectures, generic homework assignments, and public test score shaming. However, empirical analysis of top rankers reveals that modern physics (dual nature, atoms, nuclei - 5-6 qs), semiconductors (3 qs), current electricity (3 qs), ray & wave optics (4 qs), thermal physics (3 qs), gravitation (2 qs) requires surgical diagnostic intervention, individual habit rewiring, and unhurried problem deconstruction. The table below illustrates why personalized 1-on-1 mentorship consistently outperforms mass batch broadcasting.",
+  "overviewIntro": "In traditional coaching classrooms across India, students struggling with 120+ in neet physics in 30 days are treated with a one-size-fits-all approach: more video lectures, generic homework assignments, and public test score shaming. However, empirical analysis of top rankers reveals that modern physics (dual nature, atoms, nuclei - 5-6 qs), semiconductors (3 qs), current electricity (3 qs), ray & wave optics (4 qs), thermal physics (3 qs), gravitation (2 qs) requires surgical diagnostic intervention, individual habit rewiring, and step-by-step problem solving. The table below illustrates why personalized 1-on-1 mentorship consistently outperforms mass batch broadcasting.",
   "overviewPoints": [
     {
       "title": "Individual Cognitive Diagnostic vs Uniform Lectures",
@@ -93,7 +93,7 @@ const config: BookCallPageConfig = {
   "timelinePhases": [
     {
       "timeframe": "Phase 1 • Days 1 to 7",
-      "phaseTitle": "Forensic Diagnostic & Baseline Calibration",
+      "phaseTitle": "Initial Mock & Syllabus Review",
       "description": "Your mentor evaluates your recent test papers, study notes, and daily schedule to identify foundational leaks in NEET Physics formula sheet with boundary units and PYQ collection from 2018 to 2026.",
       "deliverables": [
         "Itemized diagnostic audit of 120+ in NEET Physics in 30 Days",
@@ -104,7 +104,7 @@ const config: BookCallPageConfig = {
     {
       "timeframe": "Phase 2 • Days 8 to 21",
       "phaseTitle": "Prerequisite Reconstruction & Problem Drills",
-      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build unflinching confidence in Modern Physics (Dual Nature, Atoms, Nuclei - 5-6 Qs), Semiconductors (3 Qs), Current Electricity (3 Qs), Ray & Wave Optics (4 Qs), Thermal Physics (3 Qs), Gravitation (2 Qs).",
+      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build solid confidence in Modern Physics (Dual Nature, Atoms, Nuclei - 5-6 Qs), Semiconductors (3 Qs), Current Electricity (3 Qs), Ray & Wave Optics (4 Qs), Thermal Physics (3 Qs), Gravitation (2 Qs).",
       "deliverables": [
         "Mastery of core concepts in NEET Physics formula sheet with boundary units and PYQ collection from 2018 to 2026",
         "Creation of a physical Error Vault / Mistake Copy",
@@ -181,7 +181,7 @@ const config: BookCallPageConfig = {
       "heading": "Deconstructing 120+ in NEET Physics in 30 Days: The Root Causes of Failure",
       "subheading": "Why traditional study methods collapse under the weight of competitive entrance pressure",
       "paragraphs": [
-        "When students and parents confront challenges around 120+ in neet physics in 30 days, the instinct is almost always to treat the surface symptoms: enrolling in another crash course, buying thicker reference books, or forcing 14-hour study marathons. In competitive exams like NEET UG, however, academic stagnation is rarely caused by a lack of effort. It is caused by systematic friction: passive information consumption, lack of immediate feedback loops, and the cognitive fatigue caused by attempting complex multi-step mechanics questions and developing a mental phobia that prevents scoring 100+ easy marks in modern physics.",
+        "When students and parents confront challenges around 120+ in neet physics in 30 days, the instinct is almost always to treat the surface symptoms: enrolling in another crash course, buying thicker reference books, or forcing 14-hour study marathons. In competitive exams like NEET UG, however, academic stagnation is rarely caused by a lack of effort. It is caused by common preparation mistakes: passive information consumption, lack of immediate feedback loops, and the cognitive fatigue caused by attempting complex multi-step mechanics questions and developing a mental phobia that prevents scoring 100+ easy marks in modern physics.",
         "In conventional classroom setups, students spend 6 to 8 hours daily passively listening to teachers solve problems. This creates the dangerous psychological trap known as the 'Illusion of Competence'—nodding along with an expert's derivation feels like learning, but when the student sits alone with an unattempted question in NEET Physics formula sheet with boundary units, the mind goes blank. True competitive mastery requires active problem generation, unassisted derivation, and immediate correction of false cognitive pathways."
       ],
       "keyTakeaways": [
@@ -204,7 +204,7 @@ const config: BookCallPageConfig = {
       "subheading": "How top rankers architect their daily study blocks to achieve effortless mastery",
       "paragraphs": [
         "Achieving a decisive turnaround in 120+ in neet physics in 30 days requires shifting from emotional motivation to systematic operational engineering. Top 0.1% rankers at IITs and AIIMS do not rely on burst-and-crash motivation cycles. Instead, they design their days around three non-negotiable structural anchors: (1) Protected morning analytical problem slots, (2) Active recall blinder sessions for factual retention, and (3) Ruthless error archiving.",
-        "By breaking the daunting mountain of modern physics (dual nature, atoms, nuclei - 5-6 qs), semiconductors (3 qs), current electricity (3 qs), ray & wave optics (4 qs), thermal physics (3 qs), gravitation (2 qs) into discrete 90-minute ultradian focus sprints, cognitive fatigue is permanently mitigated. During each sprint, your phone is physically isolated in another room, all notifications are severed, and the objective is clear: solve 20 to 25 challenging problems without checking solutions. If you stumble on a concept in PYQ collection from 2018 to 2026, you note the precise trigger in your Error Vault rather than abandoning the problem set in frustration."
+        "By breaking the daunting mountain of modern physics (dual nature, atoms, nuclei - 5-6 qs), semiconductors (3 qs), current electricity (3 qs), ray & wave optics (4 qs), thermal physics (3 qs), gravitation (2 qs) into discrete 90-minute focused 90-minute study sessions, cognitive fatigue is permanently mitigated. During each sprint, your phone is physically isolated in another room, all notifications are severed, and the objective is clear: solve 20 to 25 challenging problems without checking solutions. If you stumble on a concept in PYQ collection from 2018 to 2026, you note the precise trigger in your Error Vault rather than abandoning the problem set in frustration."
       ],
       "keyTakeaways": [
         {

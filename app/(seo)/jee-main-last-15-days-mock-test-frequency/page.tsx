@@ -7,14 +7,14 @@ import {
 
 export const metadata: Metadata = {
   title: "JEE Main Last 15 Days Mock Test Frequency & Strategy: Balancing Testing with Error Surgery | Mentskool",
-  description: "Should you take a full mock test every single day? Discover the optimal alternate-day testing cadence, post-test forensic analysis schedule, and when to st",
+  description: "Should you take a full mock test every single day? Discover the optimal alternate-day testing cadence, post-test detailed question-by-question analysis schedule, and when to st",
   keywords: ["jee main last 15 days mock test frequency", "last 15 days mock test cadence", "jee main exam strategy", "jee 2027 preparation guide", "jee 1 on 1 mentorship call", "jee topper study routine"],
   alternates: {
     canonical: "https://mentskool.com/jee-main-last-15-days-mock-test-frequency",
   },
   openGraph: {
     title: "JEE Main Last 15 Days Mock Test Frequency & Strategy: Balancing Testing with Error Surgery | Mentskool",
-    description: "Should you take a full mock test every single day? Discover the optimal alternate-day testing cadence, post-test forensic analysis schedule, and when to st",
+    description: "Should you take a full mock test every single day? Discover the optimal alternate-day testing cadence, post-test detailed question-by-question analysis schedule, and when to st",
     url: "https://mentskool.com/jee-main-last-15-days-mock-test-frequency",
     siteName: "Mentskool",
     images: [
@@ -33,7 +33,7 @@ const config: BookCallPageConfig = {
   "breadcrumbLabel": "Last 15 Days Mock Test Cadence",
   "examFocus": "JEE",
   "metaTitle": "JEE Main Last 15 Days Mock Test Frequency & Strategy: Balancing Testing with Error Surgery | Mentskool",
-  "metaDescription": "Should you take a full mock test every single day? Discover the optimal alternate-day testing cadence, post-test forensic analysis schedule, and when to st",
+  "metaDescription": "Should you take a full mock test every single day? Discover the optimal alternate-day testing cadence, post-test detailed question-by-question analysis schedule, and when to st",
   "keywords": [
     "jee main last 15 days mock test frequency",
     "last 15 days mock test cadence",
@@ -45,7 +45,7 @@ const config: BookCallPageConfig = {
   "badgeText": "Mock Strategy • Cadence & Analysis",
   "h1Prefix": "JEE Main Last 15 Days Mock Test Frequency & Strategy:",
   "h1Highlight": "Balancing Testing with Error Surgery",
-  "heroDescription": "Should you take a full mock test every single day? Discover the optimal alternate-day testing cadence, post-test forensic analysis schedule, and when to stop taking mocks before exam day.",
+  "heroDescription": "Should you take a full mock test every single day? Discover the optimal alternate-day testing cadence, post-test detailed question-by-question analysis schedule, and when to stop taking mocks before exam day.",
   "serviceTitle": "1:1 Last 15 Days Mock Test Cadence Strategy & Diagnostic Call",
   "serviceDescription": "Audit your preparation and create a customized 30-day comeback plan with an IITian Senior Mentor.",
   "quickStats": [
@@ -71,7 +71,7 @@ const config: BookCallPageConfig = {
     }
   ],
   "overviewHeading": "Why Standard Coaching Methods Break Down in Last 15 Days Mock Test Cadence",
-  "overviewIntro": "In traditional coaching classrooms across India, students struggling with last 15 days mock test cadence are treated with a one-size-fits-all approach: more video lectures, generic homework assignments, and public test score shaming. However, empirical analysis of top rankers reveals that 3-hour mock followed by mandatory 4-hour error analysis, resting the brain 72 hours before d-day, and testing strictly in official shift slots (9-12 or 3-6) requires surgical diagnostic intervention, individual habit rewiring, and unhurried problem deconstruction. The table below illustrates why personalized 1-on-1 mentorship consistently outperforms mass batch broadcasting.",
+  "overviewIntro": "In traditional coaching classrooms across India, students struggling with last 15 days mock test cadence are treated with a one-size-fits-all approach: more video lectures, generic homework assignments, and public test score shaming. However, empirical analysis of top rankers reveals that 3-hour mock followed by mandatory 4-hour error analysis, resting the brain 72 hours before d-day, and testing strictly in official shift slots (9-12 or 3-6) requires surgical diagnostic intervention, individual habit rewiring, and step-by-step problem solving. The table below illustrates why personalized 1-on-1 mentorship consistently outperforms mass batch broadcasting.",
   "overviewPoints": [
     {
       "title": "Individual Cognitive Diagnostic vs Uniform Lectures",
@@ -93,7 +93,7 @@ const config: BookCallPageConfig = {
   "timelinePhases": [
     {
       "timeframe": "Phase 1 • Days 1 to 7",
-      "phaseTitle": "Forensic Diagnostic & Baseline Calibration",
+      "phaseTitle": "Initial Mock & Syllabus Review",
       "description": "Your mentor evaluates your recent test papers, study notes, and daily schedule to identify foundational leaks in Full Syllabus Mock Test Papers (NTA format) and Excel or Physical Error Diary.",
       "deliverables": [
         "Itemized diagnostic audit of Last 15 Days Mock Test Cadence",
@@ -104,7 +104,7 @@ const config: BookCallPageConfig = {
     {
       "timeframe": "Phase 2 • Days 8 to 21",
       "phaseTitle": "Prerequisite Reconstruction & Problem Drills",
-      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build unflinching confidence in 3-hour mock followed by mandatory 4-hour error analysis, resting the brain 72 hours before D-Day, and testing strictly in official shift slots (9-12 or 3-6).",
+      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build solid confidence in 3-hour mock followed by mandatory 4-hour error analysis, resting the brain 72 hours before D-Day, and testing strictly in official shift slots (9-12 or 3-6).",
       "deliverables": [
         "Mastery of core concepts in Full Syllabus Mock Test Papers (NTA format) and Excel or Physical Error Diary",
         "Creation of a physical Error Vault / Mistake Copy",
@@ -181,7 +181,7 @@ const config: BookCallPageConfig = {
       "heading": "Deconstructing Last 15 Days Mock Test Cadence: The Root Causes of Failure",
       "subheading": "Why traditional study methods collapse under the weight of competitive entrance pressure",
       "paragraphs": [
-        "When students and parents confront challenges around last 15 days mock test cadence, the instinct is almost always to treat the surface symptoms: enrolling in another crash course, buying thicker reference books, or forcing 14-hour study marathons. In competitive exams like JEE Advanced & Main, however, academic stagnation is rarely caused by a lack of effort. It is caused by systematic friction: passive information consumption, lack of immediate feedback loops, and the cognitive fatigue caused by giving back-to-back mocks without analyzing mistakes, reinforcing the same errors, and exhausting mental stamina.",
+        "When students and parents confront challenges around last 15 days mock test cadence, the instinct is almost always to treat the surface symptoms: enrolling in another crash course, buying thicker reference books, or forcing 14-hour study marathons. In competitive exams like JEE Advanced & Main, however, academic stagnation is rarely caused by a lack of effort. It is caused by common preparation mistakes: passive information consumption, lack of immediate feedback loops, and the cognitive fatigue caused by giving back-to-back mocks without analyzing mistakes, reinforcing the same errors, and exhausting mental stamina.",
         "In conventional classroom setups, students spend 6 to 8 hours daily passively listening to teachers solve problems. This creates the dangerous psychological trap known as the 'Illusion of Competence'—nodding along with an expert's derivation feels like learning, but when the student sits alone with an unattempted question in Full Syllabus Mock Test Papers (NTA format), the mind goes blank. True competitive mastery requires active problem generation, unassisted derivation, and immediate correction of false cognitive pathways."
       ],
       "keyTakeaways": [
@@ -204,7 +204,7 @@ const config: BookCallPageConfig = {
       "subheading": "How top rankers architect their daily study blocks to achieve effortless mastery",
       "paragraphs": [
         "Achieving a decisive turnaround in last 15 days mock test cadence requires shifting from emotional motivation to systematic operational engineering. Top 0.1% rankers at IITs and AIIMS do not rely on burst-and-crash motivation cycles. Instead, they design their days around three non-negotiable structural anchors: (1) Protected morning analytical problem slots, (2) Active recall blinder sessions for factual retention, and (3) Ruthless error archiving.",
-        "By breaking the daunting mountain of 3-hour mock followed by mandatory 4-hour error analysis, resting the brain 72 hours before d-day, and testing strictly in official shift slots (9-12 or 3-6) into discrete 90-minute ultradian focus sprints, cognitive fatigue is permanently mitigated. During each sprint, your phone is physically isolated in another room, all notifications are severed, and the objective is clear: solve 20 to 25 challenging problems without checking solutions. If you stumble on a concept in Excel or Physical Error Diary, you note the precise trigger in your Error Vault rather than abandoning the problem set in frustration."
+        "By breaking the daunting mountain of 3-hour mock followed by mandatory 4-hour error analysis, resting the brain 72 hours before d-day, and testing strictly in official shift slots (9-12 or 3-6) into discrete 90-minute focused 90-minute study sessions, cognitive fatigue is permanently mitigated. During each sprint, your phone is physically isolated in another room, all notifications are severed, and the objective is clear: solve 20 to 25 challenging problems without checking solutions. If you stumble on a concept in Excel or Physical Error Diary, you note the precise trigger in your Error Vault rather than abandoning the problem set in frustration."
       ],
       "keyTakeaways": [
         {

@@ -75,7 +75,7 @@ const config: BookCallPageConfig = {
   "overviewPoints": [
     {
       "title": "Cognitive Overload vs Active Problem Solving",
-      "detail": "Watching a faculty member solve 15 advanced problems on a smartboard creates the illusion of competence. In contrast, 1-on-1 mentorship forces you to explain your problem-solving tree, instantly highlighting where your logic collapses."
+      "detail": "Watching a faculty member solve 15 advanced problems on a smartboard creates the false sense of confidence. In contrast, 1-on-1 mentorship forces you to explain your problem-solving tree, instantly highlighting where your logic collapses."
     },
     {
       "title": "Uniform Pacing vs High-Yield Weakness Triage",

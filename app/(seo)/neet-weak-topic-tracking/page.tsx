@@ -96,7 +96,7 @@ export default function NeetWeakTopicTrackingPage() {
         "@type": "HowTo",
         name: "How to Repair a Weak NEET Topic with AIIMS Doctors",
         description:
-          "The forensic diagnostic protocol used by AIIMS rankers to eliminate negative marks in difficult medical chapters.",
+          "The step-by-step diagnostic protocol used by AIIMS rankers to eliminate negative marks in difficult medical chapters.",
         step: [
           {
             "@type": "HowToStep",

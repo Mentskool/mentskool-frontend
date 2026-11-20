@@ -71,7 +71,7 @@ const config: BookCallPageConfig = {
     }
   ],
   "overviewHeading": "Why Standard Coaching Methods Break Down in GOC & Hydrocarbons for Class 12",
-  "overviewIntro": "In traditional coaching classrooms across India, students struggling with goc & hydrocarbons for class 12 are treated with a one-size-fits-all approach: more video lectures, generic homework assignments, and public test score shaming. However, empirical analysis of top rankers reveals that shifting from memorizing 100+ random organic reactions to understanding electron richness, carbocation shifts, and resonance stability requires surgical diagnostic intervention, individual habit rewiring, and unhurried problem deconstruction. The table below illustrates why personalized 1-on-1 mentorship consistently outperforms mass batch broadcasting.",
+  "overviewIntro": "In traditional coaching classrooms across India, students struggling with goc & hydrocarbons for class 12 are treated with a one-size-fits-all approach: more video lectures, generic homework assignments, and public test score shaming. However, empirical analysis of top rankers reveals that shifting from memorizing 100+ random organic reactions to understanding electron richness, carbocation shifts, and resonance stability requires surgical diagnostic intervention, individual habit rewiring, and step-by-step problem solving. The table below illustrates why personalized 1-on-1 mentorship consistently outperforms mass batch broadcasting.",
   "overviewPoints": [
     {
       "title": "Individual Cognitive Diagnostic vs Uniform Lectures",
@@ -93,7 +93,7 @@ const config: BookCallPageConfig = {
   "timelinePhases": [
     {
       "timeframe": "Phase 1 • Days 1 to 7",
-      "phaseTitle": "Forensic Diagnostic & Baseline Calibration",
+      "phaseTitle": "Initial Mock & Syllabus Review",
       "description": "Your mentor evaluates your recent test papers, study notes, and daily schedule to identify foundational leaks in Chemical Bonding hybridization and Lewis octet and formal charge.",
       "deliverables": [
         "Itemized diagnostic audit of GOC & Hydrocarbons for Class 12",
@@ -104,7 +104,7 @@ const config: BookCallPageConfig = {
     {
       "timeframe": "Phase 2 • Days 8 to 21",
       "phaseTitle": "Prerequisite Reconstruction & Problem Drills",
-      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build unflinching confidence in Shifting from memorizing 100+ random organic reactions to understanding electron richness, carbocation shifts, and resonance stability.",
+      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build solid confidence in Shifting from memorizing 100+ random organic reactions to understanding electron richness, carbocation shifts, and resonance stability.",
       "deliverables": [
         "Mastery of core concepts in Chemical Bonding hybridization and Lewis octet and formal charge",
         "Creation of a physical Error Vault / Mistake Copy",
@@ -181,7 +181,7 @@ const config: BookCallPageConfig = {
       "heading": "Deconstructing GOC & Hydrocarbons for Class 12: The Root Causes of Failure",
       "subheading": "Why traditional study methods collapse under the weight of competitive entrance pressure",
       "paragraphs": [
-        "When students and parents confront challenges around goc & hydrocarbons for class 12, the instinct is almost always to treat the surface symptoms: enrolling in another crash course, buying thicker reference books, or forcing 14-hour study marathons. In competitive exams like JEE Advanced & Main, however, academic stagnation is rarely caused by a lack of effort. It is caused by systematic friction: passive information consumption, lack of immediate feedback loops, and the cognitive fatigue caused by trying to memorize class 12 named reactions without knowing why a nucleophile attacks a specific carbonyl carbon.",
+        "When students and parents confront challenges around goc & hydrocarbons for class 12, the instinct is almost always to treat the surface symptoms: enrolling in another crash course, buying thicker reference books, or forcing 14-hour study marathons. In competitive exams like JEE Advanced & Main, however, academic stagnation is rarely caused by a lack of effort. It is caused by common preparation mistakes: passive information consumption, lack of immediate feedback loops, and the cognitive fatigue caused by trying to memorize class 12 named reactions without knowing why a nucleophile attacks a specific carbonyl carbon.",
         "In conventional classroom setups, students spend 6 to 8 hours daily passively listening to teachers solve problems. This creates the dangerous psychological trap known as the 'Illusion of Competence'—nodding along with an expert's derivation feels like learning, but when the student sits alone with an unattempted question in Chemical Bonding hybridization, the mind goes blank. True competitive mastery requires active problem generation, unassisted derivation, and immediate correction of false cognitive pathways."
       ],
       "keyTakeaways": [
@@ -204,7 +204,7 @@ const config: BookCallPageConfig = {
       "subheading": "How top rankers architect their daily study blocks to achieve effortless mastery",
       "paragraphs": [
         "Achieving a decisive turnaround in goc & hydrocarbons for class 12 requires shifting from emotional motivation to systematic operational engineering. Top 0.1% rankers at IITs and AIIMS do not rely on burst-and-crash motivation cycles. Instead, they design their days around three non-negotiable structural anchors: (1) Protected morning analytical problem slots, (2) Active recall blinder sessions for factual retention, and (3) Ruthless error archiving.",
-        "By breaking the daunting mountain of shifting from memorizing 100+ random organic reactions to understanding electron richness, carbocation shifts, and resonance stability into discrete 90-minute ultradian focus sprints, cognitive fatigue is permanently mitigated. During each sprint, your phone is physically isolated in another room, all notifications are severed, and the objective is clear: solve 20 to 25 challenging problems without checking solutions. If you stumble on a concept in Lewis octet and formal charge, you note the precise trigger in your Error Vault rather than abandoning the problem set in frustration."
+        "By breaking the daunting mountain of shifting from memorizing 100+ random organic reactions to understanding electron richness, carbocation shifts, and resonance stability into discrete 90-minute focused 90-minute study sessions, cognitive fatigue is permanently mitigated. During each sprint, your phone is physically isolated in another room, all notifications are severed, and the objective is clear: solve 20 to 25 challenging problems without checking solutions. If you stumble on a concept in Lewis octet and formal charge, you note the precise trigger in your Error Vault rather than abandoning the problem set in frustration."
       ],
       "keyTakeaways": [
         {

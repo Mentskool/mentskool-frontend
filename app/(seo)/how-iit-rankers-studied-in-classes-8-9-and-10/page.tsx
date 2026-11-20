@@ -71,7 +71,7 @@ const config: BookCallPageConfig = {
     }
   ],
   "overviewHeading": "Why Standard Coaching Methods Break Down in How IIT Rankers Studied in 8-10",
-  "overviewIntro": "In traditional coaching classrooms across India, students struggling with how iit rankers studied in 8-10 are treated with a one-size-fits-all approach: more video lectures, generic homework assignments, and public test score shaming. However, empirical analysis of top rankers reveals that empirical case studies of top iit rankers during their middle school years, highlighting the harmony between childhood and academic depth requires surgical diagnostic intervention, individual habit rewiring, and unhurried problem deconstruction. The table below illustrates why personalized 1-on-1 mentorship consistently outperforms mass batch broadcasting.",
+  "overviewIntro": "In traditional coaching classrooms across India, students struggling with how iit rankers studied in 8-10 are treated with a one-size-fits-all approach: more video lectures, generic homework assignments, and public test score shaming. However, empirical analysis of top rankers reveals that empirical case studies of top iit rankers during their middle school years, highlighting the harmony between childhood and academic depth requires surgical diagnostic intervention, individual habit rewiring, and step-by-step problem solving. The table below illustrates why personalized 1-on-1 mentorship consistently outperforms mass batch broadcasting.",
   "overviewPoints": [
     {
       "title": "Individual Cognitive Diagnostic vs Uniform Lectures",
@@ -93,7 +93,7 @@ const config: BookCallPageConfig = {
   "timelinePhases": [
     {
       "timeframe": "Phase 1 • Days 1 to 7",
-      "phaseTitle": "Forensic Diagnostic & Baseline Calibration",
+      "phaseTitle": "Initial Mock & Syllabus Review",
       "description": "Your mentor evaluates your recent test papers, study notes, and daily schedule to identify foundational leaks in Interest in learning from role models and Willingness to adopt simple daily habits.",
       "deliverables": [
         "Itemized diagnostic audit of How IIT Rankers Studied in 8-10",
@@ -104,7 +104,7 @@ const config: BookCallPageConfig = {
     {
       "timeframe": "Phase 2 • Days 8 to 21",
       "phaseTitle": "Prerequisite Reconstruction & Problem Drills",
-      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build unflinching confidence in Empirical case studies of top IIT rankers during their middle school years, highlighting the harmony between childhood and academic depth.",
+      "description": "Targeted execution of high-yield conceptual drills and level-1/level-2 problem sets to build solid confidence in Empirical case studies of top IIT rankers during their middle school years, highlighting the harmony between childhood and academic depth.",
       "deliverables": [
         "Mastery of core concepts in Interest in learning from role models and Willingness to adopt simple daily habits",
         "Creation of a physical Error Vault / Mistake Copy",
@@ -181,7 +181,7 @@ const config: BookCallPageConfig = {
       "heading": "Deconstructing How IIT Rankers Studied in 8-10: The Root Causes of Failure",
       "subheading": "Why traditional study methods collapse under the weight of competitive entrance pressure",
       "paragraphs": [
-        "When students and parents confront challenges around how iit rankers studied in 8-10, the instinct is almost always to treat the surface symptoms: enrolling in another crash course, buying thicker reference books, or forcing 14-hour study marathons. In competitive exams like JEE Advanced & Main, however, academic stagnation is rarely caused by a lack of effort. It is caused by systematic friction: passive information consumption, lack of immediate feedback loops, and the cognitive fatigue caused by believing that top rankers are genetically gifted geniuses rather than students who built consistent curiosity habits early.",
+        "When students and parents confront challenges around how iit rankers studied in 8-10, the instinct is almost always to treat the surface symptoms: enrolling in another crash course, buying thicker reference books, or forcing 14-hour study marathons. In competitive exams like JEE Advanced & Main, however, academic stagnation is rarely caused by a lack of effort. It is caused by common preparation mistakes: passive information consumption, lack of immediate feedback loops, and the cognitive fatigue caused by believing that top rankers are genetically gifted geniuses rather than students who built consistent curiosity habits early.",
         "In conventional classroom setups, students spend 6 to 8 hours daily passively listening to teachers solve problems. This creates the dangerous psychological trap known as the 'Illusion of Competence'—nodding along with an expert's derivation feels like learning, but when the student sits alone with an unattempted question in Interest in learning from role models, the mind goes blank. True competitive mastery requires active problem generation, unassisted derivation, and immediate correction of false cognitive pathways."
       ],
       "keyTakeaways": [
@@ -204,7 +204,7 @@ const config: BookCallPageConfig = {
       "subheading": "How top rankers architect their daily study blocks to achieve effortless mastery",
       "paragraphs": [
         "Achieving a decisive turnaround in how iit rankers studied in 8-10 requires shifting from emotional motivation to systematic operational engineering. Top 0.1% rankers at IITs and AIIMS do not rely on burst-and-crash motivation cycles. Instead, they design their days around three non-negotiable structural anchors: (1) Protected morning analytical problem slots, (2) Active recall blinder sessions for factual retention, and (3) Ruthless error archiving.",
-        "By breaking the daunting mountain of empirical case studies of top iit rankers during their middle school years, highlighting the harmony between childhood and academic depth into discrete 90-minute ultradian focus sprints, cognitive fatigue is permanently mitigated. During each sprint, your phone is physically isolated in another room, all notifications are severed, and the objective is clear: solve 20 to 25 challenging problems without checking solutions. If you stumble on a concept in Willingness to adopt simple daily habits, you note the precise trigger in your Error Vault rather than abandoning the problem set in frustration."
+        "By breaking the daunting mountain of empirical case studies of top iit rankers during their middle school years, highlighting the harmony between childhood and academic depth into discrete 90-minute focused 90-minute study sessions, cognitive fatigue is permanently mitigated. During each sprint, your phone is physically isolated in another room, all notifications are severed, and the objective is clear: solve 20 to 25 challenging problems without checking solutions. If you stumble on a concept in Willingness to adopt simple daily habits, you note the precise trigger in your Error Vault rather than abandoning the problem set in frustration."
       ],
       "keyTakeaways": [
         {
