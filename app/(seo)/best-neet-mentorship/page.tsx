@@ -282,17 +282,10 @@ export default function BestNeetMentorshipPage() {
           </article>
 
           {/* Program Features Component */}
-          <section className="my-16">
-            <div className="text-center max-w-2xl mx-auto mb-10">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                The 4 Pillars of the Mentskool Medical Mentorship Engine
-              </h2>
-              <p className="text-slate-400 text-sm mt-2">
-                Coaching teaches the theory. Mentorship ensures the execution.
-              </p>
-            </div>
-            <ProgramFeatures />
-          </section>
+          <ProgramFeatures
+            heading="Why Mentskool Outranks Traditional NEET Mentorship"
+            subheading="Coaching teaches the theory. Mentorship ensures the execution. Built from the ground up for medical aspirants who need serious discipline, weekly mock error audits, and 680+ score targeting."
+          />
 
           <SeoDeepDiveExtension {...batchDExtensions["best-neet-mentorship"]} />
 

@@ -191,17 +191,10 @@ export default function Class1112MentorshipPage() {
           </section>
 
           {/* Program Features Component */}
-          <section className="my-16">
-            <div className="text-center max-w-2xl mx-auto mb-10">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                The 4 Pillars of Foundation Mentorship
-              </h2>
-              <p className="text-slate-400 text-sm mt-2">
-                Lectures explain the concept. Mentorship guarantees the execution.
-              </p>
-            </div>
-            <ProgramFeatures />
-          </section>
+          <ProgramFeatures
+            heading="Why Mentskool Outranks Traditional Mentorship"
+            subheading="Lectures explain the concept. Mentorship guarantees the execution. Designed for school-going Class 11 & 12 students balancing board exams with early competitive prep."
+          />
 
           <SeoDeepDiveExtension {...batchB2Extensions["class-11-12-mentorship"]} />
           <SeoMentorFunnel examFocus="BOTH" />

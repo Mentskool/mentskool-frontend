@@ -192,17 +192,10 @@ export default function JeeDroppersPage() {
           </section>
 
           {/* Program Features Component */}
-          <section className="my-16">
-            <div className="text-center max-w-2xl mx-auto mb-10">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                The 4 Pillars of the Mentskool Dropper Engine
-              </h2>
-              <p className="text-slate-400 text-sm mt-2">
-                Lectures explain the concept. Mentorship guarantees the execution.
-              </p>
-            </div>
-            <ProgramFeatures />
-          </section>
+          <ProgramFeatures
+            heading="Why Mentskool Outranks Traditional Mentorship"
+            subheading="Lectures explain the concept. Mentorship guarantees the execution. Dedicated to repeaters overcoming drop-year isolation, mock score stagnation, and exam anxiety."
+          />
 
           <SeoDeepDiveExtension {...batchB2Extensions["jee-droppers"]} />
           <SeoMentorFunnel examFocus="JEE" />

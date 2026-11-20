@@ -197,17 +197,10 @@ export default function NeetMentorshipPage() {
           </section>
 
           {/* Program Features Component */}
-          <section className="my-16">
-            <div className="text-center max-w-2xl mx-auto mb-10">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                The 4 Pillars of the Mentskool Medical Mentorship Engine
-              </h2>
-              <p className="text-slate-400 text-sm mt-2">
-                Lectures explain the concept. Mentorship guarantees the execution.
-              </p>
-            </div>
-            <ProgramFeatures />
-          </section>
+          <ProgramFeatures
+            heading="Why Mentskool Outranks Traditional Mentorship"
+            subheading="Lectures explain the concept. Mentorship guarantees the execution. Master NCERT depth, Physics numerical speed, and negative-mark reduction with AIIMS mentors."
+          />
 
           <SeoDeepDiveExtension {...batchB2Extensions["neet-mentorship"]} />
           <SeoMentorFunnel examFocus="NEET" />
