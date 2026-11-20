@@ -233,13 +233,14 @@ export interface AdminUserListResponse {
 
 export interface AdminDiagnosticAlert {
   id: string;
-  category: "SESSIONS" | "MENTORS" | "VERIFICATION" | "COHORTS" | string;
-  severity: "HIGH" | "MEDIUM" | "LOW" | string;
+  category: "SESSIONS" | "MENTORS" | "VERIFICATION" | "COHORTS" | "INACTIVITY" | "FINANCIALS" | string;
+  severity: "HIGH" | "MEDIUM" | "LOW" | "CRITICAL" | "WARNING" | "INFO" | string;
   title: string;
   description: string;
   count: number;
   action_label: string;
-  action_href: string;
+  action_url?: string | null;
+  action_href?: string | null;
 }
 
 export interface AdminRecentActivityItem {

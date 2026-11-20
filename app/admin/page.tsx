@@ -71,7 +71,9 @@ export default function AdminOverviewPage() {
 
   const netCommission = Number(data?.platform_net_commission ?? 0);
   const alerts = data?.diagnostic_alerts ?? [];
-  const highSeverityAlerts = alerts.filter((a) => a.severity === "HIGH");
+  const highSeverityAlerts = alerts.filter(
+    (a) => a.severity === "HIGH" || a.severity === "CRITICAL"
+  );
 
   // Ratios
   const cohortPct = grossRevenue > 0 ? Math.round((cohortRevenue / grossRevenue) * 100) : 0;
@@ -115,8 +117,9 @@ export default function AdminOverviewPage() {
         {alerts.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
             {alerts.map((alert) => {
-              const isHigh = alert.severity === "HIGH";
-              const isMedium = alert.severity === "MEDIUM";
+              const isHigh = alert.severity === "HIGH" || alert.severity === "CRITICAL";
+              const isMedium = alert.severity === "MEDIUM" || alert.severity === "WARNING";
+              const targetUrl = alert.action_url || alert.action_href || "/admin";
 
               return (
                 <div
@@ -156,7 +159,7 @@ export default function AdminOverviewPage() {
                     </p>
                   </div>
 
-                  <Link href={alert.action_href}>
+                  <Link href={targetUrl}>
                     <Button
                       variant={isHigh ? "primary" : "secondary"}
                       size="sm"
