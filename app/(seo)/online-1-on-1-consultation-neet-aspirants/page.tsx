@@ -294,7 +294,7 @@ const config: BookCallPageConfig = {
       "href": "/online-1-on-1-consultation-jee-aspirants"
     },
     {
-      "label": "Free Mentorship Trial",
+      "label": "Free Mentorship Strategy Session",
       "href": "/free-mentorship-session"
     }
   ]

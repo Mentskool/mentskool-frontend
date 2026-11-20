@@ -295,7 +295,7 @@ const config: BookCallPageConfig = {
       "href": "/mentors"
     },
     {
-      "label": "Free 15-Minute Trial Call",
+      "label": "Free 15-Minute Strategy Call",
       "href": "/free-mentorship-session"
     }
   ]

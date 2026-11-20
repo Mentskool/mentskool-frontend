@@ -174,7 +174,7 @@ export function BookCallPageTemplate({ config }: { config: BookCallPageConfig })
                 className="px-6 py-3.5 rounded-xl text-sm font-semibold bg-slate-900 border border-slate-800 text-slate-200 hover:text-white hover:border-slate-700 transition-all flex items-center gap-2"
               >
                 <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>Claim Free 15-Min Trial Call</span>
+                <span>Claim Free 1-on-1 Strategy Session</span>
               </Link>
             </div>
           </div>
@@ -447,7 +447,7 @@ export function BookCallPageTemplate({ config }: { config: BookCallPageConfig })
             subtitle="Book a private 1-on-1 video strategy session with an IITian or AIIMS ranker. Get real answers, audit your mock tests, and walk away with a crystal-clear execution plan."
             primaryBtnText="Book Your 1:1 Call Now"
             primaryBtnHref="/book-call"
-            secondaryBtnText="Claim Free 15-Min Trial"
+            secondaryBtnText="Claim Free Strategy Call"
             secondaryBtnHref="/free-mentorship-session"
           />
 
