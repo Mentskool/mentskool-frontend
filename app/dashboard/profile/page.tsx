@@ -30,7 +30,7 @@ const TARGET_EXAMS = [
   "GATE / PSU",
 ];
 
-const TARGET_YEARS = [2025, 2026, 2027, 2028];
+const TARGET_YEARS = [2027, 2028, 2029];
 
 const PREP_STAGES = [
   "Dropper / Repeater",
@@ -46,7 +46,7 @@ export default function StudentProfilePage() {
   const [fullName, setFullName] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
   const [targetExam, setTargetExam] = useState("JEE Advanced");
-  const [targetYear, setTargetYear] = useState<number>(2025);
+  const [targetYear, setTargetYear] = useState<number>(2027);
   const [prepStage, setPrepStage] = useState("Dropper / Repeater");
   const [bio, setBio] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -61,7 +61,7 @@ export default function StudentProfilePage() {
       setFullName(user.full_name || "");
       setAvatarUrl(user.avatar_url || "");
       setTargetExam(user.target_exam || "JEE Advanced");
-      setTargetYear(user.target_year || 2025);
+      setTargetYear(user.target_year || 2027);
       setPrepStage(user.prep_stage || "Dropper / Repeater");
       setBio(user.bio || "");
     }

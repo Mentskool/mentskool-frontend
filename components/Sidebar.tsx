@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { useAuth } from "@/hooks/useAuth";
 import { useConversations } from "@/hooks/useChat";
+import { useMySessionBookings } from "@/hooks/useSessions";
 import {
   CheckSquare,
   BarChart3,
@@ -68,6 +69,14 @@ export const Sidebar: React.FC = () => {
   const totalUnreadMessages =
     conversations?.reduce((sum, c) => sum + (c.unread_count ?? 0), 0) ?? 0;
 
+  const isMentor = user?.role === "MENTOR";
+  const { data: mentorBookings } = useMySessionBookings(
+    isMentor ? "PENDING_APPROVAL" : undefined
+  );
+  const pending1on1Count = isMentor
+    ? mentorBookings?.filter((b) => b.status === "PENDING_APPROVAL").length ?? 0
+    : 0;
+
   const handleLogout = async () => {
     await logout();
     router.push("/login");
@@ -108,6 +117,14 @@ export const Sidebar: React.FC = () => {
             {item.href === "/messages" && totalUnreadMessages > 0 && (
               <span className="ml-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-[10px] font-bold bg-rose-500 text-white shadow-xs">
                 {totalUnreadMessages > 99 ? "99+" : totalUnreadMessages}
+              </span>
+            )}
+            {item.href === "/mentor/sessions" && pending1on1Count > 0 && (
+              <span
+                className="ml-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-[10px] font-bold bg-amber-500 text-white shadow-xs animate-pulse"
+                title={`${pending1on1Count} session booking${pending1on1Count === 1 ? "" : "s"} awaiting approval`}
+              >
+                {pending1on1Count > 99 ? "99+" : pending1on1Count}
               </span>
             )}
           </Link>

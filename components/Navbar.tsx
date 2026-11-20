@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "./ui/Button";
-import { ArrowLeft, ArrowRight, LayoutDashboard } from "lucide-react";
+import { ArrowRight, LayoutDashboard } from "lucide-react";
 import { BrandLogo } from "./BrandLogo";
 
 export const Navbar: React.FC = () => {
@@ -19,8 +19,6 @@ export const Navbar: React.FC = () => {
     await logout();
     router.push("/login");
   };
-
-  const isExploreMentorsPage = pathname === "/mentors" || pathname.startsWith("/mentors/");
 
   const dashboardHref =
     user?.role === "ADMIN"
@@ -66,6 +64,16 @@ export const Navbar: React.FC = () => {
               <span className="text-[10px] bg-blue-100 text-blue-700 font-bold px-1.5 py-0.5 rounded-full">
                 New
               </span>
+            </Link>
+            <Link
+              href="/mentors"
+              className={`text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors hidden md:inline-flex ${
+                pathname === "/mentors"
+                  ? "text-blue-600 bg-blue-50"
+                  : "text-ink-muted hover:text-ink hover:bg-mist/40"
+              }`}
+            >
+              Explore Mentors
             </Link>
             {user?.role === "ADMIN" && (
               <Link
@@ -121,28 +129,15 @@ export const Navbar: React.FC = () => {
             </div>
           ) : (
             <div className="flex items-center gap-1.5 sm:gap-2">
-              {isExploreMentorsPage ? (
-                <Link href="/" className="hidden sm:inline-flex">
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    className="text-ink font-semibold text-xs flex items-center gap-1.5 px-3 border-mist"
-                  >
-                    <ArrowLeft className="w-3.5 h-3.5" />
-                    <span>Back to Home</span>
-                  </Button>
-                </Link>
-              ) : (
-                <Link href="/mentors" className="hidden sm:inline-flex">
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    className="text-xs font-semibold text-ink border-mist px-3"
-                  >
-                    Explore Mentors
-                  </Button>
-                </Link>
-              )}
+              <Link href="/signup?role=STUDENT" className="hidden sm:inline-flex">
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  className="text-xs font-semibold text-blue-700 bg-blue-50/80 hover:bg-blue-100/90 border-blue-200/80 px-3 transition-colors shadow-2xs"
+                >
+                  Join as Student
+                </Button>
+              </Link>
               <Link href="/login">
                 <Button
                   size="sm"
