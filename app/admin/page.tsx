@@ -17,6 +17,10 @@ import {
   PieChart,
   CheckCircle2,
   Layers,
+  AlertTriangle,
+  Activity,
+  ChevronRight,
+  Filter,
 } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { useAdminOverview } from "@/hooks/useAdmin";
@@ -66,6 +70,12 @@ export default function AdminOverviewPage() {
   const oneOnOnePayoutDue = Number(data?.one_on_one_payout_due ?? 0);
 
   const netCommission = Number(data?.platform_net_commission ?? 0);
+  const alerts = data?.diagnostic_alerts ?? [];
+  const highSeverityAlerts = alerts.filter((a) => a.severity === "HIGH");
+
+  // Ratios
+  const cohortPct = grossRevenue > 0 ? Math.round((cohortRevenue / grossRevenue) * 100) : 0;
+  const oneOnOnePct = grossRevenue > 0 ? 100 - cohortPct : 0;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
@@ -73,8 +83,101 @@ export default function AdminOverviewPage() {
       <AdminHeader
         pendingMentorsCount={data?.pending_mentors ?? 0}
         pendingSessionsCount={data?.pending_one_on_one_bookings ?? 0}
+        alertsCount={alerts.length}
         onRefresh={() => refetch()}
       />
+
+      {/* Platform Operational Health & Issue Diagnostic Scanner */}
+      <div className="space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Activity className="w-5 h-5 text-indigo-600" />
+            <h2 className="text-base sm:text-lg font-bold font-display text-slate-900">
+              Platform Health & Operational Diagnostics
+            </h2>
+          </div>
+          <div className="flex items-center gap-2 text-xs">
+            {alerts.length === 0 ? (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                All Operational Checks Healthy (0 Issues)
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200 font-bold">
+                <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
+                {alerts.length} Actionable Diagnostic Alert{alerts.length > 1 ? "s" : ""}
+                {highSeverityAlerts.length > 0 && ` (${highSeverityAlerts.length} High Priority)`}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {alerts.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            {alerts.map((alert) => {
+              const isHigh = alert.severity === "HIGH";
+              const isMedium = alert.severity === "MEDIUM";
+
+              return (
+                <div
+                  key={alert.id}
+                  className={`p-4 rounded-xl border transition-all flex flex-col justify-between space-y-3 shadow-sm ${
+                    isHigh
+                      ? "bg-rose-50/60 border-rose-200 text-rose-950 hover:bg-rose-50"
+                      : isMedium
+                      ? "bg-amber-50/60 border-amber-200 text-amber-950 hover:bg-amber-50"
+                      : "bg-blue-50/60 border-blue-200 text-blue-950 hover:bg-blue-50"
+                  }`}
+                >
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <span
+                        className={`text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full tracking-wider border ${
+                          isHigh
+                            ? "bg-rose-100 text-rose-800 border-rose-200"
+                            : isMedium
+                            ? "bg-amber-100 text-amber-800 border-amber-200"
+                            : "bg-blue-100 text-blue-800 border-blue-200"
+                        }`}
+                      >
+                        {alert.severity} • {alert.category}
+                      </span>
+                      {alert.count > 1 && (
+                        <span className="text-xs font-bold px-1.5 py-0.5 rounded-md bg-white/80 shadow-xs border">
+                          {alert.count}
+                        </span>
+                      )}
+                    </div>
+                    <h4 className="text-xs font-bold leading-snug pt-1">
+                      {alert.title}
+                    </h4>
+                    <p className="text-[11px] opacity-80 leading-relaxed">
+                      {alert.description}
+                    </p>
+                  </div>
+
+                  <Link href={alert.action_href}>
+                    <Button
+                      variant={isHigh ? "primary" : "secondary"}
+                      size="sm"
+                      className={`w-full text-xs font-semibold py-1.5 flex items-center justify-center gap-1.5 ${
+                        isHigh
+                          ? "bg-rose-600 hover:bg-rose-700 text-white shadow-xs"
+                          : isMedium
+                          ? "border-amber-300 text-amber-900 bg-amber-100/70 hover:bg-amber-200"
+                          : "border-blue-300 text-blue-900 bg-blue-100/70 hover:bg-blue-200"
+                      }`}
+                    >
+                      <span>{alert.action_label}</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </Button>
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
 
       {/* Main KPI Performance Strip */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -200,6 +303,43 @@ export default function AdminOverviewPage() {
           </div>
         </Card>
       </div>
+
+      {/* Gross Revenue Distribution Ratio Bar */}
+      <Card className="p-4 bg-white border border-slate-200/90 shadow-sm space-y-2.5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-slate-600 gap-1">
+          <span className="font-bold text-slate-900 flex items-center gap-1.5">
+            <PieChart className="w-4 h-4 text-indigo-600" />
+            Platform Revenue Composition & Real-time Split
+          </span>
+          <div className="flex items-center gap-4 text-[11px] flex-wrap">
+            <span className="flex items-center gap-1.5 font-medium">
+              <span className="w-2.5 h-2.5 rounded-full bg-indigo-600 inline-block" />
+              Cohorts: {cohortPct}% (₹{cohortRevenue.toLocaleString()})
+            </span>
+            <span className="flex items-center gap-1.5 font-medium">
+              <span className="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block" />
+              1:1 Calls: {oneOnOnePct}% (₹{oneOnOneRevenue.toLocaleString()})
+            </span>
+            <span className="text-slate-300 hidden sm:inline">|</span>
+            <span className="text-emerald-700 font-bold flex items-center gap-1">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse inline-block" />
+              {data?.active_mentors_today ?? 0} mentor(s) active today
+            </span>
+          </div>
+        </div>
+        <div className="w-full h-3 rounded-full bg-slate-100 overflow-hidden flex">
+          <div
+            className="h-full bg-indigo-600 transition-all duration-500"
+            style={{ width: `${cohortPct}%` }}
+            title={`Cohorts: ₹${cohortRevenue.toLocaleString()} (${cohortPct}%)`}
+          />
+          <div
+            className="h-full bg-blue-500 transition-all duration-500"
+            style={{ width: `${oneOnOnePct}%` }}
+            title={`1:1 Calls: ₹${oneOnOneRevenue.toLocaleString()} (${oneOnOnePct}%)`}
+          />
+        </div>
+      </Card>
 
       {/* Dual Revenue Stream & Payouts Breakdown (Cohorts vs 1:1 Calls) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
