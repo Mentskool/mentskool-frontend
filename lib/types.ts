@@ -231,6 +231,17 @@ export interface AdminUserListResponse {
   total_admins: number;
 }
 
+export interface AdminDiagnosticAlert {
+  id: string;
+  category: "SESSIONS" | "MENTORS" | "VERIFICATION" | "COHORTS" | string;
+  severity: "HIGH" | "MEDIUM" | "LOW" | string;
+  title: string;
+  description: string;
+  count: number;
+  action_label: string;
+  action_href: string;
+}
+
 export interface AdminRecentActivityItem {
   id: string;
   type: string;
@@ -261,6 +272,7 @@ export interface AdminOverviewResponse {
   confirmed_one_on_one_bookings: number;
   pending_one_on_one_bookings: number;
   category_counts: Record<string, number>;
+  diagnostic_alerts: AdminDiagnosticAlert[];
   recent_activity: AdminRecentActivityItem[];
 }
 

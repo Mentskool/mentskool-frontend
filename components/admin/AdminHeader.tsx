@@ -22,12 +22,14 @@ import { useQueryClient } from "@tanstack/react-query";
 interface AdminHeaderProps {
   pendingMentorsCount?: number;
   pendingSessionsCount?: number;
+  alertsCount?: number;
   onRefresh?: () => void;
 }
 
 export const AdminHeader: React.FC<AdminHeaderProps> = ({
   pendingMentorsCount = 0,
   pendingSessionsCount = 0,
+  alertsCount = 0,
   onRefresh,
 }) => {
   const pathname = usePathname();
@@ -41,6 +43,8 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
       label: "Platform Insights",
       icon: LayoutDashboard,
       exact: true,
+      badge: alertsCount > 0 ? `${alertsCount} Issues` : undefined,
+      badgeColor: "rose",
     },
     {
       href: "/admin/mentors",
@@ -193,6 +197,8 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
                   className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
                     item.badgeColor === "amber"
                       ? "bg-amber-100 text-amber-800 border border-amber-200"
+                      : item.badgeColor === "rose"
+                      ? "bg-rose-100 text-rose-800 border border-rose-200"
                       : "bg-indigo-100 text-indigo-800 border border-indigo-200"
                   }`}
                 >

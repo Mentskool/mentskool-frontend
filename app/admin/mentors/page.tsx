@@ -31,6 +31,10 @@ import {
   Video,
   Receipt,
   Sparkles,
+  Download,
+  MessageSquare,
+  SlidersHorizontal,
+  RotateCcw,
 } from "lucide-react";
 import { AdminMentorItem, MentorCategory, CATEGORY_LABELS } from "@/lib/types";
 import { formatExamRank } from "@/lib/mentor-utils";
@@ -41,6 +45,10 @@ export default function AdminMentorsPage() {
   const { user, isAuthenticated, isLoading: authLoading } = useAuthStore();
   const [selectedStatus, setSelectedStatus] = useState<string>("ALL");
   const [searchQuery, setSearchQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState<string>("ALL");
+  const [availabilityFilter, setAvailabilityFilter] = useState<string>("ALL");
+  const [activityFilter, setActivityFilter] = useState<string>("ALL");
+  const [sortBy, setSortBy] = useState<string>("DEFAULT");
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   // Mentor Activity Audit Modal
@@ -57,8 +65,94 @@ export default function AdminMentorsPage() {
   // Payout breakdown modal
   const [payoutBreakdownMentor, setPayoutBreakdownMentor] = useState<AdminMentorItem | null>(null);
 
-  const { data, isLoading, refetch } = useAdminMentors(selectedStatus, searchQuery);
+  const { data, isLoading, refetch } = useAdminMentors({
+    status: selectedStatus,
+    search: searchQuery,
+    category: categoryFilter,
+    availability: availabilityFilter,
+    activity: activityFilter,
+    sort_by: sortBy,
+  });
   const verifyMutation = useAdminVerifyMentor();
+
+  const handleExportCSV = () => {
+    if (!data?.items || data.items.length === 0) return;
+    const headers = [
+      "Full Name",
+      "Email",
+      "Phone",
+      "College",
+      "Exam Rank",
+      "Category",
+      "Verification Status",
+      "Active Cohort Students",
+      "Cohort Monthly Rate (INR)",
+      "Cohort Gross Rev (INR)",
+      "Cohort Payout 85% (INR)",
+      "1:1 Bookings Count",
+      "1:1 Completed Count",
+      "1:1 Price (INR)",
+      "1:1 Gross Rev (INR)",
+      "1:1 Payout 85% (INR)",
+      "Total Combined Payout (INR)",
+      "Payout UPI ID",
+      "Available",
+      "Joined Date",
+    ];
+
+    const rows = data.items.map((m) => {
+      const mCohortGross = Number(m.total_monthly_revenue || 0);
+      const mCohortPayout = Number(m.cohort_payout_due || mCohortGross * 0.85);
+      const m1on1Gross = Number(m.one_on_one_total_revenue || 0);
+      const m1on1Payout = Number(m.one_on_one_payout_due || m1on1Gross * 0.85);
+      const mFinalPayout = Number(m.payout_due || mCohortPayout + m1on1Payout);
+
+      return [
+        `"${(m.full_name || "").replace(/"/g, '""')}"`,
+        `"${(m.email || "").replace(/"/g, '""')}"`,
+        `"${m.phone_number || ""}"`,
+        `"${(m.college || "").replace(/"/g, '""')}"`,
+        `"${m.exam_rank || ""}"`,
+        `"${m.category || ""}"`,
+        `"${m.verification_status || ""}"`,
+        m.active_students_count || 0,
+        Number(m.price_per_month || 0),
+        mCohortGross,
+        mCohortPayout,
+        m.one_on_one_bookings_count || 0,
+        m.one_on_one_completed_count || 0,
+        Number(m.one_on_one_price || 0),
+        m1on1Gross,
+        m1on1Payout,
+        mFinalPayout,
+        `"${m.payout_upi_id || ""}"`,
+        m.is_available ? "YES" : "NO",
+        `"${m.created_at ? new Date(m.created_at).toISOString().split("T")[0] : ""}"`,
+      ].join(",");
+    });
+
+    const csvContent =
+      "data:text/csv;charset=utf-8," + [headers.join(","), ...rows].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute(
+      "download",
+      `mentskool_mentors_payouts_${new Date().toISOString().split("T")[0]}.csv`
+    );
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleResetFilters = () => {
+    setSelectedStatus("ALL");
+    setSearchQuery("");
+    setCategoryFilter("ALL");
+    setAvailabilityFilter("ALL");
+    setActivityFilter("ALL");
+    setSortBy("DEFAULT");
+  };
 
   if (authLoading) {
     return (
@@ -241,39 +335,133 @@ export default function AdminMentorsPage() {
         </Card>
       </div>
 
-      {/* Filter and Search Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        {/* Status Tabs */}
-        <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl border border-slate-200/80 w-full sm:w-auto overflow-x-auto">
-          {[
-            { id: "ALL", label: "All Mentors" },
-            { id: "PENDING", label: `Pending (${data?.pending_count ?? 0})` },
-            { id: "APPROVED", label: `Approved (${data?.approved_count ?? 0})` },
-            { id: "REJECTED", label: `Rejected (${data?.rejected_count ?? 0})` },
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setSelectedStatus(tab.id)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-                selectedStatus === tab.id
-                  ? "bg-white text-slate-900 shadow-sm font-bold border border-slate-200/60"
-                  : "text-slate-600 hover:text-slate-900"
-              }`}
+      {/* Enhanced Multi-Filter and Controls Command Bar */}
+      <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-sm space-y-3.5">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+          {/* Status Tabs */}
+          <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl border border-slate-200/80 w-full sm:w-auto overflow-x-auto scrollbar-none">
+            {[
+              { id: "ALL", label: "All Mentors" },
+              { id: "PENDING", label: `Pending (${data?.pending_count ?? 0})` },
+              { id: "APPROVED", label: `Approved (${data?.approved_count ?? 0})` },
+              { id: "REJECTED", label: `Rejected (${data?.rejected_count ?? 0})` },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setSelectedStatus(tab.id)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+                  selectedStatus === tab.id
+                    ? "bg-white text-slate-900 shadow-sm font-bold border border-slate-200/60"
+                    : "text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Action Tools: Search & CSV Export */}
+          <div className="flex items-center gap-2.5 w-full lg:w-auto">
+            <div className="relative flex-1 sm:w-72">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+              <Input
+                placeholder="Search name, email, college, phone..."
+                className="pl-9 h-9 text-xs"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handleExportCSV}
+              disabled={!data?.items || data.items.length === 0}
+              className="h-9 px-3 text-xs border-slate-200 text-slate-700 hover:bg-slate-50 flex items-center gap-1.5 shrink-0"
+              title="Download currently filtered mentors list as CSV spreadsheet"
             >
-              {tab.label}
-            </button>
-          ))}
+              <Download className="w-3.5 h-3.5 text-slate-600" />
+              <span className="hidden sm:inline">Export CSV</span>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                {data?.items?.length ?? 0}
+              </span>
+            </Button>
+          </div>
         </div>
 
-        {/* Search Input */}
-        <div className="relative w-full sm:w-80">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-          <Input
-            placeholder="Search by name, email, college, phone..."
-            className="pl-9 text-xs"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+        {/* Second Row: Deep Multi-Filters & Sorting Controls */}
+        <div className="flex flex-wrap items-center gap-2.5 pt-2 border-t border-slate-100 text-xs">
+          <div className="flex items-center gap-1.5 text-slate-500 font-medium shrink-0">
+            <SlidersHorizontal className="w-3.5 h-3.5 text-slate-400" />
+            <span>Filters:</span>
+          </div>
+
+          {/* Category Filter */}
+          <select
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            className="h-8 rounded-lg border border-slate-200 bg-white px-2.5 text-xs text-slate-700 font-medium focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          >
+            <option value="ALL">All Exam Categories</option>
+            <option value="JEE">JEE Main & Advanced</option>
+            <option value="NEET">NEET-UG (Medical)</option>
+            <option value="GATE">GATE & PSU Careers</option>
+            <option value="FOUNDATION">Class 11 & 12 Foundation</option>
+          </select>
+
+          {/* Availability Filter */}
+          <select
+            value={availabilityFilter}
+            onChange={(e) => setAvailabilityFilter(e.target.value)}
+            className="h-8 rounded-lg border border-slate-200 bg-white px-2.5 text-xs text-slate-700 font-medium focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          >
+            <option value="ALL">All Availability</option>
+            <option value="AVAILABLE">Accepting Students (Active)</option>
+            <option value="PAUSED">Paused / Away</option>
+          </select>
+
+          {/* Activity Status Filter */}
+          <select
+            value={activityFilter}
+            onChange={(e) => setActivityFilter(e.target.value)}
+            className="h-8 rounded-lg border border-slate-200 bg-white px-2.5 text-xs text-slate-700 font-medium focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          >
+            <option value="ALL">All Activity</option>
+            <option value="ACTIVE_TODAY">Active Today (IST)</option>
+            <option value="ACTIVE_THIS_WEEK">Active This Week</option>
+            <option value="INACTIVE_7D">Inactive &gt; 7 Days</option>
+          </select>
+
+          {/* Sort By Filter */}
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="h-8 rounded-lg border border-slate-200 bg-indigo-50/50 px-2.5 text-xs text-indigo-900 font-semibold focus:outline-none focus:ring-1 focus:ring-indigo-500 ml-auto"
+          >
+            <option value="DEFAULT">Sort by: Default (Newest)</option>
+            <option value="payout_desc">Highest Combined Payout Due</option>
+            <option value="students_desc">Most Active Students</option>
+            <option value="sessions_desc">Most 1:1 Sessions Delivered</option>
+            <option value="rate_desc">Highest 1:1 Session Rate</option>
+            <option value="active_desc">Most Recently Active</option>
+            <option value="created_asc">Oldest Joined First</option>
+          </select>
+
+          {/* Clear Filters Reset */}
+          {(categoryFilter !== "ALL" ||
+            availabilityFilter !== "ALL" ||
+            activityFilter !== "ALL" ||
+            sortBy !== "DEFAULT" ||
+            searchQuery.trim() !== "") && (
+            <button
+              onClick={handleResetFilters}
+              className="h-8 px-2.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 flex items-center gap-1 font-medium transition-colors"
+              title="Reset all filters"
+            >
+              <RotateCcw className="w-3 h-3 text-slate-400" />
+              <span>Reset</span>
+            </button>
+          )}
         </div>
       </div>
 
