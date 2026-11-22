@@ -55,6 +55,20 @@ const KEYWORD_MAP: KeywordMapping[] = [
   { pattern: /verified iitian mentors|verified aiims mentors|browse all verified mentors/i, href: "/mentors" },
   { pattern: /best jee mentorship/i, href: "/best-jee-mentorship" },
   { pattern: /best neet mentorship/i, href: "/best-neet-mentorship" },
+  { pattern: /nta jee main 2027 notification|jee 2027 session 1 calendar/i, href: "/nta-jee-main-2027-notification-and-exam-dates" },
+  { pattern: /nta neet 2027 notification|neet 2027 application form/i, href: "/nta-neet-2027-notification-and-application-form" },
+  { pattern: /neet mentorship program|1 on 1 neet mentorship/i, href: "/neet-mentorship-program" },
+  { pattern: /jee mentorship program|1 on 1 jee mentorship/i, href: "/jee-mentorship-program" },
+  { pattern: /iit jee mentorship program|iit bombay delhi mentor/i, href: "/iit-jee-mentorship-program" },
+  { pattern: /online neet mentorship program/i, href: "/online-neet-mentorship-program" },
+  { pattern: /online jee mentorship program/i, href: "/online-jee-mentorship-program" },
+  { pattern: /neet dropper mentorship program/i, href: "/neet-dropper-mentorship-program" },
+  { pattern: /jee dropper mentorship program/i, href: "/jee-dropper-mentorship-program" },
+  { pattern: /aiims doctor mentorship program/i, href: "/aiims-doctor-mentorship-program" },
+  { pattern: /jee main 2027 syllabus|deleted chapters jee/i, href: "/jee-main-2027-syllabus-pdf-deleted-chapters" },
+  { pattern: /neet 2027 syllabus update|nmc ncert changes/i, href: "/neet-2027-syllabus-update-nmc-ncert-changes" },
+  { pattern: /safe score for 99 percentile in jee main/i, href: "/safe-score-for-99-percentile-in-jee-main-by-shift" },
+  { pattern: /safe score for government mbbs seat/i, href: "/safe-score-for-government-mbbs-seat-by-state" },
 ];
 
 /**
