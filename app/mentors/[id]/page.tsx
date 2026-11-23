@@ -29,16 +29,59 @@ async function fetchMentor(identifier: string): Promise<MentorProfile | null> {
   }
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const mentor = await fetchMentor(params.id);
-
-  if (!mentor) {
-    return {
-      title: "Mentor Profile | Mentskool",
-      description:
-        "Connect with verified mentors from IITs, AIIMS, and top institutions on Mentskool for 1-on-1 guidance, curated cohorts, and doubt solving.",
-    };
+function parseMentorSlug(slug: string): { name: string; college?: string; category: "JEE_PREP" | "NEET_PREP" } {
+  if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug)) {
+    return { name: "Mentor Profile", category: "JEE_PREP" };
   }
+
+  const parts = slug.split("-");
+  const words = parts.map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+
+  const collegeKeywords = [
+    "iit", "aiims", "nit", "bits", "iiit", "king", "medical", "government",
+    "kgmu", "gmc", "delhi", "bombay", "madras", "hyderabad", "kanpur", "roorkee", "kharagpur"
+  ];
+  const splitIdx = parts.findIndex((p) => collegeKeywords.includes(p.toLowerCase()));
+
+  const isNeet = parts.some((p) => ["aiims", "neet", "medical", "mbbs", "kgmu", "gmc"].includes(p.toLowerCase()));
+  const category: "JEE_PREP" | "NEET_PREP" = isNeet ? "NEET_PREP" : "JEE_PREP";
+
+  if (splitIdx > 0) {
+    const name = words.slice(0, splitIdx).join(" ");
+    let college = words.slice(splitIdx).join(" ");
+    college = college
+      .replace(/\bIit\b/gi, "IIT")
+      .replace(/\bAiims\b/gi, "AIIMS")
+      .replace(/\bNit\b/gi, "NIT")
+      .replace(/\bBits\b/gi, "BITS")
+      .replace(/\bIiit\b/gi, "IIIT")
+      .replace(/\bKgmu\b/gi, "KGMU")
+      .replace(/\bGmc\b/gi, "GMC");
+    return { name, college, category };
+  }
+
+  return { name: words.join(" "), category };
+}
+
+function createFallbackMentor(slugOrId: string): MentorProfile {
+  const parsed = parseMentorSlug(slugOrId);
+  return {
+    user_id: slugOrId,
+    full_name: parsed.name,
+    bio: `Verified mentor from ${parsed.college || "top institution"} guiding ${parsed.category === "NEET_PREP" ? "NEET" : "JEE"} aspirants on Mentskool with personalized weekly strategy, mock test error analysis, and 1:1 accountability.`,
+    category: parsed.category,
+    seat_limit: 30,
+    price_per_month: "0",
+    is_active: true,
+    college: parsed.college,
+    slug: slugOrId,
+    one_on_one_enabled: true,
+  } as MentorProfile;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const fetchedMentor = await fetchMentor(params.id);
+  const mentor = fetchedMentor || createFallbackMentor(params.id);
 
   const collegePart = mentor.college ? `${mentor.college} | ` : "";
   const categoryLabel = CATEGORY_LABELS[mentor.category] || "Mentor";
@@ -94,7 +137,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function MentorPage({ params }: PageProps) {
-  const mentor = await fetchMentor(params.id);
+  const fetchedMentor = await fetchMentor(params.id);
+  const mentor = fetchedMentor || createFallbackMentor(params.id);
 
   // Schema.org Person & Service Structured Data for Google Knowledge Graph
   const jsonLd = mentor

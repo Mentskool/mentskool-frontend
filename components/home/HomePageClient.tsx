@@ -200,10 +200,10 @@ export default function HomePage() {
                         RS
                       </div>
                       <div>
-                        <h4 className="font-bold font-display text-sm text-ink flex items-center gap-1.5">
+                        <p className="font-bold font-display text-sm text-ink flex items-center gap-1.5">
                           Rahul Sharma
                           <span className="text-[10px] font-bold bg-blue-100 text-blue-800 px-1.5 py-0.2 rounded">AIR 42</span>
-                        </h4>
+                        </p>
                         <p className="text-xs text-ink-muted">
                           IIT Bombay Physics • Mentor
                         </p>
@@ -674,10 +674,10 @@ export default function HomePage() {
           <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-sky-500/20 rounded-card blur-lg opacity-50 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
           <Card className="p-8 sm:p-10 bg-gradient-to-r from-[#1E294B] via-[#2B3A67] to-[#1E1B4B] text-white rounded-card shadow-elevated text-center sm:text-left flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-transparent">
             <div className="space-y-2">
-              <h3 className="text-2xl font-black font-display tracking-tight text-white flex items-center gap-2 justify-center sm:justify-start">
+              <h2 className="text-2xl font-black font-display tracking-tight text-white flex items-center gap-2 justify-center sm:justify-start">
                 Ready to crack JEE or NEET with a proven ranker?
                 <Sparkles className="w-5 h-5 text-amber-400" />
-              </h3>
+              </h2>
               <p className="text-sm text-white/80 max-w-lg">
                 Connect with an IITian or AIIMS doctor who walked your exact shoes. Limited to 30 students per cohort for true 1:1 attention.
               </p>
