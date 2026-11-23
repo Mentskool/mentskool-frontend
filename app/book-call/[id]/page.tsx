@@ -13,7 +13,8 @@ interface PageProps {
 const API_BASE_URL =
   process.env.INTERNAL_API_URL ||
   process.env.NEXT_PUBLIC_API_URL ||
-  "http://localhost:8000/api/v1";
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "https://mentskool-backend.onrender.com/api/v1";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://mentskool.com";
 

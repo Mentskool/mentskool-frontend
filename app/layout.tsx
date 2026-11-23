@@ -1,12 +1,44 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import localFont from "next/font/local";
+import Script from "next/script";
 import "./globals.css";
 import { Providers } from "./providers";
 import { AppShell } from "@/components/AppShell";
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
+const satoshi = localFont({
+  src: [
+    {
+      path: "../public/fonts/Satoshi-500.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Satoshi-700.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Satoshi-900.woff2",
+      weight: "900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-display",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://mentskool.com"),
   title: {
-    default: "Mentskool — #1 Personal 1:1 JEE & NEET Mentorship by IIT & AIIMS Rankers",
+    default: "Mentskool — 1:1 JEE & NEET Mentorship by IIT & AIIMS Rankers",
     template: "%s | Mentskool",
   },
   description:
@@ -191,35 +223,23 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${satoshi.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico?v=3" sizes="any" />
         <link rel="icon" href="/icon.png?v=3" type="image/png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
-        <link
-          rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@700,600,500&display=swap"
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
-          crossOrigin="anonymous"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
         {/* Google tag (gtag.js) */}
-        <script
-          async
+        <Script
+          strategy="afterInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=G-16WK7KBJLF"
         />
-        <script
+        <Script
           id="google-tag-gtag"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -231,7 +251,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen bg-paper text-ink font-sans flex flex-col selection:bg-brand/10 selection:text-brand">
+      <body className={`${inter.variable} ${satoshi.variable} min-h-screen bg-paper text-ink font-sans flex flex-col selection:bg-brand/10 selection:text-brand`}>
         <Providers>
           <AppShell>{children}</AppShell>
         </Providers>
