@@ -66,11 +66,11 @@ export default function StudentEfficiencyPage() {
   }
 
   // Quiz score formatting: handle negative numbers due to exam penalty marking
-  const rawAvg = quizRanking?.average_percentage;
+  const rawAvg = quizRanking?.cohort_size ? quizRanking?.average_percentage : null;
   const numAvg = rawAvg !== null && rawAvg !== undefined ? Number(rawAvg) : null;
   const hasAvg = numAvg !== null && !isNaN(numAvg);
   const isNegativeScore = hasAvg && numAvg < 0;
-  const displayScore = hasAvg ? `${numAvg.toFixed(1)}%` : "No data";
+  const displayScore = hasAvg ? `${numAvg.toFixed(1)}%` : "—";
 
   return (
     <div className="space-y-6">
@@ -140,7 +140,9 @@ export default function StudentEfficiencyPage() {
           <div>
             <p className="text-xs text-slate-500 font-medium">Cohort Standing</p>
             <p className="text-xl sm:text-2xl font-black font-display text-slate-900">
-              {quizRanking?.rank ? `#${quizRanking.rank}` : "Unranked"}
+              {quizRanking?.cohort_size && quizRanking?.rank
+                ? `#${quizRanking.rank}`
+                : "—"}
             </p>
           </div>
         </div>
@@ -153,7 +155,9 @@ export default function StudentEfficiencyPage() {
           <div>
             <p className="text-xs text-slate-500 font-medium">Tests Attempted</p>
             <p className="text-xl sm:text-2xl font-black font-display text-slate-900">
-              {quizRanking?.quizzes_attempted ?? 0} Drills
+              {quizRanking?.cohort_size
+                ? `${quizRanking?.quizzes_attempted ?? 0} Drills`
+                : "0 Drills"}
             </p>
           </div>
         </div>
@@ -287,7 +291,7 @@ export default function StudentEfficiencyPage() {
                     </p>
                   ) : (
                     <p className="text-[11px] text-slate-400 mt-1">
-                      Across all attempted mock drills
+                      {quizRanking?.cohort_size ? "Across current cohort drills" : "No active cohort"}
                     </p>
                   )}
                 </div>
@@ -297,7 +301,7 @@ export default function StudentEfficiencyPage() {
                     Cohort Peer Rank
                   </p>
                   <p className="text-2xl font-black font-display text-blue-600 mt-0.5">
-                    {quizRanking?.rank ? `Rank #${quizRanking.rank}` : "Unranked"}
+                    {quizRanking?.cohort_size && quizRanking?.rank ? `Rank #${quizRanking.rank}` : "—"}
                   </p>
                   <p className="text-[11px] text-slate-400 mt-1">
                     {quizRanking?.cohort_size
