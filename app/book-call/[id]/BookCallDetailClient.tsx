@@ -82,7 +82,7 @@ export default function BookCallDetailClient({
 
   // Available slots query for selected date
   const mentorIdentifier = mentor?.slug || mentor?.mentor_id || mentorId;
-  const { data: slotsData, isLoading: isSlotsLoading } = useAvailableSlots(
+  const { data: slotsData, isLoading: isSlotsLoading, refetch: refetchSlots } = useAvailableSlots(
     mentorIdentifier,
     selectedDate
   );
@@ -194,6 +194,9 @@ export default function BookCallDetailClient({
         notes: {
           mentor_id: mentorIdentifier,
           scheduled_at: scheduledAtIso,
+          type: "one_on_one_session",
+          student_id: user?.id || "",
+          agenda_notes: agenda.trim(),
         },
         onSuccess: async (verification) => {
           try {
@@ -204,10 +207,25 @@ export default function BookCallDetailClient({
               payment_id: verification.payment_id,
             });
             setIsSuccess(true);
+            setErrorMsg(null);
           } catch (bookErr: any) {
-            setErrorMsg(
-              getUserFriendlyError(bookErr, "Failed to finalize session booking.")
-            );
+            const apiErr = bookErr as any;
+            const detailStr = String(apiErr?.detail || apiErr?.message || "").toLowerCase();
+            if (
+              apiErr?.status === 409 ||
+              detailStr.includes("already been booked") ||
+              detailStr.includes("already been used") ||
+              detailStr.includes("already booked")
+            ) {
+              setIsSuccess(true);
+              setErrorMsg(null);
+            } else {
+              setErrorMsg(
+                getUserFriendlyError(bookErr, "Failed to finalize session booking.")
+              );
+            }
+          } finally {
+            refetchSlots();
           }
         },
         onError: (err) => {
@@ -228,10 +246,13 @@ export default function BookCallDetailClient({
         agenda_notes: agenda.trim(),
       });
       setIsSuccess(true);
+      setErrorMsg(null);
     } catch (err: any) {
       setErrorMsg(
         getUserFriendlyError(err, "Failed to book session. Please try another slot.")
       );
+    } finally {
+      refetchSlots();
     }
   };
 
@@ -609,6 +630,7 @@ export default function BookCallDetailClient({
                           onClick={() => {
                             setSelectedDate(item.dateStr);
                             setSelectedTime(null);
+                            setErrorMsg(null);
                           }}
                           className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center justify-center gap-0.5 ${
                             isSelected
@@ -667,7 +689,10 @@ export default function BookCallDetailClient({
                           <button
                             key={slot}
                             type="button"
-                            onClick={() => setSelectedTime(slot)}
+                            onClick={() => {
+                              setSelectedTime(slot);
+                              setErrorMsg(null);
+                            }}
                             className={`py-2.5 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                               isChosen
                                 ? "bg-blue-600 border-blue-600 text-white shadow-xs"
@@ -700,7 +725,10 @@ export default function BookCallDetailClient({
                   <textarea
                     rows={3}
                     value={agenda}
-                    onChange={(e) => setAgenda(e.target.value)}
+                    onChange={(e) => {
+                      setAgenda(e.target.value);
+                      if (errorMsg) setErrorMsg(null);
+                    }}
                     placeholder={
                       isNeetMentor
                         ? "E.g. Preparing for NEET 2027, clearing biology/physics backlogs, scoring 650+ in mocks, NCERT revision strategy..."
