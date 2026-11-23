@@ -289,51 +289,83 @@ export default function QuizzesPage() {
                     Cohort Exam Performance
                   </span>
                 </div>
-                <Link href="/dashboard/efficiency">
-                  <span className="text-xs font-bold text-blue-600 hover:underline">
-                    Efficiency Dashboard →
-                  </span>
-                </Link>
+                {studentRanking.cohort_size ? (
+                  <Link href="/dashboard/efficiency">
+                    <span className="text-xs font-bold text-blue-600 hover:underline">
+                      Efficiency Dashboard →
+                    </span>
+                  </Link>
+                ) : (
+                  <Link href="/mentors">
+                    <span className="text-xs font-bold text-blue-600 hover:underline">
+                      Find a Mentor →
+                    </span>
+                  </Link>
+                )}
               </div>
 
               <div className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-baseline gap-6 flex-wrap">
-                  <div>
-                    <span className="text-2xl font-black font-display text-slate-900">
-                      {studentRanking.average_percentage !== null &&
-                      studentRanking.average_percentage !== undefined
-                        ? `${studentRanking.average_percentage}%`
-                        : "No data yet"}
-                    </span>
-                    <span className="text-xs text-slate-500 ml-1.5 font-medium">Average Score</span>
+                {studentRanking.cohort_size ? (
+                  <div className="flex items-baseline gap-6 flex-wrap">
+                    <div>
+                      <span className="text-2xl font-black font-display text-slate-900">
+                        {studentRanking.average_percentage !== null &&
+                        studentRanking.average_percentage !== undefined
+                          ? `${studentRanking.average_percentage}%`
+                          : "No drills yet"}
+                      </span>
+                      <span className="text-xs text-slate-500 ml-1.5 font-medium">Average Score</span>
+                    </div>
+
+                    {studentRanking.rank ? (
+                      <div className="border-l border-slate-200 pl-6">
+                        <span className="text-2xl font-bold font-display text-blue-600">
+                          Rank #{studentRanking.rank}
+                        </span>
+                        <span className="text-xs text-slate-500 ml-1.5 font-medium">
+                          of {studentRanking.cohort_size} cohort peers
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="border-l border-slate-200 pl-6 flex items-center">
+                        <span className="text-sm font-bold text-slate-500">
+                          Unranked
+                        </span>
+                        <span className="text-xs text-slate-400 ml-1.5 font-medium">
+                          • Awaiting peer attempts
+                        </span>
+                      </div>
+                    )}
                   </div>
-
-                  {studentRanking.rank ? (
-                    <div className="border-l border-slate-200 pl-6">
-                      <span className="text-2xl font-bold font-display text-blue-600">
-                        Rank #{studentRanking.rank}
+                ) : (
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-bold text-slate-700">
+                        No Active Cohort
                       </span>
-                      <span className="text-xs text-slate-500 ml-1.5 font-medium">
-                        of {studentRanking.cohort_size} cohort peers
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="border-l border-slate-200 pl-6 flex items-center">
-                      <span className="text-sm font-bold text-slate-500">
-                        Unranked
-                      </span>
-                      <span className="text-xs text-slate-400 ml-1.5 font-medium">
-                        • No active cohort
+                      <span className="text-[11px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">
+                        Unenrolled
                       </span>
                     </div>
-                  )}
-                </div>
+                    <p className="text-xs text-slate-500">
+                      Join a mentor cohort to access weekly diagnostic quizzes, test-series drills, and peer cohort leaderboards.
+                    </p>
+                  </div>
+                )}
 
-                <Link href="/dashboard/efficiency">
-                  <Button variant="secondary" size="sm" className="rounded-xl border-slate-200 text-slate-700 text-xs font-semibold">
-                    Inspect on Efficiency Page →
-                  </Button>
-                </Link>
+                {studentRanking.cohort_size ? (
+                  <Link href="/dashboard/efficiency">
+                    <Button variant="secondary" size="sm" className="rounded-xl border-slate-200 text-slate-700 text-xs font-semibold">
+                      Inspect on Efficiency Page →
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link href="/mentors">
+                    <Button variant="primary" size="sm" className="rounded-xl text-xs font-semibold">
+                      Browse Cohorts →
+                    </Button>
+                  </Link>
+                )}
               </div>
             </div>
           )}
