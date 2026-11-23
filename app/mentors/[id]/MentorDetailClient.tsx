@@ -167,6 +167,23 @@ export default function MentorDetailClient({
       return;
     }
 
+    if (isEnrolledHere) {
+      setFeedback({
+        type: "success",
+        message: "You are already enrolled in this cohort! Opening workspace...",
+      });
+      router.push("/cohort");
+      return;
+    }
+
+    if (isEnrolledElsewhere) {
+      setFeedback({
+        type: "error",
+        message: "You are already enrolled in an active cohort. Students can only enroll in one cohort at a time. Leave your existing cohort before joining a new one.",
+      });
+      return;
+    }
+
     const priceNum = Number(mentor?.price_per_month || 0);
 
     if (priceNum > 0) {
@@ -182,6 +199,7 @@ export default function MentorDetailClient({
         notes: {
           mentor_id: targetMentorId,
           type: "cohort_subscription",
+          student_id: user?.id || "",
         },
         onSuccess: async (verification) => {
           try {
@@ -193,16 +211,29 @@ export default function MentorDetailClient({
               type: "success",
               message: "Successfully subscribed for 30 days! You now have full access to assignments, chat, and meetings.",
             });
+          } catch (enrollErr: any) {
+            const apiErr = enrollErr as ApiError;
+            if (
+              apiErr?.code === "ALREADY_SUBSCRIBED" ||
+              apiErr?.status === 409 ||
+              apiErr?.detail?.toLowerCase().includes("active subscription")
+            ) {
+              setFeedback({
+                type: "success",
+                message: "Payment verified! Your 30-day cohort subscription is now active.",
+              });
+            } else {
+              setFeedback({
+                type: "error",
+                message: getUserFriendlyError(
+                  enrollErr,
+                  "Payment verified, but cohort enrollment failed. Please contact support."
+                ),
+              });
+            }
+          } finally {
             refetch();
             refetchSubs();
-          } catch (enrollErr: any) {
-            setFeedback({
-              type: "error",
-              message: getUserFriendlyError(
-                enrollErr,
-                "Payment verified, but cohort enrollment failed. Please contact support."
-              ),
-            });
           }
         },
         onError: (err) => {
@@ -227,8 +258,6 @@ export default function MentorDetailClient({
         type: "success",
         message: "Successfully subscribed to this cohort! You now have full access to assignments, chat, and meetings.",
       });
-      refetch();
-      refetchSubs();
     } catch (err) {
       const apiErr = err as ApiError;
 
@@ -274,6 +303,9 @@ export default function MentorDetailClient({
           message: getUserFriendlyError(apiErr, "Unable to complete subscription. Please try again."),
         });
       }
+    } finally {
+      refetch();
+      refetchSubs();
     }
   };
 

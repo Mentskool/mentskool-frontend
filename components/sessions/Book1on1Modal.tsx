@@ -100,6 +100,9 @@ export function Book1on1Modal({ isOpen, onClose, mentor }: Book1on1ModalProps) {
         notes: {
           mentor_id: mentorIdentifier,
           scheduled_at: scheduledAtIso,
+          type: "one_on_one_session",
+          student_id: user?.id || "",
+          agenda_notes: agenda.trim(),
         },
         onSuccess: async (verification) => {
           try {
@@ -111,9 +114,20 @@ export function Book1on1Modal({ isOpen, onClose, mentor }: Book1on1ModalProps) {
             });
             setIsSuccess(true);
           } catch (bookErr: any) {
-            setErrorMsg(
-              getUserFriendlyError(bookErr, "Failed to finalize session booking.")
-            );
+            const apiErr = bookErr as any;
+            const detailStr = String(apiErr?.detail || apiErr?.message || "").toLowerCase();
+            if (
+              apiErr?.status === 409 ||
+              detailStr.includes("already been booked") ||
+              detailStr.includes("already been used") ||
+              detailStr.includes("already booked")
+            ) {
+              setIsSuccess(true);
+            } else {
+              setErrorMsg(
+                getUserFriendlyError(bookErr, "Failed to finalize session booking.")
+              );
+            }
           }
         },
         onError: (err) => {
