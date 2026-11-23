@@ -302,7 +302,7 @@ export default function StudentEfficiencyPage() {
                   <p className="text-[11px] text-slate-400 mt-1">
                     {quizRanking?.cohort_size
                       ? `Compared with ${quizRanking.cohort_size} cohort peers`
-                      : "Awaiting peer attempts"}
+                      : "No active cohort"}
                   </p>
                 </div>
               </div>

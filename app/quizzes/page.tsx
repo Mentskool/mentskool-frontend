@@ -308,13 +308,22 @@ export default function QuizzesPage() {
                     <span className="text-xs text-slate-500 ml-1.5 font-medium">Average Score</span>
                   </div>
 
-                  {studentRanking.rank && (
+                  {studentRanking.rank ? (
                     <div className="border-l border-slate-200 pl-6">
                       <span className="text-2xl font-bold font-display text-blue-600">
                         Rank #{studentRanking.rank}
                       </span>
                       <span className="text-xs text-slate-500 ml-1.5 font-medium">
                         of {studentRanking.cohort_size} cohort peers
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="border-l border-slate-200 pl-6 flex items-center">
+                      <span className="text-sm font-bold text-slate-500">
+                        Unranked
+                      </span>
+                      <span className="text-xs text-slate-400 ml-1.5 font-medium">
+                        • No active cohort
                       </span>
                     </div>
                   )}

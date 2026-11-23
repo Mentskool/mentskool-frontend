@@ -482,6 +482,11 @@ export interface QuizDetail extends Quiz {
   attempt_id?: string | null;
   attempt_status?: AttemptStatus | null;
   attempt_started_at?: string | null;
+  attempt_score?: number | string | null;
+  attempt_max_score?: number | string | null;
+  attempt_percentage?: number | string | null;
+  attempt_submitted_at?: string | null;
+  breakdown?: AnswerBreakdownItem[] | null;
 }
 
 export interface StudentQuizItem {
