@@ -21,10 +21,8 @@ export function Footer() {
             <Link href="/" className="inline-flex items-center gap-2.5 group">
               <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-sky-500 to-indigo-600 p-0.5 flex items-center justify-center shadow-md shadow-sky-500/10 group-hover:scale-105 transition-transform">
                 <img
-                  src="/logo-sm.webp"
+                  src="/logo.png"
                   alt="Mentskool Logo"
-                  width={36}
-                  height={36}
                   className="w-full h-full object-contain rounded-md"
                 />
               </div>
