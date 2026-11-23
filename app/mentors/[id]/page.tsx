@@ -12,9 +12,25 @@ interface PageProps {
 const API_BASE_URL =
   process.env.INTERNAL_API_URL ||
   process.env.NEXT_PUBLIC_API_URL ||
-  "http://localhost:8000/api/v1";
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "https://mentskool-backend.onrender.com/api/v1";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://mentskool.com";
+
+function parseMentorSlug(slug: string): { name: string; college: string } {
+  if (!slug) return { name: "Mentor", college: "Top Ranker" };
+  const parts = decodeURIComponent(slug).replace(/[_-]/g, " ").trim().split(/\s+/);
+  if (parts.length <= 2) {
+    const name = parts.map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join(" ");
+    return { name, college: "Top Ranker" };
+  }
+  const mid = Math.min(2, Math.floor(parts.length / 2));
+  const nameParts = parts.slice(0, mid);
+  const collegeParts = parts.slice(mid);
+  const name = nameParts.map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join(" ");
+  const college = collegeParts.map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join(" ");
+  return { name, college };
+}
 
 async function fetchMentor(identifier: string): Promise<MentorProfile | null> {
   try {
@@ -33,10 +49,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const mentor = await fetchMentor(params.id);
 
   if (!mentor) {
+    const { name, college } = parseMentorSlug(params.id);
+    const title = `${name} - ${college} | 1:1 Mentorship on Mentskool`;
+    const description = `Connect with ${name} (${college}) on Mentskool for 1-on-1 JEE & NEET mentorship, personalized study strategy, and single-blind task accountability.`;
+    const canonicalUrl = `${SITE_URL}/mentors/${params.id}`;
+
     return {
-      title: "Mentor Profile | Mentskool",
-      description:
-        "Connect with verified mentors from IITs, AIIMS, and top institutions on Mentskool for 1-on-1 guidance, curated cohorts, and doubt solving.",
+      title,
+      description,
+      alternates: {
+        canonical: canonicalUrl,
+      },
+      openGraph: {
+        title,
+        description,
+        url: canonicalUrl,
+        siteName: "Mentskool",
+        type: "profile",
+      },
     };
   }
 
@@ -141,6 +171,8 @@ export default async function MentorPage({ params }: PageProps) {
       }
     : null;
 
+  const fallbackInfo = !mentor ? parseMentorSlug(params.id) : null;
+
   return (
     <>
       {jsonLd && (
@@ -148,6 +180,11 @@ export default async function MentorPage({ params }: PageProps) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+      )}
+      {fallbackInfo && (
+        <h1 className="sr-only">
+          {fallbackInfo.name} - {fallbackInfo.college} | Mentorship on Mentskool
+        </h1>
       )}
       <MentorDetailClient
         mentorId={params.id}

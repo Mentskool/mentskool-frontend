@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import {
   Sparkles,
   ShieldCheck,
@@ -140,11 +141,15 @@ export const HeroPlatformEngine: React.FC<HeroPlatformEngineProps> = ({
                     </span>
                   </div>
 
-                  {/* Clean Google Meet Window using the user's pixel-perfect meet.png */}
+                  {/* Clean Google Meet Window using optimized WebP */}
                   <div className="relative rounded-xl overflow-hidden border border-slate-700/80 shadow-[0_8px_24px_rgba(0,0,0,0.18)] bg-[#121316]">
-                    <img
-                      src="/meet.png"
+                    <Image
+                      src="/meet.webp"
                       alt="Mentskool Live Google Meet Cohort Mentorship Discussion"
+                      width={1754}
+                      height={896}
+                      sizes="(max-width: 768px) 100vw, 600px"
+                      priority
                       className="w-full h-auto object-cover rounded-xl block"
                     />
                   </div>
