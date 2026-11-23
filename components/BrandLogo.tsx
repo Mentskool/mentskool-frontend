@@ -46,8 +46,10 @@ export function BrandLogo({
           }`}
         >
           <img
-            src="/logo.png"
+            src="/logo-sm.webp"
             alt="Mentskool M"
+            width={64}
+            height={64}
             className={`${iconHeight} w-auto object-contain drop-shadow-[0_1px_3px_rgba(0,0,0,0.08)] group-hover:drop-shadow-[0_3px_8px_rgba(2,132,199,0.25)] transition-all duration-300`}
           />
 
