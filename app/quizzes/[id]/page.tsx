@@ -65,6 +65,19 @@ export default function QuizDetailPage() {
   const [startError, setStartError] = useState("");
   const [submittedResult, setSubmittedResult] = useState<any>(null);
 
+  // Automatically hydrate submittedResult from persisted attempt data when quiz is already submitted
+  useEffect(() => {
+    if (!submittedResult && quiz?.attempt_status === "SUBMITTED" && quiz.breakdown) {
+      setSubmittedResult({
+        total_score: quiz.attempt_score ?? "0.00",
+        max_score: quiz.attempt_max_score ?? "0.00",
+        percentage: quiz.attempt_percentage ?? "0.00",
+        submitted_at: quiz.attempt_submitted_at,
+        breakdown: quiz.breakdown,
+      });
+    }
+  }, [quiz, submittedResult]);
+
   // Fullscreen state
   const [isFullscreen, setIsFullscreen] = useState(false);
 
