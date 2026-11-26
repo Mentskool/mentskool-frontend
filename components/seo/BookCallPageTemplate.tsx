@@ -75,7 +75,7 @@ export interface BookCallPageConfig {
   sections: CallDeepDiveSection[];
   bookingSteps: { step: string; title: string; description: string }[];
   faqs: FaqItem[];
-  relatedLinks: { label: string; href: string }[];
+  relatedLinks: { label: string; href: string; badge?: string }[];
 }
 
 export function BookCallPageTemplate({ config }: { config: BookCallPageConfig }) {
@@ -630,7 +630,14 @@ export function BookCallPageTemplate({ config }: { config: BookCallPageConfig })
                       href={link.href}
                       className="p-3.5 rounded-xl bg-slate-900/50 border border-slate-800/80 text-xs font-medium text-slate-300 hover:text-blue-300 hover:border-blue-500/40 transition-all flex items-center justify-between group"
                     >
-                      <span className="line-clamp-1">{link.label}</span>
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="line-clamp-1">{link.label}</span>
+                        {link.badge && (
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20 shrink-0">
+                            {link.badge}
+                          </span>
+                        )}
+                      </div>
                       <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 group-hover:text-blue-400 transition-all shrink-0 ml-2" />
                     </Link>
                   ))}
