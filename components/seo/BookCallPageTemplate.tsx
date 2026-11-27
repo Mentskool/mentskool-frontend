@@ -73,10 +73,37 @@ export interface BookCallPageConfig {
   comparisonSubtitle: string;
   comparisonRows: CallComparisonRow[];
   sections: CallDeepDiveSection[];
-  bookingSteps: { step: string; title: string; description: string }[];
+  bookingSteps?: { step: string; title: string; description: string }[];
   faqs: FaqItem[];
   relatedLinks: { label: string; href: string; badge?: string }[];
 }
+
+const defaultBookingSteps = [
+  {
+    step: "01",
+    title: "Select Verified Ranker",
+    description:
+      "Browse verified mentors from top IITs, NITs, and AIIMS based on your target college, branch, and category.",
+  },
+  {
+    step: "02",
+    title: "Lock Your Preferred Slot",
+    description:
+      "Choose a convenient date and time on your mentor's live calendar for your 1:1 strategy consultation.",
+  },
+  {
+    step: "03",
+    title: "Diagnostic Mock Assessment",
+    description:
+      "Share your latest test marks and weak chapters in advance so your mentor prepares a tailored roadmap.",
+  },
+  {
+    step: "04",
+    title: "1:1 Live Strategy Video Call",
+    description:
+      "Join the private video session to build an actionable daily routine, syllabus triage, and mistake book drill.",
+  },
+];
 
 export function BookCallPageTemplate({ config }: { config: BookCallPageConfig }) {
   const jsonLd = {
@@ -443,7 +470,7 @@ export function BookCallPageTemplate({ config }: { config: BookCallPageConfig })
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {config.bookingSteps.map((step, idx) => (
+              {(config.bookingSteps || defaultBookingSteps).map((step, idx) => (
                 <div
                   key={idx}
                   className="p-5 rounded-2xl bg-slate-950/60 border border-slate-800/90 relative"
