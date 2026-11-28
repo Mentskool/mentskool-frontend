@@ -3,10 +3,10 @@ import Link from "next/link";
 import {
   ShieldCheck,
   Lock,
-  Mail,
   GraduationCap,
   BookOpen,
 } from "lucide-react";
+import { SupportEmailLink } from "@/components/SupportEmailLink";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -124,6 +124,14 @@ export function Footer() {
             <ul className="space-y-2.5 text-xs sm:text-sm">
               <li>
                 <Link
+                  href="/about"
+                  className="hover:text-sky-400 transition-colors"
+                >
+                  About Mentskool
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/contact#faq"
                   className="hover:text-sky-400 transition-colors"
                 >
@@ -139,13 +147,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a
-                  href="mailto:support@mentskool.com"
-                  className="hover:text-sky-400 transition-colors inline-flex items-center gap-1.5"
-                >
-                  <Mail className="w-3.5 h-3.5 text-sky-400" />
-                  <span>support@mentskool.com</span>
-                </a>
+                <SupportEmailLink />
               </li>
               <li>
                 <Link
