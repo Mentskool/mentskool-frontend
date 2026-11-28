@@ -168,7 +168,7 @@ export default function BestJeeMentorshipPage() {
                 className="px-6 py-3.5 rounded-xl text-sm font-bold flex items-center gap-2 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-600 text-white shadow-elevated hover:-translate-y-0.5 transition-all group"
               >
                 <Sparkles className="w-4 h-4 text-amber-300" />
-                <span>Claim Free Diagnostic Session (₹0)</span>
+                <span>Claim Free Strategy Session (₹0)</span>
               </Link>
               <Link
                 href="/mentors"
