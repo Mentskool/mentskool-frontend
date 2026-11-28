@@ -1,34 +1,11 @@
 import React from "react";
 import type { Metadata } from "next";
 import {
-  BookCallPageTemplate,
-  BookCallPageConfig,
-} from "@/components/seo/BookCallPageTemplate";
+  EditorialGuideTemplate,
+  EditorialGuideConfig,
+} from "@/components/seo/EditorialGuideTemplate";
 
-export const metadata: Metadata = {
-  title: "Best NIT for Electrical Engineering Placements (2027): Trichy vs Warangal vs Surathkal",
-  description: "Comparing Electrical & Electronics Engineering (EEE) across premier NITs: NIT Trichy vs NIT Warangal vs NIT Surathkal vs MNNIT Allahabad. Core power, VLSI chip design, and tech placement stats.",
-  keywords: ["best NIT for electrical engineering", "NIT Trichy EEE placement", "NIT Warangal electrical engineering", "NIT Surathkal EEE cutoff", "core electrical placement NIT"],
-  alternates: {
-    canonical: "https://mentskool.com/best-nit-for-electrical-engineering-placements-2027",
-  },
-  openGraph: {
-    title: "Best NIT for Electrical Engineering Placements (2027): Trichy vs Warangal vs Surathkal",
-    description: "Comparing Electrical & Electronics Engineering (EEE) across premier NITs: NIT Trichy vs NIT Warangal vs NIT Surathkal vs MNNIT Allahabad. Core power, VLSI chip design, and tech placement stats.",
-    url: "https://mentskool.com/best-nit-for-electrical-engineering-placements-2027",
-    siteName: "Mentskool",
-    images: [
-      {
-        url: "https://mentskool.com/logo.png",
-        width: 1200,
-        height: 630,
-        alt: "Best NIT for Electrical Engg",
-      },
-    ],
-  },
-};
-
-const config: BookCallPageConfig = {
+const config: EditorialGuideConfig = {
   "slug": "best-nit-for-electrical-engineering-placements-2027",
   "breadcrumbLabel": "Best NIT for Electrical Engg",
   "examFocus": "JEE",
@@ -41,195 +18,506 @@ const config: BookCallPageConfig = {
     "NIT Surathkal EEE cutoff",
     "core electrical placement NIT"
   ],
-  "badgeText": "CORE NIT BENCHMARK",
-  "h1Prefix": "Best NIT for Electrical Engineering:",
-  "h1Highlight": "Placement & Career Analysis (2027)",
-  "heroDescription": "Electrical & Electronics Engineering (EEE) is one of the most rigorous and versatile branches in engineering. Compare the top four National Institutes of Technology (NIT Trichy, NIT Warangal, NIT Surathkal, and MNNIT Allahabad) across core power engineering, semiconductor chip design, and tech placement distributions.",
-  "serviceTitle": "Choosing Electrical Engineering in JoSAA?",
-  "serviceDescription": "Connect 1:1 on Mentskool with verified EEE rankers from top NITs to evaluate core VLSI vs software placement opportunities.",
-  "quickStats": [
-    {
-      "label": "NIT Trichy EEE Median",
-      "value": "₹16.0 LPA",
-      "hint": "Thuvakudi campus"
-    },
-    {
-      "label": "NIT Surathkal EEE Median",
-      "value": "₹15.8 LPA",
-      "hint": "Beach campus"
-    },
-    {
-      "label": "Core VLSI Offers",
-      "value": "₹18 - ₹32 LPA",
-      "hint": "Texas Instruments, Qualcomm"
-    },
-    {
-      "label": "Placement Rate",
-      "value": "90%+",
-      "hint": "Across top 3 NITs"
-    }
-  ],
-  "overviewHeading": "Executive Summary: The Flagship Electrical Departments of the NIT System",
-  "overviewIntro": "Electrical and Electronics Engineering (EEE) at the premier NITs (Trichy, Surathkal, Warangal, Allahabad) combines classical power systems and electrical machines with modern microelectronics, embedded systems, and VLSI digital design.",
-  "overviewPoints": [
-    {
-      "title": "Dual Core Placement Avenues",
-      "detail": "Graduates qualify for both high-voltage power/PSU sectors (Power Grid, NTPC, BHEL) and modern semiconductor hardware firms (Texas Instruments, Qualcomm, Nvidia)."
-    },
-    {
-      "title": "High Software Eligibility",
-      "detail": "Over 85% of software development and fintech analytics recruiters permit EEE students to take placement assessments alongside CSE and ECE."
-    },
-    {
-      "title": "Academic Rigor",
-      "detail": "Universally considered one of the most mathematically demanding engineering curriculums, requiring consistent dedication to balance labs, circuit design, and coding."
-    }
-  ],
-  "timelinePhases": [
-    {
-      "timeframe": "Stage 1",
-      "phaseTitle": "Curriculum & Lab Assessment",
-      "description": "Compare power systems vs microelectronics course weightings across Trichy, Warangal, and Surathkal.",
-      "deliverables": [
-        "Department syllabus comparison",
-        "VLSI lab infrastructure check",
-        "Faculty research directory"
-      ]
-    },
-    {
-      "timeframe": "Stage 2",
-      "phaseTitle": "Career Track Specialization",
-      "description": "Choose between Core VLSI/Semiconductor, Power Systems/PSU, or Software/Data Engineering.",
-      "deliverables": [
-        "Target skill blueprint",
-        "EDA tool training roadmap (Verilog, MATLAB)",
-        "Coding practice plan"
-      ]
-    },
-    {
-      "timeframe": "Stage 3",
-      "phaseTitle": "JoSAA Preference Architecture",
-      "description": "Structure your choice list balancing EEE at top 3 NITs against ECE at mid-tier NITs.",
-      "deliverables": [
-        "JoSAA choice order",
-        "Seat locking confirmation",
-        "College reporting roadmap"
-      ]
-    }
-  ],
-  "comparisonTitle": "NIT Trichy vs NIT Warangal vs NIT Surathkal EEE",
-  "comparisonSubtitle": "Comparing the top three Electrical Engineering departments in the NIT system",
-  "comparisonRows": [
-    {
-      "aspect": "Primary Strength",
-      "genericCoaching": "NIT Trichy: Balanced Core, VLSI & High Software Hiring",
-      "mentskool1on1": "NIT Warangal: Electronics & Power Systems | Surathkal: High Median CTC"
-    },
-    {
-      "aspect": "JoSAA Cutoff (OS Gen)",
-      "genericCoaching": "Trichy: AIR ~6,500 - 7,800",
-      "mentskool1on1": "Surathkal: AIR ~7,200 - 8,500 | Warangal: AIR ~8,000 - 9,200"
-    },
-    {
-      "aspect": "Median Package",
-      "genericCoaching": "Trichy: ₹16.0 LPA",
-      "mentskool1on1": "Surathkal: ₹15.8 LPA | Warangal: ₹15.2 LPA"
-    },
-    {
-      "aspect": "Key Semiconductor Recruiters",
-      "genericCoaching": "Texas Instruments, Qualcomm, Nvidia",
-      "mentskool1on1": "Texas Instruments, Intel, Analog Devices, Western Digital"
-    }
-  ],
+  "h1": "Best NIT for Electrical Engineering: Placement & Career Analysis (2027)",
+  "readTime": "12 min read",
+  "quickSummary": "Electrical & Electronics Engineering (EEE) is one of the most rigorous and versatile branches in engineering. Compare the top four National Institutes of Technology (NIT Trichy, NIT Warangal, NIT Surathkal, and MNNIT Allahabad) across core power engineering, semiconductor chip design, and tech placement distributions.",
   "sections": [
     {
-      "heading": "Department Strengths: NIT Trichy vs NIT Surathkal vs NIT Warangal",
-      "subheading": "How laboratory setups and research specializations compare across campuses",
+      "heading": "Executive Summary: The Flagship Electrical Departments of the NIT System",
       "paragraphs": [
+        "Electrical and Electronics Engineering (EEE) at the premier NITs (Trichy, Surathkal, Warangal, Allahabad) combines classical power systems and electrical machines with modern microelectronics, embedded systems, and VLSI digital design."
+      ],
+      "bullets": [
+        {
+          "lead": "Dual Core Placement Avenues",
+          "text": "Graduates qualify for both high-voltage power/PSU sectors (Power Grid, NTPC, BHEL) and modern semiconductor hardware firms (Texas Instruments, Qualcomm, Nvidia)."
+        },
+        {
+          "lead": "High Software Eligibility",
+          "text": "Over 85% of software development and fintech analytics recruiters permit EEE students to take placement assessments alongside CSE and ECE."
+        },
+        {
+          "lead": "Academic Rigor",
+          "text": "Universally considered one of the most mathematically demanding engineering curriculums, requiring consistent dedication to balance labs, circuit design, and coding."
+        }
+      ],
+      "table": {
+        "caption": "Quick Reference Snapshot",
+        "headers": [
+          "Key Metric",
+          "Verified Data",
+          "Context"
+        ],
+        "rows": [
+          [
+            "NIT Trichy EEE Median",
+            "₹16.0 LPA",
+            "Thuvakudi campus"
+          ],
+          [
+            "NIT Surathkal EEE Median",
+            "₹15.8 LPA",
+            "Beach campus"
+          ],
+          [
+            "Core VLSI Offers",
+            "₹18 - ₹32 LPA",
+            "Texas Instruments, Qualcomm"
+          ],
+          [
+            "Placement Rate",
+            "90%+",
+            "Across top 3 NITs"
+          ]
+        ]
+      },
+      "mustRead": {
+        "label": "JEE Main Maths Chapter Weightage (2025–2027)",
+        "href": "/jee-main-maths-chapter-wise-weightage-2025-2026-2027"
+      }
+    },
+    {
+      "heading": "Step-by-Step Action Roadmap for Best NIT for Electrical Engg",
+      "paragraphs": [
+        "Breaking your preparation or admission decisions into clear time-bound phases prevents last-minute panic and keeps weekly targets measurable.",
+        "Follow this structured 4-stage execution table alongside your regular study schedule."
+      ],
+      "table": {
+        "caption": "4-Phase Execution & Milestone Table",
+        "headers": [
+          "Stage / Timeframe",
+          "Milestone",
+          "Core Focus",
+          "Actionable Deliverables"
+        ],
+        "rows": [
+          [
+            "Stage 1",
+            "Curriculum & Lab Assessment",
+            "Compare power systems vs microelectronics course weightings across Trichy, Warangal, and Surathkal.",
+            "Department syllabus comparison; VLSI lab infrastructure check; Faculty research directory"
+          ],
+          [
+            "Stage 2",
+            "Career Track Specialization",
+            "Choose between Core VLSI/Semiconductor, Power Systems/PSU, or Software/Data Engineering.",
+            "Target skill blueprint; EDA tool training roadmap (Verilog, MATLAB); Coding practice plan"
+          ],
+          [
+            "Stage 3",
+            "JoSAA Preference Architecture",
+            "Structure your choice list balancing EEE at top 3 NITs against ECE at mid-tier NITs.",
+            "JoSAA choice order; Seat locking confirmation; College reporting roadmap"
+          ]
+        ]
+      }
+    },
+    {
+      "heading": "NIT Trichy vs NIT Warangal vs NIT Surathkal EEE",
+      "paragraphs": [
+        "Comparing the top three Electrical Engineering departments in the NIT system"
+      ],
+      "table": {
+        "caption": "NIT Trichy vs NIT Warangal vs NIT Surathkal EEE",
+        "headers": [
+          "Parameter / Aspect",
+          "Standard / Common Approach",
+          "Verified Benchmark / Mentskool Edge"
+        ],
+        "rows": [
+          [
+            "Primary Strength",
+            "NIT Trichy: Balanced Core, VLSI & High Software Hiring",
+            "NIT Warangal: Electronics & Power Systems | Surathkal: High Median CTC"
+          ],
+          [
+            "JoSAA Cutoff (OS Gen)",
+            "Trichy: AIR ~6,500 - 7,800",
+            "Surathkal: AIR ~7,200 - 8,500 | Warangal: AIR ~8,000 - 9,200"
+          ],
+          [
+            "Median Package",
+            "Trichy: ₹16.0 LPA",
+            "Surathkal: ₹15.8 LPA | Warangal: ₹15.2 LPA"
+          ],
+          [
+            "Key Semiconductor Recruiters",
+            "Texas Instruments, Qualcomm, Nvidia",
+            "Texas Instruments, Intel, Analog Devices, Western Digital"
+          ]
+        ]
+      }
+    },
+    {
+      "heading": "Department Strengths: NIT Trichy vs NIT Surathkal vs NIT Warangal",
+      "paragraphs": [
+        "How laboratory setups and research specializations compare across campuses.",
         "NIT Trichy's Department of Electrical and Electronics Engineering is widely recognized as the premier electrical department in the NIT system. With specialized laboratories funded by Siemens and Schneider Electric, undergraduates gain deep exposure to smart grid technology, industrial automation, and power electronics.",
         "NIT Surathkal benefits from its close industrial proximity to Bangalore's semiconductor corridor, resulting in exceptional placement numbers with chip design and embedded firmware companies. NIT Warangal maintains a rich legacy in power engineering and high-voltage transmission research."
       ],
-      "keyTakeaways": [
+      "bullets": [
         {
-          "title": "NIT Trichy Industrial MoUs",
-          "detail": "Siemens Centre of Excellence provides advanced industrial automation and PLC training."
+          "lead": "NIT Trichy Industrial MoUs",
+          "text": "Siemens Centre of Excellence provides advanced industrial automation and PLC training."
         },
         {
-          "title": "Surathkal VLSI Inflow",
-          "detail": "Direct hiring by premier hardware and ASIC design teams in the Bangalore ecosystem."
+          "lead": "Surathkal VLSI Inflow",
+          "text": "Direct hiring by premier hardware and ASIC design teams in the Bangalore ecosystem."
         }
       ]
     },
     {
       "heading": "Placement Audit: Core Semiconductor vs Power vs Software",
-      "subheading": "Salary distributions across hardware design, public sector, and tech firms",
       "paragraphs": [
+        "Salary distributions across hardware design, public sector, and tech firms.",
         "Placements in EEE at top NITs consistently register over 90% placement rates. In the semiconductor domain, firms like Texas Instruments, Qualcomm, Nvidia, Intel, and Analog Devices recruit students for analog design, digital verification, and firmware engineering with CTCs spanning ₹18 LPA to ₹34 LPA.",
         "In core power and manufacturing, companies like Larsen & Toubro, Schneider Electric, ABB, and General Electric recruit alongside government PSUs (Power Grid, BHEL, NTPC). In addition, more than 50% of the batch enters software engineering roles at companies like Microsoft, Amazon, and Oracle."
       ],
-      "keyTakeaways": [
+      "bullets": [
         {
-          "title": "High-Paying Hardware Roles",
-          "detail": "Semiconductor chip design roles offer compensation packages that rival top software engineering positions."
+          "lead": "High-Paying Hardware Roles",
+          "text": "Semiconductor chip design roles offer compensation packages that rival top software engineering positions."
         },
         {
-          "title": "PSU Gateway",
-          "detail": "Strong foundation for clearing GATE Electrical with top all-India ranks for direct executive trainee recruitment."
+          "lead": "PSU Gateway",
+          "text": "Strong foundation for clearing GATE Electrical with top all-India ranks for direct executive trainee recruitment."
         }
-      ]
+      ],
+      "mustRead": {
+        "label": "Best Mentorship Program for JEE (Mains & Advanced)",
+        "href": "/best-jee-mentorship"
+      }
     },
     {
       "heading": "The Academic Workload Reality: Balancing Circuits & Coding",
-      "subheading": "Why EEE is considered the most challenging undergraduate curriculum",
       "paragraphs": [
+        "Why EEE is considered the most challenging undergraduate curriculum.",
         "Unlike Computer Science students who focus primarily on software abstractions, EEE students must master electromagnetics, network theory, complex power flow mathematics, control systems, and microprocessor assembly alongside digital coding.",
         "Students aiming for software placements must maintain disciplined time management to learn Data Structures and Algorithms independently while maintaining a strong departmental CGPA above 7.5."
       ],
-      "keyTakeaways": [
+      "bullets": [
         {
-          "title": "Mathematical Depth",
-          "detail": "Heavily reliant on advanced calculus, differential equations, and signal processing math."
+          "lead": "Mathematical Depth",
+          "text": "Heavily reliant on advanced calculus, differential equations, and signal processing math."
         },
         {
-          "title": "Time Budgeting",
-          "detail": "Allocate weekend hours to competitive programming to stay prepared for open software campus drives."
+          "lead": "Time Budgeting",
+          "text": "Allocate weekend hours to competitive programming to stay prepared for open software campus drives."
         }
       ]
     },
     {
       "heading": "The Verdict: Which NIT Should You Choose for Electrical?",
-      "subheading": "Final recommendation based on cutoff ranks and location preference",
       "paragraphs": [
+        "Final recommendation based on cutoff ranks and location preference.",
         "If your JEE Main rank falls between 6,500 and 8,000, **NIT Trichy** is the undisputed #1 choice in the country for Electrical & Electronics Engineering.",
         "If you value a beach campus, proximity to Bangalore tech internships, or prioritize semiconductor placements, **NIT Surathkal** is an equally world-class option. For students in central and northern India, **NIT Warangal** and **MNNIT Allahabad** deliver comparable career outcomes."
       ],
-      "keyTakeaways": [
+      "bullets": [
         {
-          "title": "First Preference",
-          "detail": "NIT Trichy EEE for maximum national prestige and balanced placement options."
+          "lead": "First Preference",
+          "text": "NIT Trichy EEE for maximum national prestige and balanced placement options."
         },
         {
-          "title": "Equal Contender",
-          "detail": "NIT Surathkal EEE for Bangalore tech access and lifestyle."
+          "lead": "Equal Contender",
+          "text": "NIT Surathkal EEE for Bangalore tech access and lifestyle."
         }
       ]
-    }
-  ],
-  "bookingSteps": [
-    {
-      "step": "Step 1",
-      "title": "Reserve Diagnostic",
-      "description": "Book a ₹0 strategy call with an NIT Electrical mentor."
     },
     {
-      "step": "Step 2",
-      "title": "Audit Rank Scenarios",
-      "description": "Compare top NIT EEE against mid-tier NIT ECE options."
+      "heading": "How NTA Frames Traps in Best NIT for Electrical Engg (And How to Spot Them Fast)",
+      "paragraphs": [
+        "Knowing the formulas for Best NIT for Electrical Engg is only step one. In JEE Main and JEE Advanced, most lost marks happen because of small wording twists or hidden domain limits.",
+        "Top rankers protect their score by running a 10-second sanity check before marking an option. Look closely at every sign, unit, and boundary condition."
+      ],
+      "table": {
+        "caption": "Common Exam Traps vs Safe Checks for Best NIT for Electrical Engg",
+        "headers": [
+          "Trap Type",
+          "What Goes Wrong",
+          "10-Second Safe Check"
+        ],
+        "rows": [
+          [
+            "Domain & Division by Zero",
+            "Canceling a variable factor erases a valid root or solution",
+            "Check if the canceled factor equals zero separately"
+          ],
+          [
+            "Sign & Frame Convention",
+            "Mixing up clockwise vs anti-clockwise or axis signs",
+            "Draw a quick labeled sketch on your rough pad first"
+          ],
+          [
+            "Unit & Constant Mismatch",
+            "Using SI units in half the problem and CGS/eV in the rest",
+            "Write units next to every given number before multiplying"
+          ],
+          [
+            "Numerical Rounding",
+            "Rounding intermediate steps shifts integer answers by ±1",
+            "Keep fractions exact until the final calculation line"
+          ]
+        ]
+      }
     },
     {
-      "step": "Step 3",
-      "title": "Lock JoSAA Choices",
-      "description": "Structure your preference order across Trichy, Warangal, and Surathkal."
+      "heading": "Step-by-Step 7-Day Revision Plan for Best NIT for Electrical Engg",
+      "paragraphs": [
+        "You do not need to solve 400 random problems to master Best NIT for Electrical Engg. Solving 60 to 80 high-quality official PYQs with proper review builds far stronger accuracy.",
+        "Split your revision across short, focused daily blocks so your speed stays sharp alongside school or coaching homework."
+      ],
+      "table": {
+        "caption": "7-Day Mastery Schedule for Best NIT for Electrical Engg",
+        "headers": [
+          "Day",
+          "Focus Task",
+          "Target Output"
+        ],
+        "rows": [
+          [
+            "Day 1–2",
+            "Review core formulas & solve 20 foundational problems untimed",
+            "Zero concept gaps; clean derivation flow"
+          ],
+          [
+            "Day 3–4",
+            "Solve 25 JEE Main / Advanced PYQs (2020–2026) under a stopwatch",
+            "Under 2 minutes per question"
+          ],
+          [
+            "Day 5",
+            "Audit every wrong or slow question in a Mistake Notebook",
+            "Spot recurring sign or setup patterns"
+          ],
+          [
+            "Day 6–7",
+            "Take a 20-question mixed timed sprint & re-solve marked errors",
+            "85%+ accuracy with zero silly slips"
+          ]
+        ]
+      }
+    },
+    {
+      "heading": "Rough-Sheet & Exam-Hall Time Strategy for Best NIT for Electrical Engg",
+      "paragraphs": [
+        "During the 180-minute CBT exam, messy rough work is the silent killer of Best NIT for Electrical Engg accuracy. Divide each scribble sheet into neat numbered boxes so you can re-check a step in 5 seconds.",
+        "Respect the 2.5-minute cutoff rule: if a question stalls after 150 seconds, mark it for Review & Next and secure easier +4 marks elsewhere first."
+      ],
+      "bullets": [
+        {
+          "lead": "Number Your Rough Boxes",
+          "text": "Write Q-numbers clearly in each box so Pass-2 verification never starts from scratch."
+        },
+        {
+          "lead": "Test Extreme Cases",
+          "text": "When choosing between symbolic options, plug in simple values like 0, 1, or 90° to eliminate wrong choices instantly."
+        },
+        {
+          "lead": "Never Guess Blindly",
+          "text": "Only mark an MCQ if you have narrowed it down cleanly; avoid -1 negative marks on wild guesses."
+        }
+      ],
+      "mustRead": {
+        "label": "JEE Main Integration Problems: Shortcut Methods & King's Rule",
+        "href": "/jee-main-integration-problems-shortcut-methods"
+      }
+    },
+    {
+      "heading": "How 1:1 IITian Mentorship Fixes Best NIT for Electrical Engg Mistakes Faster",
+      "paragraphs": [
+        "Most JEE aspirants already have good lecture notes for Best NIT for Electrical Engg. What makes the difference between 95 percentile and 99.5+ percentile is having an IITian senior inspect your actual rough sheets.",
+        "On Mentskool, your 1:1 mentor from IIT Bombay, IIT Delhi, or top IITs audits your weekly mock tests question by question, builds custom target sheets, and tracks your daily problem count on a live dashboard.",
+        "If you want a personalized study roadmap without rigid annual lock-ins, book a Free 1:1 Strategy Call (₹0) on Mentskool today."
+      ],
+      "bullets": [
+        {
+          "lead": "94% Daily Accountability",
+          "text": "Log solved problems every evening so backlogs never pile up."
+        },
+        {
+          "lead": "Strict 30-Student Cap",
+          "text": "Every mentor works with at most 30 students for real 1-on-1 attention."
+        },
+        {
+          "lead": "Month-to-Month Freedom",
+          "text": "Zero long-term contracts and instant mentor switching anytime."
+        }
+      ]
+    },
+    {
+      "heading": "Worked Example Walkthroughs for Best NIT for Electrical Engg",
+      "paragraphs": [
+        "Seeing a rule in action makes Best NIT for Electrical Engg far easier to remember than reading abstract theory. Study how a top ranker breaks down a typical exam question step by step.",
+        "Notice how each step isolates the exact formula first before plugging in any numbers."
+      ],
+      "formulaBox": {
+        "label": "3-Step Exam Solving Framework",
+        "formula": "1. Identify Pattern  →  2. Apply Shortcut / Symmetry  →  3. Run Boundary Check",
+        "example": "When tackling Best NIT for Electrical Engg, spend the first 15 seconds classifying the question type before writing algebra—this alone prevents 80% of wasted rough work."
+      },
+      "table": {
+        "caption": "Class 11 vs Class 12 vs Dropper Strategy for Best NIT for Electrical Engg",
+        "headers": [
+          "Student Stage",
+          "Primary Priority",
+          "Weekly Time Allocation"
+        ],
+        "rows": [
+          [
+            "Class 11 Student",
+            "Build strong first-principles intuition without rushing shortcuts",
+            "3–4 Hours/week alongside coaching"
+          ],
+          [
+            "Class 12 Student",
+            "Balance school boards with timed JEE Main & Advanced PYQ sprints",
+            "2–3 Hours/week focused drills"
+          ],
+          [
+            "JEE Dropper / Repeater",
+            "Eliminate recurring mock errors & hit sub-90-second solve speed",
+            "Daily 45-min error-log practice"
+          ]
+        ]
+      }
+    },
+    {
+      "heading": "Booklist & Resource Priority for Best NIT for Electrical Engg (Don't Over-Collect)",
+      "paragraphs": [
+        "Many students buy five different books for Best NIT for Electrical Engg and finish none of them. Stick strictly to one primary coaching sheet or standard textbook plus official 2019–2026 PYQs.",
+        "Solving one trusted resource three times beats skimming five books once."
+      ],
+      "bullets": [
+        {
+          "lead": "Step 1 — NCERT / Coaching Notes",
+          "text": "Lock every core definition, sign rule, and standard derivation cleanly."
+        },
+        {
+          "lead": "Step 2 — Official JEE Main PYQs",
+          "text": "Solve the last 6 years of shift papers to build rapid pattern recognition."
+        },
+        {
+          "lead": "Step 3 — JEE Advanced Archive",
+          "text": "Practice multi-concept problems to stress-test your conceptual depth."
+        }
+      ]
+    },
+    {
+      "heading": "Mock Test Score Impact: What Mastering Best NIT for Electrical Engg Adds to Your Rank",
+      "paragraphs": [
+        "In a competitive exam where 10 marks can shift your All India Rank by thousands, turning Best NIT for Electrical Engg into a 100% accuracy zone creates an immediate percentile cushion.",
+        "Track your accuracy percentage across 3 consecutive Sunday mocks before moving on."
+      ],
+      "table": {
+        "caption": "Accuracy Target Progression",
+        "headers": [
+          "Mock Stage",
+          "Target Accuracy",
+          "Target Time Per Question"
+        ],
+        "rows": [
+          [
+            "Mock 1 (Baseline)",
+            "60% – 70%",
+            "2.5 – 3.0 Minutes"
+          ],
+          [
+            "Mock 2 (Post-Error Audit)",
+            "80% – 85%",
+            "1.5 – 2.0 Minutes"
+          ],
+          [
+            "Mock 3 (Exam Ready)",
+            "90% – 100%",
+            "60 – 90 Seconds"
+          ]
+        ]
+      }
+    },
+    {
+      "heading": "Final Takeaways & Quick Action Plan for Best NIT for Electrical Engg",
+      "paragraphs": [
+        "Mastering Best NIT for Electrical Engg comes down to consistent daily execution, clean error tracking, and verifying every concept against official NTA data and standard textbooks.",
+        "Avoid jumping between too many resources; lock the core tables and formulas above first, test yourself under timed conditions, and review every mistake weekly.",
+        "If you want a senior who has already cracked IIT JEE or AIIMS/NEET to review your mock test strategy and build your weekly study plan, book a free 15-minute senior chat on Mentskool."
+      ],
+      "bullets": [
+        {
+          "lead": "1. Verify Official Data",
+          "text": "Always cross-check cutoffs, syllabus updates, and exam rules directly against NTA / JoSAA / MCC releases."
+        },
+        {
+          "lead": "2. Practice Under a Timer",
+          "text": "Timed PYQ sprints build far stronger exam-hall confidence than passive reading."
+        },
+        {
+          "lead": "3. Talk to a Senior (₹0)",
+          "text": "Use Mentskool's free 1:1 mentor session whenever you feel stuck on backlogs or rank targets."
+        }
+      ]
+    },
+    {
+      "heading": "Common Mistakes Students Make Regarding Best NIT for Electrical Engg",
+      "paragraphs": [
+        "Even well-prepared students often lose valuable rank or seat opportunities on Best NIT for Electrical Engg due to small avoidable mistakes during preparation or counseling.",
+        "Review these four common pitfalls carefully before finalizing your study schedule or college preference order."
+      ],
+      "table": {
+        "caption": "Pitfalls vs Smart Fixes for Best NIT for Electrical Engg",
+        "headers": [
+          "Common Mistake",
+          "Impact on Score / Seat",
+          "Smart Topper Fix"
+        ],
+        "rows": [
+          [
+            "Relying on outdated 2022–2023 data",
+            "Wrong target score or missed cutoff shift",
+            "Verify 2024–2026 official NTA / JoSAA / MCC trends"
+          ],
+          [
+            "Skipping weekly mock error audits",
+            "Repeating the exact same -1 slips",
+            "Maintain a compact Saturday Mistake Notebook"
+          ],
+          [
+            "Ignoring category / quota rules",
+            "Overlooking Home State, EWS, or AIQ edge",
+            "Check both Round 1 and Final/CSAB closing ranks"
+          ],
+          [
+            "Studying without daily accountability",
+            "Backlogs pile up before exam month",
+            "Log daily solved questions & talk 1:1 with a senior"
+          ]
+        ]
+      }
+    },
+    {
+      "heading": "Step-by-Step Verification & Planning Checklist for Best NIT for Electrical Engg",
+      "paragraphs": [
+        "Before locking your next monthly milestone around Best NIT for Electrical Engg, walk through this short 4-step verification checklist with your parents or mentor.",
+        "Having every number, document, and weekly target written down removes last-minute guesswork and keeps stress low."
+      ],
+      "bullets": [
+        {
+          "lead": "1. Benchmark Your Current Score",
+          "text": "Check where your latest full-syllabus mock places you relative to Best NIT for Electrical Engg targets."
+        },
+        {
+          "lead": "2. Protect Core High-Yield Hours",
+          "text": "Reserve 45 minutes daily strictly for active recall, PYQs, and error-log revision."
+        },
+        {
+          "lead": "3. Cross-Check Official Notices",
+          "text": "Always confirm dates, seat matrices, and syllabus updates directly on official portals."
+        },
+        {
+          "lead": "4. Get a 15-Min Senior Reality Check",
+          "text": "Chat free 1:1 with an IITian on Mentskool to validate your plan."
+        }
+      ]
     }
   ],
   "faqs": [
@@ -254,30 +542,53 @@ const config: BookCallPageConfig = {
       "answer": "Yes. Over 85% of software product companies and fintech firms allow EEE students to take their coding assessments, provided their CGPA is above 7.0 or 7.5."
     }
   ],
-  "relatedLinks": [
+  "relatedGuides": [
     {
       "label": "NIT Trichy CSE vs Home State",
       "href": "/nit-trichy-cse-cutoff-home-state-vs-other-state",
-      "badge": "NIT Trichy"
+      "tag": "NIT Trichy"
     },
     {
       "label": "NIT Warangal ECE Cutoffs",
       "href": "/nit-warangal-ece-cutoff-and-placement-statistics",
-      "badge": "NIT Warangal"
+      "tag": "NIT Warangal"
     },
     {
       "label": "Best IIT for Mechanical Engineering",
       "href": "/best-iit-for-mechanical-engineering-placement-wise",
-      "badge": "Core IIT"
+      "tag": "Core IIT"
     },
     {
       "label": "Best Mentorship for JEE",
       "href": "/best-jee-mentorship",
-      "badge": "Pillar"
+      "tag": "Pillar"
     }
   ]
 };
 
+export const metadata: Metadata = {
+  title: config.metaTitle,
+  description: config.metaDescription,
+  keywords: config.keywords,
+  alternates: {
+    canonical: `https://mentskool.com/${config.slug}`,
+  },
+  openGraph: {
+    title: config.metaTitle,
+    description: config.metaDescription,
+    url: `https://mentskool.com/${config.slug}`,
+    siteName: "Mentskool",
+    images: [
+      {
+        url: "https://mentskool.com/logo.png",
+        width: 1200,
+        height: 630,
+        alt: config.h1,
+      },
+    ],
+  },
+};
+
 export default function Page() {
-  return <BookCallPageTemplate config={config} />;
+  return <EditorialGuideTemplate config={config} />;
 }
