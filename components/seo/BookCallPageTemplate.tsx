@@ -93,7 +93,7 @@ const defaultBookingSteps = [
   },
   {
     step: "03",
-    title: "Diagnostic Mock Assessment",
+    title: "Mock Test & Routine Review",
     description:
       "Share your latest test marks and weak chapters in advance so your mentor prepares a tailored roadmap.",
   },
@@ -578,10 +578,10 @@ export function BookCallPageTemplate({ config }: { config: BookCallPageConfig })
                       <span className="text-[11px] font-semibold text-slate-400 line-through">₹499</span>
                     </div>
                     <h4 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
-                      Claim Free Diagnostic Call (₹0)
+                      Claim Free 1:1 Strategy Call (₹0)
                     </h4>
                     <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-                      30-minute private video diagnostic to audit your mistake patterns, test papers, and routine.
+                      30-minute private video call to review your mistake patterns, test papers, and daily study plan.
                     </p>
                   </div>
                   <div className="mt-4 pt-3 border-t border-emerald-800/40 flex items-center justify-between text-xs font-bold text-emerald-300">
@@ -685,7 +685,7 @@ export function BookCallPageTemplate({ config }: { config: BookCallPageConfig })
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
                   <Calculator className="w-3.5 h-3.5 text-emerald-400" />
-                  Free Interactive Score & Rank Diagnostic Tools
+                  Free Interactive Score & Rank Planning Tools
                 </h3>
                 <span className="text-[11px] text-slate-400">Instant calculations</span>
               </div>
